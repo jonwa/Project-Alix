@@ -17,18 +17,15 @@ using System.Collections;
 
 public class WindowButton : MonoBehaviour 
 {
-	public enum Action{	show, hide, loadScene, exit };
+	public enum Action{	Show, Hide, Continue, LoadScene, ExitApp, ExitToMain };
 
 	#region publicMemberVariables
-	public string m_SceneName = null;
-	public UIPanel m_Window = null; 
-	public Action m_Action = Action.show;
+	public string  m_SceneName 	= null;
+	public UIPanel m_Window 	= null; 
+	public Action  m_Action 	= Action.Show;
 	#endregion
 
 	private WindowHandler m_WindowHandler;
-
-	private bool m_LevelFlag = false;
-	private bool m_WindowFlag = true;
 
 	void Start()
 	{
@@ -39,7 +36,7 @@ public class WindowButton : MonoBehaviour
 	{
 		switch (m_Action)
 		{
-		case Action.show:
+		case Action.Show:
 			if(m_Window != null) 
 			{
 				m_WindowHandler.Show(m_Window);
@@ -48,11 +45,11 @@ public class WindowButton : MonoBehaviour
 				Debug.Log("Please assign window to open");
 			break;
 		
-		case Action.hide:
+		case Action.Hide:
 			m_WindowHandler.Hide();
 			break;
 		
-		case Action.loadScene:
+		case Action.LoadScene:
 			if(m_SceneName != null) 
 			{
 				Application.LoadLevel(m_SceneName);
@@ -61,7 +58,16 @@ public class WindowButton : MonoBehaviour
 				Debug.Log("Please assign scene to load");
 			break; 
 		
-		case Action.exit:
+		case Action.ExitToMain:
+			if(m_SceneName != null)
+			{
+				Application.LoadLevel(m_SceneName);
+			}
+			else
+				Debug.Log("Please assign scene to load, in this case type the main menu scene name");
+			break;
+
+		case Action.ExitApp:
 			Application.Quit();
 			break; 
 		}
