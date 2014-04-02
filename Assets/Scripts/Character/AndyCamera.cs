@@ -39,6 +39,7 @@ public class AndyCamera : MonoBehaviour
 		//Kamera med Oculus rift
 		else
 		{
+			//Skall vara för oculus, musen simulerar fortfarande rörelserna
 			//Roterar x och y oberoende av förälder
 			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * 5;
 			
