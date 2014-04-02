@@ -37,7 +37,7 @@ public class CharacterCotroller : MonoBehaviour
 		if(m_Grounded)
 		{
 			Vector3 forward			= transform.forward.normalized*Input.GetAxis("Vertical");
-			Vector3 right			= transform.right.normalized*Input.GetAxis("Horizontal");
+			Vector3 right			= -transform.right.normalized*Input.GetAxis("Horizontal");
 			Vector3 targetVelocity  = new Vector3(forward.x-right.x, 0.0f, forward.z-right.z);
 
 			Vector3 velocity 		= rigidbody.velocity;
