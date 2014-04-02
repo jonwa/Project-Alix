@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* A WindowButton 
+/* Should be places on a menu button
+ * A WindowButton has differend modes
+ * 	show - transition from one part of the menu to another
+ *  hide - returns to the previous window shown
+ *  loadScene - loads the scene assigned 
+ *  exit - Shuts down the application
+ * 
+ * WindowButtons calls, when clicked, a function from WindowHandler.cs 
+ * depending on which mode is active
  * 
  * Created By: Jon Wahlström 2014-04-02
  * Modified By: 
@@ -26,7 +34,7 @@ public class WindowButton : MonoBehaviour
 	{
 		m_WindowHandler = WindowHandler.Instance;
 	}
-
+	
 	void OnClick()
 	{
 		switch (m_Action)
