@@ -1,0 +1,29 @@
+git checkout jimmy
+byter branch som du arbetar på till branchen med namn jimmy
+Arbeta ALLTID på din egen branch!
+
+------------------------------------------------------------
+
+git pull origin master
+pullar/hämtar ner ändringar från branchen som heter master 
+Börja dagen med att pulla från master för att alltid ha de senaste ändringarna!
+
+------------------------------------------------------------
+
+git add --all  / git add -A
+lägger till ALLA nya filer du skapat efter senaste adden.
+
+------------------------------------------------------------
+
+git commit -a
+talar om för git att du gjort ändringar. Lägger bara till ändringar du redan har lagt till med "git add"
+
+------------------------------------------------------------
+
+git push
+skickar det du commitat till din "remote branch" (din branch på internet)
+
+-----------------------------------------------------------
+
+git status
+visar ändringar du gjort sen senaste add/commit
