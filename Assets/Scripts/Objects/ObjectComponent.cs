@@ -5,12 +5,12 @@ using System.Collections;
  * 
  * Created by: Robert and Sebastian Datum: 02/04-14
  * Modified by:
- * 	
+ * 
  */
 
-public class ObjectComponent : MonoBehaviour
+public class ObjectComponent :  MonoBehaviour
 {
-    private bool m_isActive = false;
+    private bool m_IsActive = false;
    
 
     // Use this for initialization
@@ -18,6 +18,7 @@ public class ObjectComponent : MonoBehaviour
     {
 
 	}
+
 
     // Update is called once per frame
     void Update()
@@ -30,19 +31,31 @@ public class ObjectComponent : MonoBehaviour
 
     }
 
-	public virtual void Should()
+
+    public virtual void Should()
     {
 
     }
 
-	public virtual void Interact()
+    public virtual void Interact()
     {
 
     }
 
-    // If raycast hits object and leftmouse is pressed object is active
+    // If raycast hits object and left mouse button is pressed object is active
     public void Activate()
     {
-    	m_isActive = true;
+		m_IsActive = true;
     }
+
+	//When left mouse button is released the object goes unactive
+	public void DeActivate()
+	{
+		m_IsActive = false;
+	}
+
+	public bool GetIsActive()
+	{
+		return m_IsActive;
+	}
 }

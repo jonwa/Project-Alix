@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/* 
+/* WindowHandler either show or hide a window. The functions
+ * are called from WindowButton.cs whenever a button is pressed. 
  * 
  * Created By: Jon Wahlström 2014-04-02
  * Modified By: 
@@ -12,7 +13,6 @@ public class WindowHandler : MonoBehaviour
 {
 	#region privatMemberVariables
 	private static WindowHandler m_Instance = null;
-	private static object m_Lock = new object();
 
 	private Stack<UIPanel> m_History = new Stack<UIPanel>(); 
 	private UIPanel m_CurrentWindow;
