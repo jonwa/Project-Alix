@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-/*Rasmus Björk 02/04
- * Class for rotation of character, called from FirstPersonCamera
+/* Class for rotation of character, called from FirstPersonCamera
+ * 
+ * Made by: Rasmus Björk 02/04
  * */
 
 public class FirstPersonRotation : MonoBehaviour 
@@ -19,13 +20,14 @@ public class FirstPersonRotation : MonoBehaviour
 	}
 
 	//Called from FirstPersonCamera
-	void RotateCharacter()
+	void RotateCharacter(float sensitivity)
 	{
-		transform.Rotate(0, Input.GetAxis("Mouse X") * 5, 0);
+		transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivity, 0);
 	}
-	void RotateCharacterJoystick()
+
+	void RotateCharacterJoystick(float sensitivity)
 	{
-		transform.Rotate(0, Input.GetAxis("xBoxHorizontal") * 5, 0);
+		transform.Rotate(0, Input.GetAxis("xBoxHorizontal") * sensitivity, 0);
 	}
 
 }
