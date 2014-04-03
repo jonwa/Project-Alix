@@ -37,9 +37,7 @@ public class FirstPersonCamera : MonoBehaviour
 				//Call parents for x rotation
 				this.SendMessageUpwards("RotateCharacter");
 			}
-		}
-		else if(m_Oculus == false && m_XboxController == true)
-		{
+
 			//Locks the camera when inspection objects
 			if(m_Locked== false){
 				//Rotation Y
