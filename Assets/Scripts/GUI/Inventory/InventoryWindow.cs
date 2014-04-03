@@ -10,5 +10,7 @@ using System.Collections.Generic;
 
 public class InventoryWindow : MonoBehaviour 
 {
-
+	#region publicMemberVariables
+	public UISprite m_WindowTexture; 
+	#endregion
 }

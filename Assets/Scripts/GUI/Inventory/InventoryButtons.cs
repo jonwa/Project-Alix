@@ -9,4 +9,7 @@ using System.Collections;
 
 public class InventoryButtons : MonoBehaviour 
 {
+	#region publicMemberVariables
+
+	#endregion
 }
