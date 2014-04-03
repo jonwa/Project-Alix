@@ -2,6 +2,7 @@
 using System.Collections;
 
 /* Placed on the character. Handles movement WASD and with Controller.
+ * Requires a rigidbody to work!
  * 
  * Created by: 	Jimmy Nilsson 14-04-02
  * Modified by:	
@@ -29,9 +30,7 @@ public class CharacterCotroller : MonoBehaviour
 		rigidbody.freezeRotation = true;
 	}
 
-	/*
-	 * The function that handles all movement 
-	 */
+	// The function that handles all movement 
 	void Move(float deltaTime)
 	{
 		if(m_Grounded)
@@ -81,6 +80,10 @@ public class CharacterCotroller : MonoBehaviour
 		return Mathf.Sqrt(2* m_JumpForce * m_Gravity);
 	}
 
+	/*
+	 * When the object collides with another object, cast a ray down, 
+	 * this is done to see if we are standing on something or colliding with a wall!
+	 */
 	void OnCollisionStay(Collision collisionInfo)
 	{
 		RaycastHit rayHitInfo;
