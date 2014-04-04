@@ -7,9 +7,11 @@ using System.Collections;
  * Modified By: 
  */
 
-public class InventoryButtons : MonoBehaviour 
+public class InventoryButton : MonoBehaviour 
 {
-	#region publicMemberVariables
+	//Called when a button is clicked
+	void OnClick()
+	{
 
-	#endregion
+	}
 }

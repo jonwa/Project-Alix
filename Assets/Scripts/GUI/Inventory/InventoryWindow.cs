@@ -10,7 +10,24 @@ using System.Collections.Generic;
 
 public class InventoryWindow : MonoBehaviour 
 {
-	#region publicMemberVariables
-	public UISprite m_WindowTexture; 
-	#endregion
+	public bool m_Edit = true; 
+
+	void OnClick()
+	{
+
+
+
+	}
+
+	void Update()
+	{
+		if(!m_Edit)
+		{
+			gameObject.GetComponent<BoxCollider>().enabled = false; 
+		}
+		else
+		{
+			gameObject.GetComponent<BoxCollider>().enabled = true; 
+		}
+	}
 }
