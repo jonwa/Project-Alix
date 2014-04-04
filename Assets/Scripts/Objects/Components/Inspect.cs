@@ -105,6 +105,10 @@ public class Inspect : ObjectComponent
 		{
 			if(!GetIsActive())
 			{
+				if(m_CameraTransform==null)
+				{
+					m_CameraTransform  = Camera.main.transform;
+				}
 				m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 				m_CameraTransform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
 				m_OriginalPosition = transform.position;
