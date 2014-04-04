@@ -25,7 +25,7 @@ public class Raycasting : MonoBehaviour {
 	public void Cast()
 	{
 		RaycastHit hit;
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		Ray ray = new Ray(transform.position, transform.forward);
 		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
 
 		if (Input.GetMouseButton (0))

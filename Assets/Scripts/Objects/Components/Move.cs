@@ -1,88 +1,66 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /* Discription: Move Component
+ * Used for moving boxes or different ojects in the gameworld
  * 
- * Created by: Sebastian 02/04-14
+ * Created by: Sebastian 04/04-14
  * Modified by:
  */
 
 public class Move : ObjectComponent 
 {
-	#region PUBLIC MEMBERS
-	public Transform heldObject;
-	#endregion //PUBLIC MEMBERS
-	
-	#region PRIVATE MEMBERS
-	private GameObject m_Target;
-	private Vector3 touchOffset;
-	private bool dragging = false;
-	#endregion //PRIVATE MEMBERS
+	#region PrivateMemberVariables
+	private Vector3 m_OriginalPlayerPosition;
+	private Vector3 m_CurrentPlayerPosition;
+	private Vector3 m_Offset;
+	private GameObject m_Player;
+	private float m_DeActivateCounter 			= 5;
+	#endregion
+
+	#region PublicMemberVariables
+	public string m_PlayerName					= "Player Controller Example";
+	#endregion
 
 	void Start()
 	{
+		//Change "Player Controller Example" to whatever Player is called when finished
+		m_Player = GameObject.Find (m_PlayerName); 
+		m_OriginalPlayerPosition = m_Player.transform.position;
 	}
 
 	void Update()
 	{
-
-
-	}
-	public override void Interact()
-	{
-
-			if(Input.GetMouseButton(0))
-			{
-				m_Target = transform.gameObject;
-				//Vector3 screenPoint = Camera.main.WorldToScreenPoint(m_Target.transform.position);
-				//Debug.Log ("ScreenPoint: " + screenPoint);
-				
-
-			if(m_Target != null)
-				{
-					/*calculate offset*/
-					Vector3 screenPoint = Camera.main.WorldToScreenPoint(m_Target.transform.position);
-					
-
-					/*calculate offset from camera*/
-					Vector3 offset = m_Target.transform.position - Camera.main.transform.position;
-					Debug.Log ("Offset: " + offset);
-
-					//Fuck this shietttt
-					//form the current position
-					Vector3 curPosition = Camera.main.transform.position + offset;
-					Debug.Log ("Curposition: " + curPosition);
-
-					
-				m_Target.transform.position = curPosition;
-				}
-			}
-			
-
-	}
-
-	/*
-	public override void Interact()
-	{
-		if(Input.GetMouseButton(0))
+		m_DeActivateCounter++;
+		if(m_DeActivateCounter > 10)
 		{
-
-			//m_Movement += Input.GetAxis("Mouse Y") * 1;
-			//Moves the object forwards
-			if (Input.GetAxis("Mouse Y") > 0) 
-			{
-				//transform.Translate(transform.TransformDirection(transform.forward) * m_Movement);
-				Debug.Log ("Rör musen upp!");
-			}
-			//Moves the object backwards
-			if (Input.GetAxis ("Mouse Y") < 0) 
-			{
-				//transform.Translate(transform.TransformDirection(transform.forward) * m_Movement);
-				Debug.Log ("Rör musen Ner!");
-			}
-			//m_Movement = 0;
+			DeActivate();
 		}
-
 	}
-*/
+
+	//Function for moving objects, moves the object with the player
+	public override void Interact()
+	{
+		if (GetIsActive()) 
+		{
+			m_CurrentPlayerPosition = m_Player.transform.position;
+			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
+			transform.position += m_Offset;
+			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
+		}
+		if(Input.GetButton("Fire1"))
+		{
+			if(!GetIsActive())
+			{
+				m_OriginalPlayerPosition = m_Player.transform.position;
+			}
+			Activate();
+			m_DeActivateCounter = 0;
+		}
+		else
+		{
+			DeActivate();
+			transform.rigidbody.isKinematic = true;
+		}
+	}
 }

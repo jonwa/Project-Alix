@@ -17,38 +17,46 @@ using System.Collections;
 
 public class WindowButton : MonoBehaviour 
 {
-	public enum Action{	Show, Hide, Continue, LoadScene, ExitApp, ExitToMain };
+	#region PublicMemberVariables
+	public enum Action{	None, Show, Hide, Continue, LoadScene, ExitApp, ExitToMain };
 
-	#region publicMemberVariables
-	public string  m_SceneName 	= null;
-	public UIPanel m_Window 	= null; 
-	public Action  m_Action 	= Action.Show;
+	public string 	  m_SceneName 	 = null;
+	public GameObject m_Window 	     = null; 
+	public Action  	  m_Action 		 = Action.None;
 	#endregion
 
-	private WindowHandler m_WindowHandler;
-
-	void Start()
-	{
-		m_WindowHandler = WindowHandler.Instance;
-	}
-	
+	//Called when a menu button is pressed
+	//Depending on the button settings
+	//either of the cases will be chosed.
 	void OnClick()
 	{
 		switch (m_Action)
 		{
+		case Action.None:
+
+			break;
 		case Action.Show:
 			if(m_Window != null) 
 			{
-				m_WindowHandler.Show(m_Window);
+				WindowHandler.Show(m_Window);
 			}
 			else
 				Debug.Log("Please assign window to open");
 			break;
 		
 		case Action.Hide:
-			m_WindowHandler.Hide();
+			WindowHandler.Hide();
 			break;
 		
+		case Action.Continue:
+			m_Window.SetActive(false);
+			WindowHandler.Default();
+			m_Window.transform.parent.GetComponent<MenuInput>().Active = false;
+
+			//unfreeze the camera position
+			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			break; 
+
 		case Action.LoadScene:
 			if(m_SceneName != null) 
 			{
@@ -72,4 +80,6 @@ public class WindowButton : MonoBehaviour
 			break; 
 		}
 	}
+
+
 }
