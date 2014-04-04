@@ -11,58 +11,72 @@ using System.Collections.Generic;
 
 public class WindowHandler : MonoBehaviour 
 {
-	#region privatMemberVariables
-	private static WindowHandler m_Instance = null;
-
-	private Stack<UIPanel> m_History 		= new Stack<UIPanel>(); 
-	private UIPanel 	   m_CurrentWindow 	= null;
-	private UIPanel        m_InitialWindow 	= null;
+	#region PublicMemberVariables
+	public GameObject 				  m_InitialWindow = null;		
 	#endregion
 
-	public static WindowHandler Instance
-	{
-		get
-		{
-			if(m_Instance == null)
-			{
-				GameObject go = new GameObject("_UIWindow");
-				m_Instance 	  = go.AddComponent<WindowHandler>();
-
-				DontDestroyOnLoad(go);
-			}
-			return m_Instance;
-		}
-	}
+	#region PrivatMemberVariables
+	private static Stack<GameObject> m_History 	     = new Stack<GameObject>(); 
+	private static GameObject 	   	 m_CurrentWindow = null;
+	private static GameObject		 m_DefaultWindow = null; 
+	#endregion
 
 	void Start()
 	{
-		GameObject go   = GameObject.Find ("Main");
-		m_InitialWindow = go.GetComponent<UIPanel>();
-		m_InitialWindow.gameObject.SetActive(true);
-
-		m_CurrentWindow = m_InitialWindow;
-
-		m_History.Push(m_CurrentWindow);
-	}
-	
-	public void Show(UIPanel window)
-	{
-		m_History.Peek().gameObject.SetActive(false);
-	
-		m_CurrentWindow = window; 
-		m_CurrentWindow.gameObject.SetActive(true);
-
-		m_History.Push(m_CurrentWindow);
+		if(m_InitialWindow != null)
+		{
+			m_DefaultWindow = m_InitialWindow;
+			Debug.Log ("HEJHEJHEJ");
+			m_CurrentWindow = m_InitialWindow; 
+			m_CurrentWindow.gameObject.SetActive(true); 
+			m_History.Push(m_CurrentWindow);
+		}
 	}
 
-	public void Hide()
+	public static void Default()
 	{
-		if (m_History.Count > 1) 
+		Clear();
+		m_CurrentWindow = m_DefaultWindow; 
+		m_CurrentWindow.gameObject.SetActive(true); 
+		m_History.Push(m_CurrentWindow);
+	}
+
+	public static void Show(GameObject window)
+	{
+		if(m_History.Count > 0)
+		{
+			m_History.Peek().gameObject.SetActive (false);
+		}
+
+		m_CurrentWindow = window;
+		m_CurrentWindow.gameObject.SetActive (true);
+
+
+		m_History.Push (m_CurrentWindow);
+	}
+
+	public static void Hide()
+	{
+		if(m_History.Count > 1)
 		{
 			m_History.Pop().gameObject.SetActive(false);
-
 			m_CurrentWindow = m_History.Peek();
-			m_CurrentWindow.gameObject.SetActive(true);
+			m_CurrentWindow.SetActive(true);
 		}
+	}
+
+	static void Clear()
+	{
+		foreach(GameObject window in m_History)
+		{
+			window.SetActive(false);
+		}
+		m_History.Clear();
+	}
+
+	void OnLevelWasLoaded(int level)
+	{
+		m_CurrentWindow = null; 
+		m_History.Clear ();
 	}
 }
