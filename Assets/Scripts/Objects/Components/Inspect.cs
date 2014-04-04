@@ -80,8 +80,6 @@ public class Inspect : ObjectComponent
 			float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
 			float m_moveY = Input.GetAxis("Mouse Y") * m_Sensitivity;
 
-			Debug.Log("Skall inspektera");
-
 			//state changed to inspecting or camera is locked
 
 			//rotates the object based on mouse input
@@ -94,6 +92,10 @@ public class Inspect : ObjectComponent
 		{
 			if(!GetIsActive())
 			{
+				if(m_CameraTransform==null)
+				{
+					m_CameraTransform  = Camera.main.transform;
+				}
 				m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 				m_OriginalPosition = transform.position;
 				m_OriginalRotation = transform.rotation;
