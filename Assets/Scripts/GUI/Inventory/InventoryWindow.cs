@@ -10,11 +10,12 @@ using System.Collections.Generic;
 
 public class InventoryWindow : MonoBehaviour 
 {
-	private Vector3 m_MousePosition; 
-	private float m_Speed = 5f;
-	private bool m_Pressed = false;
-
-	private Camera m_Camera;
+	#region PrivateMemberVariables
+	private Vector3 m_MousePosition = Vector3.zero; 
+	private float   m_Speed 		= 5f;
+	private bool    m_Pressed 		= false;
+	private Camera  m_Camera 		= null;
+	#endregion
 
 	void Start()
 	{
@@ -33,6 +34,7 @@ public class InventoryWindow : MonoBehaviour
 			//Moves the window towards the mouse position
 			m_MousePosition    = m_Camera.ScreenToWorldPoint(Input.mousePosition);
 			m_MousePosition.z  = 0f;
+
 			transform.position = Vector3.MoveTowards (transform.position, m_MousePosition, m_Speed * Time.deltaTime);
 		}
 	}

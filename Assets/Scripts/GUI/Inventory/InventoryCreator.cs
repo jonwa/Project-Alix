@@ -16,11 +16,11 @@ public class InventoryCreator : MonoBehaviour
 
 	public Camera 	m_Camera		  = null; 
 
-	public float 	m_WindowPositionX = -300; 
-	public float 	m_WindowPositionY = 500; 
+	public float 	m_WindowPositionX = 0; 
+	public float 	m_WindowPositionY = 0; 
 
-	public int 		m_NumberColumns	  = 5;
-	public int 		m_NumberRows	  = 1;
+	public int 		m_NumberColumns	  = 0;
+	public int 		m_NumberRows	  = 0;
 	public float    m_ButtonSpacing   = 0f;
 
 	public bool 	m_MouseInput	  = true; 
@@ -35,7 +35,7 @@ public class InventoryCreator : MonoBehaviour
 	private GameObject m_InventoryWindow = null;
 	private GameObject m_InventoryButton = null; 
 	#endregion
-	
+
 	void Start () 
 	{
 		InitializeHierarky();
