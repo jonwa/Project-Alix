@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/* Script for Raycasting from Camera to Objects
+ * 
+ * 
+ * Created By: Seabstian Olsson 2014-04-03
+ * Modified By:
+ */
+
 public class Raycasting : MonoBehaviour {
 
 	public float m_Distance = 10;
 
 	void Start () 
 	{
-		
 	}
 	
 	// Update is called once per frame

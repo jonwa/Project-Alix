@@ -14,7 +14,7 @@ public class Inspect : ObjectComponent
 
 	void Update()
 	{
-		Interact ();
+
 	}
 
 	public override void Interact ()
