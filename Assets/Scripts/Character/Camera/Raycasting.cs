@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 /* Casts a ray from the Objects position in the forward direction of the object
  * until it hits an object with ObjectComponent's then activates Interact on that object.
  * 
@@ -8,6 +9,7 @@ using System.Collections;
  * Modified by:
  * 
  */
+
 public class Raycasting : MonoBehaviour {
 
 	#region PublicMemberVariables
