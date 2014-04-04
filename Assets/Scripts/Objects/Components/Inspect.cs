@@ -20,7 +20,9 @@ public class Inspect : ObjectComponent
 	private Vector3 	m_OriginalPosition;
 	private Quaternion  m_OriginalRotation;
 	private Transform   m_CameraTransform;
-	private int			m_DeActivateCounter;
+	private int			m_DeActivateCounter  = 0;
+	private bool		m_IsOriginalPosition = true;
+	private bool		m_UnlockedCamera	 = true;
 	#endregion
 
 
@@ -36,7 +38,12 @@ public class Inspect : ObjectComponent
 		if(!GetIsActive())
 		{
 			MoveToInspectDistance(false);
-			m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			if(m_UnlockedCamera == false)
+			{
+				m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+				m_CameraTransform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
+				m_UnlockedCamera = true;
+			}
 		}
 		else
 		{
@@ -51,7 +58,7 @@ public class Inspect : ObjectComponent
 	{
 		Vector3 cameraPosition 		 = m_CameraTransform.position;
 		float   cameraObjectDistance = Vector3.Distance(cameraPosition, transform.position);
-
+		float	lerpSpeed			 = m_LerpSpeed;
 		if(cameraObjectDistance > m_InspectionViewDistance)
 		{ 
 			Vector3 targetPosition;
@@ -66,6 +73,14 @@ public class Inspect : ObjectComponent
 			{
 				targetPosition = m_OriginalPosition;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, m_LerpSpeed/10.0f);
+				if(Vector3.Distance(transform.position, targetPosition) > 0.1)
+				{
+					m_IsOriginalPosition = false;
+				}
+				else
+				{
+					m_IsOriginalPosition = true;
+				}
 			}
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
 		}
@@ -80,21 +95,25 @@ public class Inspect : ObjectComponent
 			float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
 			float m_moveY = Input.GetAxis("Mouse Y") * m_Sensitivity;
 
-			//state changed to inspecting or camera is locked
-
 			//rotates the object based on mouse input
 			transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 			transform.RotateAround(collider.bounds.center,Vector3.up, m_moveX);
 		}
 
 		//Check if we should inspect the object or not.
-		if(Input.GetButton("Fire2"))
+		if(Input.GetButton("Fire2") && m_IsOriginalPosition)
 		{
 			if(!GetIsActive())
 			{
+				if(m_CameraTransform==null)
+				{
+					m_CameraTransform  = Camera.main.transform;
+				}
 				m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+				m_CameraTransform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
 				m_OriginalPosition = transform.position;
 				m_OriginalRotation = transform.rotation;
+				m_UnlockedCamera = false;
 			}
 			Activate();
 			m_DeActivateCounter = 0;

@@ -22,6 +22,7 @@ public class FirstPersonController : MonoBehaviour
 
 	#region PrivateMemberVariables
 	private bool m_Grounded		 = false;
+	private bool m_Locked		 = false;
 	#endregion
 
 	void Awake()
@@ -33,7 +34,7 @@ public class FirstPersonController : MonoBehaviour
 	// The function that handles all movement 
 	void Move(float deltaTime)
 	{
-		if(m_Grounded)
+		if(m_Grounded && !m_Locked)
 		{
 			Vector3 forward			= transform.forward.normalized*Input.GetAxis("Vertical");
 			Vector3 right			= -transform.right.normalized*Input.GetAxis("Horizontal");
@@ -94,6 +95,18 @@ public class FirstPersonController : MonoBehaviour
 			m_Grounded = true;
 		}
 
+	}
+
+	//Locks player movement WASD
+	public void LockPlayerMovement()
+	{
+		m_Locked = true;
+	}
+
+	//Unlocks player movement WASD
+	public void UnLockPlayerMovement()
+	{
+		m_Locked = false;
 	}
 
 	void FixedUpdate()
