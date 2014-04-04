@@ -12,6 +12,6 @@ public class InventoryButton : MonoBehaviour
 	//Called when a button is clicked
 	void OnClick()
 	{
-
+		Debug.Log ("Inventory button was pressed");
 	}
 }

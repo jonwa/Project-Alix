@@ -10,24 +10,30 @@ using System.Collections.Generic;
 
 public class InventoryWindow : MonoBehaviour 
 {
-	public bool m_Edit = true; 
+	private Vector3 m_MousePosition; 
+	private float m_Speed = 5f;
+	private bool m_Pressed = false;
 
-	void OnClick()
+	private Camera m_Camera;
+
+	void Start()
 	{
+		m_Camera = GameObject.Find("Camera").camera;
+	}
 
-
-
+	void OnPress(bool pressed)
+	{
+		m_Pressed = pressed;
 	}
 
 	void Update()
 	{
-		if(!m_Edit)
+		if(m_Pressed)
 		{
-			gameObject.GetComponent<BoxCollider>().enabled = false; 
-		}
-		else
-		{
-			gameObject.GetComponent<BoxCollider>().enabled = true; 
+			//Moves the window towards the mouse position
+			m_MousePosition    = m_Camera.ScreenToWorldPoint(Input.mousePosition);
+			m_MousePosition.z  = 0f;
+			transform.position = Vector3.MoveTowards (transform.position, m_MousePosition, m_Speed * Time.deltaTime);
 		}
 	}
 }
