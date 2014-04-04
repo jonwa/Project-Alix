@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InventoryButtons : MonoBehaviour {
+/* Interface for the inventory buttons
+ * 
+ * Created By: Jon Wahlström 2014-04-02
+ * Modified By: 
+ */
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class InventoryButtons : MonoBehaviour 
+{
+	#region publicMemberVariables
+
+	#endregion
 }

@@ -9,7 +9,7 @@ using System.Collections;
  */
 
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterCotroller : MonoBehaviour 
+public class FirstPersonController : MonoBehaviour 
 {
 	#region PublicMemberVariables
 	public float m_MovementSpeed = 10.0f;

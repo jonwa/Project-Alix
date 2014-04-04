@@ -17,7 +17,8 @@ public class ObjectComponent :  MonoBehaviour
     void Start()
     {
 
-    }
+	}
+
 
     // Update is called once per frame
     void Update()
@@ -25,10 +26,11 @@ public class ObjectComponent :  MonoBehaviour
 
     }
 
-    public virtual void Init()
+	public virtual void Init()
     {
 
     }
+
 
     public virtual void Should()
     {

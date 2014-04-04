@@ -14,9 +14,9 @@ public class WindowHandler : MonoBehaviour
 	#region privatMemberVariables
 	private static WindowHandler m_Instance = null;
 
-	private Stack<UIPanel> m_History = new Stack<UIPanel>(); 
-	private UIPanel m_CurrentWindow;
-	private UIPanel m_InitialWindow;
+	private Stack<UIPanel> m_History 		= new Stack<UIPanel>(); 
+	private UIPanel 	   m_CurrentWindow 	= null;
+	private UIPanel        m_InitialWindow 	= null;
 	#endregion
 
 	public static WindowHandler Instance
@@ -26,7 +26,8 @@ public class WindowHandler : MonoBehaviour
 			if(m_Instance == null)
 			{
 				GameObject go = new GameObject("_UIWindow");
-				m_Instance = go.AddComponent<WindowHandler>();
+				m_Instance 	  = go.AddComponent<WindowHandler>();
+
 				DontDestroyOnLoad(go);
 			}
 			return m_Instance;
@@ -35,9 +36,12 @@ public class WindowHandler : MonoBehaviour
 
 	void Start()
 	{
-		m_InitialWindow = GameObject.Find("Main").GetComponent<UIPanel>();
+		GameObject go   = GameObject.Find ("Main");
+		m_InitialWindow = go.GetComponent<UIPanel>();
 		m_InitialWindow.gameObject.SetActive(true);
+
 		m_CurrentWindow = m_InitialWindow;
+
 		m_History.Push(m_CurrentWindow);
 	}
 	
@@ -47,6 +51,7 @@ public class WindowHandler : MonoBehaviour
 	
 		m_CurrentWindow = window; 
 		m_CurrentWindow.gameObject.SetActive(true);
+
 		m_History.Push(m_CurrentWindow);
 	}
 
@@ -55,6 +60,7 @@ public class WindowHandler : MonoBehaviour
 		if (m_History.Count > 1) 
 		{
 			m_History.Pop().gameObject.SetActive(false);
+
 			m_CurrentWindow = m_History.Peek();
 			m_CurrentWindow.gameObject.SetActive(true);
 		}
