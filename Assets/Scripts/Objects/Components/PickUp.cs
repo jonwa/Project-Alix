@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class Grab : ObjectComponent {
+public class PickUp : ObjectComponent
+{
 
 	private Raycasting m_raycast;
 

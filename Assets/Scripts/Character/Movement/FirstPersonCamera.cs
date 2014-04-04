@@ -67,6 +67,9 @@ public class FirstPersonCamera : MonoBehaviour
 			m_rotationY = Mathf.Clamp (m_rotationY, m_minimumY, m_maximumY);
 			
 			transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
+
+			//this.SendMessageUpwards("RotateCharacter", m_sensitivity);
+			//this.SendMessageUpwards("RotateCharacterJoystick", m_sensitivity);
 		}
 	}
 

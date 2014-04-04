@@ -23,6 +23,8 @@ public class Inspect : ObjectComponent
 			float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
 			float m_moveY = Input.GetAxis("Mouse Y") * m_Sensitivity;
 
+			Debug.Log("Skall inspektera");
+
 			//state changed to inspecting or camera is locked
 
 			//rotates the object based on mouse input
