@@ -10,7 +10,8 @@ using System.Collections;
  * 
  */
 
-public class Raycasting : MonoBehaviour {
+public class Raycasting : MonoBehaviour 
+{
 
 	#region PublicMemberVariables
 	public float  		m_Distance  	 = 10;
@@ -100,5 +101,11 @@ public class Raycasting : MonoBehaviour {
 			}
 		}
 
+	}
+
+	//Releases the grip of the object we are interacting with right now.
+	public void Release()
+	{
+		m_InteractingWith = null;
 	}
 }
