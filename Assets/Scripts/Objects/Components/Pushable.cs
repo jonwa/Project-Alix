@@ -11,22 +11,24 @@ using System.Collections;
 public class Pushable : ObjectComponent 
 {
 	#region PrivateMemberVariables
-	private Vector3 m_OriginalMousePosition;
-	private Vector3 m_CurrentMousePosition;
-	private Vector3 m_Offset;
+	private float m_MouseXPosition;
+	private float m_MouseYPosition;
+	private Vector3 m_Delta						= Vector3.zero;
 	private float m_DeActivateCounter			= 5;
-	private Vector3 m_Change;
+	private GameObject m_Player;
 	#endregion
 	
 	#region PublicMemberVariables
+	public string m_HorizontalInput;
+	public string m_VerticalInput;
 	public string m_Input;
-	public float m_Sensitivity					= 2;
+	public string m_PlayerName					= "Player Controller Example";
 	#endregion
 
 
 	void Start () 
 	{
-		m_OriginalMousePosition = Input.mousePosition;
+		m_Player = GameObject.Find (m_PlayerName); 
 	}
 
 	void Update () 
@@ -38,16 +40,17 @@ public class Pushable : ObjectComponent
 	{
 		if (GetIsActive()) 
 		{
+			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
+			m_MouseYPosition = Input.GetAxis(m_VerticalInput);
 
-			m_Change = new Vector3(0, 0, Input.GetAxis("Mouse Y"));
-			transform.position += m_Change;
+			rigidbody.AddForce(1,2,3);
+
+			m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition);
+			Debug.Log ("Forward 4= " + m_Player.transform.forward);
+			transform.position += m_Delta;
 		}
 		if(Input.GetButton(m_Input))
 		{
-			if(!GetIsActive())
-			{
-				m_OriginalMousePosition = Input.mousePosition;
-			}
 			Activate();
 			m_DeActivateCounter = 0;
 		}
@@ -55,11 +58,5 @@ public class Pushable : ObjectComponent
 		{
 			DeActivate();
 		}
-	}
-
-	public void FacingDirection()
-	{
-		//TODO Write function that knows what direction player is facing for m_Change
-
 	}
 }

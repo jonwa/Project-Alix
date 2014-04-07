@@ -19,8 +19,8 @@ public class Move : ObjectComponent
 	#endregion
 
 	#region PublicMemberVariables
-	public string m_PlayerName					= "Player Controller Example";
 	public string m_Input;
+	public string m_PlayerName					= "Player Controller Example";
 	#endregion
 
 	void Start()
@@ -46,6 +46,7 @@ public class Move : ObjectComponent
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
+			Debug.Log("Offset = " + m_Offset.x);
 			transform.position += m_Offset;
 			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
 		}
