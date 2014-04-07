@@ -9,6 +9,10 @@ using System.Collections;
 
 public class InventoryButton : MonoBehaviour 
 {
+	#region PrivateMemberVariables
+	private bool m_Occupied = false; 
+	#endregion
+
 	//Called when a button is clicked
 	void OnClick()
 	{

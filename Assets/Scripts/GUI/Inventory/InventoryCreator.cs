@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* 
+/* Initiates the inventory. 
+ * 
  * 
  * Created By: Jon Wahlström 2014-04-04
  * Modified By: 
@@ -14,16 +15,12 @@ public class InventoryCreator : MonoBehaviour
 	public UIButton m_Window		  = null; 
 	public UIButton m_Button		  = null;
 
-	public Camera 	m_Camera		  = null; 
-
 	public float 	m_WindowPositionX = 0; 
 	public float 	m_WindowPositionY = 0; 
 
 	public int 		m_NumberColumns	  = 0;
 	public int 		m_NumberRows	  = 0;
 	public float    m_ButtonSpacing   = 0f;
-
-	public bool 	m_MouseInput	  = true; 
 	#endregion
 
 	#region PrivateMemberVariables
@@ -32,10 +29,11 @@ public class InventoryCreator : MonoBehaviour
 	private int        m_WindowWidth     = 0; 
 	private int 	   m_WindowHeight    = 0;
 	private float	   m_WindowOutline   = 10f;
-	private GameObject m_InventoryWindow = null;
-	private GameObject m_InventoryButton = null; 
-	#endregion
 
+	private GameObject m_InventoryWindow = null;
+	private GameObject m_InventoryButton = null;
+	#endregion
+	
 	void Start () 
 	{
 		InitializeHierarky();
@@ -48,10 +46,10 @@ public class InventoryCreator : MonoBehaviour
 	{
 		m_InventoryWindow 				          = Instantiate(m_Window.gameObject) as GameObject;
 		m_InventoryWindow.transform.parent 		  = m_Parent.transform;
+		m_InventoryWindow.transform.localScale 	  = new Vector3(1f, 1f, 1f);
 		m_InventoryWindow.transform.localPosition = new Vector3 (m_WindowPositionX, 
 		                                                         m_WindowPositionY, 
 		                                                         0f);
-		m_InventoryWindow.transform.localScale 	  = new Vector3(1f, 1f, 1f);	 
 	}
 
 	//Initialization for the inventory window
@@ -83,32 +81,20 @@ public class InventoryCreator : MonoBehaviour
 
 				//this is retarded, but it works.
 				//positioning for each button according to 
-				//its parent (that is the m_InventoryWindow).
+				//its parent (that is the m_InventoryWindow)
+				button.transform.localScale	   = new Vector3(1f, 1f, 1f);
 				button.transform.localPosition = 
 					new Vector3((xMult * m_ButtonSpacing) - (m_WindowWidth/2) + (button.GetComponent<UISprite>().width/2) + (m_WindowOutline/2), 						
 					            (((yMult * m_ButtonSpacing))-(j * m_ButtonSpacing)) + (m_WindowHeight/2) - (button.GetComponent<UISprite>().height/2) - (m_WindowOutline/2),
 					            0f);
 
-				button.transform.localScale	   = new Vector3(1f, 1f, 1f);
-
 				m_Buttons.Add(button);
 			}
+
 			if((int)Mathf.Floor(x / m_NumberColumns) < 1)
 				j += 1;
 			else
 				j += (int)Mathf.Floor(x / m_NumberColumns) + 1;
-		}
-	}
-
-	void Update()
-	{
-		if(!m_MouseInput)
-		{
-			m_InventoryWindow.GetComponent<BoxCollider>().enabled = false; 
-		}
-		else
-		{
-			m_InventoryWindow.GetComponent<BoxCollider>().enabled = true; 
 		}
 	}
 }
