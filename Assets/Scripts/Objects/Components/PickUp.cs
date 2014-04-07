@@ -22,7 +22,7 @@ public class PickUp : ObjectComponent
 	#region PrivateMemberVariables
 	private Transform   m_CameraTransform;
 	private int			m_DeActivateCounter;
-	private int			m_Collided=0;
+	private int			m_CollidedWall=0;
 	private bool 		m_HoldingObject=false;
 	private bool 		m_Move=true;
 	#endregion
@@ -40,10 +40,11 @@ public class PickUp : ObjectComponent
 		{
 			rigidbody.useGravity=true;
 			m_HoldingObject=false;
+			collider.enabled=true;
 		}
-		if(m_Collided>0)
+		if(m_CollidedWall>0)
 		{
-			m_Collided--;
+			m_CollidedWall--;
 		}
 		//Interact();
 		/*if(!GetIsActive())
@@ -61,15 +62,19 @@ public class PickUp : ObjectComponent
 				DeActivate();
 		}*/
 	}
-	
-	//Lerps position and rotation of the object to the inspection Mode distance and back to original position/rotation
+
+	//Moves the object towards the camera
 	void MoveToInspectDistance(bool shouldInspect)
 	{
+		if(m_CameraTransform==null)
+		{
+			m_CameraTransform = Camera.main.transform;
+		}
 		Vector3 cameraPosition 		 = m_CameraTransform.position;
 		float   cameraObjectDistance = Vector3.Distance(cameraPosition, transform.position);
 		
-		if(cameraObjectDistance-0.2 >= m_InspectionViewDistance)
-		{ 
+		if(cameraObjectDistance-0.3 >= m_InspectionViewDistance)
+		{ //Move object closer to camera
 			Vector3 targetPosition;
 			Vector3 cameraForward  = m_CameraTransform.forward.normalized;
 			
@@ -78,17 +83,19 @@ public class PickUp : ObjectComponent
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
 		}
 		else
-		{
+		{//When the object is close to the camera
 			m_HoldingObject=true;
 		}
 	}
-	
+
 	public override void Interact ()
 	{
-		if(m_Collided==0){
-			rigidbody.useGravity=false;
+		Debug.Log(m_CameraTransform.forward.x);
+		if(m_CollidedWall==0)
+		{
 			m_DeActivateCounter=0;
 
+			//Object is close enough and allowed to move
 			if(m_HoldingObject == true && m_Move == true){
 				Vector3 cameraPosition = m_CameraTransform.position;
 
@@ -99,28 +106,37 @@ public class PickUp : ObjectComponent
 				cameraForward *= m_InspectionViewDistance;
 				targetPosition = cameraPosition+cameraForward;
 
-				transform.position = targetPosition;
+				//transform.position = targetPosition;
+				transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
+				//transform.rotation = m_CameraTransform.rotation;
 			}
-			
-			//Check if we should inspect the object or not.
-			if(Input.GetButton(m_Input))
+			rigidbody.useGravity=false;
+			MoveToInspectDistance(true);
+		}
+	}
+
+	//Check collison
+	public void OnCollisionEnter(Collision col)
+	{
+		//With wall, release the object
+		if(m_HoldingObject == true){
+			if(col.collider.CompareTag("Wall"))
 			{
-				MoveToInspectDistance(true);
+				m_Move=false;
+				m_CollidedWall=40;
+				Debug.Log("Krockat med vägg");
+				//Camera.main.SendMessage("ReleaseObject");
+			}
+			else//Collision with other object, don't collide
+			{
+				Debug.Log("Krockat med ngt annat");
+				collider.enabled=false;
 			}
 		}
 	}
 
-	public void OnCollisionEnter()
-	{
-		Debug.Log("Krock");
-		m_Move=false;
-		m_Collided=30;
-	}
-
 	public void OnCollisionExit()
 	{
-		Debug.Log("Slut Krock");
 		m_Move=true;
 	}
-
 }
