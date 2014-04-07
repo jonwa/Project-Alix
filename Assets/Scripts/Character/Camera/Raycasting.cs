@@ -13,9 +13,10 @@ using System.Collections;
 public class Raycasting : MonoBehaviour {
 
 	#region PublicMemberVariables
-	public float  		m_Distance  = 10;
-	public string 		m_Input	 	= "Fire1";
-	public LayerMask	m_LayerMask = (1<<9);
+	public float  		m_Distance  	 = 10;
+	public string 		m_Input	 		 = "Fire1";
+	public LayerMask	m_LayerMask 	 = (1<<9);
+	public bool			m_HoldToInteract = false;
 	#endregion
 	#region PrivateMemberVariables
 	private GameObject m_InteractingWith;
@@ -24,6 +25,7 @@ public class Raycasting : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+
 		if(Input.GetButton(m_Input) && m_InteractingWith == null)
 		{
 			Cast ();
