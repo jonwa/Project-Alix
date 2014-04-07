@@ -56,7 +56,7 @@ public class PortableObject : ObjectComponent
 	{
 		m_Duplicate = Instantiate(transform, transform.position, transform.rotation) as Transform;
 		Destroy(m_Duplicate.GetComponent<PortableObject>());
-		Destroy(m_Duplicate.collider);
+		//Destroy(m_Duplicate.collider);
 		StartCoroutine(UpdateDuplicate());
 	}
 
@@ -100,7 +100,7 @@ public class PortableObject : ObjectComponent
 		{
 			m_ShouldUpdate = false;
 
-			if((m_CurrentPortal.position - transform.position).magnitude < (m_InitialPosition- transform.position).magnitude )
+			if((m_CurrentPortal.position - transform.position).magnitude < (m_InitialPosition - transform.position).magnitude )
 			{
 				ForceUpdateDuplicate();
 				transform.position = m_Duplicate.position;
