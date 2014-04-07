@@ -7,7 +7,7 @@ using System.Collections;
  * 
  */
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class PickUp : ObjectComponent
 {
 	#region PublicMemberVariables
@@ -22,8 +22,9 @@ public class PickUp : ObjectComponent
 	#region PrivateMemberVariables
 	private Transform   m_CameraTransform;
 	private int			m_DeActivateCounter;
+	private int			m_CollidedWall=0;
 	private bool 		m_HoldingObject=false;
-	private bool 		m_move=true;
+	private bool 		m_Move=true;
 	#endregion
 	
 	
@@ -34,89 +35,108 @@ public class PickUp : ObjectComponent
 	
 	void Update()
 	{
-		if(!GetIsActive())
+		m_DeActivateCounter++;
+		if(m_DeActivateCounter > 10)
+		{
+			rigidbody.useGravity=true;
+			m_HoldingObject=false;
+			collider.enabled=true;
+		}
+		if(m_CollidedWall>0)
+		{
+			m_CollidedWall--;
+		}
+		//Interact();
+		/*if(!GetIsActive())
 		{
 			MoveToInspectDistance(false);
+			rigidbody.useGravity=true;
 			m_HoldingObject=false;
 			//m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 		}
 		else
 		{
+			rigidbody.useGravity=false;
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 10)
 				DeActivate();
-		}
+		}*/
 	}
-	
-	//Lerps position and rotation of the object to the inspection Mode distance and back to original position/rotation
+
+	//Moves the object towards the camera
 	void MoveToInspectDistance(bool shouldInspect)
 	{
+		if(m_CameraTransform==null)
+		{
+			m_CameraTransform = Camera.main.transform;
+		}
 		Vector3 cameraPosition 		 = m_CameraTransform.position;
 		float   cameraObjectDistance = Vector3.Distance(cameraPosition, transform.position);
 		
-		if(cameraObjectDistance > m_InspectionViewDistance)
-		{ 
+		if(cameraObjectDistance-0.3 >= m_InspectionViewDistance)
+		{ //Move object closer to camera
 			Vector3 targetPosition;
-			if(shouldInspect)
-			{
-				Vector3 cameraForward  = m_CameraTransform.forward.normalized;
-				
-				cameraForward *= m_InspectionViewDistance;
-				targetPosition = cameraPosition+cameraForward;
-				transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
-			}
+			Vector3 cameraForward  = m_CameraTransform.forward.normalized;
+			
+			cameraForward *= m_InspectionViewDistance;
+			targetPosition = cameraPosition+cameraForward;
+			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
 		}
 		else
-		{
+		{//When the object is close to the camera
 			m_HoldingObject=true;
 		}
 	}
-	
+
 	public override void Interact ()
 	{
-		if(GetIsActive())
+		Debug.Log(m_CameraTransform.forward.x);
+		if(m_CollidedWall==0)
 		{
-			MoveToInspectDistance(true);
+			m_DeActivateCounter=0;
 
-			if(m_HoldingObject == true && m_move == true){
+			//Object is close enough and allowed to move
+			if(m_HoldingObject == true && m_Move == true){
 				Vector3 cameraPosition = m_CameraTransform.position;
 
 				Vector3 targetPosition;
 
 				Vector3 cameraForward  = m_CameraTransform.forward.normalized;
-				
+					
 				cameraForward *= m_InspectionViewDistance;
 				targetPosition = cameraPosition+cameraForward;
 
-				transform.position = targetPosition;
+				//transform.position = targetPosition;
+				transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
+				//transform.rotation = m_CameraTransform.rotation;
 			}
-			//Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
-		}
-		
-		//Check if we should inspect the object or not.
-		if(Input.GetButton(m_Input))
-		{
-			Activate();
-			m_DeActivateCounter = 0;
-		}
-		else
-		{
-			DeActivate();
+			rigidbody.useGravity=false;
+			MoveToInspectDistance(true);
 		}
 	}
 
-	public void OnCollisionEnter()
+	//Check collison
+	public void OnCollisionEnter(Collision col)
 	{
-		Debug.Log("Krock");
-		//collider.transform.localScale.Set(1.5f, 1.5f, 1.5f);
-		//m_move=false;
+		//With wall, release the object
+		if(m_HoldingObject == true){
+			if(col.collider.CompareTag("Wall"))
+			{
+				m_Move=false;
+				m_CollidedWall=40;
+				Debug.Log("Krockat med vägg");
+				//Camera.main.SendMessage("ReleaseObject");
+			}
+			else//Collision with other object, don't collide
+			{
+				Debug.Log("Krockat med ngt annat");
+				collider.enabled=false;
+			}
+		}
 	}
 
 	public void OnCollisionExit()
 	{
-		Debug.Log("Slut Krock");
-		//collider.transform.localScale.Set(1.0f, 1.0f, 1.0f);
-		m_move=true;
+		m_Move=true;
 	}
-
 }
