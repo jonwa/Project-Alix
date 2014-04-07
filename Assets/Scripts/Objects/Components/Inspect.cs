@@ -102,11 +102,8 @@ public class Inspect : ObjectComponent
 		}
 
 		//Check if we should inspect the object or not.
-<<<<<<< HEAD
-		if(Input.GetButton(m_Input))
-=======
+
 		if(Input.GetButton("Fire2") && m_IsOriginalPosition)
->>>>>>> f8e429b2e4819dfccdd77f01a5dec825c9f5bc31
 		{
 			if(!GetIsActive())
 			{
