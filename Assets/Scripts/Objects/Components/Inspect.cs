@@ -14,7 +14,11 @@ public class Inspect : ObjectComponent
 	public float m_Sensitivity 			  = 20.0f;
 	public float m_InspectionViewDistance = 2.0f;
 	public float m_LerpSpeed			  = 1f;
+<<<<<<< HEAD
 	public string m_Input;
+=======
+	public string m_Input				  = "Fire2"; 
+>>>>>>> db3249b0e2a999ead2e8508cbd838cec764fb5aa
 	#endregion
 
 	#region PrivateMemberVariables
@@ -102,8 +106,12 @@ public class Inspect : ObjectComponent
 		}
 
 		//Check if we should inspect the object or not.
+<<<<<<< HEAD
 
 		if(Input.GetButton("Fire2") && m_IsOriginalPosition)
+=======
+		if(Input.GetButton(m_Input) && m_IsOriginalPosition)
+>>>>>>> db3249b0e2a999ead2e8508cbd838cec764fb5aa
 		{
 			if(!GetIsActive())
 			{
