@@ -18,6 +18,7 @@ public class InventoryInput : MonoBehaviour
 
 	public GameObject InventoryWindow
 	{
+		get { return m_Window;  }
 		set { m_Window = value; }
 	}
 
