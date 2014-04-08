@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* Discription: Objectcomponent class for putting the object you are locking at in the inventory
+/* Discription: Objectcomponent class for putting the object you are locking at/holding in the inventory
  * 
  * Created by: Robert Datum: 07/04-14
  * Modified by:
  * 
  */
-
+[RequireComponent(typeof(Id))]
 public class Pocket : ObjectComponent
 {
 	#region PublicMemberVariables
@@ -19,12 +19,14 @@ public class Pocket : ObjectComponent
 	private bool		m_InventoryIsFull;
 	private string		m_InventoryName		= "Inventory Example"; //Change to the real inventory name when finnished		
 	private GameObject 	m_Inventory;
+	private int			m_Id;
 	#endregion
 
 	void Start()
 	{
 		m_Inventory = GameObject.Find(m_InventoryName);
-		//m_InventoryIsFull = m_Inventory.gameObject.GetComponents<Inventory>().GetIsfull();
+		m_Id = GetComponent<Id>().GetId();
+		//m_InventoryIsFull = m_Inventory.gameObject.GetComponent<Inventory>().GetIsfull();
 	}
 	
 	void Update()
@@ -36,11 +38,11 @@ public class Pocket : ObjectComponent
 		}
 	}
 	
-	//Moves the item to the inventory
-	void MoveToInventory()
+	//Adds the item to the inventory
+	void AddIntoInventory()
 	{
 		/* Add to inventory/set ID */
-		//m_Inventory.gameObject.GetComponents<Inventory>().AddItem(getID);
+		//m_Inventory.gameObject.GetComponent<Inventory>().AddItem(m_Id);
 	}
 
 	//Calls for the move to inventory function and then deactivates this item.
@@ -48,7 +50,7 @@ public class Pocket : ObjectComponent
 	{
 		if(GetIsActive())
 		{
-			MoveToInventory();
+			AddIntoInventory();
 			gameObject.SetActive(false);
 			DeActivate();
 		}

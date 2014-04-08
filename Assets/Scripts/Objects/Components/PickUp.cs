@@ -14,7 +14,7 @@ public class PickUp : ObjectComponent
 	public float m_Sensitivity 			  = 20.0f;
 	public float m_InspectionViewDistance = 2.0f;
 	public float m_LerpSpeed			  = 1f;
-	public string m_Input				  = "Fire2";
+	public string m_Input				  = "Mouse1";
 	#endregion
 
 
@@ -118,5 +118,4 @@ public class PickUp : ObjectComponent
 		//collider.transform.localScale.Set(1.0f, 1.0f, 1.0f);
 		m_move=true;
 	}
-
 }
