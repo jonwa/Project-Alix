@@ -41,6 +41,9 @@ public class PickUp : ObjectComponent
 			Physics.IgnoreLayerCollision(9, 9, false);
 			rigidbody.useGravity=true;
 			m_HoldingObject=false;
+			//Color test=renderer.material.color;
+			//test.a=1.0f;
+			//renderer.material.color = test;
 		}
 		if(m_CollidedWall>0)
 		{
@@ -77,6 +80,11 @@ public class PickUp : ObjectComponent
 	{
 		if(m_CollidedWall==0)
 		{
+			//Color test=renderer.material.color;
+			//test.a=0.5f;
+			//renderer.material.color = test;
+			//float alpha=0.5f;
+			//renderer.material.color.a = alpha;
 			m_DeActivateCounter=0;
 
 			//Object is close enough and allowed to move

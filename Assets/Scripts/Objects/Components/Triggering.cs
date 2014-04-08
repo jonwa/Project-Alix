@@ -29,7 +29,7 @@ public class Triggering : ObjectComponent {
 			m_Locked= new bool[m_Triggers.Length];
 
 			tempArray=FindGameObjectsWithLayer(9);
-			Debug.Log("Size of gameObjects int layer 9: " + tempArray.Length);
+			//Debug.Log("Size of gameObjects int layer 9: " + tempArray.Length);
 			m_GameObjects=new GameObject[m_Triggers.Length];
 			MakeGameObjectList(tempArray);
 
