@@ -16,8 +16,9 @@ public class Triggering : ObjectComponent {
 	
 	#region PrivateMemberVariables
 	private int m_ArrayPosition 		=0;
-	private bool[] m_Locked				= new bool[m_Triggers.Length];
+	private bool[] m_Locked;//= new bool[m_Triggers.Length];
 	private GameObject[] m_GameObjects  = null;
+	GameObject[] tempArray				= null;
 	#endregion
 
 	// Use this for initialization
@@ -25,14 +26,16 @@ public class Triggering : ObjectComponent {
 	{
 		if(m_GameObjects==null)
 		{
-			GameObject[] tempArray=FindGameObjectsWithLayer(9);
+			m_Locked= new bool[m_Triggers.Length];
+
+			tempArray=FindGameObjectsWithLayer(9);
 			Debug.Log("Size of gameObjects int layer 9: " + tempArray.Length);
 			m_GameObjects=new GameObject[m_Triggers.Length];
 			MakeGameObjectList(tempArray);
 
 			for(int i=0; i<m_Triggers.Length; i++)
 			{
-				//m_Locked[i]=m_GameObjects[i].GetComponent<Locked>().GetLocked();
+				m_Locked[i]=m_GameObjects[i].GetComponent<Locked>().GetLocked();
 			}
 		}
 	}
@@ -57,7 +60,7 @@ public class Triggering : ObjectComponent {
 		//Gather new values in case of change
 		for(int i=0; i<m_Triggers.Length; i++)
 		{
-			//m_Locked[i]=m_GameObjects[i].GetComponent<Locked>().GetLocked();
+			m_Locked[i]=m_GameObjects[i].GetComponent<Locked>().GetLocked();
 		}
 
 		if(m_ActivateAll==true)
@@ -66,7 +69,7 @@ public class Triggering : ObjectComponent {
 			{
 				if(m_Locked[i] == false)
 				{
-					//m_GameObjects[i].SendMessage(ActivateTrigger);
+					m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTrigger();
 				}
 			}
 		}
@@ -74,7 +77,7 @@ public class Triggering : ObjectComponent {
 		{
 			if(m_Locked[m_ArrayPosition] == false)
 			{
-				//m_GameObjects[m_ArrayPosition].SendMessage(ActivateTrigger);
+				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTrigger();
 			}
 		}
 	}
@@ -104,14 +107,15 @@ public class Triggering : ObjectComponent {
 	private void MakeGameObjectList(GameObject[] tempArray)
 	{
 		int arrayInt=0;
-		for(int i=0; i < m_Triggers.Length; i++){
+		for(int i=0; i < m_Triggers.Length; i++)
+		{
 			for(int j=0; j<tempArray.Length; j++)
 			{
-				//if(m_Triggers[i] == tempArray[j].gameObject.GetComponent<Inspect>().GetId)
-				//{
-				//	m_GameObjects[arrayInt]=tempArray[j];
-				//	arrayInt++;
-				//}
+				if(m_Triggers[i] == tempArray[j].gameObject.GetComponent<Id>().GetId())
+				{
+					m_GameObjects[arrayInt]=tempArray[j];
+					arrayInt++;
+				}
 			}
 		}
 	}
