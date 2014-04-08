@@ -125,5 +125,4 @@ public class Inspect : ObjectComponent
 			DeActivate();
 		}
 	}
-
 }
