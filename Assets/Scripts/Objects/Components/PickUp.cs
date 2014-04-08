@@ -25,6 +25,7 @@ public class PickUp : ObjectComponent
 	private int			m_CollidedWall=0;
 	private bool 		m_HoldingObject=false;
 	private bool 		m_Move=true;
+	//private bool 		m_Colliding=false;
 	#endregion
 	
 	
@@ -35,9 +36,11 @@ public class PickUp : ObjectComponent
 	
 	void Update()
 	{
+		//Turn on everything again if objects stops being pickup
 		m_DeActivateCounter++;
 		if(m_DeActivateCounter > 10)
 		{
+			Physics.IgnoreLayerCollision(9, 9, false);
 			rigidbody.useGravity=true;
 			m_HoldingObject=false;
 			collider.enabled=true;
@@ -46,21 +49,6 @@ public class PickUp : ObjectComponent
 		{
 			m_CollidedWall--;
 		}
-		//Interact();
-		/*if(!GetIsActive())
-		{
-			MoveToInspectDistance(false);
-			rigidbody.useGravity=true;
-			m_HoldingObject=false;
-			//m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
-		}
-		else
-		{
-			rigidbody.useGravity=false;
-			m_DeActivateCounter++;
-			if(m_DeActivateCounter > 10)
-				DeActivate();
-		}*/
 	}
 
 	//Moves the object towards the camera
@@ -90,13 +78,13 @@ public class PickUp : ObjectComponent
 
 	public override void Interact ()
 	{
-		Debug.Log(m_CameraTransform.forward.x);
 		if(m_CollidedWall==0)
 		{
 			m_DeActivateCounter=0;
 
 			//Object is close enough and allowed to move
-			if(m_HoldingObject == true && m_Move == true){
+			if(m_HoldingObject == true && m_Move == true)
+			{
 				Vector3 cameraPosition = m_CameraTransform.position;
 
 				Vector3 targetPosition;
@@ -112,6 +100,7 @@ public class PickUp : ObjectComponent
 			}
 			rigidbody.useGravity=false;
 			MoveToInspectDistance(true);
+			Physics.IgnoreLayerCollision(9, 9, true);
 		}
 	}
 
@@ -119,24 +108,34 @@ public class PickUp : ObjectComponent
 	public void OnCollisionEnter(Collision col)
 	{
 		//With wall, release the object
-		if(m_HoldingObject == true){
+		if(m_HoldingObject == true)
+		{
 			if(col.collider.CompareTag("Wall"))
 			{
 				m_Move=false;
 				m_CollidedWall=40;
-				Debug.Log("Krockat med vägg");
-				//Camera.main.SendMessage("ReleaseObject");
+				//Debug.Log("Krockat med vägg");
+				Camera.main.SendMessage("Release");
 			}
 			else//Collision with other object, don't collide
 			{
-				Debug.Log("Krockat med ngt annat");
-				collider.enabled=false;
+				//Won't collide thanks to :"Physics.IgnoreLayerCollision(9, 9, true);"
+				//Debug.Log("Krockat med ngt annat");
+				//collider.enabled=false;
 			}
 		}
+		//m_Colliding=true;
 	}
 
 	public void OnCollisionExit()
 	{
+		//m_Colliding=false;
+		collider.enabled=true;
 		m_Move=true;
 	}
+
+	//public bool IsColliding()
+	//{
+	//	return m_Colliding;
+	//}
 }
