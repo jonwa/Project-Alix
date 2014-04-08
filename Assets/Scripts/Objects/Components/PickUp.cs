@@ -17,8 +17,6 @@ public class PickUp : ObjectComponent
 	public string m_Input				  = "Fire2";
 	#endregion
 
-
-
 	#region PrivateMemberVariables
 	private Transform   m_CameraTransform;
 	private int			m_DeActivateCounter;
@@ -43,7 +41,6 @@ public class PickUp : ObjectComponent
 			Physics.IgnoreLayerCollision(9, 9, false);
 			rigidbody.useGravity=true;
 			m_HoldingObject=false;
-			collider.enabled=true;
 		}
 		if(m_CollidedWall>0)
 		{
@@ -94,12 +91,18 @@ public class PickUp : ObjectComponent
 				cameraForward *= m_InspectionViewDistance;
 				targetPosition = cameraPosition+cameraForward;
 
+
+
 				//transform.position = targetPosition;
 				transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
 				//transform.rotation = m_CameraTransform.rotation;
 			}
+			//Used to stop the object rotating/fallen while holding
 			rigidbody.useGravity=false;
 			MoveToInspectDistance(true);
+			rigidbody.velocity = Vector3.zero;
+			rigidbody.angularVelocity = Vector3.zero;
+			//Ignore collision with some object, determent by layer
 			Physics.IgnoreLayerCollision(9, 9, true);
 		}
 	}
