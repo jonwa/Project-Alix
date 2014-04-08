@@ -46,12 +46,12 @@ public class Rotation : ObjectComponent
 	
 	public override void Interact ()
 	{
-		int MaxX = m_OriginalX + m_PositiveX;
-		int MinX = m_OriginalX - m_NegativeX;
-		int MaxY = m_OriginalY + m_PositiveY;
-		int MinY = m_OriginalY - m_NegativeY;
-		int MaxZ = m_OriginalZ + m_PositiveZ;
-		int MinZ = m_OriginalY - m_NegativeY;
+		float MaxX = m_OriginalX + m_PositiveX;
+		float MinX = m_OriginalX - m_NegativeX;
+		float MaxY = m_OriginalY + m_PositiveY;
+		float MinY = m_OriginalY - m_NegativeY;
+		float MaxZ = m_OriginalZ + m_PositiveZ;
+		float MinZ = m_OriginalY - m_NegativeY;
 
 		if(m_CurrentX > MaxX){
 			transform.Rotate(MaxX - m_CurrentX,0,0,Space.Self);

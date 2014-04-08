@@ -46,30 +46,30 @@ public class MovementLimit : ObjectComponent
 
 	public override void Interact ()
 	{
-		int MaxX = m_OriginalX + m_PositiveX;
-		int MinX = m_OriginalX - m_NegativeX;
-		int MaxY = m_OriginalY + m_PositiveY;
-		int MinY = m_OriginalY - m_NegativeY;
-		int MaxZ = m_OriginalZ + m_PositiveZ;
-		int MinZ = m_OriginalY - m_NegativeY;
+		float MaxX = m_OriginalX + m_PositiveX;
+		float MinX = m_OriginalX - m_NegativeX;
+		float MaxY = m_OriginalY + m_PositiveY;
+		float MinY = m_OriginalY - m_NegativeY;
+		float MaxZ = m_OriginalZ + m_PositiveZ;
+		float MinZ = m_OriginalY - m_NegativeY;
 
 		if(m_CurrentX > MaxX){
-			transform.position.x = MaxX;
+			transform.position = Vector3(MaxX,m_CurrentY,m_CurrentZ);
 		}
 		else if (m_CurrentX < MinX) {
-			transform.position.x = MinX;
+			transform.position = Vector3(MinX,m_CurrentY,m_CurrentZ);
 		}
 		if(m_CurrentY > MaxY){
-			transform.position.y = MaxY;
+			transform.position = Vector3(m_CurrentX,MaxY,m_CurrentZ);
 		}
 		else if (m_CurrentY < MinY) {
-			transform.position.y = MinY;
+			transform.position = Vector3(m_CurrentX,MinY,m_CurrentZ);		
 		}
 		if(m_CurrentZ > MaxZ){
-			transform.position.z = MaxZ;
+			transform.position = Vector3(m_CurrentX,m_CurrentY,MaxZ);			
 		}
 		else if (m_CurrentZ < MinZ) {
-			transform.position.z = MinZ;
+			transform.position = Vector3(m_CurrentX,m_CurrentY,MinZ);			
 		}
 	}
 }
