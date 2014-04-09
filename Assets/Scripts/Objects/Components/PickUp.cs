@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* Discription: ObjectComponent class for rotating items in fixed position in inspect mode
+/* Discription: Class for picking up an object and holding in front of you
  * 
- * 
- * 
+ * Made by: Rasmus 04/04
  */
 
 [RequireComponent(typeof(Rigidbody))]

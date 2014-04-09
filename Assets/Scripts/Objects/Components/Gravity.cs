@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/* Discription: Class for setting gravity on/off for an object
+ * 
+ * Made by: Rasmus 09/04
+ */
+
 [RequireComponent(typeof(Rigidbody))]
 public class Gravity : ObjectComponent 
 {

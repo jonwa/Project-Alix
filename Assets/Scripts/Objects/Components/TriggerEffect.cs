@@ -59,7 +59,7 @@ public class TriggerEffect : ObjectComponent
 		}
 		else
 		{
-			BroadcastMessage(m_Message);
+			SendMessage(m_Message);
 		}
 	}
 }
