@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 /* Description: Makes the object able to pass through portals
  * 
  * Created by: Jimmy  Date: 2014-04-07
@@ -44,38 +44,27 @@ public class Portal : ObjectComponent
 				GetTargetPortal(); 
 			}
 
-			Quaternion q1 = Quaternion.FromToRotation(transform.up, m_TargetPortal.up);
-			Quaternion q2 = Quaternion.FromToRotation(-transform.up, m_TargetPortal.up);
-			
-			Vector3 newPos = m_TargetPortal.position + q2 * (collider.transform.position - transform.position);// + OtherEnd.transform.up * 2;;
-			
+			float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
+			collider.gameObject.transform.Rotate(0, 180+angle, 0);
+
+			Quaternion q1 = Quaternion.FromToRotation(transform.up, m_TargetPortal.up);					
+			Vector3 newPos = m_TargetPortal.position + q1 * (collider.transform.position - transform.position);
+	
 			if (collider.rigidbody != null) 
 			{
-				GameObject o = (GameObject) GameObject.Instantiate(collider.gameObject, newPos, collider.transform.localRotation);
-				o.rigidbody.velocity = q2 * collider.rigidbody.velocity;
-				o.rigidbody.angularVelocity = collider.rigidbody.angularVelocity;
+				GameObject o = (GameObject) GameObject.Instantiate(collider.gameObject, newPos, collider.gameObject.transform.rotation);
+				o.rigidbody.velocity = ((q1 * collider.rigidbody.velocity))*(-1);
+				o.rigidbody.velocity = Quaternion.AngleAxis(angle, Vector3.up)*o.rigidbody.velocity;
+				o.rigidbody.angularVelocity = (collider.rigidbody.angularVelocity);
+
 				collider.gameObject.SetActive(false);
 				Destroy(collider.gameObject);
 				collider = o.collider;
 			}
 
-			//Calc rotation
-			Vector3 targetFwd = m_TargetPortal.forward;
-			Vector3 cFwd	  = collider.transform.forward;
-			collider.transform.forward = Vector3.Reflect(cFwd, targetFwd);
-
-
 			m_TargetPortal.GetComponent<Portal>().m_Colliding.Add(collider);
-			
-			collider.transform.position = newPos;
-			
-			Vector3 fwd = collider.transform.forward;
-			
-			if (collider.rigidbody == null) 
-			{
-				collider.transform.LookAt(collider.transform.position + q2 * fwd, m_TargetPortal.transform.forward);
-			}
 
+			collider.transform.position = newPos;
 		}
 		collider.name = collider.name.Replace("(Clone)","");
 	}
