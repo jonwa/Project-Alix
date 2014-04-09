@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-/*
- *  
+/* Initializes an inventory containing 5 items by default. 
  * 
  * Created By: Jon Wahlström 2014-04-08
  * Modified By: 
@@ -14,7 +13,6 @@ public class Inventory : MonoBehaviour
 	public GameObject m_Template	  = null; 
 	public GameObject m_Input		  = null; 
 	public UIWidget	  m_Background    = null; 
-	public GameObject m_Root		  = null; 
 
 	public int 		  m_MaxItemSlots  = 0;
 	public int 		  m_MaxRows		  = 0;
@@ -27,52 +25,57 @@ public class Inventory : MonoBehaviour
 
 	void Start () 
 	{
-		if(m_Root == null) 
-		{
-			return;
-		}
-		else
-		{
-			GameObject go = NGUITools.AddChild(m_Root, m_Input);
-			go.GetComponent<InventoryInput>().InventoryWindow = gameObject;
-		}
+		if(m_Input == null)	     return;
+		if(m_Template == null)   return;
+		if(m_Background == null) return;
 
-		if(m_Template != null)
-		{
-			InitializeInventory();
-		}
+		InitializeInventory();
 	}
 
+	// sets up the inventory with as many items
+	// as maxItemSlot. the background can be seen
+	// if it contains a UISprite. 
+	// NOTE: the background position may not always be correct
+	//       it can be fixed in the inspect of the sprite itself. 
 	void InitializeInventory()
 	{
 		int    count = 0; 
 		Bounds bound = new Bounds();
 
+		//init background and input management
+		//input is used to toggle between visibility
+		GameObject background = NGUITools.AddChild(gameObject, m_Background.gameObject);
+		GameObject input 	  = NGUITools.AddChild(gameObject, m_Input);
+		input.GetComponent<InventoryInput>().InventoryWindow = background;
+
 		for(int y = 0; y < m_MaxRows; ++y)
 		{
 			for(int x = 0; x < m_MaxColumns; ++x)
 			{
-				GameObject go   		   = NGUITools.AddChild(gameObject, m_Template);
+				GameObject go   		   = NGUITools.AddChild(background, m_Template);
 				go.transform.localPosition = new Vector3(
 					m_Padding  + (x + 0.5f) * m_Spacing,
 					-m_Padding - (y + 0.5f) * m_Spacing,
 					0f);
-
-				//go.GetComponent<InventoryItem>().Id = count; 
 
 				bound.Encapsulate(new Vector3(
 					m_Padding  * 2f + (x + 1) * m_Spacing,
 					-m_Padding * 2f - (y + 1) * m_Spacing, 
 					0f));
 
+				InventoryItem slot = go.GetComponent<InventoryItem>();
+				if(slot != null)
+				{
+					slot.m_Inventory = this;
+					slot.m_Slot = count;
+				}
+
 				++count; 
-				// Not sure if this even works, 
-				// needs to be tested! 
 				if(count >= m_MaxItemSlots)
 				{
 					if(m_Background != null) 
 					{
-						m_Background.transform.localScale = bound.size;
+						background.transform.localScale = bound.size;
 					}
 					return;
 				}
@@ -83,7 +86,17 @@ public class Inventory : MonoBehaviour
 
 		if(m_Background != null) 
 		{
-			m_Background.transform.localScale = bound.size;
+			background.transform.localScale = bound.size;
 		}
+	}
+
+	void Serialize(GameObject go)
+	{
+
+	}
+
+	GameObject Deserialize()
+	{
+		return new GameObject();
 	}
 }

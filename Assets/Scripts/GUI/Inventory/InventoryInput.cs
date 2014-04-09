@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* 
+/* Allows you to toggle between opened and closed. 
+ * Default button, "Inventory", is "b" and can be
+ * changed in the Unity Input Management. 
  * 
  * Created By: Jon Wahlström 2014-04-07
  * Modified By: 
@@ -26,7 +28,7 @@ public class InventoryInput : MonoBehaviour
 	{
 		ToggleInventoy();
 	}
-
+	
 	void ToggleInventoy()
 	{
 		if(Input.GetButtonDown(m_ToggleButton))
