@@ -100,6 +100,7 @@ public class Inspect : ObjectComponent
 		}
 
 		//Check if we should inspect the object or not.
+
 		if(Input.GetButton(m_Input) && m_IsOriginalPosition)
 		{
 			if(!GetIsActive())
