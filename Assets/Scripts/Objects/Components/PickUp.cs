@@ -4,7 +4,6 @@ using System.Collections;
 /* Discription: ObjectComponent class for rotating items in fixed position in inspect mode
  * 
  * 
- * 
  */
 
 [RequireComponent(typeof(Rigidbody))]
@@ -116,8 +115,8 @@ public class PickUp : ObjectComponent
 		{
 			if(col.collider.CompareTag("Wall"))
 			{
-				m_Move=false;
-				m_CollidedWall=40;
+				m_Move 		   = false;
+				m_CollidedWall = 40;
 				//Debug.Log("Krockat med vägg");
 				Camera.main.SendMessage("Release");
 			}

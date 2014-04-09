@@ -38,11 +38,14 @@ public class InventoryData : MonoBehaviour
 		set { m_Toggle = value; }
 	}
 
+	//Initializes the List of empty slots. 
+	//called from Inventory.cs
 	public static void AddSlot(GameObject slot)
 	{
 		m_Slots.Add(slot);
 	}
-	
+
+	//add a object to the inventory, called from Pocket.cs
 	public static void AddItem(GameObject go)
 	{
 		foreach(GameObject itemSlot in m_Slots)
@@ -69,7 +72,9 @@ public class InventoryData : MonoBehaviour
 			}
 		}
 	}
-	
+
+	//Remove a selected object from the inventory
+	//called from InventoryItem.cs
 	public static void RemoveItem(int item)
 	{
 		if(item < m_MaxItemSlots)
@@ -82,6 +87,8 @@ public class InventoryData : MonoBehaviour
 		}
 	}
 
+	//updates the information for each slot in
+	//the inventory as it gets active
 	public static void UpdateInventory()
 	{
 		foreach(GameObject item in m_Slots)
@@ -91,8 +98,13 @@ public class InventoryData : MonoBehaviour
 		}
 	}
 
+	//as an object is unpocketed, its position is 
+	//set to the players position
 	private static void SetPosition(GameObject go)
 	{
 		go.transform.position = m_Player.transform.position; 
 	}
+
+	public static void Serialize(){}
+	public static void Deserialize(){}
 }
