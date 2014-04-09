@@ -16,17 +16,13 @@ public class Pocket : ObjectComponent
 	
 	#region PrivateMemberVariables
 	private int			m_DeActivateCounter	= 0;
-	private bool		m_InventoryIsFull;
-	private string		m_InventoryName		= "Inventory Example"; //Change to the real inventory name when finnished		
+	private string		m_InventoryName		= "Inventory Example"; //Change to the real inventory name when finished		
 	private GameObject 	m_Inventory;
-	private int			m_Id;
 	#endregion
 
 	void Start()
 	{
 		m_Inventory = GameObject.Find(m_InventoryName);
-		m_Id = GetComponent<Id>().GetId();
-		//m_InventoryIsFull = m_Inventory.gameObject.GetComponent<Inventory>().GetIsfull();
 	}
 	
 	void Update()
@@ -41,8 +37,8 @@ public class Pocket : ObjectComponent
 	//Adds the item to the inventory
 	void AddIntoInventory()
 	{
-		/* Add to inventory/set ID */
-		//m_Inventory.gameObject.GetComponent<Inventory>().AddItem(m_Id);
+		/* Add to inventory */
+		//m_Inventory.gameObject.GetComponent<Inventory>().AddItem(gameObject);
 	}
 
 	//Calls for the move to inventory function and then deactivates this item.
@@ -51,12 +47,10 @@ public class Pocket : ObjectComponent
 		if(GetIsActive())
 		{
 			AddIntoInventory();
-			gameObject.SetActive(false);
-			DeActivate();
 		}
 		
 		//Check if we are going to pocket this item.
-		if(Input.GetKeyDown(m_Input) /*&& inventory not full*/)
+		if(Input.GetKeyDown(m_Input))
 		{
 			Activate();
 			m_DeActivateCounter = 0;
@@ -64,7 +58,6 @@ public class Pocket : ObjectComponent
 		else
 		{
 			DeActivate();
-			Debug.Log ("Inventory full");
 		}
 	}
 }
