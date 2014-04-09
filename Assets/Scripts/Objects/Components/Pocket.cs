@@ -4,14 +4,14 @@ using System.Collections;
 /* Discription: Objectcomponent class for putting the object you are locking at/holding in the inventory
  * 
  * Created by: Robert Datum: 07/04-14
- * Modified by:
+ * Modified by: Jon Wahlström 2014-04-09
  * 
  */
 [RequireComponent(typeof(Id))]
 public class Pocket : ObjectComponent
 {
 	#region PublicMemberVariables
-	public string		m_Input = "Fire3";
+	public string		m_Input = "Pocket";
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -35,10 +35,10 @@ public class Pocket : ObjectComponent
 	}
 	
 	//Adds the item to the inventory
-	void AddIntoInventory()
+	void AddToInventory()
 	{
-		/* Add to inventory */
-		//m_Inventory.gameObject.GetComponent<Inventory>().AddItem(gameObject);
+		InventoryData.AddItem(gameObject);
+		Camera.main.GetComponent<Raycasting>().Release();
 	}
 
 	//Calls for the move to inventory function and then deactivates this item.
@@ -46,11 +46,11 @@ public class Pocket : ObjectComponent
 	{
 		if(GetIsActive())
 		{
-			AddIntoInventory();
+			AddToInventory();
 		}
 		
 		//Check if we are going to pocket this item.
-		if(Input.GetKeyDown(m_Input))
+		if(Input.GetButtonDown(m_Input))
 		{
 			Activate();
 			m_DeActivateCounter = 0;

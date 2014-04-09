@@ -54,22 +54,22 @@ public class MovementLimit : ObjectComponent
 		float MinZ = m_OriginalY - m_NegativeY;
 
 		if(m_CurrentX > MaxX){
-			transform.position = Vector3(MaxX,m_CurrentY,m_CurrentZ);
+			transform.position = new Vector3(MaxX,m_CurrentY,m_CurrentZ);
 		}
 		else if (m_CurrentX < MinX) {
-			transform.position = Vector3(MinX,m_CurrentY,m_CurrentZ);
+			transform.position = new Vector3(MinX,m_CurrentY,m_CurrentZ);
 		}
 		if(m_CurrentY > MaxY){
-			transform.position = Vector3(m_CurrentX,MaxY,m_CurrentZ);
+			transform.position = new Vector3(m_CurrentX,MaxY,m_CurrentZ);
 		}
 		else if (m_CurrentY < MinY) {
-			transform.position = Vector3(m_CurrentX,MinY,m_CurrentZ);		
+			transform.position = new Vector3(m_CurrentX,MinY,m_CurrentZ);		
 		}
 		if(m_CurrentZ > MaxZ){
-			transform.position = Vector3(m_CurrentX,m_CurrentY,MaxZ);			
+			transform.position = new Vector3(m_CurrentX,m_CurrentY,MaxZ);			
 		}
 		else if (m_CurrentZ < MinZ) {
-			transform.position = Vector3(m_CurrentX,m_CurrentY,MinZ);			
+			transform.position = new Vector3(m_CurrentX,m_CurrentY,MinZ);			
 		}
 	}
 }

@@ -19,9 +19,7 @@ public class Inventory : MonoBehaviour
 	public int 		  m_MaxColumns	  = 0; 
 	public int 		  m_Spacing		  = 0; 
 	public int 		  m_Padding		  = 0; 
-	#endregion
-
-	private List<GameObject> m_ItemList = new List<GameObject>(); 
+	#endregion 
 
 	void Start () 
 	{
@@ -45,7 +43,7 @@ public class Inventory : MonoBehaviour
 		//init background and input management
 		//input is used to toggle between visibility
 		GameObject background = NGUITools.AddChild(gameObject, m_Background.gameObject);
-		GameObject input 	  = NGUITools.AddChild(gameObject, m_Input);
+		GameObject input  	  = NGUITools.AddChild(gameObject, m_Input);
 		input.GetComponent<InventoryInput>().InventoryWindow = background;
 
 		for(int y = 0; y < m_MaxRows; ++y)
@@ -66,8 +64,7 @@ public class Inventory : MonoBehaviour
 				InventoryItem slot = go.GetComponent<InventoryItem>();
 				if(slot != null)
 				{
-					slot.m_Inventory = this;
-					slot.m_Slot = count;
+					slot.Slot = count;
 				}
 
 				++count; 
@@ -80,7 +77,7 @@ public class Inventory : MonoBehaviour
 					return;
 				}
 
-				m_ItemList.Add(go);
+				InventoryData.AddSlot(go);
 			}
 		}
 
@@ -88,15 +85,5 @@ public class Inventory : MonoBehaviour
 		{
 			background.transform.localScale = bound.size;
 		}
-	}
-
-	void Serialize(GameObject go)
-	{
-
-	}
-
-	GameObject Deserialize()
-	{
-		return new GameObject();
 	}
 }
