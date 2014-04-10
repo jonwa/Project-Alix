@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* Discription: ObjectComponent class for rotating items in fixed position in inspect mode
+
+/* Discription: Class for picking up an object and holding in front of you
  * 
- * 
+ * Made by: Rasmus 04/04
  */
 
 [RequireComponent(typeof(Rigidbody))]
@@ -38,8 +39,11 @@ public class PickUp : ObjectComponent
 		if(m_DeActivateCounter > 10)
 		{
 			Physics.IgnoreLayerCollision(9, 9, false);
-			rigidbody.useGravity=true;
+			//rigidbody.useGravity=true;
 			m_HoldingObject=false;
+			//Color test=renderer.material.color;
+			//test.a=1.0f;
+			//renderer.material.color = test;
 		}
 		if(m_CollidedWall>0)
 		{
@@ -77,6 +81,11 @@ public class PickUp : ObjectComponent
 		//Debug.Log(m_CameraTransform.forward.x);
 		if(m_CollidedWall==0)
 		{
+			//Color test=renderer.material.color;
+			//test.a=0.5f;
+			//renderer.material.color = test;
+			//float alpha=0.5f;
+			//renderer.material.color.a = alpha;
 			m_DeActivateCounter=0;
 
 			//Object is close enough and allowed to move

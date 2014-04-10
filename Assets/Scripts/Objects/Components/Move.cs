@@ -4,7 +4,7 @@ using System.Collections;
 /* Discription: Move Component
  * Used for moving boxes or different ojects in the gameworld
  * 
- * Created by: Sebastian 04/04-14
+ * Created by: Sebastian Olsson 04/04-14
  * Modified by:
  */
 
@@ -19,6 +19,7 @@ public class Move : ObjectComponent
 	#endregion
 
 	#region PublicMemberVariables
+	public string m_Input;
 	public string m_PlayerName					= "Player Controller Example";
 	#endregion
 
@@ -45,10 +46,11 @@ public class Move : ObjectComponent
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
+			Debug.Log("Offset = " + m_Offset.x);
 			transform.position += m_Offset;
 			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
 		}
-		if(Input.GetButton("Fire1"))
+		if(Input.GetButton(m_Input))
 		{
 			if(!GetIsActive())
 			{
@@ -60,7 +62,6 @@ public class Move : ObjectComponent
 		else
 		{
 			DeActivate();
-			transform.rigidbody.isKinematic = true;
 		}
 	}
 }

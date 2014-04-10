@@ -16,7 +16,7 @@ public class Triggering : ObjectComponent {
 	
 	#region PrivateMemberVariables
 	private int m_ArrayPosition 		=0;
-	private bool[] m_Locked;//= new bool[m_Triggers.Length];
+	private bool[] m_Allowed;
 	private GameObject[] m_GameObjects  = null;
 	GameObject[] tempArray				= null;
 	#endregion
@@ -26,16 +26,16 @@ public class Triggering : ObjectComponent {
 	{
 		if(m_GameObjects==null)
 		{
-			m_Locked= new bool[m_Triggers.Length];
+			m_Allowed= new bool[m_Triggers.Length];
 
 			tempArray=FindGameObjectsWithLayer(9);
-			Debug.Log("Size of gameObjects int layer 9: " + tempArray.Length);
+			//Debug.Log("Size of gameObjects int layer 9: " + tempArray.Length);
 			m_GameObjects=new GameObject[m_Triggers.Length];
 			MakeGameObjectList(tempArray);
 
 			for(int i=0; i<m_Triggers.Length; i++)
 			{
-				m_Locked[i]=m_GameObjects[i].GetComponent<Locked>().GetLocked();
+				m_Allowed[i]=m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
 			}
 		}
 	}
@@ -60,14 +60,14 @@ public class Triggering : ObjectComponent {
 		//Gather new values in case of change
 		for(int i=0; i<m_Triggers.Length; i++)
 		{
-			m_Locked[i]=m_GameObjects[i].GetComponent<Locked>().GetLocked();
+			m_Allowed[i]=m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
 		}
 
 		if(m_ActivateAll==true)
 		{
 			for(int i=0; i<m_Triggers.Length; i++)
 			{
-				if(m_Locked[i] == false)
+				if(m_Allowed[i] == true)
 				{
 					m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTrigger();
 				}
@@ -75,7 +75,7 @@ public class Triggering : ObjectComponent {
 		}
 		else
 		{
-			if(m_Locked[m_ArrayPosition] == false)
+			if(m_Allowed[m_ArrayPosition] == true)
 			{
 				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTrigger();
 			}

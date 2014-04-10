@@ -1,16 +1,51 @@
 fileFormatVersion: 2
-guid: 26554061e569e66488ab43ee306eb2bc
+guid: 65af0497ef5a5344594a73ab234a0f9f
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: tv
-    400000: //RootNode
-    400002: tv
-    2300000: tv
-    3300000: tv
-    4300000: tv
+    100000: head
+    100002: head_ctrl
+    100004: L_arm_ctrl
+    100006: L_foot
+    100008: L_hand
+    100010: L_leg
+    100012: L_leg_ctrl
+    100014: L_shoulder
+    100016: neck
+    100018: prop_nalle_3D_lowpolly_klar:polySurface1
+    100020: //RootNode
+    100022: R_arm_ctrl
+    100024: R_foot
+    100026: R_hand
+    100028: R_leg
+    100030: R_leg_ctrl
+    100032: R_shoulder
+    100034: root
+    100036: root_ctrl
+    100038: transform1
+    400000: head
+    400002: head_ctrl
+    400004: L_arm_ctrl
+    400006: L_foot
+    400008: L_hand
+    400010: L_leg
+    400012: L_leg_ctrl
+    400014: L_shoulder
+    400016: neck
+    400018: prop_nalle_3D_lowpolly_klar:polySurface1
+    400020: //RootNode
+    400022: R_arm_ctrl
+    400024: R_foot
+    400026: R_hand
+    400028: R_leg
+    400030: R_leg_ctrl
+    400032: R_shoulder
+    400034: root
+    400036: root_ctrl
+    400038: transform1
+    4300000: prop_nalle_3D_lowpolly_klar:polySurface1
     9500000: //RootNode
+    13700000: prop_nalle_3D_lowpolly_klar:polySurface1
   materials:
     importMaterials: 1
     materialName: 0
@@ -29,7 +64,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .100000001
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

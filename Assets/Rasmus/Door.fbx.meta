@@ -1,15 +1,17 @@
 fileFormatVersion: 2
-guid: 26554061e569e66488ab43ee306eb2bc
+guid: 37ad21c5f8e193349b380fc6f69d8171
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
-    100002: tv
+    100002: polySurface15
+    100004: transform1
     400000: //RootNode
-    400002: tv
-    2300000: tv
-    3300000: tv
-    4300000: tv
+    400002: polySurface15
+    400004: transform1
+    2300000: polySurface15
+    3300000: polySurface15
+    4300000: polySurface15
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -29,7 +31,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .100000001
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

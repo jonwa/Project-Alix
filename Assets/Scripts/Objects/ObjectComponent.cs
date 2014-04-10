@@ -3,7 +3,7 @@ using System.Collections;
 
 /* Discription: Base class for object components
  * 
- * Created by: Robert and Sebastian Datum: 02/04-14
+ * Created by: Robert and Sebastian Datum: 2014-04-02
  * Modified by:
  * 
  */
