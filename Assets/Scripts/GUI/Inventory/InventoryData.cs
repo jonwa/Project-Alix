@@ -83,7 +83,6 @@ public class InventoryData : MonoBehaviour
 			m_Items[item] = null;
 
 			go.SetActive(true);
-			SetPosition(go);
 		}
 	}
 
@@ -96,13 +95,6 @@ public class InventoryData : MonoBehaviour
 			InventoryItem slot = item.GetComponent<InventoryItem>();
 			slot.ChangeTexture();
 		}
-	}
-
-	//as an object is unpocketed, its position is 
-	//set to the players position
-	private static void SetPosition(GameObject go)
-	{
-		go.transform.position = m_Player.transform.position; 
 	}
 
 	public static void Serialize(){}
