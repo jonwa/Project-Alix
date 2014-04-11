@@ -48,7 +48,9 @@ public class Inspect : ObjectComponent
 		{
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 10)
+			{
 				DeActivate();
+			}
 		}
 	}
 
@@ -70,7 +72,7 @@ public class Inspect : ObjectComponent
 			}
 			else
 			{
-				targetPosition = m_OriginalPosition;
+				targetPosition	   = m_OriginalPosition;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, m_LerpSpeed/10.0f);
 				if(Vector3.Distance(transform.position, targetPosition) > 0.1)
 				{
@@ -87,6 +89,7 @@ public class Inspect : ObjectComponent
 
 	public override void Interact ()
 	{
+		//if we are active we rotate the object with the mouse here.
 		if(GetIsActive())
 		{
 			MoveToInspectDistance(true);
@@ -109,8 +112,9 @@ public class Inspect : ObjectComponent
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
 				m_OriginalPosition = transform.position;
 				m_OriginalRotation = transform.rotation;
-				m_UnlockedCamera = false;
+				m_UnlockedCamera   = false;
 			}
+
 			Activate();
 			m_DeActivateCounter = 0;
 		}
