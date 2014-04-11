@@ -9,7 +9,7 @@ Created by: Rasmus 07/04
 public class Throw : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public float m_Force  = 100f;
+	public float  m_Force = 100f;
 	public string m_Input = "f";
 	#endregion
 
@@ -20,7 +20,7 @@ public class Throw : ObjectComponent
 	// Use this for initialization
 	void Start () 
 	{
-		m_CameraTransform  = Camera.main.transform;
+		m_CameraTransform = Camera.main.transform;
 	}
 	
 	// Update is called once per frame

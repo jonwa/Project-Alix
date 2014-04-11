@@ -18,31 +18,31 @@ public class Locked : ObjectComponent
 
 
 	// Use this for initialization
-	void Start () 
+	void Start() 
 	{
 		if(m_LockedFromStart == true)
 		{
-			m_Locked=true;
+			m_Locked = true;
 		}
 		else
 		{
-			m_Locked=false;
+			m_Locked = false;
 		}
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update() 
 	{
 	
 	}
 
 	public void Lock()
 	{
-		m_Locked=true;
+		m_Locked = true;
 	}
 	public void UnLock()
 	{
-		m_Locked=false;
+		m_Locked = false;
 	}
 
 	public bool GetLocked()
