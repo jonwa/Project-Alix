@@ -62,6 +62,7 @@ public class Inventory : MonoBehaviour
 					0f));
 
 				InventoryItem slot = go.GetComponent<InventoryItem>();
+
 				if(slot != null)
 				{
 					slot.Slot = count;

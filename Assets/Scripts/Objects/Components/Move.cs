@@ -42,7 +42,7 @@ public class Move : ObjectComponent
 	//Function for moving objects, moves the object with the player
 	public override void Interact()
 	{
-		if (GetIsActive()) 
+		if (IsActive) 
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
@@ -52,7 +52,7 @@ public class Move : ObjectComponent
 		}
 		if(Input.GetButton(m_Input))
 		{
-			if(!GetIsActive())
+			if(!IsActive)
 			{
 				m_OriginalPlayerPosition = m_Player.transform.position;
 			}

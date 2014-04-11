@@ -37,7 +37,7 @@ public class Pushable : ObjectComponent
 	
 	void Update () 
 	{
-		if(!GetIsActive())
+		if(!IsActive)
 		{
 			if(m_UnlockedCamera == false)
 			{
@@ -56,7 +56,7 @@ public class Pushable : ObjectComponent
 	//By checking the players forward we change the axis of the mouse position
 	public override void Interact()
 	{
-		if (GetIsActive()) 
+		if (IsActive) 
 		{
 			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
 			m_MouseYPosition = Input.GetAxis(m_VerticalInput);

@@ -9,9 +9,11 @@ using System.Collections;
 
 public class InventoryItem : MonoBehaviour 
 {
-	private int  	  	  m_Slot 		= 0; 
-	private bool 	  	  m_Occupied 	= false;
-	private string    	  m_spritename  = null; 
+	#region PrivateMemberVariables
+	private int    m_Slot 		= 0; 
+	private bool   m_Occupied 	= false;
+	private string m_spritename = null; 
+	#endregion
 
 	public int Slot
 	{
@@ -27,7 +29,7 @@ public class InventoryItem : MonoBehaviour
 
 	void Start()
 	{
-		GetComponentInChildren<UILabel>().text = (m_Slot + 1).ToString();
+		GetComponentInChildren<UILabel>().enabled = false;
 	}
 
 	public void Replace(string item)

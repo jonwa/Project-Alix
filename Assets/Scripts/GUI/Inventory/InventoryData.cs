@@ -13,23 +13,27 @@ using System.Collections.Generic;
 public class InventoryData : MonoBehaviour
 {
 	#region PublicMemberVariables
-	public int 	 m_MaxItems    = 5;
-	public string m_PlayerName = null; 
+	public int 	  m_MaxItems   = 5;
+	public string m_PlayerName;
 	#endregion
 
 	#region PrivateMemberVariables
-	private static List<GameObject>  m_Slots		= new List<GameObject>();
-	private static GameObject[] 	 m_Items		= null;
-	private static GameObject 		 m_Player 		= null; 
-	private static bool 			 m_Toggle		= false; 
-	private static int 				 m_MaxItemSlots = 0; 
+	private static List<GameObject> m_Slots		   = new List<GameObject>();
+	private static GameObject[] 	m_Items		   = null;
+	private static bool 			m_Toggle	   = false; 
+	private static int 				m_MaxItemSlots = 0; 
+	private static GameObject		m_Player	   = null; 
 	#endregion
 
 	void Start ()
 	{
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
-		m_Player       = GameObject.Find(m_PlayerName);
+
+		if(m_PlayerName != null)
+		{
+			m_Player   = GameObject.Find(m_PlayerName) as GameObject;
+		}
 	}
 
 	public static bool Toggle
@@ -54,19 +58,20 @@ public class InventoryData : MonoBehaviour
 			if(!slot.Occupied)
 			{
 				go.SetActive(false);
-			
+				Name name = go.GetComponent<Name>();
+
+				if(name == null) return;
+
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
 
 				if(m_Toggle)
 				{
-					slot.Replace(slot.Slot.ToString());
-					// TODO: slot.Replace(go.GetComponent<Name>().Name);
+						slot.Replace(name.ObjectName);
 				}
 				else
 				{
-					slot.DelayedReplace(slot.Slot.ToString());
-					// TODO: slot.Replace(go.GetComponent<Name>().Name);
+					slot.DelayedReplace(name.ObjectName);
 				}
 				break;
 			}
@@ -81,8 +86,26 @@ public class InventoryData : MonoBehaviour
 		{
 			GameObject go = m_Items[item];
 			m_Items[item] = null;
-
 			go.SetActive(true);
+
+			//this might need to be changed, simply reposition the origional pos of
+			//the pocketed object as the object is unpocketed. 
+			if(m_Player != null) 
+			{
+				FirstPersonController controller = m_Player.GetComponent<FirstPersonController>();
+				Inspect    inspect 				 = go.GetComponent<Inspect>();
+				PickUp     pickup				 = go.GetComponent<PickUp>();
+				Raycasting raycast				 = Camera.main.GetComponent<Raycasting>();
+
+				if(pickup)
+				{
+					raycast.Activate(go);
+				}
+				else if(inspect)
+				{
+					inspect.OrigionalPosition = controller.Position; 
+				}
+			}
 		}
 	}
 
@@ -96,7 +119,4 @@ public class InventoryData : MonoBehaviour
 			slot.ChangeTexture();
 		}
 	}
-
-	public static void Serialize(){}
-	public static void Deserialize(){}
 }

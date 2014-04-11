@@ -108,4 +108,9 @@ public class Raycasting : MonoBehaviour
 	{
 		m_InteractingWith = null;
 	}
+
+	public void Activate(GameObject go)
+	{
+		m_InteractingWith = go; 
+	}
 }

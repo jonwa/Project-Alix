@@ -31,7 +31,7 @@ public class Interacting : ObjectComponent
 	
 	void Update()
 	{
-		if(!GetIsActive())
+		if(!IsActive)
 		{
 			if(m_Collision){
 				CheckCollision();
@@ -49,7 +49,7 @@ public class Interacting : ObjectComponent
 	
 	public override void Interact ()
 	{
-		if(GetIsActive())
+		if(IsActive)
 		{
 			//m_CollidedObject.GetComponent<Interacting>().Should(m_VaildInteract);
 			//Should(m_VaildInteract);
@@ -70,7 +70,7 @@ public class Interacting : ObjectComponent
 
 	void CheckCollision(){
 
-		int collisionId = m_CollidedObject.GetComponent<Id>().GetId();
+		int collisionId = m_CollidedObject.GetComponent<Id>().ObjectId;
 		if (collisionId == m_ValidId) 
 		{
 			m_Interact = true;

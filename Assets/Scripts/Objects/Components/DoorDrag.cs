@@ -42,7 +42,7 @@ public class DoorDrag : ObjectComponent
 	
 	void Update () 
 	{		
-		if(!GetIsActive())
+		if(!IsActive)
 		{
 			if(m_UnlockedCamera == false)
 			{
@@ -68,7 +68,7 @@ public class DoorDrag : ObjectComponent
 
 	public override void Interact()
 	{
-		if(GetIsActive())
+		if(IsActive)
 		{
 			Vector3 m_RotationAxis;
 			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);

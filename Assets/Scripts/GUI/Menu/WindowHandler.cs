@@ -12,7 +12,7 @@ using System.Collections.Generic;
 public class WindowHandler : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public GameObject 				  m_InitialWindow = null;		
+	public GameObject m_InitialWindow = null;		
 	#endregion
 
 	#region PrivatMemberVariables
@@ -26,7 +26,6 @@ public class WindowHandler : MonoBehaviour
 		if(m_InitialWindow != null)
 		{
 			m_DefaultWindow = m_InitialWindow;
-			Debug.Log ("HEJHEJHEJ");
 			m_CurrentWindow = m_InitialWindow; 
 			m_CurrentWindow.gameObject.SetActive(true); 
 			m_History.Push(m_CurrentWindow);

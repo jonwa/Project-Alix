@@ -13,23 +13,9 @@ public class Id : ObjectComponent
 	#region PublicMemberVariables
 	public int	m_Id	= 0;
 	#endregion
-	
-	#region PrivateMemberVariables
 
-	#endregion
-	
-	void Start()
+	public int ObjectId
 	{
-
-	}
-	
-	void Update()
-	{
-
-	}
-
-	public int GetId()
-	{
-		return m_Id;
+		get { return m_Id; }
 	}
 }

@@ -16,7 +16,7 @@ public class MenuInput : MonoBehaviour
 	#endregion
 
 	#region PrivateMemberVariables
-	private bool   	  m_Active = false;
+	private bool m_Active = false;
 	#endregion
 
 	//get/set the value of m_Active
@@ -40,9 +40,9 @@ public class MenuInput : MonoBehaviour
 		}
 		else if(Input.GetKeyDown(KeyCode.Escape) && m_Active)
 		{
+			m_Active = false;
 			m_Window.SetActive(false);
-			m_Active = false; 
-
+			 
 			WindowHandler.Default();
 
 			//unfreeze the camera position
