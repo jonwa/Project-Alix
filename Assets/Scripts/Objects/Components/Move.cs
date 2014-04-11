@@ -38,7 +38,7 @@ public class Move : ObjectComponent
 			DeActivate();
 		}
 	}
-
+	
 	//Function for moving objects, moves the object with the player
 	public override void Interact()
 	{
@@ -50,12 +50,10 @@ public class Move : ObjectComponent
 			transform.position += m_Offset;
 			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
 		}
-		if(Input.GetButton(m_Input))
+
+		if(!GetIsActive())
 		{
-			if(!GetIsActive())
-			{
-				m_OriginalPlayerPosition = m_Player.transform.position;
-			}
+			m_OriginalPlayerPosition = m_Player.transform.position;
 			Activate();
 			m_DeActivateCounter = 0;
 		}
