@@ -23,7 +23,6 @@ public class DoorDrag : ObjectComponent
 	#endregion
 	
 	#region PublicMemberVariables
-	public bool			m_Closed			= true;
 	public string 		m_PlayerName		= "Player Controller Example";
 	public string 		m_HorizontalInput;
 	public string 		m_VerticalInput;
@@ -63,12 +62,6 @@ public class DoorDrag : ObjectComponent
 			Vector3 m_RotationAxis;
 			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
 			m_MouseYPosition = Input.GetAxis(m_VerticalInput);
-
-
-			if(m_Target.transform.rotation.y != 0)
-			{
-				m_Closed = false;
-			}
 
 			if(m_MouseXPosition != 0 || m_MouseYPosition != 0)
 			{
