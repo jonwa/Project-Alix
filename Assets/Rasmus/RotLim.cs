@@ -1,64 +1,131 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/* Discription: Class for rotationLimit on object, works for the in-game physiscs.
+* 
+* Made by: Rasmus 14/04
+*/
+
 public class RotLim : MonoBehaviour 
 {
-	public float m_MaxLimit = 180;
-	public float m_MinLimit = 0;
 
-	public bool m_Locked=false;
+	#region PublicMemberVariables
+	public float m_MaxLimit 	= 90;
+	public float m_MinLimit 	= 90;
+	public float m_LockedOffset = 5;
+	public bool  m_Locked 		= false;
+	public RotLim m_OtherLimit;
+	//public bool  m_Vertical		= true;
+	#endregion
 
-	private float m_OriginalRotation;
-	Vector3 m_pos;
+	#region PrivateMemberVariables
+	private float   m_OriginalRotation;
+	private Vector3 m_LastPosition;
+	private float   m_Difference;
+	#endregion
+
+
+
 	// Use this for initialization
 	void Start () 
 	{
-		m_OriginalRotation = transform.localRotation.eulerAngles.y;
-		Debug.Log(m_OriginalRotation);
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		if(!m_Locked)
+		if(m_MinLimit < 1)
 		{
-			//Debug.Log(transform.localRotation.eulerAngles.y);
-			if(transform.localRotation.eulerAngles.y > 180 && transform.localRotation.eulerAngles.y <= 270)
-			{
-				transform.position = m_pos;
-				//Debug.Log("Över y: " + transform.localRotation.eulerAngles.y);
-				transform.Rotate(0, 180-transform.localRotation.eulerAngles.y, 0);
-			}
-			else if(transform.localRotation.eulerAngles.y < 360 && transform.localRotation.eulerAngles.y > 270)
-			{
-				transform.position = m_pos;
-				transform.Rotate(0, 360-transform.localRotation.eulerAngles.y, 0);
-				//Debug.Log("Under y: " + transform.localRotation.eulerAngles.y);
-			}
-			else 
-			{
-				m_pos = transform.position;
-			}
+			m_MinLimit = 1;
 		}
-		else
-		{
-			//Debug.Log(transform.localRotation.eulerAngles.y);
-			if(transform.localRotation.eulerAngles.y > 95)
+
+		m_LastPosition 		= transform.position;
+		m_OriginalRotation  = transform.localRotation.eulerAngles.y;
+		Debug.Log(transform.localRotation.eulerAngles.y + " och " + transform.rotation.eulerAngles.y);
+
+	}
+
+	// Update is called once per frame
+	void LateUpdate () 
+	{
+		//if(m_Vertical){
+			if(m_Locked)
 			{
-				transform.position = m_pos;
-				//Debug.Log("Över y: " + transform.localRotation.eulerAngles.y);
-				transform.Rotate(0, 95-transform.localRotation.eulerAngles.y, 0);
-			}
-			else if(transform.localRotation.eulerAngles.y < 85)
-			{
-				transform.position = m_pos;
-				transform.Rotate(0, 85-transform.localRotation.eulerAngles.y, 0);
-				//Debug.Log("Under y: " + transform.localRotation.eulerAngles.y);
+				CheckLocked();
 			}
 			else
 			{
-				m_pos = transform.position;
+				CheckUnLocked();
+			}
+		//}
+	}
+
+	private void CheckUnLocked()
+	{
+		float m_TempMaximum = m_OriginalRotation + m_MaxLimit;
+		float m_TempMinimum = m_OriginalRotation - m_MinLimit;
+
+		//Debug.Log(transform.localRotation.eulerAngles.y);
+		//Debug.Log();
+
+		//Rotation minimum is still positive
+		if(m_TempMinimum > 1)
+		{
+			if(transform.localRotation.eulerAngles.y  > m_TempMaximum)
+			{
+				transform.position = m_LastPosition;
+				transform.Rotate(0, m_TempMaximum - transform.localRotation.eulerAngles.y, 0);
+			}
+			else if(transform.localRotation.eulerAngles.y < m_TempMinimum)
+			{
+				transform.position = m_LastPosition;
+				transform.Rotate(0, m_TempMinimum - transform.localRotation.eulerAngles.y, 0);
+			}
+			else
+			{
+				//Debug.Log("Skall spara en position");
+				m_LastPosition = transform.position;
 			}
 		}
+		else //Rotation minimum is under 0, exempel -90
+		{
+			m_TempMinimum += 360;
+			if(transform.localRotation.eulerAngles.y + m_Difference> m_TempMaximum && transform.localRotation.eulerAngles.y <= 250)
+			{
+				transform.position = m_LastPosition;
+				transform.Rotate(0, m_TempMaximum - transform.localRotation.eulerAngles.y, 0);
+			}
+			else if(transform.localRotation.eulerAngles.y - m_Difference < m_TempMinimum  && transform.localRotation.eulerAngles.y> 250)
+			{
+				transform.position = m_LastPosition;
+				transform.Rotate(0, m_TempMinimum - transform.localRotation.eulerAngles.y, 0);
+			}
+			else 
+			{
+				m_LastPosition = transform.position;
+			}
+		}
+	}
+
+	private void CheckLocked()
+	{
+		float m_TempMaximum = m_OriginalRotation + m_LockedOffset;
+		float m_TempMinimum = m_OriginalRotation - m_LockedOffset;
+
+		if(transform.localRotation.eulerAngles.y > m_TempMaximum)
+		{
+			transform.position = m_LastPosition;
+			transform.Rotate(0, m_TempMaximum - transform.localRotation.eulerAngles.y, 0);
+		}
+		else if(transform.localRotation.eulerAngles.y < m_TempMinimum)
+		{
+			transform.position = m_LastPosition;
+			transform.Rotate(0, m_TempMinimum - transform.localRotation.eulerAngles.y, 0);
+		}
+		else
+		{
+			m_LastPosition = transform.position;
+		}
+	}
+
+	public void SetDifference(float flo)
+	{
+		Debug.Log("Getting difference");
+		m_Difference = flo;
 	}
 }

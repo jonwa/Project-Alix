@@ -57,6 +57,7 @@ public class DoorDrag : ObjectComponent
 
 	public override void Interact()
 	{
+
 		if(GetIsActive())
 		{
 			Vector3 m_RotationAxis;
@@ -66,7 +67,9 @@ public class DoorDrag : ObjectComponent
 			if(m_MouseXPosition != 0 || m_MouseYPosition != 0)
 			{
 				m_RotationAxis = PlayerForward();
+				//Debug.Log(m_Target.transform.rotation.eulerAngles.y);
 				m_Target.transform.Rotate(m_RotationAxis,m_Delta);
+				//transform.Rotate(m_RotationAxis,m_Delta);
 			}
 		}
 
@@ -79,6 +82,7 @@ public class DoorDrag : ObjectComponent
 		}
 		else
 		{
+			Camera.main.SendMessage("Release");
 			DeActivate();
 		}
 	}

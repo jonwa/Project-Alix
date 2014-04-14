@@ -124,6 +124,7 @@ public class PickUp : ObjectComponent
 			}
 			else//Collision with other object, don't collide
 			{
+				//Debug.Log("Krockat med ngt");
 			}
 		}
 		//m_Colliding=true;
