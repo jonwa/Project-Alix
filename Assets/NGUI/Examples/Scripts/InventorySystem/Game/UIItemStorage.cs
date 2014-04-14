@@ -100,6 +100,7 @@ public class UIItemStorage : MonoBehaviour
 			{
 				for (int x = 0; x < maxColumns; ++x)
 				{
+					
 					GameObject go = NGUITools.AddChild(gameObject, template);
 					Transform t = go.transform;
 					t.localPosition = new Vector3(padding + (x + 0.5f) * spacing, -padding - (y + 0.5f) * spacing, 0f);

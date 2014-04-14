@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 /* Discription: Class for picking up an object and holding in front of you
  * 
  * Made by: Rasmus 04/04
@@ -29,6 +30,9 @@ public class PickUp : ObjectComponent
 	void Start()
 	{
 		m_CameraTransform  = Camera.main.transform;
+		//rigidbody.freezeRotation = true;
+		//rigidbody.useGravity = false;
+		//rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 	}
 	
 	void Update()
@@ -78,14 +82,14 @@ public class PickUp : ObjectComponent
 	public override void Interact ()
 	{
 		//Debug.Log(m_CameraTransform.forward.x);
-		if(m_CollidedWall==0)
+		if(m_CollidedWall == 0)
 		{
 			//Color test=renderer.material.color;
 			//test.a=0.5f;
 			//renderer.material.color = test;
 			//float alpha=0.5f;
 			//renderer.material.color.a = alpha;
-			m_DeActivateCounter=0;
+			m_DeActivateCounter = 0;
 
 			//Object is close enough and allowed to move
 			if(m_HoldingObject == true && m_Move == true)
@@ -123,8 +127,8 @@ public class PickUp : ObjectComponent
 		{
 			if(col.collider.CompareTag("Wall"))
 			{
-				m_Move=false;
-				m_CollidedWall=40;
+				m_Move 		   = false;
+				m_CollidedWall = 40;
 				//Debug.Log("Krockat med vägg");
 				Camera.main.SendMessage("Release");
 			}
