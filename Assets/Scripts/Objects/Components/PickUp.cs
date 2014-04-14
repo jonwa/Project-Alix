@@ -4,7 +4,7 @@ using System.Collections;
 
 /* Discription: Class for picking up an object and holding in front of you
  * 
- * Made by: Rasmus 04/04
+ * Created By: Rasmus 04/04
  */
 
 [RequireComponent(typeof(Rigidbody))]

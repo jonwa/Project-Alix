@@ -12,7 +12,8 @@ using System.Collections;
 public class MenuInput : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public GameObject m_Window = null; 
+	public GameObject m_Window          = null; 
+	public bool 	  m_ButtonDetection = true;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -30,23 +31,39 @@ public class MenuInput : MonoBehaviour
 	//open or/and close the ingame menu.
 	void Update () 
 	{
-		if (Input.GetKeyDown(KeyCode.Escape) && !m_Active)
+		if(m_ButtonDetection)
 		{
-			m_Active = true; 
-			m_Window.SetActive(true);
+			if (Input.GetKeyDown(KeyCode.Escape) && !m_Active)
+			{
+				m_Active = true; 
+				m_Window.SetActive(true);
 
-			//freeze the camera position
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+				//freeze the camera position
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			}
+			else if(Input.GetKeyDown(KeyCode.Escape) && m_Active)
+			{
+				m_Active = false;
+				m_Window.SetActive(false);
+				 
+				WindowHandler.Default();
+
+				//unfreeze the camera position
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			}
 		}
-		else if(Input.GetKeyDown(KeyCode.Escape) && m_Active)
+		else
 		{
-			m_Active = false;
-			m_Window.SetActive(false);
-			 
-			WindowHandler.Default();
-
-			//unfreeze the camera position
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			if(m_Active)
+			{
+				m_Window.SetActive(true);
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			}
+			else
+			{
+				m_Window.SetActive(false);
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			}
 		}
 	}
 }
