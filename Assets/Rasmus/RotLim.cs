@@ -35,7 +35,7 @@ public class RotLim : MonoBehaviour
 				transform.Rotate(0, 360-transform.localRotation.eulerAngles.y, 0);
 				//Debug.Log("Under y: " + transform.localRotation.eulerAngles.y);
 			}
-			else
+			else 
 			{
 				m_pos = transform.position;
 			}
