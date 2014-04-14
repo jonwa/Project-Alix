@@ -3,8 +3,8 @@ using System.Collections;
 
 /* Discription: Base class for object components
  * 
- * Created by: Robert and Sebastian Datum: 02/04-14
- * Modified by:
+ * Created by: Robert and Sebastian Datum: 2014-04-02
+ * Modified by: Jon Wahlström 2014-04-11
  * 
  */
 
@@ -12,6 +12,12 @@ public class ObjectComponent :  MonoBehaviour
 {
     private bool m_IsActive = false;
    
+
+	public bool IsActive
+	{
+		get { return m_IsActive; }
+		set { m_IsActive = value;}
+	}
 
     // Use this for initialization
     void Start()
@@ -52,10 +58,5 @@ public class ObjectComponent :  MonoBehaviour
 	public void DeActivate()
 	{
 		m_IsActive = false;
-	}
-
-	public bool GetIsActive()
-	{
-		return m_IsActive;
 	}
 }

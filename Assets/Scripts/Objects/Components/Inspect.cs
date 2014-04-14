@@ -20,7 +20,6 @@ public class Inspect : ObjectComponent
 	#region PrivateMemberVariables
 	private Vector3 	m_OriginalPosition;
 	private Quaternion  m_OriginalRotation;
-	private Transform   m_CameraTransform;
 	private int			m_DeActivateCounter  = 0;
 	private bool		m_IsOriginalPosition = true;
 	private bool		m_UnlockedCamera	 = true;
@@ -29,51 +28,57 @@ public class Inspect : ObjectComponent
 
 	void Start()
 	{
-		m_CameraTransform  = Camera.main.transform;
 		m_OriginalPosition = transform.position;
 		m_OriginalRotation = transform.rotation;
 	}
 
 	void Update()
 	{
-		if(!GetIsActive())
+		if(!IsActive)
 		{
 			MoveToInspectDistance(false);
+
 			if(m_UnlockedCamera == false)
 			{
-				m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
-				m_CameraTransform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
+				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+				Camera.main.transform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
 				m_UnlockedCamera = true;
 			}
 		}
 		else
 		{
 			m_DeActivateCounter++;
+
 			if(m_DeActivateCounter > 10)
+			{
 				DeActivate();
+			}
 		}
 	}
 
 	//Lerps position and rotation of the object to the inspection Mode distance and back to original position/rotation
 	void MoveToInspectDistance(bool shouldInspect)
 	{
-		Vector3 cameraPosition 		 = m_CameraTransform.position;
+		Vector3 cameraPosition 		 = Camera.main.transform.position;
 		float   cameraObjectDistance = Vector3.Distance(cameraPosition, transform.position);
 		float	lerpSpeed			 = m_LerpSpeed;
+
 		if(cameraObjectDistance > m_InspectionViewDistance)
 		{ 
 			Vector3 targetPosition;
+
 			if(shouldInspect)
 			{
-				Vector3 cameraForward  = m_CameraTransform.forward.normalized;
+				Vector3 cameraForward  = Camera.main.transform.forward.normalized;
 
 				cameraForward *= m_InspectionViewDistance;
 				targetPosition = cameraPosition+cameraForward;
 			}
 			else
 			{
-				targetPosition = m_OriginalPosition;
+				targetPosition	   = m_OriginalPosition;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, m_LerpSpeed/10.0f);
+
 				if(Vector3.Distance(transform.position, targetPosition) > 0.1)
 				{
 					m_IsOriginalPosition = false;
@@ -87,9 +92,15 @@ public class Inspect : ObjectComponent
 		}
 	}
 
+	public Vector3 OrigionalPosition
+	{
+		set { m_OriginalPosition = value; } 
+	}
+
 	public override void Interact ()
 	{
-		if(GetIsActive())
+		//if we are active we rotate the object with the mouse here.
+		if(IsActive)
 		{
 			MoveToInspectDistance(true);
 
@@ -102,20 +113,18 @@ public class Inspect : ObjectComponent
 		}
 
 		//Check if we should inspect the object or not.
+
 		if(Input.GetButton(m_Input) && m_IsOriginalPosition)
 		{
-			if(!GetIsActive())
+			if(!IsActive)
 			{
-				if(m_CameraTransform==null)
-				{
-					m_CameraTransform  = Camera.main.transform;
-				}
-				m_CameraTransform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
-				m_CameraTransform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
+				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+				Camera.main.transform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
 				m_OriginalPosition = transform.position;
 				m_OriginalRotation = transform.rotation;
-				m_UnlockedCamera = false;
+				m_UnlockedCamera   = false;
 			}
+
 			Activate();
 			m_DeActivateCounter = 0;
 		}
@@ -124,5 +133,4 @@ public class Inspect : ObjectComponent
 			DeActivate();
 		}
 	}
-
 }
