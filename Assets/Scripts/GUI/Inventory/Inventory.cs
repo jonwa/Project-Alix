@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
 				{
 					if(m_Background != null) 
 					{
-						background.transform.localPosition = new Vector3(-150f, -160f, 0f);
+						background.transform.localPosition = new Vector3(-150f, -140f, 0f);
 						background.transform.localScale    = bound.size;
 					}
 					return;
@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour
 
 		if(m_Background != null) 
 		{
-			background.transform.localPosition = new Vector3(180f, -160f, 0f);
+			background.transform.localPosition = new Vector3(180f, -140f, 0f);
 			background.transform.localScale    = bound.size;
 		}
 	}
