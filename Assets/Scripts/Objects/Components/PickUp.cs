@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 /* Discription: Class for picking up an object and holding in front of you
  * 
  * Made by: Rasmus 04/04
@@ -123,8 +124,8 @@ public class PickUp : ObjectComponent
 		{
 			if(col.collider.CompareTag("Wall"))
 			{
-				m_Move=false;
-				m_CollidedWall=40;
+				m_Move 		   = false;
+				m_CollidedWall = 40;
 				//Debug.Log("Krockat med vägg");
 				Camera.main.SendMessage("Release");
 			}

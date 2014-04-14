@@ -23,7 +23,7 @@ public class PortalRenderer : MonoBehaviour {
 	void Awake()
 	{
 		m_Camera 			   = GetComponent<Camera>();
-		m_RenderTarget		   = new RenderTexture();
+		m_RenderTarget		   = new RenderTexture(256,256,24);
 		m_Camera.targetTexture = m_RenderTarget;
 	}
 

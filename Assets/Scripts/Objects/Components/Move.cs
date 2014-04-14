@@ -19,8 +19,9 @@ public class Move : ObjectComponent
 	#endregion
 
 	#region PublicMemberVariables
-	public string m_Input;
-	public string m_PlayerName					= "Player Controller Example";
+	public string	m_PlayerName				= "Player Controller Example";
+	public string	m_Input;
+	public float	m_DistanceToObject;
 	#endregion
 
 	void Start()
@@ -38,24 +39,37 @@ public class Move : ObjectComponent
 			DeActivate();
 		}
 	}
-
+	
 	//Function for moving objects, moves the object with the player
 	public override void Interact()
 	{
-		if (GetIsActive()) 
+		if (IsActive) 
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
-			Debug.Log("Offset = " + m_Offset.x);
-			transform.position += m_Offset;
+
+			if((m_Player.transform.position.magnitude - transform.position.magnitude) < m_DistanceToObject ||
+			   (m_Player.transform.position.magnitude - transform.position.magnitude) > -m_DistanceToObject)
+			{
+				transform.position += m_Offset;
+			}
+			else
+			{
+
+			}
+			//Debug.Log ("Distance to Object = "+m_DistanceToObject);
+			Debug.Log ("mPlayer= "+ (m_Player.transform.position.magnitude - transform.position.magnitude));
+
 			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
 		}
-		if(Input.GetButton(m_Input))
+	
+
+		if(!IsActive)
 		{
-			if(!GetIsActive())
-			{
-				m_OriginalPlayerPosition = m_Player.transform.position;
-			}
+			m_OriginalPlayerPosition = m_Player.transform.position;
+
+			m_OriginalPlayerPosition = m_Player.transform.position;
+
 			Activate();
 			m_DeActivateCounter = 0;
 		}
