@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;	
 
-public class RotLim2 : MonoBehaviour 
+public class DoorLimitRestrain : MonoBehaviour 
 {
 	#region PublicMemberVariables
 	public float m_Maximum 		= 90;
@@ -10,7 +10,7 @@ public class RotLim2 : MonoBehaviour
 	public bool  m_Door;
 	public GameObject m_OtherLimit;
 	#endregion
-
+	
 	#region PrivateMemberVariables
 	private Transform m_LastTransform;
 	private float 	  m_TotalRotation = 0;
@@ -20,18 +20,18 @@ public class RotLim2 : MonoBehaviour
 	private float     m_OriginalMaximum;
 	private float     m_OriginalMinimum;
 	#endregion
-
-
+	
+	
 	void Start () 
 	{
 		m_OriginalMaximum = m_Maximum;
 		m_OriginalMinimum = m_Minimum;
-
+		
 		m_LastTransform = transform;
 		if(m_Door)
 		{
-			m_Maximum = m_OtherLimit.GetComponent<RotLim2>().m_Maximum;
-			m_Minimum = m_OtherLimit.GetComponent<RotLim2>().m_Minimum;
+			m_Maximum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Maximum;
+			m_Minimum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Minimum;
 		}
 	}
 	
@@ -66,13 +66,13 @@ public class RotLim2 : MonoBehaviour
 			CheckLimit();
 		}
 	}
-
+	
 	private void CheckLimit()
 	{
 		if(m_Delay == 0)
 		{
 			rigidbody.isKinematic = false;
-			m_TotalRotation 	  = m_OtherLimit.GetComponent<RotLim>().GetDifference() +	gameObject.GetComponent<RotLim>().GetDifference();
+			m_TotalRotation 	  = m_OtherLimit.GetComponent<DoorLimitCalculate>().GetDifference() +	gameObject.GetComponent<DoorLimitCalculate>().GetDifference();
 			if(m_TotalRotation < m_Maximum && m_TotalRotation > m_Minimum)
 			{
 				m_LastTransform = transform;
