@@ -7,13 +7,14 @@ using System.Collections;
  * Made by: Rasmus 04/04
  */
 
+[RequireComponent(typeof(Gravity))]
 [RequireComponent(typeof(Rigidbody))]
 public class PickUp : ObjectComponent
 {
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  = 20.0f;
 	public float m_InspectionViewDistance = 2.0f;
-	public float m_LerpSpeed			  = 1f;
+	public float m_LerpSpeed			  = 10f;
 	public string m_Input				  = "Fire1";
 	#endregion
 

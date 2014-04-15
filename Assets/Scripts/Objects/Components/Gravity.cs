@@ -10,7 +10,6 @@ using System.Collections;
 public class Gravity : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public string m_Message = "Effect";
 	public bool m_Gravity	= true;
 	#endregion
 	
