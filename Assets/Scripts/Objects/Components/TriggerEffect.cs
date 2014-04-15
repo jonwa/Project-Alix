@@ -9,8 +9,8 @@ Made by: Rasmus 08/04
 public class TriggerEffect : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public string m_Message 		= "Effect";
-	public bool m_AllowedFromStart	= true;
+	public string[] m_Messages;
+	public bool     m_AllowedFromStart = true;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -22,11 +22,11 @@ public class TriggerEffect : ObjectComponent
 	{
 		if(m_AllowedFromStart)
 		{
-			m_CanBeTriggered=true;
+			m_CanBeTriggered = true;
 		}
 		else
 		{
-			m_CanBeTriggered=false;
+			m_CanBeTriggered = false;
 		}
 	}
 	
@@ -38,12 +38,12 @@ public class TriggerEffect : ObjectComponent
 
 	public void AllowTriggering()
 	{
-		m_CanBeTriggered=true;
+		m_CanBeTriggered = true;
 	}
 
 	public void DisallowTriggering()
 	{
-		m_CanBeTriggered=false;
+		m_CanBeTriggered = false;
 	}
 
 	public bool GetAllowedTriggering()
@@ -53,13 +53,15 @@ public class TriggerEffect : ObjectComponent
 
 	public void ActivateTrigger()
 	{
-		if(m_Message.Equals("Effect"))
-		{
-			Debug.Log("Fått en triggereffekt");
-		}
-		else
-		{
-			SendMessage(m_Message);
+		for(int i = 0; i < m_Messages.Length; i++){
+			if(m_Messages[i].Equals("Effect"))
+			{
+				Debug.Log("Fått en triggerEffect");
+			}
+			else
+			{
+				SendMessage(m_Messages[i]);
+			}
 		}
 	}
 }
