@@ -25,6 +25,11 @@ public class FirstPersonController : MonoBehaviour
 	private bool m_Locked		 = false;
 	#endregion
 
+	public Vector3 Position
+	{
+		get { return rigidbody.position; }
+	}
+
 	void Awake()
 	{
 		rigidbody.useGravity = false;

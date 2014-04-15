@@ -109,7 +109,7 @@ public class Triggering : ObjectComponent {
 		{
 			for(int j = 0; j < tempArray.Length; j++)
 			{
-				if(m_Triggers[i] == tempArray[j].gameObject.GetComponent<Id>().GetId())
+				if(m_Triggers[i] == tempArray[j].gameObject.GetComponent<Id>().ObjectId)
 				{
 					m_GameObjects[arrayInt] = tempArray[j];
 					arrayInt++;
