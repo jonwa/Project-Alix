@@ -29,14 +29,12 @@ public class PickUp : ObjectComponent
 	
 	void Start()
 	{
-<<<<<<< HEAD
 		m_CameraTransform = Camera.main.transform;
-=======
 		m_CameraTransform  = Camera.main.transform;
 		//rigidbody.freezeRotation = true;
 		//rigidbody.useGravity = false;
+                                                           		
 		//rigidbody.constraints = RigidbodyConstraints.FreezeAll;
->>>>>>> 16d64c211aa03b5ce960dd4671ced0a5ecf540a0
 	}
 	
 	void Update()
@@ -125,13 +123,8 @@ public class PickUp : ObjectComponent
 		{
 			if(col.collider.CompareTag("Wall"))
 			{
-<<<<<<< HEAD
-				m_Move 			= false;
-				m_CollidedWall	= 40;
-=======
 				m_Move 		   = false;
 				m_CollidedWall = 40;
->>>>>>> 16d64c211aa03b5ce960dd4671ced0a5ecf540a0
 				//Debug.Log("Krockat med vägg");
 				Camera.main.SendMessage("Release");
 			}

@@ -57,12 +57,7 @@ public class DoorDrag : ObjectComponent
 
 	public override void Interact()
 	{
-<<<<<<< HEAD
-
-		if(GetIsActive())
-=======
 		if(IsActive)
->>>>>>> 16d64c211aa03b5ce960dd4671ced0a5ecf540a0
 		{
 			Vector3 m_RotationAxis;
 			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
@@ -118,4 +113,10 @@ public class DoorDrag : ObjectComponent
 		}
 		return forward;
 	}
+
+	public void ReleaseDoor()
+	{
+		Camera.main.SendMessage("Release");
+	}
+
 }
