@@ -60,12 +60,6 @@ public class FMOD_Listener : MonoBehaviour
 		{
 			bankPath = "jar:file://" + Application.dataPath + "!/assets";
 		}
-#if PLATFORM_PS4
-		else if (Application.platform == RuntimePlatform.PS4)
-		{
-			bankPath = Application.dataPath + "/StreamingAssets";
-		}
-#endif
 		else
 		{		
 			FMOD.Studio.UnityUtil.LogError("Unknown platform!");
@@ -208,12 +202,6 @@ public class FMOD_Listener : MonoBehaviour
 				string packageName = dirInfo.Parent.Name;
 				return "/data/data/" + packageName + "/lib";
 			}
-#if PLATFORM_PS4
-			else if (Application.platform == RuntimePlatform.PS4)
-			{
-				return Application.dataPath + "/Plugins";
-			}
-#endif
 			
 			FMOD.Studio.UnityUtil.LogError("Unknown platform!");
 			return "";
@@ -237,12 +225,6 @@ public class FMOD_Listener : MonoBehaviour
 		{
 			return "lib" + rawName + ".so";
 		}
-#if PLATFORM_PS4
-		else if (Application.platform == RuntimePlatform.PS4)
-		{
-			return rawName + ".prx";
-		}
-#endif
 		
 		FMOD.Studio.UnityUtil.LogError("Unknown platform!");
 		return "";		

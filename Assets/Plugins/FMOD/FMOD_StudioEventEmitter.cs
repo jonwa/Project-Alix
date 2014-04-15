@@ -74,11 +74,11 @@ public class FMOD_StudioEventEmitter : MonoBehaviour
 	{
 		if (asset != null)
 		{
-			evt = FMOD_StudioSystem.instance.GetEvent(asset.id);				
+			evt = FMOD_StudioSystem.instance.getEvent(asset.id);				
 		}
 		else if (!String.IsNullOrEmpty(path))
 		{
-			evt = FMOD_StudioSystem.instance.GetEvent(path);
+			evt = FMOD_StudioSystem.instance.getEvent(path);
 		}
 		else
 		{
