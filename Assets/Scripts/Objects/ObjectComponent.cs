@@ -38,10 +38,43 @@ public class ObjectComponent :  MonoBehaviour
     }
 
 
-    public virtual void Should()
-    {
-
-    }
+	//// Should-type flags
+	//protected class Unlock_t {};
+	//static protected Unlock_t Unlock = new Unlock_t();
+	//
+	////protected class DestructSelf_t {};
+	////static protected DestructSelf_t DestructSelf = new DestructSelf_t();
+	////
+	////protected class Hook_t {};
+	////static protected Hook_t Hook = new Hook_t();
+	//
+	//
+	//protected bool Should(Hook_t whenhitting, GameObject other)
+	//{
+	//	if (other == GetComponent<SpellData>().Caster)
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	if (other.GetComponent<SuperSolid> ())
+	//	{
+	//		return true;
+	//	}
+	//	
+	//	if (other.GetComponent<SpellData> ())
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	if (other.GetComponent<NonSolid> ())
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	return true;
+	//	
+	//	
+	//}
 
     public virtual void Interact()
     {

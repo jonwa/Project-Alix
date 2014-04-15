@@ -94,7 +94,7 @@ public class Raycasting : MonoBehaviour
 			m_InteractingWith = hit.collider.gameObject;
 			ObjectComponent[] objectArray;
 			objectArray = m_InteractingWith.GetComponents<ObjectComponent>();
-			Debug.Log("Träffade " + m_InteractingWith.name.ToString() + objectArray.Length.ToString());
+
 			foreach(ObjectComponent c in objectArray)
 			{
 				c.Interact();
