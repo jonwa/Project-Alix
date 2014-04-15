@@ -31,9 +31,7 @@ public class PickUp : ObjectComponent
 	void Start()
 	{
 		m_CameraTransform  = Camera.main.transform;
-		//rigidbody.freezeRotation = true;
-		//rigidbody.useGravity = false;
-		//rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+
 	}
 	
 	void Update()
@@ -73,6 +71,11 @@ public class PickUp : ObjectComponent
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
+
+			if(GetComponent<Inspect>())
+			{
+				GetComponent<Inspect>().OrigionalPosition =  transform.position;
+			}
 		}
 		else
 		{//When the object is close to the camera
