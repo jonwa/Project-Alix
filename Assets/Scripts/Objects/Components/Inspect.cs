@@ -5,6 +5,7 @@ using System.Collections;
  * 
  * Created by: Robert Datum: 02/04-14
  * Modified by: Jimmy 03-04-14
+ * 				Jon Wahlström 2014-04-14
  * 
  */
 
@@ -82,7 +83,7 @@ public class Inspect : ObjectComponent
 				targetPosition	   = m_OriginalPosition;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, m_LerpSpeed/10.0f);
 
-				if(Vector3.Distance(transform.position, targetPosition) > 0.1)
+				if(Vector3.Distance(transform.position, targetPosition) > 0.01)
 				{
 					m_IsOriginalPosition = false;
 				}
@@ -117,7 +118,6 @@ public class Inspect : ObjectComponent
 		}
 
 		//Check if we should inspect the object or not.
-
 		if(Input.GetButton(m_Input) && m_IsOriginalPosition)
 		{
 			if(!IsActive)
@@ -137,5 +137,7 @@ public class Inspect : ObjectComponent
 		{
 			DeActivate();
 		}
+		//Ignore collision with some object, determent by layer
+		Physics.IgnoreLayerCollision(9, 9, true);
 	}
 }

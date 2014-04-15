@@ -36,7 +36,7 @@ public class FirstPersonCamera : MonoBehaviour
 		if(m_Oculus == false)
 		{
 			//Locks the camera when inspection objects
-			if(m_Locked== false){
+			if(m_Locked == false){
 				//Rotation Y
 				m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity;
 				m_rotationY = Mathf.Clamp (m_rotationY, m_minimumY, m_maximumY);
