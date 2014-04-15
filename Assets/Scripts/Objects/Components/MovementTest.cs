@@ -7,7 +7,7 @@ using System.Collections;
  * 
  */
 
-public class MovementLimit : ObjectComponent
+public class MovementTest : ObjectComponent
 {
 	#region PublicMemberVariables
 	public float m_PositiveX;
@@ -57,11 +57,26 @@ public class MovementLimit : ObjectComponent
 		m_CurrentX = gameObject.transform.position.x;
 		m_CurrentY = gameObject.transform.position.y;
 		m_CurrentZ = gameObject.transform.position.z;
-
-		transform.position = CheckPosition (gameObject.transform.position);
-
 	}
-	
+	public Vector3 CheckMovement(Vector3 Offset)
+	{
+		float x = Offset.x;
+		float y = Offset.y;
+		float z = Offset.z;
+		
+		if(m_CurrentX+x > MaxX || m_CurrentX+x < MinX){
+			Offset.x = 0;
+		}
+		if(m_CurrentX+y > MaxY || m_CurrentX+y < MinY){
+			Offset.y = 0;
+		}
+		if(m_CurrentX+z > MaxZ || m_CurrentX+z < MinZ){
+			Offset.z = 0;
+		}
+		Debug.Log (Offset.z);
+		return Offset;
+	}
+
 	public Vector3 CheckPosition(Vector3 TargetPosition)
 	{
 		float x = TargetPosition.x;
@@ -80,10 +95,10 @@ public class MovementLimit : ObjectComponent
 			TargetPosition.y = MinY;		
 		}
 		if(z > MaxZ){
-			TargetPosition.z = MaxZ;	
+			TargetPosition.z = MaxZ;			
 		}
 		else if (z < MinZ) {
-			TargetPosition.z = MinZ;
+			TargetPosition.z = MinZ;		
 		}
 		return TargetPosition;
 	}
