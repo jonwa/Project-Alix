@@ -82,13 +82,13 @@ public class ObjectComponent :  MonoBehaviour
     }
 
     // If raycast hits object and left mouse button is pressed object is active
-    public void Activate()
+    public virtual void Activate()
     {
 		m_IsActive = true;
     }
 
 	//When left mouse button is released the object goes unactive
-	public void DeActivate()
+	public virtual void DeActivate()
 	{
 		m_IsActive = false;
 	}

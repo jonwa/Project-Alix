@@ -4,16 +4,17 @@ using System.Collections;
 
 /* Discription: Class for picking up an object and holding in front of you
  * 
- * Made by: Rasmus 04/04
+ * Created By: Rasmus 04/04
  */
 
+[RequireComponent(typeof(Gravity))]
 [RequireComponent(typeof(Rigidbody))]
 public class PickUp : ObjectComponent
 {
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  = 20.0f;
 	public float m_InspectionViewDistance = 2.0f;
-	public float m_LerpSpeed			  = 1f;
+	public float m_LerpSpeed			  = 10f;
 	public string m_Input				  = "Fire1";
 	#endregion
 
@@ -30,9 +31,7 @@ public class PickUp : ObjectComponent
 	void Start()
 	{
 		m_CameraTransform  = Camera.main.transform;
-		//rigidbody.freezeRotation = true;
-		//rigidbody.useGravity = false;
-		//rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+
 	}
 	
 	void Update()
@@ -72,6 +71,11 @@ public class PickUp : ObjectComponent
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
+
+			if(GetComponent<Inspect>())
+			{
+				GetComponent<Inspect>().OrigionalPosition =  transform.position;
+			}
 		}
 		else
 		{//When the object is close to the camera

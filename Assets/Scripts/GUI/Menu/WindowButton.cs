@@ -53,8 +53,8 @@ public class WindowButton : MonoBehaviour
 			WindowHandler.Default();
 			m_Window.transform.parent.GetComponent<MenuInput>().Active = false;
 
-			//unfreeze the camera position
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			//TODO: Add respawn ? 
+
 			break; 
 
 		case Action.LoadScene:
