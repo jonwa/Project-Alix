@@ -47,7 +47,6 @@ public class Move : ObjectComponent
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
-
 			if((m_Player.transform.position.magnitude - transform.position.magnitude) < m_DistanceToObject ||
 			   (m_Player.transform.position.magnitude - transform.position.magnitude) > -m_DistanceToObject)
 			{

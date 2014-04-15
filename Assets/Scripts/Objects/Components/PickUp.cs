@@ -41,7 +41,7 @@ public class PickUp : ObjectComponent
 		m_DeActivateCounter++;
 		if(m_DeActivateCounter > 10)
 		{
-			Physics.IgnoreLayerCollision(9, 9, false);
+			Physics.IgnoreLayerCollision(8, 9, false);
 			//rigidbody.useGravity=true;
 			m_HoldingObject=false;
 			//Color test=renderer.material.color;
@@ -71,6 +71,10 @@ public class PickUp : ObjectComponent
 			
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
+			if(gameObject.GetComponent<MovementLimit>())
+			{
+				targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
+			}
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
 		}
 		else
@@ -102,11 +106,14 @@ public class PickUp : ObjectComponent
 					
 				cameraForward *= m_InspectionViewDistance;
 				targetPosition = cameraPosition+cameraForward;
-
-
+				if(gameObject.GetComponent<MovementLimit>())
+				{
+					targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
+				}
 
 				//transform.position = targetPosition;
-				transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
+				//transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
+				transform.position = targetPosition;
 				//transform.rotation = m_CameraTransform.rotation;
 			}
 			//Used to stop the object rotating/fallen while holding
