@@ -30,6 +30,9 @@ public class PickUp : ObjectComponent
 	void Start()
 	{
 		m_CameraTransform  = Camera.main.transform;
+		//rigidbody.freezeRotation = true;
+		//rigidbody.useGravity = false;
+		//rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 	}
 	
 	void Update()
@@ -79,14 +82,14 @@ public class PickUp : ObjectComponent
 	public override void Interact ()
 	{
 		//Debug.Log(m_CameraTransform.forward.x);
-		if(m_CollidedWall==0)
+		if(m_CollidedWall == 0)
 		{
 			//Color test=renderer.material.color;
 			//test.a=0.5f;
 			//renderer.material.color = test;
 			//float alpha=0.5f;
 			//renderer.material.color.a = alpha;
-			m_DeActivateCounter=0;
+			m_DeActivateCounter = 0;
 
 			//Object is close enough and allowed to move
 			if(m_HoldingObject == true && m_Move == true)

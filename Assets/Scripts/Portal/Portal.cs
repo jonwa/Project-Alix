@@ -11,9 +11,9 @@ using System.Linq;
 public class Portal : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public int m_PortalId	  		 = 0;
-	public int m_TargetPortalId 	 = 0;
-	public int[] m_TargetPortals	 =  new int[PortalManager.NumberOfStages];
+	//public int m_PortalId	  		 = 0;
+	//public int m_TargetPortalId 	 = 0;
+	//public int[] m_TargetPortals	 =  new int[PortalManager.NumberOfStages];
 	#endregion
 
 	#region PrivateMemberVariables
@@ -24,21 +24,21 @@ public class Portal : ObjectComponent
 
 	void Awake()
 	{
-		m_TargetPortals = new int[PortalManager.NumberOfStages];
+		//m_TargetPortals = new int[PortalManager.NumberOfStages];
 	}
 
 	//Gets the portal that the player should be ported to from this one. And sets
 	void  GetTargetPortal()
 	{
-		Portal[] portals =  Object.FindObjectsOfType<Portal>();
-
-		foreach(Portal p in portals)
-		{
-			if(p.m_PortalId == m_TargetPortalId)
-			{
-				m_TargetPortal = p.transform;
-			}
-		}
+	//	Portal[] portals =  Object.FindObjectsOfType<Portal>();
+	//
+	//	foreach(Portal p in portals)
+	//	{
+	//		if(p.m_PortalId == m_TargetPortalId)
+	//		{
+	//			m_TargetPortal = p.transform;
+	//		}
+	//	}
 
 	}
 
@@ -47,10 +47,7 @@ public class Portal : ObjectComponent
 	{
 		if (!m_Colliding.Contains(collider)) 
 		{
-			if(m_TargetPortal == null)
-			{
-				GetTargetPortal(); 
-			}
+			m_TargetPortal = transform.parent.GetComponent<PortalPairHandler>().GetRemotePortal(transform.name);
 
 			float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
 			collider.gameObject.transform.Rotate(0, 180+angle, 0);
@@ -82,6 +79,11 @@ public class Portal : ObjectComponent
 	void OnTriggerExit(Collider collider)
 	{
 		m_Colliding.Remove(collider);
+	}
+
+	public void SetTargetPortal(Transform target)
+	{
+		m_TargetPortal = target;
 	}
 
 }
