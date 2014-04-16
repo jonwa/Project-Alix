@@ -24,6 +24,7 @@ public class Inspect : ObjectComponent
 	private int			m_DeActivateCounter  = 0;
 	private bool		m_IsOriginalPosition = true;
 	private bool		m_UnlockedCamera	 = true;
+	private bool		m_ShouldMoveBack	 = false;
 	#endregion
 
 
@@ -37,20 +38,24 @@ public class Inspect : ObjectComponent
 	{
 		if(!IsActive)
 		{
-			MoveToInspectDistance(false);
-
-			if(m_UnlockedCamera == false)
+			if(m_ShouldMoveBack)
+			{
+				MoveToInspectDistance(false);
+			}
+			if(m_DeActivateCounter > 15 &&  m_UnlockedCamera == false)
 			{
 				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
 				m_UnlockedCamera = true;
+				m_ShouldMoveBack = false;
 			}
+			m_DeActivateCounter++;
 		}
 		else
 		{
 			m_DeActivateCounter++;
 
-			if(m_DeActivateCounter > 10)
+			if(m_DeActivateCounter > 5)
 			{
 				DeActivate();
 			}
@@ -74,22 +79,24 @@ public class Inspect : ObjectComponent
 
 				cameraForward *= m_InspectionViewDistance;
 				targetPosition = cameraPosition+cameraForward;
+				transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
 			}
 			else
 			{
 				targetPosition	   = m_OriginalPosition;
-				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, m_LerpSpeed/10.0f);
 
 				if(Vector3.Distance(transform.position, targetPosition) > 0.01)
 				{
 					m_IsOriginalPosition = false;
+					transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, lerpSpeed/10.0f);
+					transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed/10.0f);
 				}
 				else
 				{
 					m_IsOriginalPosition = true;
+					m_ShouldMoveBack 	 = false;
 				}
 			}
-			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
 		}
 	}
 
@@ -123,6 +130,7 @@ public class Inspect : ObjectComponent
 				m_OriginalPosition = transform.position;
 				m_OriginalRotation = transform.rotation;
 				m_UnlockedCamera   = false;
+				m_ShouldMoveBack = true;
 			}
 
 			Activate();
