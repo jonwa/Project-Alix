@@ -4,7 +4,7 @@ using System.Collections;
 /* Discription: Class that holds data for the player, example health and alive/dead status
  * 
  * Created by: Jimmy Date: 2014-04-04
- * Modified by:
+ * Modified by: Jon Wahlstöm 2014-04-14
  */
 
 public class CharacterData : MonoBehaviour 
@@ -71,11 +71,6 @@ public class CharacterData : MonoBehaviour
 
 	public void ShowDeathMenu()
 	{
-
-		m_DeathMenu.SetActive(true);
 		m_DeathMenu.GetComponent<MenuInput>().Active = true;
-		
-		//freeze the camera position
-		Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 	}
 }

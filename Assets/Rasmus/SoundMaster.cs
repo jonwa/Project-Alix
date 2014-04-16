@@ -72,10 +72,11 @@ public class SoundMaster : MonoBehaviour
 
 	public void ResetVolumes()
 	{
-		m_MasterVolume 	    = m_OriginalMasterVolume;		
+		m_MasterVolume 	    = m_OriginalMasterVolume;
 		m_MusicVolume 	    = m_OriginalMusicVolume;
 		m_SoundEffectVolume = m_OriginalSoundEffectVolume;
 		m_OtherSoundVolume  = m_OriginalOtherSoundVolume;
+		UpdateVolumes();
 	}
 
 	private void UpdateVolumes()

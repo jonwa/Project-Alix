@@ -19,7 +19,7 @@ public class Move : ObjectComponent
 	#endregion
 
 	#region PublicMemberVariables
-	public string	m_PlayerName				= "Player Controller Example";
+	//public string	m_PlayerName				= "Player Controller Example";
 	public string	m_Input;
 	public float	m_DistanceToObject;
 	#endregion
@@ -27,7 +27,7 @@ public class Move : ObjectComponent
 	void Start()
 	{
 		//Change "Player Controller Example" to whatever Player is called when finished
-		m_Player = GameObject.Find (m_PlayerName); 
+		m_Player = Camera.main.transform.parent.gameObject; 
 		m_OriginalPlayerPosition = m_Player.transform.position;
 	}
 
@@ -43,11 +43,15 @@ public class Move : ObjectComponent
 	//Function for moving objects, moves the object with the player
 	public override void Interact()
 	{
+		if(m_Player == null)
+		{
+			m_Player = Camera.main.transform.parent.gameObject; 
+		}
+
 		if (IsActive) 
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
-
 			if((m_Player.transform.position.magnitude - transform.position.magnitude) < m_DistanceToObject ||
 			   (m_Player.transform.position.magnitude - transform.position.magnitude) > -m_DistanceToObject)
 			{
@@ -58,7 +62,7 @@ public class Move : ObjectComponent
 
 			}
 			//Debug.Log ("Distance to Object = "+m_DistanceToObject);
-			Debug.Log ("mPlayer= "+ (m_Player.transform.position.magnitude - transform.position.magnitude));
+			//Debug.Log ("mPlayer= "+ (m_Player.transform.position.magnitude - transform.position.magnitude));
 
 			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
 		}

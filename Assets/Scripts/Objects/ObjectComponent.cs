@@ -38,10 +38,43 @@ public class ObjectComponent :  MonoBehaviour
     }
 
 
-    public virtual void Should()
-    {
-
-    }
+	//// Should-type flags
+	//protected class Unlock_t {};
+	//static protected Unlock_t Unlock = new Unlock_t();
+	//
+	////protected class DestructSelf_t {};
+	////static protected DestructSelf_t DestructSelf = new DestructSelf_t();
+	////
+	////protected class Hook_t {};
+	////static protected Hook_t Hook = new Hook_t();
+	//
+	//
+	//protected bool Should(Hook_t whenhitting, GameObject other)
+	//{
+	//	if (other == GetComponent<SpellData>().Caster)
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	if (other.GetComponent<SuperSolid> ())
+	//	{
+	//		return true;
+	//	}
+	//	
+	//	if (other.GetComponent<SpellData> ())
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	if (other.GetComponent<NonSolid> ())
+	//	{
+	//		return false;
+	//	}
+	//	
+	//	return true;
+	//	
+	//	
+	//}
 
     public virtual void Interact()
     {
@@ -49,13 +82,13 @@ public class ObjectComponent :  MonoBehaviour
     }
 
     // If raycast hits object and left mouse button is pressed object is active
-    public void Activate()
+    public virtual void Activate()
     {
 		m_IsActive = true;
     }
 
 	//When left mouse button is released the object goes unactive
-	public void DeActivate()
+	public virtual void DeActivate()
 	{
 		m_IsActive = false;
 	}

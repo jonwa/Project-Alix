@@ -51,11 +51,16 @@ public class Raycasting : MonoBehaviour
 		}
 		else if(m_InteractingWith != null)
 		{
-			ObjectComponent[] objectArray;
-			objectArray = m_InteractingWith.GetComponents<ObjectComponent>();
-			foreach(ObjectComponent c in objectArray)
-			{
-				c.Interact();
+			if(Vector3.Distance(m_InteractingWith.transform.position,transform.position) > 5){
+				m_InteractingWith = null;
+			}
+			else{
+				ObjectComponent[] objectArray;
+				objectArray = m_InteractingWith.GetComponents<ObjectComponent>();
+				foreach(ObjectComponent c in objectArray)
+				{
+					c.Interact();
+				}
 			}
 		}
 	}
@@ -94,7 +99,7 @@ public class Raycasting : MonoBehaviour
 			m_InteractingWith = hit.collider.gameObject;
 			ObjectComponent[] objectArray;
 			objectArray = m_InteractingWith.GetComponents<ObjectComponent>();
-			Debug.Log("Träffade " + m_InteractingWith.name.ToString() + objectArray.Length.ToString());
+
 			foreach(ObjectComponent c in objectArray)
 			{
 				c.Interact();
