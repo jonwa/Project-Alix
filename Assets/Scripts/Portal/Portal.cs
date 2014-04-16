@@ -17,6 +17,7 @@ public class Portal : ObjectComponent
 	#endregion
 
 	#region PrivateMemberVariables
+	private int				  m_TargetPortalCounter = 0;
 	private int				  m_CurrentTargetTime;
 	private Transform 		  m_TargetPortal;
 	private HashSet<Collider> m_Colliding = new HashSet<Collider>();
@@ -24,23 +25,15 @@ public class Portal : ObjectComponent
 
 	void Awake()
 	{
-		//m_TargetPortals = new int[PortalManager.NumberOfStages];
+		m_TargetPortal  = transform.parent.GetComponent<PortalPairHandler>().GetRemotePortal(transform.name);
 	}
 
 	//Gets the portal that the player should be ported to from this one. And sets
-	void  GetTargetPortal()
+	public Transform  GetTargetPortal()
 	{
-	//	Portal[] portals =  Object.FindObjectsOfType<Portal>();
-	//
-	//	foreach(Portal p in portals)
-	//	{
-	//		if(p.m_PortalId == m_TargetPortalId)
-	//		{
-	//			m_TargetPortal = p.transform;
-	//		}
-	//	}
-
+		return transform.parent.GetComponent<PortalPairHandler>().GetRemotePortal(transform.name);;
 	}
+	
 
 	//When we collide with the portal we create a duplicate and 
 	void OnTriggerEnter(Collider collider)
