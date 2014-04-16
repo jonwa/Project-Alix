@@ -19,31 +19,31 @@ public class Gravity : ObjectComponent
 	// Use this for initialization
 	void Start () 
 	{
-		if(m_Gravity==true)
+		if(m_Gravity == true)
 		{
-			rigidbody.useGravity=true;
+			rigidbody.useGravity = true;
 		}
 		else
 		{
-			rigidbody.useGravity=false;
+			rigidbody.useGravity = false;
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if(m_Gravity==true)
+		if(m_Gravity == true)
 		{
-			rigidbody.useGravity=true;
+			rigidbody.useGravity = true;
 		}
 		else
 		{
-			rigidbody.useGravity=false;
+			rigidbody.useGravity = false;
 		}
 	}
 
 	public void SetGravity(bool bo)
 	{
-		m_Gravity=bo;
+		m_Gravity = bo;
 	}
 }

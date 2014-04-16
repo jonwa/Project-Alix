@@ -25,14 +25,29 @@ public class MovementLimit : ObjectComponent
 	private float m_CurrentX;
 	private float m_CurrentY;
 	private float m_CurrentZ;
+	private float MaxX;
+	private float MinX;
+	private float MaxY;
+	private float MinY;
+	private float MaxZ;
+	private float MinZ;
 	#endregion
-
+	
 	// Use this for initialization
 	void Start () 
 	{
 		m_OriginalX = gameObject.transform.position.x;
 		m_OriginalY = gameObject.transform.position.y;
 		m_OriginalZ = gameObject.transform.position.z;
+		MaxX = m_OriginalX + m_PositiveX;
+		MinX = m_OriginalX - m_NegativeX;
+		MaxY = m_OriginalY + m_PositiveY;
+		MinY = m_OriginalY - m_NegativeY;
+		MaxZ = m_OriginalZ + m_PositiveZ;
+		MinZ = m_OriginalZ - m_NegativeZ;
+		Debug.Log (MaxX+", "+MinX);
+		Debug.Log (MaxY+", "+MinY);
+		Debug.Log (MaxZ+", "+MinZ);
 		Activate();
 	}
 	
@@ -42,34 +57,34 @@ public class MovementLimit : ObjectComponent
 		m_CurrentX = gameObject.transform.position.x;
 		m_CurrentY = gameObject.transform.position.y;
 		m_CurrentZ = gameObject.transform.position.z;
+
+		transform.position = CheckPosition (gameObject.transform.position);
+
 	}
-
-	public override void Interact ()
+	
+	public Vector3 CheckPosition(Vector3 TargetPosition)
 	{
-		float MaxX = m_OriginalX + m_PositiveX;
-		float MinX = m_OriginalX - m_NegativeX;
-		float MaxY = m_OriginalY + m_PositiveY;
-		float MinY = m_OriginalY - m_NegativeY;
-		float MaxZ = m_OriginalZ + m_PositiveZ;
-		float MinZ = m_OriginalY - m_NegativeY;
-
-		if(m_CurrentX > MaxX){
-			transform.position = new Vector3(MaxX,m_CurrentY,m_CurrentZ);
+		float x = TargetPosition.x;
+		float y = TargetPosition.y;
+		float z = TargetPosition.z;
+		if(x > MaxX){
+			TargetPosition.x = MaxX;
 		}
-		else if (m_CurrentX < MinX) {
-			transform.position = new Vector3(MinX,m_CurrentY,m_CurrentZ);
+		else if (x < MinX) {
+			TargetPosition.x = MinX;
 		}
-		if(m_CurrentY > MaxY){
-			transform.position = new Vector3(m_CurrentX,MaxY,m_CurrentZ);
+		if(y > MaxY){
+			TargetPosition.y = MaxY;
 		}
-		else if (m_CurrentY < MinY) {
-			transform.position = new Vector3(m_CurrentX,MinY,m_CurrentZ);		
+		else if (y < MinY) {
+			TargetPosition.y = MinY;		
 		}
-		if(m_CurrentZ > MaxZ){
-			transform.position = new Vector3(m_CurrentX,m_CurrentY,MaxZ);			
+		if(z > MaxZ){
+			TargetPosition.z = MaxZ;	
 		}
-		else if (m_CurrentZ < MinZ) {
-			transform.position = new Vector3(m_CurrentX,m_CurrentY,MinZ);			
+		else if (z < MinZ) {
+			TargetPosition.z = MinZ;
 		}
+		return TargetPosition;
 	}
 }
