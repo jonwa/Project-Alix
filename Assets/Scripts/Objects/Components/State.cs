@@ -18,10 +18,10 @@ public class State : ObjectComponent
 				}
 	#endregion
 	
-	public string States
-	{
-		get { return m_State; }
-	}
+	//public string States
+	//{
+	//	get { return m_State; }
+	//}
 
 
 }

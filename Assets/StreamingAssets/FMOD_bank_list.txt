@@ -1,2 +1,2 @@
-Master Bank.bank.strings
 Master Bank.bank
+Master Bank.strings.bank

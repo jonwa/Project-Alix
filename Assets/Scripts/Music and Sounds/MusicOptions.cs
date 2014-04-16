@@ -11,7 +11,7 @@ using System.Collections;
 public class MusicOptions : MonoBehaviour 
 {
 	[Range(0,10)]
-	public float m_Volume 			= 1.0f;
+	public float m_Volume 	= 1.0f;
 
 	private FMOD.Studio.MixerStrip masterBus;
 

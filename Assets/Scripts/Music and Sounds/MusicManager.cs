@@ -10,6 +10,8 @@ using FMOD.Studio;
  * Created by: Sebastian Olsson 15/04-14
  * Modified by:
  */
+//TODO: Rensa scriptet på skit, skriv ett smidigt sätt att lägga till parametrar vid behov.
+
 
 public class MusicManager : MonoBehaviour 
 {
@@ -30,9 +32,6 @@ public class MusicManager : MonoBehaviour
 		set{ m_Location = value; }
 		get{ return m_Location; }
 	}
-
-	public void hej(){
-		}
 
 	public float Combat
 	{
@@ -71,12 +70,12 @@ public class MusicManager : MonoBehaviour
 	{
 		if (m_Asset != null)
 		{
-			m_Event = FMOD_StudioSystem.instance.getEvent(m_Asset.id);
+			m_Event = FMOD_StudioSystem.instance.GetEvent(m_Asset.id);
 			
 		}
 		else if (!String.IsNullOrEmpty(m_Path))
 		{
-			m_Event = FMOD_StudioSystem.instance.getEvent(m_Path);
+			m_Event = FMOD_StudioSystem.instance.GetEvent(m_Path);
 		}
 		else
 		{
