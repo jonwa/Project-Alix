@@ -18,7 +18,7 @@ using System.Collections;
 public class WindowButton : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public enum Action{	None, Show, Hide, Continue, LoadScene, ExitApp, ExitToMain };
+	public enum Action{	None, Show, Hide, Continue, Close, LoadScene, ExitApp, ExitToMain };
 
 	public string 	  m_SceneName 	 = null;
 	public GameObject m_Window 	     = null; 
