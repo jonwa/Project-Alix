@@ -73,6 +73,7 @@ public class Pushable : ObjectComponent
 		}
 		else
 		{
+			Camera.main.SendMessage("Release");
 			DeActivate();
 		}
 	}

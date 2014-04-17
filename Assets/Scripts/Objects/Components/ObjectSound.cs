@@ -13,6 +13,7 @@ using FMOD.Studio;
 //TODO: Om man går in i en trigger om och om igen så ska inte ljudet spelas om det redan körs.
 //		Kolla parametrarna med ljudläggarna, vad de vill ha samt vad för ljudeffekter som ska finnas i spelet.
 
+[RequireComponent(typeof(BoxCollider))]
 public class ObjectSound : ObjectComponent 
 {
 	private FMOD.Studio.EventInstance 		m_Event;
@@ -20,10 +21,9 @@ public class ObjectSound : ObjectComponent
 	private string 							m_Path;
 	private bool							m_Started;
 	private string							m_PlayerName = "Player Controller Example";
-
-
-	[Range(0,1)] public float		m_Location;
+	
 	public FMODAsset				m_Asset;
+	[Range(0,1)] public float		m_Location;
 	public bool 					m_StartOnAwake 	= true;
 	public bool						m_StartOnTrigger = false;
 
@@ -66,9 +66,24 @@ public class ObjectSound : ObjectComponent
 		{
 			if(collider.gameObject.name == m_PlayerName)
 			{
-				StartEvent();
+				if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED)
+				{
+					StartEvent();
+				}
 			}
 		}
+	}
+	public FMOD.Studio.PLAYBACK_STATE getPlaybackState()
+	{
+		if (m_Event == null || !m_Event.isValid())
+			return FMOD.Studio.PLAYBACK_STATE.STOPPED;
+		
+		FMOD.Studio.PLAYBACK_STATE state = PLAYBACK_STATE.IDLE;
+		
+		if (ERRCHECK (m_Event.getPlaybackState(out state)) == FMOD.RESULT.OK)
+			return state;
+		
+		return FMOD.Studio.PLAYBACK_STATE.STOPPED;
 	}
 
 	void OnDisable()
@@ -90,7 +105,7 @@ public class ObjectSound : ObjectComponent
 		}
 		else
 		{
-			FMOD.Studio.UnityUtil.LogError("No asset or path specified for Event Emitter");
+			FMOD.Studio.UnityUtil.LogError("No Asset/path for the Event");
 		}
 		m_Started = true;
 	}
@@ -101,18 +116,18 @@ public class ObjectSound : ObjectComponent
 		{
 			CacheEventInstance();
 		}
-		
-		// Attempt to release as oneshot
+
 		if (m_Event != null && m_Event.isValid())
 		{
 			ERRCHECK(m_Event.start());
 		}
 		else
 		{
-			FMOD.Studio.UnityUtil.LogError("Event retrieval failed: " + m_Path);
+			FMOD.Studio.UnityUtil.LogError("Event failed: " + m_Path);
 		}
 	}
-	
+
+	//Checks for errors
 	FMOD.RESULT ERRCHECK(FMOD.RESULT result)
 	{
 		FMOD.Studio.UnityUtil.ERRCHECK(result);

@@ -131,7 +131,7 @@ public class PickUp : ObjectComponent
 			rigidbody.velocity   		= Vector3.zero;
 			rigidbody.angularVelocity 	= Vector3.zero;
 			//Ignore collision with some object, determent by layer
-			Physics.IgnoreLayerCollision(9, 9, true);
+			//Physics.IgnoreLayerCollision(9, 9, true);
 		}
 	}
 

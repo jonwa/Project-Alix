@@ -79,6 +79,7 @@ public class Move : ObjectComponent
 		}
 		else
 		{
+			Camera.main.SendMessage("Release");
 			DeActivate();
 		}
 	}
