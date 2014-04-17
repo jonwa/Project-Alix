@@ -35,11 +35,6 @@
 		{
 			fragmentInput o;
 			
-			//if(v.vertex.x < 15)
-			//{
-			//	v.vertex.y += _Time*20;
-			//}
-			
 			o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
 			o.color = _MyColor;
 			o.color.x = clamp(v.vertex.x, 0.2, 0.5);
@@ -49,16 +44,6 @@
 		
 		half4 frag( fragmentInput l ) : COLOR
 		{
-			//float4 test = _MyColor;
-			//test.x = sin(_Time * 20);
-			//if(l.pos.x > 0)
-			//{
-			//	return float4(0.0, 0.0, 1.0, 0.0);
-			//}
-			//else
-			//{
-			//	return l.color;//test;//float4(1.0, 0.0, 0.0, 0.0);
-			//}
 			return l.color;
 		}
 		

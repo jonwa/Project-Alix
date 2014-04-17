@@ -6,7 +6,7 @@
 		_Speed ("Speed", Range (0,100)) = 10
 		_Height ("Height", Range (0,0.2)) = 0.05
 		_Disorient ("Disorient", Range (0,0.5)) = 0.05
-		_Delay ("Delay", Range (0,10)) = 1
+		_Delay ("Delay", Range (-1,1)) = 0.5
 	}
 	SubShader 
 	{
@@ -45,9 +45,12 @@
 			o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
 			o.uv = v.texCoord;
 			//Here's where the magic happens
-			if(o.uv.x - _Height < tan(_Time.x * _Speed) && o.uv.x + _Height > tan(_Time.x * _Speed))
+			if(_SinTime.z > _Delay)
 			{
-				o.uv.y += _Disorient;
+				if(o.uv.x - _Height < tan(_Time.x * _Speed) && o.uv.x + _Height > tan(_Time.x * _Speed))
+				{
+					o.uv.y += _Disorient;
+				}
 			}
 			
 			return o;
