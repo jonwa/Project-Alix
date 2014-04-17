@@ -10,18 +10,16 @@ using System.Collections;
 [RequireComponent(typeof(Id))]
 public class State : ObjectComponent
 {
+
 	#region PublicMemberVariables
-	public enum m_State {
-				 Pocket,
-				 InActive,
-				 Active
-				}
-	#endregion
-	
-	public string States
+	public enum m_State 
 	{
-		get { return " "; }//m_State; }
+		 Pocket,
+		 InActive,
+		 Active
 	}
 
+	//get { return " "; }//m_State; }
+	#endregion
 
 }

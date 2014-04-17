@@ -35,9 +35,12 @@ public class WindowHandler : MonoBehaviour
 	public static void Default()
 	{
 		Clear();
-		m_CurrentWindow = m_DefaultWindow; 
-		m_CurrentWindow.gameObject.SetActive(true); 
-		m_History.Push(m_CurrentWindow);
+		if(m_CurrentWindow != null)
+		{
+			m_CurrentWindow = m_DefaultWindow; 
+			m_CurrentWindow.gameObject.SetActive(true); 
+			m_History.Push(m_CurrentWindow);
+		}
 	}
 
 	public static void Show(GameObject window)

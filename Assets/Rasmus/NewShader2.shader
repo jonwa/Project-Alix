@@ -3,6 +3,10 @@
 	Properties 
 	{
 		_MainTex ("Base (RGB)", 2D) = "white"  {}
+		_Speed ("Speed", Range (0,100)) = 10
+		_Height ("Height", Range (0,0.2)) = 0.05
+		_Disorient ("Disorient", Range (0,0.5)) = 0.05
+		_Delay ("Delay", Range (0,10)) = 1
 	}
 	SubShader 
 	{
@@ -16,8 +20,12 @@
 		#include "UnityCG.cginc"
 
 		sampler2D _MainTex;
-
-		/////////
+		float _Speed;
+		float _Height;
+		float _Disorient;
+		float _Delay;
+		
+		////////////
 		struct vertexInput
 		{
 			float4 vertex : POSITION;
@@ -36,29 +44,21 @@
 			
 			o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
 			o.uv = v.texCoord;
-			if(o.uv.x - 0.1 < sin(_Time.x * 100) && o.uv.x + 0.1 > sin(_Time.x * 100))
+			//Here's where the magic happens
+			if(o.uv.x - _Height < tan(_Time.x * _Speed) && o.uv.x + _Height > tan(_Time.x * _Speed))
 			{
-				o.uv.y += 0.2;
+				o.uv.y += _Disorient;
 			}
-			
-			//_SinTime : Time (t);
 			
 			return o;
 		}
 		
 		half4 frag( fragmentInput l ) : COLOR
 		{
-			//if(l.uv.x > 0.5)
-			//{
-			//	return float4 (0.5);
-			//}
-			//else
-			//{
-				return tex2D( _MainTex, l.uv);	
-			//}
+			return tex2D( _MainTex, l.uv);	
 		}
 		
-		/////
+		////////////
 		ENDCG
 		}
 	} 
