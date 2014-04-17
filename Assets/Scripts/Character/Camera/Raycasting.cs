@@ -73,7 +73,7 @@ public class Raycasting : MonoBehaviour
 		}
 		else if(m_InteractingWith != null)
 		{
-			if(Vector3.Distance(m_InteractingWith.transform.position,transform.position) > 5){
+			if(Vector3.Distance(m_InteractingWith.transform.position,transform.position) > m_Distance){
 				m_InteractingWith = null;
 			}
 			else{

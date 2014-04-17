@@ -2,6 +2,10 @@
 [Tt]emp/
 [Oo]bj/
 
+
+*.mp4
+*.avi
+*.mov
 *.sln
 *.userprefs
 *.csproj
