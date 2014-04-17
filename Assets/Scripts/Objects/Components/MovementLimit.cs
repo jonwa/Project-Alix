@@ -22,9 +22,6 @@ public class MovementLimit : ObjectComponent
 	private float m_OriginalX;
 	private float m_OriginalY;
 	private float m_OriginalZ;
-	private float m_CurrentX;
-	private float m_CurrentY;
-	private float m_CurrentZ;
 	private float MaxX;
 	private float MinX;
 	private float MaxY;
@@ -45,21 +42,13 @@ public class MovementLimit : ObjectComponent
 		MinY = m_OriginalY - m_NegativeY;
 		MaxZ = m_OriginalZ + m_PositiveZ;
 		MinZ = m_OriginalZ - m_NegativeZ;
-		Debug.Log (MaxX+", "+MinX);
-		Debug.Log (MaxY+", "+MinY);
-		Debug.Log (MaxZ+", "+MinZ);
 		Activate();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		m_CurrentX = gameObject.transform.position.x;
-		m_CurrentY = gameObject.transform.position.y;
-		m_CurrentZ = gameObject.transform.position.z;
-
 		transform.position = CheckPosition (gameObject.transform.position);
-
 	}
 	
 	public Vector3 CheckPosition(Vector3 TargetPosition)

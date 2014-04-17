@@ -10,6 +10,7 @@ using System.Collections;
 [RequireComponent(typeof(Id))]
 public class State : ObjectComponent
 {
+
 	//public string States
 	//{
 	//	get { return m_State; }
@@ -21,4 +22,5 @@ public class State : ObjectComponent
 		 InActive,
 		 Active
 	}
+
 }

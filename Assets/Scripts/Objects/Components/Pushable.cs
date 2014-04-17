@@ -5,7 +5,7 @@ using System.Collections;
  * Used to push/pull drawers, open them Amnesia style
  * 
  * Created by: Sebastian Olsson 2014-04-08
- * Modified by:
+ * Modified by: Robert Siik 2014-04-17 : Added compability with MovementLimit
  */
 
 public class Pushable : ObjectComponent 
@@ -62,7 +62,12 @@ public class Pushable : ObjectComponent
 			m_MouseYPosition = Input.GetAxis(m_VerticalInput);
 
 			PlayerForward();
-			transform.position += m_Delta * m_MoveSpeed;
+			Vector3 targetPosition = transform.position + m_Delta * m_MoveSpeed;
+			if(gameObject.GetComponent<MovementLimit>())
+			{
+				targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
+			}
+			transform.position = targetPosition;
 		}
 		if(Input.GetButton(m_Input))
 		{

@@ -40,7 +40,7 @@ public class PickUp : ObjectComponent
 		m_DeActivateCounter++;
 		if(m_DeActivateCounter > 10)
 		{
-			Physics.IgnoreLayerCollision(8, 9, false);
+			Physics.IgnoreLayerCollision(9, 9, false);
 			//rigidbody.useGravity=true;
 			m_HoldingObject = false;
 			//Color test=renderer.material.color;
