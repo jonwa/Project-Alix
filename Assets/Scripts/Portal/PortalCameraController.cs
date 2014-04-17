@@ -20,7 +20,9 @@ public class PortalCameraController : MonoBehaviour
 				m.material = new Material(m.material);
 				m.material.mainTexture = rt;
 				mat = m.material;
-				Debug.Log(rt.depth.ToString());
+                //... Test!
+                Debug.Log(m.renderer.material.renderQueue);
+                m.renderer.material.renderQueue = 100;
 			}
 		}
 
@@ -46,12 +48,32 @@ public class PortalCameraController : MonoBehaviour
 		Transform	targetPortal = GetComponent<Portal>().GetTargetPortal();
 		Camera 		targetCam 	 = targetPortal.GetComponent<PortalCameraController>().GetCamera();
 		Camera 		cam 		 = Camera.main;
-		Quaternion  q 			 = Quaternion.FromToRotation(-targetPortal.up, cam.transform.forward);
-		targetCam.targetTexture = rt; //(rt.colorBuffer, rt.depthBuffer);
+		targetCam.targetTexture  = rt; //(rt.colorBuffer, rt.depthBuffer);
 
-		targetCam.transform.position = transform.position + (cam.transform.position - targetPortal.position);
-		targetCam.transform.LookAt(targetCam.transform.position + q * transform.up, targetPortal.transform.forward);
-		targetCam.nearClipPlane = (targetCam.transform.position - transform.position).magnitude - 0.3f;
+
+        Vector3 pos = targetPortal.transform.InverseTransformPoint(cam.transform.position);
+        pos.x      -= pos.x;
+        pos.z      -= pos.z;
+
+        m_MyCamera.transform.localPosition = pos;
+		//FRÅGA SEBASTIAN OM DENNA FORMELN!
+		float scale = Mathf.Pow((Vector3.Distance(targetPortal.transform.position, cam.transform.position)), 1.5f);
+		Debug.Log("Scale: " + scale.ToString());
+		m_MyCamera.fieldOfView = 60.0f-scale;
+        Quaternion rot = Quaternion.Inverse(targetPortal.transform.rotation) * cam.transform.rotation;
+        rot = Quaternion.AngleAxis(180.0f, Vector3.up) * rot;
+		m_MyCamera.transform.localRotation = rot;
+
+
+
+
+
+
+        //Weird controlls.. doesnt work.. V
+        //Quaternion  q 			 = Quaternion.FromToRotation(targetPortal.up, cam.transform.forward);
+        //targetCam.transform.position = transform.position + (cam.transform.position - targetPortal.position);
+        //targetCam.transform.LookAt(targetCam.transform.position + q * transform.up, targetPortal.transform.forward);
+        //targetCam.nearClipPlane = (targetCam.transform.position - transform.position).magnitude - 0.3f;
 
 	}
 }
