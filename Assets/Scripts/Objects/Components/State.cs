@@ -20,7 +20,7 @@ public class State : ObjectComponent
 	
 	public string States
 	{
-		get { return m_State; }
+		get { return " "; }//m_State; }
 	}
 
 
