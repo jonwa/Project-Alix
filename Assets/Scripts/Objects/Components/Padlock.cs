@@ -1,27 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* Allows you to open a book
+/* Opens a padlock window in which the user can choose
+ * to enter a code. Can be used for certain puzzles. 
  * 
  * Created By: Jon Wahlström 2014-04-16
  * Modified By: 
  */
 
-public class Read : ObjectComponent 
+public class Padlock : ObjectComponent 
 {
-	#region publicMemberVariables
-	public GameObject m_Window = null;
+	#region PublicMemberVariables
+	public GameObject m_Window = null; 
 	public string 	  m_Input  = null; 
 	#endregion
 
-
 	public override void Interact ()
 	{
-		if(m_Window == null) return; 
-
 		if(IsActive && Input.GetButtonDown(m_Input))
 		{
 			m_Window.SetActive(true);
+
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 		}
 		else
