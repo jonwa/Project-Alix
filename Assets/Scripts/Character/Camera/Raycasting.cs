@@ -43,7 +43,6 @@ public class Raycasting : MonoBehaviour
 		{
 			ClickToInteract();
 		}
-
 	}
 
 	//Starts Interact with object when mouse button is clicked once over object and releases the object when button is pressed again

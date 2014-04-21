@@ -27,7 +27,8 @@ public class Cursor : MonoBehaviour
 
 	void Start()
 	{
-		//Screen.showCursor  = false;
+
+		Screen.showCursor  = false;
 
 		m_DefaultTexture   = m_DefaultCrossHair;
 		m_CrossHairTexture = m_DefaultCrossHair;
