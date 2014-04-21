@@ -131,7 +131,9 @@ public class PickUp : ObjectComponent
 			rigidbody.velocity   		= Vector3.zero;
 			rigidbody.angularVelocity 	= Vector3.zero;
 			//Ignore collision with some object, determent by layer
-			Physics.IgnoreLayerCollision(9, 9, true);
+			//Physics.IgnoreLayerCollision(9, 9, true);
+			//collider.enabled=false;
+			rigidbody.detectCollisions = false;
 		}
 	}
 
@@ -150,7 +152,7 @@ public class PickUp : ObjectComponent
 			}
 			else//Collision with other object, don't collide
 			{
-				//Debug.Log("Krockat med ngt");
+				Debug.Log("Krockat med ngt");
 			}
 		}
 		//m_Colliding=true;

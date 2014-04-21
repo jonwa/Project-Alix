@@ -62,7 +62,12 @@ public class Pushable : ObjectComponent
 			m_MouseYPosition = Input.GetAxis(m_VerticalInput);
 
 			PlayerForward();
-			transform.position += m_Delta * m_MoveSpeed;
+			Vector3 targetPosition = transform.position + m_Delta * m_MoveSpeed;
+			if(gameObject.GetComponent<MovementLimit>())
+			{
+				targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
+			}
+			transform.position = targetPosition;
 		}
 		if(Input.GetButton(m_Input))
 		{

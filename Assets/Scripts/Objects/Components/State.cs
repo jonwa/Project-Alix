@@ -11,17 +11,13 @@ using System.Collections;
 public class State : ObjectComponent
 {
 	#region PublicMemberVariables
-	public enum m_State {
-				 Pocket,
-				 InActive,
-				 Active
-				}
+	public enum m_State 
+	{
+		 Pocket,
+		 InActive,
+		 Active
+	}
 	#endregion
 	
-	public string States
-	{
-		get { return m_State; }
-	}
-
 
 }
