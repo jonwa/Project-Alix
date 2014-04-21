@@ -25,7 +25,7 @@ public class Raycasting : MonoBehaviour
 	private bool m_ShowHoover = true;
 	#endregion
 
-	public bool Hoover
+	public bool ShowHoover
 	{
 		set { m_ShowHoover = value; }
 	}
@@ -33,15 +33,7 @@ public class Raycasting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		// So that the hoover effect resets to its normal texture
-		// whenever a book or padlock window is visible. 
-		if(m_ShowHoover)
-		{
-			ConstantCast();
-		}
-		else{
-			Cursor.Default();
-		}
+		Cast (m_ShowHoover);
 
 		if(m_HoldToInteract)
 		{
@@ -121,31 +113,37 @@ public class Raycasting : MonoBehaviour
 				c.Interact();
 			}
 		}
-
 	}
 
-	void ConstantCast()
+	void Cast(bool showHoover)
 	{
-		RaycastHit hit;
-		Ray ray = new Ray(transform.position, transform.forward);
-		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
-		
-		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+		if(showHoover)
 		{
-			HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
+			RaycastHit hit;
+			Ray ray = new Ray(transform.position, transform.forward);
+			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
 			
-			if(hoover != null)
+			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
 			{
-				hoover.Hoover();
+				HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
+				
+				if(hoover != null)
+				{
+					Cursor.SetCursor(hoover.HooverTexture, hoover.Description, true);
+				}
+				else
+				{
+					Cursor.SetCursor(null, null, false);
+				}
 			}
 			else
 			{
-				Cursor.Default();
+				Cursor.SetCursor(null, null, true);
 			}
 		}
 		else
 		{
-			Cursor.Default();
+			Cursor.SetCursor(null, null, false);
 		}
 	}
 

@@ -12,10 +12,16 @@ public class HooverEffect : ObjectComponent
 {
 	#region publicMemberVariables
 	public Texture m_HooverEffect;
+	public string  m_Description  = null;
 	#endregion
 
-	public void Hoover()
+	public Texture HooverTexture
 	{
-		Cursor.CrossHair = m_HooverEffect;
+		get { return m_HooverEffect; }
+	}
+
+	public string Description
+	{
+		get { return m_Description; }
 	}
 }
