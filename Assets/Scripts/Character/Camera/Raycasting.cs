@@ -6,7 +6,7 @@ using System.Collections;
  * until it hits an object with ObjectComponent's then activates Interact on that object.
  * 
  * Created by: Sebastian / Jimmy  Date: 2014-04-04
- * Modified by: Jon Wahlström 2014-04-16
+ * Modified by: Jon Wahlström 2014-04-21
  * 
  */
 
@@ -21,31 +21,25 @@ public class Raycasting : MonoBehaviour
 	#endregion
 	#region PrivateMemberVariables
 	private GameObject m_InteractingWith;
+
+	private bool m_ShowHoover = true;
 	#endregion
+
+	public bool Hoover
+	{
+		set { m_ShowHoover = value; }
+	}
 
 	// Update is called once per frame
 	void Update () 
 	{
-		RaycastHit hit;
-		Ray ray = new Ray(transform.position, transform.forward);
-		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
-
-		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+		// So that the hoover effect resets to its normal texture
+		// whenever a book or padlock window is visible. 
+		if(m_ShowHoover)
 		{
-			HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
-
-			if(hoover != null)
-			{
-				hoover.Hoover();
-			}
-			else
-			{
-				Cursor.Default();
-			}
-
+			ConstantCast();
 		}
-		else
-		{
+		else{
 			Cursor.Default();
 		}
 
@@ -128,6 +122,31 @@ public class Raycasting : MonoBehaviour
 			}
 		}
 
+	}
+
+	void ConstantCast()
+	{
+		RaycastHit hit;
+		Ray ray = new Ray(transform.position, transform.forward);
+		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
+		
+		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+		{
+			HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
+			
+			if(hoover != null)
+			{
+				hoover.Hoover();
+			}
+			else
+			{
+				Cursor.Default();
+			}
+		}
+		else
+		{
+			Cursor.Default();
+		}
 	}
 
 	//Releases the grip of the object we are interacting with right now.
