@@ -40,9 +40,10 @@ public class PickUp : ObjectComponent
 		m_DeActivateCounter++;
 		if(m_DeActivateCounter > 10)
 		{
-			Physics.IgnoreLayerCollision(8, 9, false);
+			Physics.IgnoreLayerCollision(9, 9, false);
 			//rigidbody.useGravity=true;
 			m_HoldingObject = false;
+			//collider.isTrigger=false;
 			//Color test=renderer.material.color;
 			//test.a=1.0f;
 			//renderer.material.color = test;
@@ -131,10 +132,17 @@ public class PickUp : ObjectComponent
 			rigidbody.velocity   		= Vector3.zero;
 			rigidbody.angularVelocity 	= Vector3.zero;
 			//Ignore collision with some object, determent by layer
+
 			//Physics.IgnoreLayerCollision(9, 9, true);
 			//collider.enabled=false;
 			rigidbody.detectCollisions = false;
+
 		}
+	}
+
+	public void OnTriggerEnter()
+	{
+		Debug.Log("Aha!");
 	}
 
 	//Check collison

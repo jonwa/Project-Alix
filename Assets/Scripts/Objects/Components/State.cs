@@ -18,6 +18,6 @@ public class State : ObjectComponent
 		 Active
 	}
 	#endregion
-	
+
 
 }

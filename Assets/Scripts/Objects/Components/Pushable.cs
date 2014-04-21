@@ -5,7 +5,7 @@ using System.Collections;
  * Used to push/pull drawers, open them Amnesia style
  * 
  * Created by: Sebastian Olsson 2014-04-08
- * Modified by:
+ * Modified by: Robert Siik 2014-04-17 : Added compability with MovementLimit
  */
 
 public class Pushable : ObjectComponent 
@@ -78,6 +78,7 @@ public class Pushable : ObjectComponent
 		}
 		else
 		{
+			Camera.main.SendMessage("Release");
 			DeActivate();
 		}
 	}
