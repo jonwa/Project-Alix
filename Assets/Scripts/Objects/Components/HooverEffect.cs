@@ -14,7 +14,6 @@ public class HooverEffect : ObjectComponent
 	public Texture m_HooverEffect;
 	#endregion
 
-
 	public void Hoover()
 	{
 		Cursor.CrossHair = m_HooverEffect;

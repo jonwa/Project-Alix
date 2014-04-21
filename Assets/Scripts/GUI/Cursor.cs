@@ -17,9 +17,6 @@ public class Cursor : MonoBehaviour {
 
 	void Start()
 	{
-		// hides the windows cursor
-		Screen.showCursor = false;
-
 		m_Cursor = m_CrossHair; 
 		m_Default = m_CrossHair;
 	}
