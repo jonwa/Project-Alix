@@ -75,7 +75,7 @@ public class Pull : ObjectComponent
 					//Debug.Log(m_moveY);
 				}
 				//transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
-				transform.Rotate(0,m_move,0,Space.Self);
+				transform.Rotate(m_move,0,0,Space.Self);
 				//transform.Rotate(
 			}
 			if(m_YRotation){
@@ -86,7 +86,7 @@ public class Pull : ObjectComponent
 				{
 					m_move = gameObject.GetComponent<RotationLimit>().CheckRotation(m_move,"y");
 				}
-				transform.Rotate(0,0,m_move,Space.Self);
+				transform.Rotate(0,m_move,0,Space.Self);
 			}
 			if(m_ZRotation){
 				m_move = Input.GetAxis(m_MouseAxisInputZ) * m_Sensitivity;
@@ -96,7 +96,7 @@ public class Pull : ObjectComponent
 				{
 					m_move = gameObject.GetComponent<RotationLimit>().CheckRotation(m_move,"z");
 				}
-				transform.Rotate(m_move,0,0,Space.Self);
+				transform.Rotate(0,0,m_move,Space.Self);
 			}
 			
 

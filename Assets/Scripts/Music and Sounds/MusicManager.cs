@@ -31,13 +31,7 @@ public class MusicManager : MonoBehaviour
 		get{ return m_Element0; }
 	}
 
-	public float Element1
-	{
-		set{ m_Element1 = value; }
-		get{ return m_Element1; }
-	}
-
-
+	
 	void Start()
 	{
 		CacheEventInstance();
