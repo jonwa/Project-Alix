@@ -33,9 +33,9 @@ public class MovementLimit : ObjectComponent
 	// Use this for initialization
 	void Start () 
 	{
-		m_OriginalX = gameObject.transform.position.x;
-		m_OriginalY = gameObject.transform.position.y;
-		m_OriginalZ = gameObject.transform.position.z;
+		m_OriginalX = gameObject.transform.localPosition.x;
+		m_OriginalY = gameObject.transform.localPosition.y;
+		m_OriginalZ = gameObject.transform.localPosition.z;
 		MaxX = m_OriginalX + m_PositiveX;
 		MinX = m_OriginalX - m_NegativeX;
 		MaxY = m_OriginalY + m_PositiveY;
@@ -48,7 +48,7 @@ public class MovementLimit : ObjectComponent
 	// Update is called once per frame
 	void Update () 
 	{
-		transform.position = CheckPosition (gameObject.transform.position);
+		transform.localPosition = CheckPosition (gameObject.transform.localPosition);
 	}
 	
 	public Vector3 CheckPosition(Vector3 TargetPosition)
