@@ -18,7 +18,7 @@ using System.Collections;
 public class WindowButton : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public enum Action{	None, Show, Hide, Continue, Close, LoadScene, ExitApp, ExitToMain };
+	public enum Action{	None, Show, Hide, Continue, Close, NewGame, ExitApp, ExitToMain };
 
 	public string 	  m_SceneName 	 = null;
 	public GameObject m_Window 	     = null; 
@@ -57,7 +57,7 @@ public class WindowButton : MonoBehaviour
 
 			break; 
 
-		case Action.LoadScene:
+		case Action.NewGame:
 			if(m_SceneName != null) 
 			{
 				Application.LoadLevel(m_SceneName);
