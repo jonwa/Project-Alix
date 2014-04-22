@@ -58,7 +58,7 @@ public class PortalCameraController : MonoBehaviour
         m_MyCamera.transform.localPosition = pos;
 		//FRÅGA SEBASTIAN OM DENNA FORMELN!
 		float scale = Mathf.Pow((Vector3.Distance(targetPortal.transform.position, cam.transform.position)), 1.5f);
-		Debug.Log("Scale: " + scale.ToString());
+//		Debug.Log("Scale: " + scale.ToString());
 		m_MyCamera.fieldOfView = 60.0f-scale;
         Quaternion rot = Quaternion.Inverse(targetPortal.transform.rotation) * cam.transform.rotation;
         rot = Quaternion.AngleAxis(180.0f, Vector3.up) * rot;
