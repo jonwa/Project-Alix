@@ -74,7 +74,7 @@ public class FirstPersonController : MonoBehaviour
 				rigidbody.velocity = new Vector3(rigidbody.velocity.x,CalculateJumpForce(),rigidbody.velocity.z);
 			}
 		}
-		else
+		else if(m_Locked)
 		{
 			rigidbody.velocity = new Vector3(0f, 0f, 0f);
 		}
