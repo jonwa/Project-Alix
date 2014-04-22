@@ -141,7 +141,6 @@ public class PickUp : ObjectComponent
 
 	public void OnTriggerEnter()
 	{
-		Debug.Log("Aha!");
 	}
 
 	//Check collison
