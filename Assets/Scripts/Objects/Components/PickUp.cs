@@ -148,7 +148,7 @@ public class PickUp : ObjectComponent
 		//With wall, release the object
 		if(m_HoldingObject == true)
 		{
-			if(col.collider.CompareTag("Wall"))
+			if(col.collider.CompareTag("Wall"))	
 			{
 				m_Move 		   = false;
 				m_CollidedWall = 40;
