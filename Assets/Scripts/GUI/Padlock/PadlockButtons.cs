@@ -37,6 +37,7 @@ public class PadlockButtons : MonoBehaviour
 			if(m_Window == null) return; 
 
 			m_Window.SetActive(false);
+			Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = true; 
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 			PadlockWindow.Close();
 			break;

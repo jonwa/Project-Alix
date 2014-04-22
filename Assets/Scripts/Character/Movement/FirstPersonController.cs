@@ -5,7 +5,7 @@ using System.Collections;
  * Requires a rigidbody to work!
  * 
  * Created by: 	Jimmy Nilsson 14-04-02
- * Modified by:	
+ * Modified by:	Jon Wahlström 2014-04-21 (Crouch, cameraposition.y is set to half the height)
  */
 
 [RequireComponent(typeof(Rigidbody))]
@@ -25,6 +25,8 @@ public class FirstPersonController : MonoBehaviour
 	private bool m_Locked		 = false;
 	#endregion
 
+	private float m_CameraPositionY = 0f; 
+
 	public Vector3 Position
 	{
 		get { return rigidbody.position; }
@@ -32,6 +34,7 @@ public class FirstPersonController : MonoBehaviour
 
 	void Awake()
 	{
+		m_CameraPositionY = Camera.main.transform.position.y;
 		rigidbody.useGravity = false;
 		rigidbody.freezeRotation = true;
 	}
@@ -41,6 +44,9 @@ public class FirstPersonController : MonoBehaviour
 	{
 		if(m_Grounded && !m_Locked)
 		{
+			Vector3 cameraPosition = Camera.main.transform.position;
+			Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY, cameraPosition.z);
+
 			Vector3 forward			= transform.forward.normalized*Input.GetAxis("Vertical");
 			Vector3 right			= -transform.right.normalized*Input.GetAxis("Horizontal");
 			Vector3 targetVelocity  = new Vector3(forward.x-right.x, 0.0f, forward.z-right.z);
@@ -56,6 +62,7 @@ public class FirstPersonController : MonoBehaviour
 			else if(Input.GetButton("Crouch"))
 			{
 				maxVelocity = m_ChrouchSpeed;
+				Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY/2, cameraPosition.z);
 			}
 
 			targetVelocity	*= maxVelocity;

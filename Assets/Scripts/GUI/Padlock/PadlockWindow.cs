@@ -37,9 +37,8 @@ public class PadlockWindow : MonoBehaviour
 
 	public static void NextNumber(int id)
 	{
-		Debug.Log("Next number id: " + id);
 		m_CurrentNumber = int.Parse(m_Numbers[id].GetComponentInChildren<UILabel>().text.ToString());
-		Debug.Log("Next number Current number: " + m_CurrentNumber);
+
 		if(m_CurrentNumber < 9)
 		{
 			m_CurrentNumber++; 
@@ -54,9 +53,8 @@ public class PadlockWindow : MonoBehaviour
 
 	public static void PreviousNumber(int id)
 	{
-		Debug.Log("Previous number id: " + id);
 		m_CurrentNumber = int.Parse(m_Numbers[id].GetComponentInChildren<UILabel>().text.ToString());
-		Debug.Log("Previous number Current number: " + m_CurrentNumber);
+
 		if(m_CurrentNumber > 0)
 		{
 			--m_CurrentNumber;
