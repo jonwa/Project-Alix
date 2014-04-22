@@ -5,56 +5,72 @@ using System.Collections;
 /* Discription: Class for picking up an object and holding in front of you
  * 
  * Created By: Rasmus 04/04
+ * Modified by: Sebastian 22-04-2014 : Changed so pickup put the object in the bottom right corner 
  */
+//TODO: Add so dempending on FOV the object will have the same position
+//: Fix Interact
 
 [RequireComponent(typeof(Gravity))]
 [RequireComponent(typeof(Rigidbody))]
-public class PickUp : ObjectComponent
+public class NewPickUp : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public float m_Sensitivity 			  = 20.0f;
-	public float m_InspectionViewDistance = 2.0f;
-	public float m_LerpSpeed			  = 10f;
-	public string m_Input				  = "Fire1";
+	public float m_Sensitivity 			  	= 20.0f;
+	public float m_InspectionViewDistance 	= 2.0f;
+	public float m_LerpSpeed			  	= 10f;
+	public string m_Input				  	= "Fire1";
+	[Range(0, 1)]public float m_ChangeSize	= 0.80f;
+	public float m_ScaleTime			  	= 30f;
 	#endregion
-
+	
 	#region PrivateMemberVariables
 	private Transform   m_CameraTransform;
 	private int			m_DeActivateCounter;
-	private int			m_CollidedWall		 = 0;
 	private bool 		m_HoldingObject		 = false;
 	private bool 		m_Move				 = true;
-	//private bool 		m_Colliding=false;
+	private Vector3		m_OriginalScale;
+	private Transform	m_HoldObject;
 	#endregion
 	
-	
-	void Start()
+	void Start () 
 	{
 		m_CameraTransform = Camera.main.transform;
-		m_CameraTransform  = Camera.main.transform;
+		m_OriginalScale = transform.lossyScale;
 	}
 	
-	void Update()
-	{
-		//Turn on everything again if objects stops being pickup
+	void Update () 
+	{		
 		m_DeActivateCounter++;
-		if(m_DeActivateCounter > 10)
+		if(m_DeActivateCounter >= 5)
 		{
 			Physics.IgnoreLayerCollision(9, 9, false);
-			//rigidbody.useGravity=true;
+			transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
 			m_HoldingObject = false;
-			//collider.isTrigger=false;
-			//Color test=renderer.material.color;
-			//test.a=1.0f;
-			//renderer.material.color = test;
 		}
-		if(m_CollidedWall > 0)
-		{
-			m_CollidedWall--;
-		}
+		
 	}
-
-	//Moves the object towards the camera
+	
+	public override void Interact ()
+	{
+		if(m_HoldingObject == true && m_Move == true)
+		{
+			transform.localScale = m_OriginalScale * m_ChangeSize;
+			m_HoldObject = m_CameraTransform.FindChild("ObjectHoldPosition");
+			transform.position = m_HoldObject.transform.position;
+			transform.rotation = m_HoldObject.transform.rotation;
+		}
+		else
+		{
+			transform.localScale = m_OriginalScale;
+		}
+		
+		m_DeActivateCounter 		= 0;
+		rigidbody.useGravity 		= false;
+		MoveToInspectDistance(true);
+		rigidbody.velocity   		= Vector3.zero;
+		rigidbody.angularVelocity 	= Vector3.zero;
+	}
+	
 	void MoveToInspectDistance(bool shouldInspect)
 	{
 		if(m_CameraTransform == null)
@@ -69,7 +85,7 @@ public class PickUp : ObjectComponent
 			Vector3 targetPosition;
 			Vector3 cameraForward = m_CameraTransform.forward.normalized;
 			
-
+			
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
 			if(gameObject.GetComponent<MovementLimit>())
@@ -77,102 +93,15 @@ public class PickUp : ObjectComponent
 				targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
 			}
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
-
+			
 			if(GetComponent<Inspect>())
 			{
 				GetComponent<Inspect>().OrigionalPosition =  transform.position;
 			}
 		}
 		else
-		{//When the object is close to the camera
+		{
 			m_HoldingObject = true;
 		}
 	}
-
-	public override void Interact ()
-	{
-		//Debug.Log(m_CameraTransform.forward.x);
-		if(m_CollidedWall == 0)
-		{
-			//Color test=renderer.material.color;
-			//test.a=0.5f;
-			//renderer.material.color = test;
-			//float alpha=0.5f;
-			//renderer.material.color.a = alpha;
-			m_DeActivateCounter = 0;
-
-			//Object is close enough and allowed to move
-			if(m_HoldingObject == true && m_Move == true)
-			{
-				Vector3 cameraPosition  = m_CameraTransform.position;
-				Vector3 cameraForward   = m_CameraTransform.forward.normalized;
-				Vector3 targetPosition;
-					
-
-				//cameraForward  			*= m_InspectionViewDistance;
-				//targetPosition 			= cameraPosition+cameraForward;
-				//transform.position 		= Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
-
-				cameraForward *= m_InspectionViewDistance;
-				targetPosition = cameraPosition+cameraForward;
-				if(gameObject.GetComponent<MovementLimit>())
-				{
-					targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
-				}
-
-				//transform.position = targetPosition;
-				//transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10f);
-				transform.position = targetPosition;
-				//transform.rotation = m_CameraTransform.rotation;
-
-			}
-			//Used to stop the object rotating/fallen while holding
-			rigidbody.useGravity 		= false;
-			MoveToInspectDistance(true);
-			rigidbody.velocity   		= Vector3.zero;
-			rigidbody.angularVelocity 	= Vector3.zero;
-			//Ignore collision with some object, determent by layer
-
-			//Physics.IgnoreLayerCollision(9, 9, true);
-
-
-		}
-	}
-
-	public void OnTriggerEnter()
-	{
-	}
-
-	//Check collison
-	public void OnCollisionEnter(Collision col)
-	{
-		//With wall, release the object
-		if(m_HoldingObject == true)
-		{
-			if(col.collider.CompareTag("Wall"))
-			{
-				m_Move 		   = false;
-				m_CollidedWall = 40;
-				//Debug.Log("Krockat med vägg");
-				Camera.main.SendMessage("Release");
-			}
-			else//Collision with other object, don't collide
-			{
-				//Debug.Log("Krockat med ngt");
-			}
-		}
-		//m_Colliding=true;
-	}
-
-	public void OnCollisionExit()
-	{
-		//m_Colliding=false;
-		collider.enabled = true;
-		m_Move			 = true;
-	}
-
-	//public bool IsColliding()
-	//{
-	//	return m_Colliding;
-	//}
 }
