@@ -17,6 +17,8 @@ public class Read : ObjectComponent
 
 	public override void Interact ()
 	{
+		if(m_Window == null) return; 
+
 		if(IsActive && Input.GetButtonDown(m_Input))
 		{
 			m_Window.SetActive(true);
