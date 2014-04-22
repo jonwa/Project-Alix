@@ -18,4 +18,14 @@ public class Id : ObjectComponent
 	{
 		get { return m_Id; }
 	}
+
+	public override void Serialize(ref string jsonString)
+	{
+
+	}
+
+	public override void Deserialize(ref string jsonString)
+	{
+
+	}
 }
