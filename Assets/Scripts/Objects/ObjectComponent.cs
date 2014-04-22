@@ -19,6 +19,14 @@ public class ObjectComponent :  MonoBehaviour
 		set { m_IsActive = value;}
 	}
 
+	public virtual string Name
+	{
+		get
+		{
+			return "";
+		}
+	}
+
     // Use this for initialization
     void Start()
     {
@@ -38,12 +46,12 @@ public class ObjectComponent :  MonoBehaviour
     }
 
 	//Overload when saveing data for component.
-	public virtual void Serialize(ref string jsonString)
+	public virtual void Serialize(ref JSONObject jsonObject)
 	{
 	}
 
 	//Overload when loading data for component.
-	public virtual void Deserialize(ref string jsonString)
+	public virtual void Deserialize(ref JSONObject jsonObject)
 	{
 	}
 

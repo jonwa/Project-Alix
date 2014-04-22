@@ -13,17 +13,16 @@ public class Serializer : MonoBehaviour
 
 		foreach(Id objId in objectIds)
 		{
-//JSONObject jComponentArr = new JSONObject(JSONObject.Type.ARRAY);
-//jArr.AddField"Components", jComponentArr);
-//jComponentArr.AddField("id", objId.ObjectId);
-//
-//ObjectComponent[] components = obj.gameObject.GetComponents<ObjectComponent>();
-//foreach(ObjectComponent component in components)
-//{
-//	//component.Serialize();
-//}
-		}
+			JSONObject jComponentArr = new JSONObject(JSONObject.Type.ARRAY);
+			jArr.AddField("Object", jComponentArr);
+			jComponentArr.AddField("Id", objId.ObjectId);
 
+			ObjectComponent[] components = objId.gameObject.GetComponents<ObjectComponent>();
+			foreach(ObjectComponent component in components)
+			{
+				component.Serialize(ref jComponentArr);
+			}
+		}
 	}
 
 }
