@@ -50,7 +50,9 @@ public class DoorDrag : ObjectComponent
 		{
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 10)
+			{
 				DeActivate();
+			}
 		}
 	}
 

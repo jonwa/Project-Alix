@@ -11,17 +11,16 @@ using System.Collections;
 [RequireComponent(typeof(Camera))]
 public class PortalRenderer : MonoBehaviour {
 
-	#region PublicMemeberVariables
-	#endregion
-
 	#region PrivateMemberVariables
 	private Camera		  m_Camera;
 	private RenderTexture m_RenderTarget;
 	private Material	  m_Material;
 	#endregion
 
-	void Awake()
+	void Start()
 	{
+        Debug.Log(renderer.material.renderQueue);
+
 		m_Camera 			   = GetComponent<Camera>();
 		m_RenderTarget		   = new RenderTexture(256,256,24);
 		m_Camera.targetTexture = m_RenderTarget;

@@ -6,7 +6,7 @@ using System.Collections;
  * until it hits an object with ObjectComponent's then activates Interact on that object.
  * 
  * Created by: Sebastian / Jimmy  Date: 2014-04-04
- * Modified by: Jon Wahlström 2014-04-16
+ * Modified by: Jon Wahlström 2014-04-21
  * 
  */
 
@@ -21,33 +21,20 @@ public class Raycasting : MonoBehaviour
 	#endregion
 	#region PrivateMemberVariables
 	private GameObject m_InteractingWith;
+
+	private bool m_ShowHoover = true;
 	#endregion
+
+	public bool ShowHoover
+	{
+		set { m_ShowHoover = value; }
+	}
 
 	// Update is called once per frame
 	void Update () 
 	{
-		RaycastHit hit;
-		Ray ray = new Ray(transform.position, transform.forward);
-		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
-
-		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
-		{
-			HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
-
-			if(hoover != null)
-			{
-				hoover.Hoover();
-			}
-			else
-			{
-				Cursor.Default();
-			}
-
-		}
-		else
-		{
-			Cursor.Default();
-		}
+		// used for mouse cursor state
+		Cast (m_ShowHoover);
 
 		if(m_HoldToInteract)
 		{
@@ -57,7 +44,6 @@ public class Raycasting : MonoBehaviour
 		{
 			ClickToInteract();
 		}
-
 	}
 
 	//Starts Interact with object when mouse button is clicked once over object and releases the object when button is pressed again
@@ -69,7 +55,25 @@ public class Raycasting : MonoBehaviour
 		}
 		else if(Input.GetButtonDown(m_Input) && m_InteractingWith != null)
 		{
-			m_InteractingWith = null;
+			RaycastHit hit;
+			Ray ray = new Ray(transform.position, transform.forward);
+			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
+			
+			if(Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+			{
+				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
+
+
+				if((m_InteractingWith.GetComponent<PickUp>() == null || m_InteractingWith.GetComponent<Collaborate>() == null) && hoover != null)
+				{
+					m_InteractingWith = null;
+				}
+
+			}
+			else
+			{
+				m_InteractingWith = null;
+			}
 		}
 		else if(m_InteractingWith != null)
 		{
@@ -127,7 +131,38 @@ public class Raycasting : MonoBehaviour
 				c.Interact();
 			}
 		}
+	}
 
+	void Cast(bool showHoover)
+	{
+		if(showHoover)
+		{
+			RaycastHit hit;
+			Ray ray = new Ray(transform.position, transform.forward);
+			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
+			
+			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+			{
+				HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
+				
+				if(hoover != null)
+				{
+					Cursor.SetCursor(hoover.HooverTexture, hoover.Description, true);
+				}
+				else
+				{
+					Cursor.SetCursor(null, null, false);
+				}
+			}
+			else
+			{
+				Cursor.SetCursor(null, null, true);
+			}
+		}
+		else
+		{
+			Cursor.SetCursor(null, null, false);
+		}
 	}
 
 	//Releases the grip of the object we are interacting with right now.

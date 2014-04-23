@@ -23,7 +23,6 @@ public class BookWindow : MonoBehaviour
 
 	void Start()
 	{ 
-
 	 	if(m_PagesPrefabs.Length > 0) 
 		{
 			m_Pages = new GameObject[m_PagesPrefabs.Length];

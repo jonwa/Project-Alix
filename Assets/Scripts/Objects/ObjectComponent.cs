@@ -19,6 +19,14 @@ public class ObjectComponent :  MonoBehaviour
 		set { m_IsActive = value;}
 	}
 
+	public virtual string Name
+	{
+		get
+		{
+			return "";
+		}
+	}
+
     // Use this for initialization
     void Start()
     {
@@ -37,44 +45,15 @@ public class ObjectComponent :  MonoBehaviour
 
     }
 
+	//Overload when saveing data for component.
+	public virtual void Serialize(ref JSONObject jsonObject)
+	{
+	}
 
-	//// Should-type flags
-	//protected class Unlock_t {};
-	//static protected Unlock_t Unlock = new Unlock_t();
-	//
-	////protected class DestructSelf_t {};
-	////static protected DestructSelf_t DestructSelf = new DestructSelf_t();
-	////
-	////protected class Hook_t {};
-	////static protected Hook_t Hook = new Hook_t();
-	//
-	//
-	//protected bool Should(Hook_t whenhitting, GameObject other)
-	//{
-	//	if (other == GetComponent<SpellData>().Caster)
-	//	{
-	//		return false;
-	//	}
-	//	
-	//	if (other.GetComponent<SuperSolid> ())
-	//	{
-	//		return true;
-	//	}
-	//	
-	//	if (other.GetComponent<SpellData> ())
-	//	{
-	//		return false;
-	//	}
-	//	
-	//	if (other.GetComponent<NonSolid> ())
-	//	{
-	//		return false;
-	//	}
-	//	
-	//	return true;
-	//	
-	//	
-	//}
+	//Overload when loading data for component.
+	public virtual void Deserialize(ref JSONObject jsonObject)
+	{
+	}
 
     public virtual void Interact()
     {
