@@ -45,7 +45,7 @@ public class MenuInput : MonoBehaviour
 			{
 				m_Active = false;
 				m_Window.SetActive(false);
-				 
+				WindowHandler.Default(); 
 				Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = true;
 				//unfreeze the camera position
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();

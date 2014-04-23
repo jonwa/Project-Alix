@@ -62,7 +62,17 @@ public class WindowHandler : MonoBehaviour
 			m_History.Push(m_CurrentWindow);
 		}
 	}
-	
+
+	public static void Default()
+	{
+		foreach(GameObject panel in m_History)
+		{
+			panel.SetActive(false);
+		}
+		m_History.Clear();
+		m_CurrentWindow = null;
+	}
+
 	void OnLevelWasLoaded(int level)
 	{
 		m_CurrentWindow = null;

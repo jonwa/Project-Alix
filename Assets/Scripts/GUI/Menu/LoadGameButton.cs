@@ -7,10 +7,10 @@ using System.Collections;
  * Modified By: 
  */
 
-public class LoadGame : MonoBehaviour 
+public class LoadGameButton : MonoBehaviour 
 {
 	void OnClick()
 	{
-
+		
 	}
 }

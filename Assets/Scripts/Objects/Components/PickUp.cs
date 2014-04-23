@@ -12,7 +12,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Gravity))]
 [RequireComponent(typeof(Rigidbody))]
-public class NewPickUp : ObjectComponent 
+public class PickUp : ObjectComponent 
 {
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  	= 20.0f;

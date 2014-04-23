@@ -8,24 +8,30 @@ using System.Collections;
 
 public class WindowButton : MonoBehaviour {
 
-	public enum Action { show, hide, exit };
+	public enum Action { Show, Continue, Exit };
 	
 	public GameObject m_Window;
 	public int m_Id;
-	public Action m_Action = Action.show;
+	public Action m_Action = Action.Show;
 	
 	void OnClick()
 	{
 		switch(m_Action)
 		{
-		case Action.show:
+		case Action.Show:
 			if(m_Window != null)
 			{
 				WindowHandler.Show(m_Id, m_Window);
 			}
 		break;	
 		
-		case Action.exit:
+		case Action.Continue:
+			m_Window.SetActive(false);
+			WindowHandler.Default();
+			m_Window.transform.parent.GetComponent<MenuInput>().Active = false;
+		break;
+
+		case Action.Exit:
 			Application.Quit();
 		break;
 		}
