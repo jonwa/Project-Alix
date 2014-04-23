@@ -48,7 +48,7 @@ public class State : ObjectComponent
 	{
 		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
 		jsonObject.AddField(Name, jObject);
-		jObject.AddField("State",m_State.ToString());
+		jObject.AddField("m_State",m_State.ToString());
 	}
 
 	public override void Deserialize (ref JSONObject jsonObject)
