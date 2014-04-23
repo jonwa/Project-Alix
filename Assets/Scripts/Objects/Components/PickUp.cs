@@ -12,7 +12,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Gravity))]
 [RequireComponent(typeof(Rigidbody))]
-public class NewPickUp : ObjectComponent 
+public class PickUp : ObjectComponent 
 {
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  	= 20.0f;
@@ -36,6 +36,8 @@ public class NewPickUp : ObjectComponent
 	{
 		m_CameraTransform = Camera.main.transform;
 		m_OriginalScale = transform.lossyScale;
+		m_HoldObject = m_CameraTransform.FindChild("ObjectHoldPosition");
+		//m_HoldObject.transform.position = m_CameraTransform.camera.fieldOfView;
 	}
 	
 	void Update () 
@@ -55,8 +57,8 @@ public class NewPickUp : ObjectComponent
 		if(m_HoldingObject == true && m_Move == true)
 		{
 			transform.localScale = m_OriginalScale * m_ChangeSize;
-			m_HoldObject = m_CameraTransform.FindChild("ObjectHoldPosition");
 			transform.position = m_HoldObject.transform.position;
+
 			transform.rotation = m_HoldObject.transform.rotation;
 		}
 		else
@@ -73,6 +75,11 @@ public class NewPickUp : ObjectComponent
 	
 	void MoveToInspectDistance(bool shouldInspect)
 	{
+		transform.position = Vector3.Lerp (transform.position, m_HoldObject.transform.position, Time.deltaTime * m_LerpSpeed / 10.0f);
+
+		m_HoldingObject = true;
+
+		/*
 		if(m_CameraTransform == null)
 		{
 			m_CameraTransform = Camera.main.transform;
@@ -103,5 +110,6 @@ public class NewPickUp : ObjectComponent
 		{
 			m_HoldingObject = true;
 		}
+	*/
 	}
 }

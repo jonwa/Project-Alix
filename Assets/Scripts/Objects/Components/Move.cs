@@ -52,15 +52,9 @@ public class Move : ObjectComponent
 		{
 			m_CurrentPlayerPosition = m_Player.transform.position;
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
-			if((m_Player.transform.position.magnitude - transform.position.magnitude) < m_DistanceToObject ||
-			   (m_Player.transform.position.magnitude - transform.position.magnitude) > -m_DistanceToObject)
-			{
-				transform.position += m_Offset;
-			}
-			else
-			{
 
-			}
+			transform.position += m_Offset;
+
 			//Debug.Log ("Distance to Object = "+m_DistanceToObject);
 			//Debug.Log ("mPlayer= "+ (m_Player.transform.position.magnitude - transform.position.magnitude));
 
@@ -68,7 +62,7 @@ public class Move : ObjectComponent
 		}
 	
 
-		if(!IsActive)
+		if(Input.GetButton(m_Input))
 		{
 			m_OriginalPlayerPosition = m_Player.transform.position;
 
@@ -82,5 +76,6 @@ public class Move : ObjectComponent
 			Camera.main.SendMessage("Release");
 			DeActivate();
 		}
+
 	}
 }
