@@ -20,25 +20,16 @@ public class Interact : ObjectComponent
 
 	void CheckCollision(GameObject obj)
 	{
-		Debug.Log("Kommer hit1");
-		if (obj.GetComponents<Id>() != null) 
+
+		int collisionId = obj.GetComponent<Id>().ObjectId;
+		if(m_ValidId.Contains(collisionId))
 		{
-			Debug.Log("Kommer hit2");
-			int collisionId = obj.GetComponent<Id> ().ObjectId;
-			if (m_ValidId.Contains (collisionId)) 
-			{
-					obj.GetComponent<TriggerEffect> ().ActivateTrigger ();
-				Debug.Log("Kommer hit4");
-			}
+			obj.GetComponent<TriggerEffect>().ActivateTrigger();
 		}
 	}
 
 	void OnCollisionEnter(Collision Hit)
 	{
 		CheckCollision(Hit.collider.gameObject);
-	}
-	void OnTriggerEnter(Collision hit)
-	{
-		Debug.Log ("TRIGGERERDDE");
 	}
 }
