@@ -23,7 +23,7 @@ public class Serializer : MonoBehaviour
 				component.Serialize(ref jComponentArr);
 			}
 
-			SerializeTransform(jsonObject, objId);
+			SerializeTransform(ref jsonObject, objId);
 		}
 	}
 

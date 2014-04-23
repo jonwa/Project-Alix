@@ -3,20 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
+/*
+ * Description: Used for saving and loading data about the game to/from JSON-files
+ * 
+ * Created by: Jimmy 2014-04-23
+ * 
+ */
+
 public class GameData : MonoBehaviour 
 {
 
-	void Update()
-	{
-		if(Input.GetButton("Fire1"))
-		{
-			Save("filnamnLOL");
-		}
-		else if(Input.GetButtonDown("Fire2"))
-		{
-			Load("filnamnLOL");
-		}
-	}
+	//void Update()
+	//{
+	//	if(Input.GetButton("Fire1"))
+	//	{
+	//		Save("filnamnLOL");
+	//	}
+	//	else if(Input.GetButtonDown("Fire2"))
+	//	{
+	//		Load("filnamnLOL");
+	//	}
+	//}
 
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName)
@@ -56,11 +63,7 @@ public class GameData : MonoBehaviour
 		}
 	}
 
-
-
-
-
-
+	//Writes a string to specified file name.
 	static void WriteToFile(string fileName, string content)
 	{
 		System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName);
@@ -69,7 +72,8 @@ public class GameData : MonoBehaviour
 		
 		Debug.Log("SaveData has been written to: SaveData/"+fileName);
 	}
-	
+
+	//Loads content from a file as a string.
 	static string LoadFromFile(string fileName)
 	{
 		string ret = "";
