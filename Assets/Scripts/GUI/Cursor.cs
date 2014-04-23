@@ -27,7 +27,6 @@ public class Cursor : MonoBehaviour
 
 	void Start()
 	{
-
 		Screen.showCursor  = false;
 
 		m_DefaultTexture   = m_DefaultCrossHair;
@@ -36,6 +35,7 @@ public class Cursor : MonoBehaviour
 		m_DescriptionGO    = m_DescriptionFab;
 	}
 
+	// In order to deside in what state the cursor should be in
 	public static void SetCursor(Texture cursor, string description, bool crosshair)
 	{
 		if(cursor == null)
