@@ -48,13 +48,13 @@ public class Inspect : ObjectComponent
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
 				m_UnlockedCamera = true;
 				m_ShouldMoveBack = false;
+				m_IsOriginalPosition = true;
 			}
 			m_DeActivateCounter++;
 		}
 		else
 		{
 			m_DeActivateCounter++;
-
 			if(m_DeActivateCounter > 5)
 			{
 				DeActivate();

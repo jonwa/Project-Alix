@@ -11,7 +11,7 @@ using System.Collections;
 public class MusicOptions : MonoBehaviour 
 {
 	[Range(0,10)]
-	public float m_Volume 	= 1.0f;
+	public float m_MasterVolume 	= 1.0f;
 
 	private FMOD.Studio.MixerStrip masterBus;
 
@@ -25,7 +25,7 @@ public class MusicOptions : MonoBehaviour
 
 	void Update () 
 	{
-		ERRCHECK (masterBus.setFaderLevel (m_Volume));
+		ERRCHECK (masterBus.setFaderLevel (m_MasterVolume));
 	}
 
 	FMOD.RESULT ERRCHECK(FMOD.RESULT result)
