@@ -57,6 +57,8 @@ public class Inspect : ObjectComponent
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 5)
 			{
+				Camera.main.SendMessage("Release");
+			
 				DeActivate();
 			}
 		}
@@ -138,6 +140,7 @@ public class Inspect : ObjectComponent
 		}
 		else
 		{
+			Camera.main.SendMessage("Release");
 			DeActivate();
 		}
 		//Ignore collision with some object, determent by layer
