@@ -5,7 +5,7 @@ using System.Collections;
 /* Discription: Class for picking up an object and holding in front of you
  * 
  * Created By: Rasmus 04/04
- * Modified by: Sebastian 22-04-2014 : Changed so pickup put the object in the bottom right corner 
+ * Modified by: Sebastian 23-04-2014 : Changed so pickup put the object in the bottom right corner 
  */
 //TODO: Fix Interact
 
@@ -79,8 +79,6 @@ public class PickUp : ObjectComponent
 	
 	void MoveToInspectDistance()
 	{
-
-
 		//transform.position	= Vector3.Lerp (transform.position, m_HoldObject.transform.position, Time.deltaTime * m_LerpSpeed / 10.0f);
 	
 		if(GetComponent<Inspect>())
