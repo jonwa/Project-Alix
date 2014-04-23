@@ -6,7 +6,7 @@ m_Message should be a command the object send to his component for the right eff
 Made by: Rasmus 08/04
  */
 
-public class TriggerEffect : ObjectComponent 
+public class TriggerEffectOld : ObjectComponent 
 {
 	#region PublicMemberVariables
 	public string[] m_Messages;
