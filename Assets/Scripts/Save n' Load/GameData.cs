@@ -37,7 +37,7 @@ public class GameData : MonoBehaviour
 		string fileContent = LoadFromFile(fileName);
 		JSONObject jsonObject = new JSONObject(fileContent);
 
-		DeSerializer.Deserialize(ref jsonObject);
+		Deserializer.Deserialize(ref jsonObject);
 
 		string s = jsonObject.Print(true);
 		Debug.Log(s);

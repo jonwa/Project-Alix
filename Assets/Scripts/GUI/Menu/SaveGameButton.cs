@@ -10,12 +10,12 @@ using System.Collections;
 public class SaveGameButton : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public UILabel m_WarningText = null;
+	public UILabel m_InputText = null;
 	#endregion
 
 	void OnClick()
 	{
-		string input = GetComponentInChildren<UILabel> ().text.ToString ();
+		string input = m_InputText.text.ToString ();
 
 		if(!string.IsNullOrEmpty(input))
 		{
@@ -23,7 +23,7 @@ public class SaveGameButton : MonoBehaviour
 		}
 		else
 		{
-			m_WarningText.text = "Please assign a name...";
+			//m_WarningText.text = "Please assign a name...";
 		}
 	}
 }

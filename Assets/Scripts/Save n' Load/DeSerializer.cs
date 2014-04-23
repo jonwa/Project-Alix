@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DeSerializer : MonoBehaviour 
+public class Deserializer : MonoBehaviour 
 {
 	private static  Dictionary<int, GameObject> m_GameObjects = new Dictionary<int, GameObject>();
 
@@ -12,14 +12,14 @@ public class DeSerializer : MonoBehaviour
 		//Object-loop
 		for(int i=0; i< objects.list.Count; ++i)
 		{
-			//Component-loop
-			for(int j=0; j<objects.list[i].Count;++j)
-			{
-				GameObject ob = GetObjectWithId( ((int)objects.list[i].GetField("Id").n) );
-				//Loopa igenom componenter på gameObjectet..
-				//Eller något sånt...
-
-			}
+		//	GameObject ob = GetObjectWithId( ((int)objects.list[i].GetField("Id").n) );
+		//	//Component-loop
+		//	for(int j=0; j<objects.list[i].Count;++j)
+		//	{
+		//		objects.list[i].list[j].get
+		//
+		//
+		//	}
 
 		}
 
