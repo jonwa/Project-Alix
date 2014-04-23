@@ -37,11 +37,17 @@
 			o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
 			o.uv = v.texCoord;
 			
+			//if(o.uv.x != 1.0f && o.uv.y != 1.0f && o.uv.z != 1.0f)
+			//{
+			//	o.uv = v.texCoord;
+			//}
+			
 			return o;
 		}
 		
 		half4 frag( fragmentInput l ) : COLOR
 		{
+			float4 NewText = tex2D(_MainTex, l.uv);
 			return tex2D(_MainTex, l.uv);
 		}
 		
