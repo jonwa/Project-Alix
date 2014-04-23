@@ -21,11 +21,6 @@ public class ChangeModel :  TriggerComponent
 	#endregion
 
 	// Update is called once per frame
-	void Update()
-	{
-		
-	}
-
 	public void ModelChange()
 	{
 		if (counter < m_MeshStages.Length) {
