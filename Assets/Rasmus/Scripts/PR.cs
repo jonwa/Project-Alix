@@ -21,7 +21,7 @@ public class PR : MonoBehaviour
 
 	public void OnCollisionEnter(Collision col)
 	{
-		col.gameObject.transform.position = new Vector3((m_Target.transform.position.x + m_Target.transform.forward.x), col.gameObject.transform.position.y, (m_Target.transform.position.z + m_Target.transform.forward.z) ); 	
+		col.gameObject.transform.position = new Vector3((m_Target.transform.position.x + m_Target.transform.forward.x*3), col.gameObject.transform.position.y, (m_Target.transform.position.z + m_Target.transform.forward.z*3) ); 	
 		//col.gameObject.transform.position.Set(m_Target.transform.position.x, 0, m_Target.transform.localPosition.z);// = m_Target.transform.position;// + (m_Target.transform.up);
 		//Quaternion temp=col.gameObject.transform.rotation.eulerAngles;
 		//temp.y+= mFloat;

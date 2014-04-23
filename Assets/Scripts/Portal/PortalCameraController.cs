@@ -4,9 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(Portal))]
 public class PortalCameraController : MonoBehaviour 
 {
-	public float mfloat;
-	public float mfloat2;
-
 	private Camera m_MyCamera;
 	private PortalPairHandler m_PairHandler;
 	Material mat;
@@ -58,17 +55,16 @@ public class PortalCameraController : MonoBehaviour
         pos.x      -= pos.x;
         pos.z      -= pos.z;
 
-        m_MyCamera.transform.localPosition = pos;
+        //m_MyCamera.transform.localPosition = pos;
 		//FRÅGA SEBASTIAN OM DENNA FORMELN!
 		float scale = Mathf.Pow((Vector3.Distance(transform.position, cam.transform.position)), 1.5f);
 		//Debug.Log("Scale: " + scale.ToString());
-		//if(scale < 50)
-		//{
-			m_MyCamera.fieldOfView = 60.0f-scale;
-        	Quaternion rot = Quaternion.Inverse(targetPortal.transform.rotation) * cam.transform.rotation;
-        	rot = Quaternion.AngleAxis(180.0f, Vector3.up) * rot;
-			m_MyCamera.transform.localRotation = rot;
-		//}
+
+		//m_MyCamera.fieldOfView = 60.0f-scale;
+       	//Quaternion rot = Quaternion.Inverse(targetPortal.transform.rotation) * cam.transform.rotation;
+       	//rot = Quaternion.AngleAxis(180.0f, Vector3.up) * rot;
+		//m_MyCamera.transform.localRotation = rot;
+
 
 
 

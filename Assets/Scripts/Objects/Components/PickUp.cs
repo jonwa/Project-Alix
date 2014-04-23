@@ -12,7 +12,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Gravity))]
 [RequireComponent(typeof(Rigidbody))]
-public class NewPickUp : ObjectComponent 
+public class PickUp : ObjectComponent 
 {
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  	= 20.0f;
@@ -101,21 +101,7 @@ public class NewPickUp : ObjectComponent
 		}
 		else
 		{
-<<<<<<< HEAD
-			if(col.collider.CompareTag("Wall"))	
-			{
-				m_Move 		   = false;
-				m_CollidedWall = 40;
-				//Debug.Log("Krockat med vägg");
-				Camera.main.SendMessage("Release");
-			}
-			else//Collision with other object, don't collide
-			{
-				//Debug.Log("Krockat med ngt");
-			}
-=======
 			m_HoldingObject = true;
->>>>>>> 3940a689e665ddfa21cc47153f575d347ecbe045
 		}
 	}
 }
