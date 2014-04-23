@@ -3,12 +3,12 @@ using System.Collections;
 
 /* Discription: Base class for triggers on objects
  * 
- * Created by: 
+ * Created by: Robert 23/04-14
  * Modified by: 
  * 
  */
 
-public class TriggerEffect :  MonoBehaviour
+public class TriggerComponent :  MonoBehaviour
 {
 	public virtual string Name
 	{ get{return"";}}

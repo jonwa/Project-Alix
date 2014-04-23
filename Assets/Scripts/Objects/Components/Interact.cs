@@ -24,7 +24,7 @@ public class Interact : ObjectComponent
 		int collisionId = obj.GetComponent<Id>().ObjectId;
 		if(m_ValidId.Contains(collisionId))
 		{
-			obj.GetComponent<TriggerEffectOld>().ActivateTrigger();
+			obj.GetComponent<TriggerEffect>().ActivateTrigger();
 		}
 	}
 

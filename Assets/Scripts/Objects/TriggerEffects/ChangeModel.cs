@@ -1,19 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-/* Discription: Base class for triggers on objects
+/* Discription: Trigger component for changling the mesh and texture on the said object
  * 
- * Created by: 
+ * Created by: Robert 23/04-14
  * Modified by: 
  * 
  */
 
-public class ChangeModel :  TriggerEffect
+public class ChangeModel :  TriggerComponent
 {
 	#region PublicMemberVariables
 	public	Mesh[]		m_MeshStages;
 	public	Texture[]	m_TextureStages;
-	public	string		m_Input = "Pocket";
 	#endregion
 
 	#region PrivateMemberVariables
@@ -24,9 +23,7 @@ public class ChangeModel :  TriggerEffect
 	// Update is called once per frame
 	void Update()
 	{
-		if(Input.GetButtonDown(m_Input)){
-			ModelChange();
-		}
+		
 	}
 
 	public void ModelChange()
@@ -39,7 +36,7 @@ public class ChangeModel :  TriggerEffect
 	}
 	
 	override public string Name
-	{ get{return"TriggerEffect";}}
+	{ get{return"ChangeModel";}}
 	
 	//Overload when saveing data for component.
 	public virtual void Serialize(ref JSONObject jsonObject)

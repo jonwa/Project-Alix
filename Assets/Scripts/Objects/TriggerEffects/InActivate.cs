@@ -1,14 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
-/* Discription: Base class for triggers on objects
- * 
- * Created by: 
+/* Discription: Trigger components for inactivating the Object
+ * Created by: Robert 23/04-14
  * Modified by: 
  * 
  */
 
-public class InActivate :  TriggerEffect
+public class InActivate :  TriggerComponent
 {
 	#region PrivateMemberVariables
 	private bool m_IsActive = true; 
@@ -21,7 +20,7 @@ public class InActivate :  TriggerEffect
 	}
 
 	override public string Name
-	{ get{return"TriggerEffect";}}
+	{ get{return"InActivate";}}
 	
 	//Overload when saveing data for component.
 	public virtual void Serialize(ref JSONObject jsonObject)

@@ -33,7 +33,7 @@ public class Triggering : ObjectComponent {
 
 			for(int  i= 0; i < m_Triggers.Length; i++)
 			{
-				m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffectOld>().GetAllowedTriggering();
+				m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class Triggering : ObjectComponent {
 		//Gather new values in case of change
 		for(int i = 0; i < m_Triggers.Length; i++)
 		{
-			m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffectOld>().GetAllowedTriggering();
+			m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
 		}
 
 		if(m_ActivateAll == true)
@@ -67,7 +67,7 @@ public class Triggering : ObjectComponent {
 			{
 				if(m_Allowed[i] == true)
 				{
-					m_GameObjects[i].GetComponent<TriggerEffectOld>().ActivateTrigger();
+					m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTrigger();
 				}
 			}
 		}
@@ -75,7 +75,7 @@ public class Triggering : ObjectComponent {
 		{
 			if(m_Allowed[m_ArrayPosition] == true)
 			{
-				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffectOld>().ActivateTrigger();
+				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTrigger();
 			}
 		}
 	}
