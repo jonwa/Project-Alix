@@ -27,13 +27,16 @@ public class DoorDrag : ObjectComponent
 	public string 		m_HorizontalInput;
 	public string 		m_VerticalInput;
 	public string 		m_Input;
-	public GameObject	m_Target;
+	public Vector3		m_Target;
 	#endregion
 	
 	void Start () 
 	{
 		m_Camera = Camera.main.transform;
 		m_Player = GameObject.Find (m_PlayerName); 
+		//m_Target = GameObject.FindGameObjectWithTag ("hinge");
+		m_Target = transform.parent.position;
+		//gameObject.GetComponent<Animator>().
 	}
 	
 	void Update () 
@@ -69,7 +72,8 @@ public class DoorDrag : ObjectComponent
 			{
 				m_RotationAxis = PlayerForward();
 				//Debug.Log(m_Target.transform.rotation.eulerAngles.y);
-				m_Target.transform.Rotate(m_RotationAxis,m_Delta);
+				//m_Target.transform.Rotate(m_RotationAxis,m_Delta);
+				transform.RotateAround(m_Target,m_RotationAxis,m_Delta);
 				//transform.Rotate(m_RotationAxis,m_Delta);
 			}
 		}
