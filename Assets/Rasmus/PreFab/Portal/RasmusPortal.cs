@@ -58,7 +58,7 @@ public class RasmusPortal : ObjectComponent
 		{
 			GameObject o = (GameObject) GameObject.Instantiate(collider.gameObject, newPos, collider.gameObject.transform.rotation);
 			
-			o.rigidbody.velocity 		= ((q1 * collider.rigidbody.velocity))*(-1);
+			o.rigidbody.velocity 		= ((q1 * collider.rigidbody.velocity));//*(-1);
 			o.rigidbody.velocity 		= Quaternion.AngleAxis(angle, Vector3.up)*o.rigidbody.velocity;
 			o.rigidbody.angularVelocity = (collider.rigidbody.angularVelocity);
 			
