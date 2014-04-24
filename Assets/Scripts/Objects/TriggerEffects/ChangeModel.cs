@@ -34,6 +34,7 @@ public class ChangeModel :  TriggerComponent
 	
 	public override void Serialize(ref JSONObject jsonObject)
 	{
+
 		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
 		jsonObject.AddField(Name, jObject);
 		jObject.AddField("m_Counter",m_Counter);

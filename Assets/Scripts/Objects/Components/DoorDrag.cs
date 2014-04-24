@@ -110,6 +110,7 @@ public class DoorDrag : ObjectComponent
 			if(m_MouseXPosition != 0 || m_MouseYPosition != 0)
 			{
 				transform.Rotate(m_RotationAxis,m_Delta,Space.Self);
+
 			}
 		}
 

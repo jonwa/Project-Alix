@@ -26,6 +26,7 @@ public class DoorLimitRestrain : MonoBehaviour
 		m_OriginalMinimum = m_Minimum;
 		
 		m_LastTransform = transform;
+
 	}
 	
 	void Update ()
@@ -33,6 +34,7 @@ public class DoorLimitRestrain : MonoBehaviour
 
 		if(GetComponent<Locked>().GetLocked())
 		{
+
 			m_Maximum = m_LockedOffset;
 			m_Minimum = -m_LockedOffset;
 		}
@@ -49,7 +51,9 @@ public class DoorLimitRestrain : MonoBehaviour
 		if(m_Delay == 0)
 		{
 			rigidbody.isKinematic = false;
+
 			m_TotalRotation 	  = gameObject.GetComponent<DoorLimitCalculate>().GetDifference();
+
 			if(m_TotalRotation < m_Maximum && m_TotalRotation > m_Minimum)
 			{
 				m_LastTransform = transform;
