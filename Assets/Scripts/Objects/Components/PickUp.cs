@@ -48,9 +48,12 @@ public class PickUp : ObjectComponent
 		m_DeActivateCounter++;
 		if(m_DeActivateCounter >= 5)
 		{
-			Physics.IgnoreLayerCollision(9, 9, false);
-			transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
-			m_HoldingObject = false;
+			if((m_OriginalScale-transform.localScale).magnitude > 0.1f)
+			{
+				Physics.IgnoreLayerCollision(9, 9, false);
+				transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
+				m_HoldingObject = false;
+			}
 		}
 	}
 	

@@ -2,21 +2,29 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/* Description: Deseralizes the Json object that gets sent from another class. Makes sure the right componets get their JSON-object
+ * 
+ * Created by: Jimmy 2014-04-24
+ * 
+ */
+
 public class Deserializer : MonoBehaviour 
 {
 	private static  Dictionary<int, GameObject> m_GameObjects = new Dictionary<int, GameObject>();
 
+	//Sends a part of the JSON object to its correct unity-component for deserializing
 	public static void Deserialize(ref JSONObject jsonObject)
 	{
 		JSONObject jObject = null; 
 		JSONObject objects = jsonObject.GetField("Objects");
+
 		//Object-loop
 		for(int i=0; i< objects.list.Count; ++i)
 		{
 			int id = (int)objects.list[i].GetField("Id").n;
 			GameObject obj = GetObjectWithId( id );
 			List<string> keys = objects.list[i].keys;
-//			Debug.Log("Got keys: ", keys);
+
 			//Component-loop
 			foreach(string key in keys)
 			{
@@ -49,33 +57,19 @@ public class Deserializer : MonoBehaviour
 					}
 					break;
 				}
-				JSONObject obji = objects.list[i];
-
-
-//				List<string> keys = objects.list[i].list[j].keys;
-
-
-//				jObject = objects.list[i].list[j];
-
-
-//				Debug.Log("comp str: " + jObject.f);
-				//ObjectComponent comp = ob.GetComponent(jObject[0].str) as ObjectComponent;
-				//comp.Deserialize(ref jObject);
-		
 			}
-
 		}
-		return;
 	}
 
 
 	private static void DeserializeTransform(ref JSONObject jsonObject, GameObject obj)
 	{
-
+		obj.transform.localPosition = JSONTemplates.ToVector3(jsonObject.GetField("Position"));
+		obj.transform.localRotation = JSONTemplates.ToQuaternion(jsonObject.GetField("Rotation"));
+		obj.transform.localScale = JSONTemplates.ToVector3(jsonObject.GetField("Scale"));
 	}
 
-
-
+	//Gets the object with correct id
 	private static GameObject GetObjectWithId(int id)
 	{
 		if (m_GameObjects.ContainsKey(id))

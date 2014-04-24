@@ -4,7 +4,7 @@ using System;
 /* Discription: Objectcomponent class that sets an object ID
  * 
  * Created by: Robert Datum: 08/04-14
- * Modified by:
+ * Modified by: Jimmy 2014-04-24
  * 
  */
 [RequireComponent(typeof(Id))]
