@@ -1,84 +1,81 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 
-/* WindowHandler either show or hide a window. The functions
- * are called from WindowButton.cs whenever a button is pressed. 
- * 
- * Created By: Jon Wahlström 2014-04-02
+/*
+ * Created By: Jon Wahlström 2014-04-22
  * Modified By: 
  */
 
 public class WindowHandler : MonoBehaviour 
 {
-	#region PublicMemberVariables
-	public GameObject m_InitialWindow = null;		
+	#region PrivateMemberVariables
+	private static Stack<GameObject> m_History = new Stack<GameObject>();
+	
+	private static GameObject m_CurrentWindow;
+	private static int 		  m_ParamountID 	= 0; // top level windowID
+	private static int 		  m_PreviousID;
+	private static int		  m_CurrentID;
 	#endregion
-
-	#region PrivatMemberVariables
-	private static Stack<GameObject> m_History 	     = new Stack<GameObject>(); 
-	private static GameObject 	   	 m_CurrentWindow = null;
-	private static GameObject		 m_DefaultWindow = null; 
-	#endregion
-
-	void Start()
-	{
-		if(m_InitialWindow != null)
+	
+	public static void Show(int id, GameObject window)
+	{	
+		m_CurrentWindow = window;
+		
+		// In order to store the previous windowID we need the
+		// stack to be of a size greater than 1.
+		if(m_History.Count < 1)
 		{
-			m_DefaultWindow = m_InitialWindow;
-			m_CurrentWindow = m_InitialWindow; 
-			m_CurrentWindow.gameObject.SetActive(true); 
+			m_CurrentID = id;
+		}		
+		else if(m_History.Count >= 1 && id != 0)
+		{
+			m_PreviousID = m_CurrentID;
+		}
+
+		m_CurrentID = id;
+
+		if(id == m_ParamountID)
+		{
+			foreach(GameObject panel in m_History)
+			{
+				panel.SetActive(false);
+			}
+			
+			m_History.Clear();
+			
+			if(m_CurrentWindow != null)
+			{
+				m_CurrentWindow.SetActive(true);
+				m_History.Push(m_CurrentWindow);
+			}
+		}
+		else if(id == m_PreviousID)
+		{
+			m_History.Pop().SetActive(false);
+			m_CurrentWindow.SetActive(true);
+			m_History.Push(m_CurrentWindow);
+		}
+		else
+		{	
+			m_CurrentWindow.SetActive(true);
 			m_History.Push(m_CurrentWindow);
 		}
 	}
 
 	public static void Default()
 	{
-		Clear();
-		if(m_CurrentWindow != null)
+		foreach(GameObject panel in m_History)
 		{
-			m_CurrentWindow = m_DefaultWindow; 
-			m_CurrentWindow.gameObject.SetActive(true); 
-			m_History.Push(m_CurrentWindow);
-		}
-	}
-
-	public static void Show(GameObject window)
-	{
-		if(m_History.Count > 0)
-		{
-			m_History.Peek().gameObject.SetActive (false);
-		}
-
-		m_CurrentWindow = window;
-		m_CurrentWindow.gameObject.SetActive (true);
-
-
-		m_History.Push (m_CurrentWindow);
-	}
-
-	public static void Hide()
-	{
-		if(m_History.Count > 1)
-		{
-			m_History.Pop().gameObject.SetActive(false);
-			m_CurrentWindow = m_History.Peek();
-			m_CurrentWindow.SetActive(true);
-		}
-	}
-
-	static void Clear()
-	{
-		foreach(GameObject window in m_History)
-		{
-			window.SetActive(false);
+			panel.SetActive(false);
 		}
 		m_History.Clear();
+		m_CurrentWindow = null;
 	}
 
 	void OnLevelWasLoaded(int level)
 	{
-		m_CurrentWindow = null; 
-		m_History.Clear ();
+		m_CurrentWindow = null;
+		m_History.Clear();
 	}
 }

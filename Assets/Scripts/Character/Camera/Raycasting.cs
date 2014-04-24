@@ -55,7 +55,25 @@ public class Raycasting : MonoBehaviour
 		}
 		else if(Input.GetButtonDown(m_Input) && m_InteractingWith != null)
 		{
-			m_InteractingWith = null;
+			RaycastHit hit;
+			Ray ray = new Ray(transform.position, transform.forward);
+			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
+			
+			if(Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+			{
+				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
+
+
+				if((m_InteractingWith.GetComponent<PickUp>() == null || m_InteractingWith.GetComponent<Collaborate>() == null) && hoover != null)
+				{
+					m_InteractingWith = null;
+				}
+
+			}
+			else
+			{
+				m_InteractingWith = null;
+			}
 		}
 		else if(m_InteractingWith != null)
 		{

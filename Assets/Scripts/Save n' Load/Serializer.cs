@@ -22,7 +22,26 @@ public class Serializer : MonoBehaviour
 			{
 				component.Serialize(ref jComponentArr);
 			}
+
+			SerializeTransform(ref jsonObject, objId);
 		}
 	}
 
+	private static void SerializeTransform(ref JSONObject jsonObject, Id objId)
+	{
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField ("Transform", jObject);
+
+		jsonObject.AddField ("Position X", objId.transform.localPosition.x);
+		jsonObject.AddField ("Position Y", objId.transform.localPosition.y);
+		jsonObject.AddField ("Position Z", objId.transform.localPosition.z);
+
+		jsonObject.AddField ("Rotation X", objId.transform.localRotation.x);
+		jsonObject.AddField ("Rotation Y", objId.transform.localRotation.y);
+		jsonObject.AddField ("Rotation Z", objId.transform.localRotation.z);
+
+		jsonObject.AddField ("Scale X",    objId.transform.localScale.x);
+		jsonObject.AddField ("Scale Y",    objId.transform.localScale.y);
+		jsonObject.AddField ("Scale Z",    objId.transform.localScale.z);
+	}
 }
