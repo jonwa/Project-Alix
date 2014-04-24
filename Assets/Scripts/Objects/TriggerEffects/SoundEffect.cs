@@ -30,7 +30,6 @@ public class SoundEffect : TriggerComponent
 	}
 	void Start()
 	{
-		Debug.Log ("Started" + m_Started);
 		m_Started = false;
 		CacheEventInstance();
 	}
