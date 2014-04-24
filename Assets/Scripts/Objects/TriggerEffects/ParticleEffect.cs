@@ -40,4 +40,7 @@ public class ParticleEffect : TriggerComponent
 		m_Particle = Instantiate(m_Particle, this.transform.position, this.transform.rotation) as ParticleSystem;
 	}
 
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
+
 }
