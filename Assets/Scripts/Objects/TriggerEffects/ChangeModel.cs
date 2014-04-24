@@ -16,7 +16,6 @@ public class ChangeModel :  TriggerComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	private bool m_IsActive = true; 
 	private int counter = 0;
 	#endregion
 
@@ -33,6 +32,14 @@ public class ChangeModel :  TriggerComponent
 	override public string Name
 	{ get{return"ChangeModel";}}
 	
-	public override void Serialize(ref JSONObject jsonObject){}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Serialize(ref JSONObject jsonObject)
+	{
+
+
+	}
+
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+
+	}
 }
