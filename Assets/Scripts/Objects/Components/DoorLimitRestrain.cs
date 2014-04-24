@@ -30,8 +30,8 @@ public class DoorLimitRestrain : MonoBehaviour
 		m_LastTransform = transform;
 		if(m_Door)
 		{
-			m_Maximum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Maximum;
-			m_Minimum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Minimum;
+			//m_Maximum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Maximum;
+			//m_Minimum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Minimum;
 		}
 	}
 	
@@ -39,16 +39,15 @@ public class DoorLimitRestrain : MonoBehaviour
 	{
 		if(m_Door)
 		{
-			if(m_OtherLimit.GetComponent<Locked>().GetLocked())
+			/*if(m_OtherLimit.GetComponent<Locked>().GetLocked())
 			{
 				m_Maximum = m_LockedOffset;
 				m_Minimum = -m_LockedOffset;
-			}
-			else
-			{
+			}*/
+
 				m_Maximum = m_OriginalMaximum;
 				m_Minimum = m_OriginalMinimum;
-			}
+
 			CheckLimit();
 		}
 		else
@@ -72,7 +71,7 @@ public class DoorLimitRestrain : MonoBehaviour
 		if(m_Delay == 0)
 		{
 			rigidbody.isKinematic = false;
-			m_TotalRotation 	  = m_OtherLimit.GetComponent<DoorLimitCalculate>().GetDifference() +	gameObject.GetComponent<DoorLimitCalculate>().GetDifference();
+			//m_TotalRotation 	  = m_OtherLimit.GetComponent<DoorLimitCalculate>().GetDifference() +	gameObject.GetComponent<DoorLimitCalculate>().GetDifference();
 			if(m_TotalRotation < m_Maximum && m_TotalRotation > m_Minimum)
 			{
 				m_LastTransform = transform;

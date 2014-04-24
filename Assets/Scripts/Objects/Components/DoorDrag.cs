@@ -69,7 +69,7 @@ public class DoorDrag : ObjectComponent
 			{
 				m_RotationAxis = PlayerForward();
 				//Debug.Log(m_Target.transform.rotation.eulerAngles.y);
-				m_Target.transform.Rotate(m_RotationAxis,m_Delta);
+			//m_Target.transform.Rotate(m_RotationAxis,m_Delta);
 				//transform.Rotate(m_RotationAxis,m_Delta);
 			}
 		}
