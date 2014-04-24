@@ -121,4 +121,7 @@ public class DoorDrag : ObjectComponent
 		Camera.main.SendMessage("Release");
 	}
 
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
+
 }

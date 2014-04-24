@@ -139,6 +139,9 @@ public class Triggering : ObjectComponent {
 		}
 		return goList.ToArray();
 	}
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
 
 

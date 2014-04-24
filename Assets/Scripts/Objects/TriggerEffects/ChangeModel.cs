@@ -38,13 +38,6 @@ public class ChangeModel :  TriggerComponent
 	override public string Name
 	{ get{return"ChangeModel";}}
 	
-	//Overload when saveing data for component.
-	public virtual void Serialize(ref JSONObject jsonObject)
-	{
-	}
-	
-	//Overload when loading data for component.
-	public virtual void Deserialize(ref JSONObject jsonObject)
-	{
-	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
