@@ -6,6 +6,8 @@
 		_NoiseTex ("Noise", 2D) = "White"{}
 		_Clamp ("Clamp", Range (0,1)) = 0.3
 		_Lerp ("Lerp", Range (0,1)) = 0.5
+		_xCoord ("xCoord", Range (0,30)) = 5
+		_yCoord ("yCoord", Range (0,30)) = 1
 	}
 	SubShader 
 	{
@@ -22,6 +24,8 @@
 		sampler2D _NoiseTex;
 		float _Clamp;
 		float _Lerp;
+		float _xCoord;
+		float _yCoord;
 		
 		/////////
 		struct vertexInput
@@ -53,8 +57,8 @@
 			//o.uv2.x = fract(sin(dot(o.uv2 ,vec2(12.9898,78.233))) * 43758.5453);;
 			
 			
-			o.uv2.x += tan(_Time.z * 30); + o.uv2.y;
-			o.uv2.y += tan(_Time.z * 3) + o.uv2.x;
+			o.uv2.x += tan(_Time.z * _xCoord); + o.uv2.y;
+			o.uv2.y += tan(_Time.z * _yCoord) + o.uv2.x;
 			
 			return o;
 		}
