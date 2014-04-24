@@ -19,7 +19,7 @@ public class RasmusPortal : ObjectComponent
 	private Transform 		  m_TargetPortal;
 	private HashSet<Collider> m_Colliding = new HashSet<Collider>();
 	private  Material 		  m_Material;
-	public RenderTexture	  m_Texture;
+	private RenderTexture	  m_Texture;
 	#endregion
 
 	void Start()
@@ -33,8 +33,9 @@ public class RasmusPortal : ObjectComponent
 		//Debug.Log("Startar");
 	}
 
-	void update()
+	void Update()
 	{
+		m_Texture = transform.parent.GetComponent<PortalTexture>().GetTextureForPortal();
 		renderer.material.mainTexture = m_Texture;
 		//Camera targetCam = transform.parent.GetComponent<Camera>().camera;
 		//targetCam.targetTexture  = m_Texture;

@@ -4,17 +4,17 @@ using System.Collections;
 public class CheckPlayer : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public GameObject m_Target1;
-	public GameObject m_Target2;
 	public float  	  m_DoorHeight = 5.28f;
 	public float  	  m_DoorWidth  = 2.64f;
 	public float  	  m_FarPlane   = 100f;
 	public bool    	  m_House      = false;
 	public float 	  m_Distance   = 55.5f;
+	public GameObject m_Target1    = null;
+	public GameObject m_Target2    = null;
 	#endregion
 
 	#region PrivateMemberVariables
-	private GameObject m_TargetToFollow;
+	private GameObject m_TargetToFollow = null;
 	private GameObject m_Player;
 	private float MaxView = 100;
 	#endregion
@@ -30,6 +30,10 @@ public class CheckPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_Target2 == null)
+		{
+			//m_Target2 = m_Target3;
+		}
 		m_Player = Camera.main.gameObject;
 		float dist = Vector3.Distance(transform.position, m_TargetToFollow.transform.position);
 		//Debug.Log(dist);
