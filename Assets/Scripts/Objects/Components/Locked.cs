@@ -41,6 +41,7 @@ public class Locked : ObjectComponent
 	{
 		m_Locked = true;
 	}
+
 	public void UnLock()
 	{
 		m_Locked = false;
