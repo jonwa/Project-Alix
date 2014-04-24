@@ -30,7 +30,6 @@ public class SoundEffect : TriggerComponent
 	}
 	void Start()
 	{
-		Debug.Log ("Started" + m_Started);
 		m_Started = false;
 		CacheEventInstance();
 	}
@@ -116,15 +115,6 @@ public class SoundEffect : TriggerComponent
 	}
 
 
-	//Overload when saveing data for component.
-	public override void Serialize(ref JSONObject jsonObject)
-	{
-		
-	}
-	
-	//Overload when loading data for component.
-	public override void Deserialize(ref JSONObject jsonObject)
-	{
-		
-	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

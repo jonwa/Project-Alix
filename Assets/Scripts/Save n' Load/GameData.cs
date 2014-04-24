@@ -13,27 +13,26 @@ using System.IO;
 public class GameData : MonoBehaviour 
 {
 
-	//void Update()
-	//{
-	//	if(Input.GetButton("Fire1"))
-	//	{
-	//		Save("filnamnLOL");
-	//	}
-	//	else if(Input.GetButtonDown("Fire2"))
-	//	{
-	//		Load("filnamnLOL");
-	//	}
-	//}
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Q))
+		{
+			Load("filnamn");
+		}
+	}
 
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName)
 	{
 		fileName = fileName.ToLower();
-		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+		JSONObject jsonObject = new JSONObject();
 		Serializer.Serialize(ref jsonObject);
 
-		string s = jsonObject.Print(true);
-		Debug.Log(s);
+		jsonObject.Bake();
+
+		//string s = jsonObject.str.Replace("\"",("\\"+"\""));
+		Debug.Log(jsonObject.str);
+
 		WriteToFile(fileName, jsonObject.Print());
 	}
 	
@@ -41,13 +40,17 @@ public class GameData : MonoBehaviour
 	public static void Load(string fileName)
 	{
 		fileName = fileName.ToLower();
+		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
 		JSONObject jsonObject = new JSONObject(fileContent);
 
+		//jsonObject.Bake();
+		//string s = jsonObject.Print(true);
+		//Debug.Log(s);
+
 		Deserializer.Deserialize(ref jsonObject);
 
-		string s = jsonObject.Print(true);
-		Debug.Log(s);
+
 	}
 
 	//list with filenames for all saved data

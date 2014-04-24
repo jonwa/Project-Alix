@@ -58,4 +58,7 @@ public class Pocket : ObjectComponent
 			DeActivate();
 		}
 	}
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

@@ -8,7 +8,7 @@ using System.Collections;
  * 
  */
 
-public class ObjectComponent :  MonoBehaviour
+public abstract class ObjectComponent : SerializableObject
 {
     private bool m_IsActive = false;
    
@@ -46,14 +46,14 @@ public class ObjectComponent :  MonoBehaviour
     }
 
 	//Overload when saveing data for component.
-	public virtual void Serialize(ref JSONObject jsonObject)
-	{
-	}
-
-	//Overload when loading data for component.
-	public virtual void Deserialize(ref JSONObject jsonObject)
-	{
-	}
+//	public virtual void Serialize(ref JSONObject jsonObject)
+//	{
+//	}
+//
+//	//Overload when loading data for component.
+//	public virtual void Deserialize(ref JSONObject jsonObject)
+//	{
+//	}
 
     public virtual void Interact()
     {
@@ -71,4 +71,5 @@ public class ObjectComponent :  MonoBehaviour
 	{
 		m_IsActive = false;
 	}
+	
 }

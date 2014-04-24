@@ -27,7 +27,7 @@ public class MoviePlayer : TriggerComponent
 
 	void PlayMovie()
 	{
-		Debug.Log ("Hejsan");
+		renderer.material.mainTexture = m_Movie;
 		if (!m_Movie.isPlaying) 
 		{
 			m_Movie.Stop();
@@ -37,7 +37,6 @@ public class MoviePlayer : TriggerComponent
 
 	void Start () 
 	{
-		renderer.material.mainTexture = m_Movie;
 		m_Started = false;
 	}
 	

@@ -8,7 +8,7 @@ using System.Collections;
  * 
  */
 
-public class TriggerComponent :  MonoBehaviour
+public abstract class TriggerComponent : SerializableObject
 {
 	public virtual string Name
 	{ get{return"";}}
@@ -31,14 +31,4 @@ public class TriggerComponent :  MonoBehaviour
 		
 	}
 
-
-	//Overload when saveing data for component.
-	public virtual void Serialize(ref JSONObject jsonObject)
-	{
-	}
-	
-	//Overload when loading data for component.
-	public virtual void Deserialize(ref JSONObject jsonObject)
-	{
-	}
 }
