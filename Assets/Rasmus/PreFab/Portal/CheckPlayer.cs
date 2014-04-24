@@ -11,6 +11,7 @@ public class CheckPlayer : MonoBehaviour
 	public float 	  m_Distance   = 55.5f;
 	public GameObject m_Target1    = null;
 	public GameObject m_Target2    = null;
+	public float      m_Offset     = 1.23f;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -30,11 +31,7 @@ public class CheckPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(m_Target2 == null)
-		{
-			//m_Target2 = m_Target3;
-		}
-		m_Player = Camera.main.gameObject;
+		//m_Player = Camera.main.gameObject;
 		float dist = Vector3.Distance(transform.position, m_TargetToFollow.transform.position);
 		//Debug.Log(dist);
 		//2.64   F = (1.32/dist) * 100

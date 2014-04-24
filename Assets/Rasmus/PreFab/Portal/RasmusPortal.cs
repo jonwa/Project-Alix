@@ -18,7 +18,7 @@ public class RasmusPortal : ObjectComponent
 	#region PrivateMemberVariables
 	private Transform 		  m_TargetPortal;
 	private HashSet<Collider> m_Colliding = new HashSet<Collider>();
-	private  Material 		  m_Material;
+	//private Material 		  m_Material;
 	private RenderTexture	  m_Texture;
 	#endregion
 
@@ -44,7 +44,7 @@ public class RasmusPortal : ObjectComponent
 	//When we collide with the portal we create a duplicate and 
 	void OnTriggerEnter(Collider collider)
 	{
-		m_TargetPortal = m_TargetPort.transform;//transform.parent.GetComponent<PortalPairHandler>().GetRemotePortal(transform.name);
+		m_TargetPortal 		 = m_TargetPort.transform;//transform.parent.GetComponent<PortalPairHandler>().GetRemotePortal(transform.name);
 		Vector3 ExtraForward = m_TargetPortal.transform.up;
 		//Debug.Log(ExtraForward.x + " " + ExtraForward.y + " " + ExtraForward.z);
 		
@@ -54,18 +54,18 @@ public class RasmusPortal : ObjectComponent
 		Quaternion q1  = Quaternion.FromToRotation(transform.up, m_TargetPortal.up);					
 		Vector3 newPos = m_TargetPortal.position + q1 * (collider.transform.position - transform.position);
 		
-		if (collider.rigidbody != null) 
-		{
-			GameObject o = (GameObject) GameObject.Instantiate(collider.gameObject, newPos, collider.gameObject.transform.rotation);
-			
-			o.rigidbody.velocity 		= ((q1 * collider.rigidbody.velocity));//*(-1);
-			o.rigidbody.velocity 		= Quaternion.AngleAxis(angle, Vector3.up)*o.rigidbody.velocity;
-			o.rigidbody.angularVelocity = (collider.rigidbody.angularVelocity);
-			
-			collider.gameObject.SetActive(false);
-			Destroy(collider.gameObject);
-			collider = o.collider;
-		}
+		//if (collider.rigidbody != null) 
+		//{
+		//	GameObject o = (GameObject) GameObject.Instantiate(collider.gameObject, newPos, collider.gameObject.transform.rotation);
+		//	
+		//	o.rigidbody.velocity 		= ((q1 * collider.rigidbody.velocity));//*(-1);
+		//	o.rigidbody.velocity 		= Quaternion.AngleAxis(angle, Vector3.up)*o.rigidbody.velocity;
+		//	o.rigidbody.angularVelocity = (collider.rigidbody.angularVelocity);
+		//	
+		//	collider.gameObject.SetActive(false);
+		//	Destroy(collider.gameObject);
+		//	collider = o.collider;
+		//}
 		
 		collider.transform.position = newPos + ExtraForward;
 		transform.parent.GetComponent<PortalTexture>().ChangeHouse();
