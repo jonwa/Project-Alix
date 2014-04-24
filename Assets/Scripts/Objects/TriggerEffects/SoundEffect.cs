@@ -11,14 +11,18 @@ using FMOD.Studio;
  * 
  */
 
-public class SoundEffect : TriggerEffect 
+public class SoundEffect : TriggerComponent 
 {
+	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
 	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
 	private bool							m_Started;
+	#endregion
 
-	public FMODAsset				m_Asset;
+	#region PublicMemberVariables
+	public FMODAsset						m_Asset;
+	#endregion
 
 	override public string Name
 	{
