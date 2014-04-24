@@ -111,9 +111,6 @@ public class Inventory : MonoBehaviour
 	{
 		UISprite sprite = go.GetComponent<UISprite>() as UISprite;
 
-		sprite.width  = 40; 
-		sprite.height = 40; 
-
 		Debug.Log("Sprite width: " + sprite.width);
 		Debug.Log("Sprite height: " + sprite.height);
 
