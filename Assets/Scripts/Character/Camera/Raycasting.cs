@@ -22,19 +22,19 @@ public class Raycasting : MonoBehaviour
 	#region PrivateMemberVariables
 	private GameObject m_InteractingWith;
 
-	private bool m_ShowHoover = true;
+	private bool m_ShowHover = true;
 	#endregion
 
-	public bool ShowHoover
+	public bool ShowHover
 	{
-		set { m_ShowHoover = value; }
+		set { m_ShowHover = value; }
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
 		// used for mouse cursor state
-		Cast (m_ShowHoover);
+		Cast (m_ShowHover);
 
 		if(m_HoldToInteract)
 		{
@@ -133,9 +133,9 @@ public class Raycasting : MonoBehaviour
 		}
 	}
 
-	void Cast(bool showHoover)
+	void Cast(bool showHover)
 	{
-		if(showHoover)
+		if(showHover)
 		{
 			RaycastHit hit;
 			Ray ray = new Ray(transform.position, transform.forward);
@@ -143,11 +143,25 @@ public class Raycasting : MonoBehaviour
 			
 			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
 			{
-				HooverEffect hoover = hit.collider.gameObject.GetComponent<HooverEffect>();
+				HoverEffect hover = hit.collider.gameObject.GetComponent<HoverEffect>();
 				
-				if(hoover != null)
+				if(hover != null)
 				{
-					Cursor.SetCursor(hoover.HooverTexture, hoover.Description, true);
+					if(Input.GetButton(m_Input))
+					{
+						if(hover.ButtonDownHoverTexture != null)
+						{
+							Cursor.SetCursor(hover.ButtonDownHoverTexture, hover.Description, true);
+						}
+						else
+						{
+							Cursor.SetCursor(hover.HoverTexture, hover.Description, true);
+						}
+					}
+					else
+					{
+						Cursor.SetCursor(hover.HoverTexture, hover.Description, true);
+					}
 				}
 				else
 				{
