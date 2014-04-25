@@ -36,7 +36,7 @@ public class Locked : ObjectComponent
 	void Update() 
 	{
 		//Remove after testing
-		m_Locked = m_LockedFromStart;
+		//m_Locked = m_LockedFromStart;
 	}
 
 	public void Lock()

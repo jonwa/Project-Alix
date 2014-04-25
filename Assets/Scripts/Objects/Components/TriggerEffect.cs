@@ -51,7 +51,7 @@ public class TriggerEffect : ObjectComponent
 		return m_CanBeTriggered;
 	}
 
-	public void ActivateTrigger()
+	public void ActivateTriggerEffect()
 	{
 		for(int i = 0; i < m_Messages.Length; i++){
 			if(m_Messages[i].Equals("Effect"))
