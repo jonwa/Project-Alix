@@ -151,7 +151,7 @@ public class Raycasting : MonoBehaviour
 				}
 				else
 				{
-					Cursor.SetCursor(null, null, false);
+					Cursor.SetCursor(null, null, true);
 				}
 			}
 			else

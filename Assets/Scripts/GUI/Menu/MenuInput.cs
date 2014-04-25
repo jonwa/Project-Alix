@@ -14,6 +14,7 @@ public class MenuInput : MonoBehaviour
 	#region PublicMemberVariables
 	public GameObject m_Window          = null; 
 	public bool 	  m_ButtonDetection = true;
+	public string 	  m_Input			= null; 
 	#endregion
 
 	#region PrivateMemberVariables
@@ -33,7 +34,7 @@ public class MenuInput : MonoBehaviour
 	{
 		if(m_ButtonDetection)
 		{
-			if (Input.GetKeyDown(KeyCode.Escape) && !m_Active)
+			if (Input.GetButtonDown(m_Input) && !m_Active)
 			{
 				m_Active = true; 
 				m_Window.SetActive(true);
@@ -41,7 +42,7 @@ public class MenuInput : MonoBehaviour
 				//freeze the camera position
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 			}
-			else if(Input.GetKeyDown(KeyCode.Escape) && m_Active)
+			else if(Input.GetButtonDown(m_Input) && m_Active)
 			{
 				m_Active = false;
 				m_Window.SetActive(false);
