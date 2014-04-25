@@ -38,7 +38,7 @@ public class MenuInput : MonoBehaviour
 			{
 				m_Active = true; 
 				m_Window.SetActive(true);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = false;
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
 				//freeze the camera position
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 			}
@@ -47,7 +47,7 @@ public class MenuInput : MonoBehaviour
 				m_Active = false;
 				m_Window.SetActive(false);
 				WindowHandler.Default(); 
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = true;
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 				//unfreeze the camera position
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 			}
@@ -57,13 +57,13 @@ public class MenuInput : MonoBehaviour
 			if(m_Active)
 			{
 				m_Window.SetActive(true);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = false;
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 			}
 			else
 			{
 				m_Window.SetActive(false);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = true;
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 			}
 		}

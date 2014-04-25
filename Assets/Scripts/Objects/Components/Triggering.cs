@@ -140,8 +140,31 @@ public class Triggering : ObjectComponent {
 		return goList.ToArray();
 	}
 
-	public override void Serialize(ref JSONObject jsonObject){}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Serialize(ref JSONObject jsonObject)
+	{
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField(Name, jObject);
+		jObject.AddField("m_ArrayPosition", m_ArrayPosition);
+
+		JSONObject jAllowedArr = new JSONObject(JSONObject.Type.ARRAY);
+		jObject.AddField("m_Allowed", jAllowedArr);
+		for(int i=0; i< m_Allowed.Length; ++i)
+		{
+			jAllowedArr.Add(m_Allowed[i]);
+		}
+
+	}
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+		m_ArrayPosition = (int)jsonObject.GetField("m_ArrayPosition").n;
+
+		JSONObject jAllowedArr = jsonObject.GetField("m_Allowed");
+		m_Allowed = new bool[jAllowedArr.list.Count];
+		for(int i=0; i<jAllowedArr.list.Count; ++i)
+		{
+			m_Allowed[i] = jAllowedArr.list[i];
+		}
+	}
 }
 
 
