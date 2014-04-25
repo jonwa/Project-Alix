@@ -65,7 +65,6 @@ public class PickUp : ObjectComponent
 //
 			if(m_HoldingObject == true)
 			{
-				Debug.Log ("Holding");
 				transform.localScale = m_OriginalScale * m_ChangeSize;
 				transform.position = m_HoldObject.transform.position;
 				transform.rotation = m_HoldObject.transform.rotation;

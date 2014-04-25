@@ -36,7 +36,7 @@ public class BookButtons : MonoBehaviour
 		case Action.Close:
 			if(m_Window == null) return;
 			m_Window.SetActive(false);
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = true;
+			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 			BookWindow.Close();
 			break;

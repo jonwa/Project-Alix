@@ -8,16 +8,21 @@ using System.Collections;
  * Modified By: 
  */
 
-public class HooverEffect : ObjectComponent 
+public class HoverEffect : ObjectComponent 
 {
 	#region publicMemberVariables
-	public Texture m_HooverEffect;
+	public Texture m_HoverEffect;
+	public Texture m_ButtonDownHoverEffect = null;
 	public string  m_Description  = null;
 	#endregion
 
-	public Texture HooverTexture
+	public Texture HoverTexture
 	{
-		get { return m_HooverEffect; }
+		get { return m_HoverEffect; }
+	}
+	public Texture ButtonDownHoverTexture
+	{
+		get { return m_ButtonDownHoverEffect; }
 	}
 
 	public string Description

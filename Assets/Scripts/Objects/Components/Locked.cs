@@ -16,6 +16,8 @@ public class Locked : ObjectComponent
 	private bool m_Locked;
 	#endregion
 
+	override public string Name
+	{ get{return"Locked";}}
 
 	// Use this for initialization
 	void Start() 
@@ -51,6 +53,14 @@ public class Locked : ObjectComponent
 	{
 		return m_Locked;
 	}
-	public override void Serialize(ref JSONObject jsonObject){}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Serialize(ref JSONObject jsonObject)
+	{
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField(Name, jObject);
+		jObject.AddField("m_Locked", m_Locked);
+	}
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+		m_Locked = jsonObject.GetField("m_Locked").b;
+	}
 }
