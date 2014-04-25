@@ -10,21 +10,18 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour 
 {
-	public static string Window{get;set;}
-	public static bool 	 Active{get;set;}
+	public static bool Active{get;set;}
 
-
-	void RequestInput(bool activate)
+	public static void Reset()
 	{
-		if(activate)
+		Active = !Active;
+		if(Active)
 		{
-			Active = true;
 			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 		}
-		else if(!activate)
+		else if(!Active)
 		{
-			Active = false;
 			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 		}

@@ -35,22 +35,21 @@ public class MenuInput : MonoBehaviour
 	{
 		if(m_ButtonDetection)
 		{
-			if (Input.GetButtonDown(m_Input) && !m_Active)
+			if (Input.GetButtonDown(m_Input))
 			{
-				m_Active = true; 
-				m_Window.SetActive(true);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
-				//freeze the camera position
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
-			}
-			else if(Input.GetButtonDown(m_Input) && m_Active)
-			{
-				m_Active = false;
-				m_Window.SetActive(false);
-				WindowHandler.Default(); 
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
-				//unfreeze the camera position
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+				m_Active = InputManager.Active;
+
+				if(m_Active)
+				{
+					m_Window.SetActive(false);
+					WindowHandler.Default(); 
+				}
+				else
+				{
+					m_Window.SetActive(true);
+				}
+
+				InputManager.Reset();
 			}
 		}
 		else

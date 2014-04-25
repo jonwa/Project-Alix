@@ -28,22 +28,19 @@ public class InventoryInput : MonoBehaviour
 	{
 		if(Input.GetButtonDown(m_Input))
 		{
+			InventoryData.Toggle = InputManager.Active;
+
 			if(InventoryData.Toggle)
 			{ 
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				gameObject.GetComponent<UIPlayTween>().Play (true);
-				InventoryData.Toggle = false; 
 			}
 			else
 			{
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 				gameObject.GetComponent<UIPlayTween>().Play (false);
-				InventoryData.Toggle = true; 
-
 				InventoryData.UpdateInventory(); 
 			}
+
+			InputManager.Reset();
 		}
 	}
 }
