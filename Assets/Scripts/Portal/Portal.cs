@@ -80,4 +80,6 @@ public class Portal : ObjectComponent
 		m_TargetPortal = target;
 	}
 
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

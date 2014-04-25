@@ -4,43 +4,48 @@ using System.Collections;
 using FMOD.Studio;
 
 
-/* Discription: PlaySound, starts a soundeffect on triggering
+/* Discription: SoundEffect, starts a soundeffect on trigger
  * 
  * Created by: Sebastian Olsson: 23-04-2014
  * Modified by: 
  * 
  */
 
-public class PlaySound : TriggerEffect 
+public class SoundEffect : TriggerComponent 
 {
+	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
 	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
 	private bool							m_Started;
+	#endregion
 
-	public FMODAsset				m_Asset;
-	public bool 					m_StartOnAwake 	= true;
-	public bool						m_StartOnTrigger = false;
+	#region PublicMemberVariables
+	public FMODAsset						m_Asset;
+	#endregion
 
 	override public string Name
 	{
 		get{ return "PlaySoundEffect"; }
 	}
-	
+	void Start()
+	{
+		m_Started = false;
+		CacheEventInstance();
+	}
+
 	void PlaySoundEffect()
 	{
+		if (getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED) 
+		{
+			m_Started = false;
+		}
 		if (!m_Started) 
 		{
 			StartEvent();
 		}
 	}
 
-	void Start()
-	{
-		m_Started = false;
-		CacheEventInstance();
-	}
-	
 	void Update()
 	{
 		if (m_Event != null && m_Event.isValid ()) 
@@ -82,7 +87,6 @@ public class PlaySound : TriggerEffect
 		{
 			FMOD.Studio.UnityUtil.LogError("No Asset/path for the Event");
 		}
-		m_Started = true;
 	}
 	
 	public void StartEvent()
@@ -100,6 +104,7 @@ public class PlaySound : TriggerEffect
 		{
 			FMOD.Studio.UnityUtil.LogError("Event failed: " + m_Path);
 		}
+		m_Started = true;
 	}
 	
 	//Checks for errors
@@ -110,15 +115,6 @@ public class PlaySound : TriggerEffect
 	}
 
 
-	//Overload when saveing data for component.
-	public override void Serialize(ref JSONObject jsonObject)
-	{
-		
-	}
-	
-	//Overload when loading data for component.
-	public override void Deserialize(ref JSONObject jsonObject)
-	{
-		
-	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

@@ -14,7 +14,6 @@ public class InventoryData : MonoBehaviour
 {
 	#region PublicMemberVariables
 	public int 	  m_MaxItems   = 5;
-	public string m_PlayerName;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -29,11 +28,6 @@ public class InventoryData : MonoBehaviour
 	{
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
-
-		if(m_PlayerName != null)
-		{
-			m_Player   = GameObject.Find(m_PlayerName) as GameObject;
-		}
 	}
 
 	public static bool Toggle

@@ -41,6 +41,7 @@ public class Locked : ObjectComponent
 	{
 		m_Locked = true;
 	}
+
 	public void UnLock()
 	{
 		m_Locked = false;
@@ -50,4 +51,6 @@ public class Locked : ObjectComponent
 	{
 		return m_Locked;
 	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

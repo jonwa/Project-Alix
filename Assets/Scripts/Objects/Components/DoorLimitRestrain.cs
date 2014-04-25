@@ -7,8 +7,6 @@ public class DoorLimitRestrain : MonoBehaviour
 	public float m_Maximum 		= 90;
 	public float m_Minimum 		= -90;
 	public float m_LockedOffset = 5;
-	public bool  m_Door;
-	public GameObject m_OtherLimit;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -28,43 +26,24 @@ public class DoorLimitRestrain : MonoBehaviour
 		m_OriginalMinimum = m_Minimum;
 		
 		m_LastTransform = transform;
-		if(m_Door)
-		{
-			m_Maximum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Maximum;
-			m_Minimum = m_OtherLimit.GetComponent<DoorLimitRestrain>().m_Minimum;
-		}
+
 	}
 	
 	void Update ()
 	{
-		if(m_Door)
+
+		if(GetComponent<Locked>().GetLocked())
 		{
-			if(m_OtherLimit.GetComponent<Locked>().GetLocked())
-			{
-				m_Maximum = m_LockedOffset;
-				m_Minimum = -m_LockedOffset;
-			}
-			else
-			{
-				m_Maximum = m_OriginalMaximum;
-				m_Minimum = m_OriginalMinimum;
-			}
-			CheckLimit();
+
+			m_Maximum = m_LockedOffset;
+			m_Minimum = -m_LockedOffset;
 		}
 		else
 		{
-			if(GetComponent<Locked>().GetLocked())
-			{
-				m_Maximum = m_LockedOffset;
-				m_Minimum = -m_LockedOffset;
-			}
-			else
-			{
-				m_Maximum = m_OriginalMaximum;
-				m_Minimum = m_OriginalMinimum;
-			}
-			CheckLimit();
+			m_Maximum = m_OriginalMaximum;
+			m_Minimum = m_OriginalMinimum;
 		}
+		CheckLimit();
 	}
 	
 	private void CheckLimit()
@@ -72,7 +51,9 @@ public class DoorLimitRestrain : MonoBehaviour
 		if(m_Delay == 0)
 		{
 			rigidbody.isKinematic = false;
-			m_TotalRotation 	  = m_OtherLimit.GetComponent<DoorLimitCalculate>().GetDifference() +	gameObject.GetComponent<DoorLimitCalculate>().GetDifference();
+
+			m_TotalRotation 	  = gameObject.GetComponent<DoorLimitCalculate>().GetDifference();
+
 			if(m_TotalRotation < m_Maximum && m_TotalRotation > m_Minimum)
 			{
 				m_LastTransform = transform;
@@ -81,29 +62,13 @@ public class DoorLimitRestrain : MonoBehaviour
 			{
 				gameObject.transform.Rotate(transform.up, (m_Maximum - m_TotalRotation));
 				gameObject.transform.position = m_LastTransform.position;
-				if(m_Door == true)
-				{
-					m_Delay =  10;
-					m_Bugg  += 20;
-				}
-				else
-				{
-					m_Bugg2  +=10;
-				}
+				m_Bugg2  +=10;
 			}
 			else if(m_TotalRotation < m_Minimum)
 			{
 				gameObject.transform.Rotate(transform.up, (m_Minimum - m_TotalRotation));
 				gameObject.transform.position = m_LastTransform.position;
-				if(m_Door == true)
-				{
-					m_Delay =  10;
-					m_Bugg  += 20;
-				}
-				else
-				{
-					m_Bugg2  +=10;
-				}
+				m_Bugg2  +=10;
 			}
 		}
 		else

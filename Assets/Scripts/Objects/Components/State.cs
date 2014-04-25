@@ -4,7 +4,7 @@ using System;
 /* Discription: Objectcomponent class that sets an object ID
  * 
  * Created by: Robert Datum: 08/04-14
- * Modified by:
+ * Modified by: Jimmy 2014-04-24
  * 
  */
 [RequireComponent(typeof(Id))]
@@ -53,28 +53,21 @@ public class State : ObjectComponent
 
 	public override void Deserialize (ref JSONObject jsonObject)
 	{
-
-		switch(jsonObject.type)
+		switch(jsonObject.GetField("m_State").str)
 		{
-		case JSONObject.Type.OBJECT:
-			for(int i=0; i<jsonObject.list.Count; i++)
-			{
-				string key = (string)jsonObject.keys[i];
-				if(key == "State")
-				{
-					foreach(state s in Enum.GetValues(typeof(state)))
-					{
-						if(jsonObject.list[i].str == s.ToString())
-						{
-							m_State = s;
-						}
-					}
-				}
-				//Deserialize(ref jsonObject.list[i]);
-			}
+		case "Pocket":
+			m_State = state.Pocket;
+			break;
+		case "InActive":
+			m_State = state.InActive;
+			break;
+		case "Active":
+			m_State = state.Active;
+			break;
+		default:
+			Debug.LogError("Failed to deserialize State");
 			break;
 		}
-
 	}
 
 }

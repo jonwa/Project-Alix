@@ -61,7 +61,6 @@ public class RotationLimit : ObjectComponent
 		m_NegativeY *= -1;
 		m_NegativeZ *= -1;
 		m_Offset *= -1;
-		Debug.Log (m_Offset);
 	}
 	
 	// Update is called once per frame
@@ -186,4 +185,7 @@ public class RotationLimit : ObjectComponent
 	{
 
 	}
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

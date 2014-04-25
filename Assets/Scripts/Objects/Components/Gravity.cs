@@ -46,4 +46,6 @@ public class Gravity : ObjectComponent
 	{
 		m_Gravity = bo;
 	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
