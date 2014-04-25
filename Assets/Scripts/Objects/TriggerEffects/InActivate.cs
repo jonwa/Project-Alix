@@ -28,5 +28,8 @@ public class InActivate :  TriggerComponent
 		jsonObject.AddField(Name, jObject);
 		jObject.AddField("m_IsActive", m_IsActive);
 	}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+		m_IsActive = jsonObject.GetField("m_IsActive").b;
+	}
 }

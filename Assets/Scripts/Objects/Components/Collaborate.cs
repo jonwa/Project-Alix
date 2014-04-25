@@ -55,6 +55,7 @@ public class Collaborate : ObjectComponent
 				}
 			}
 		}
+
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

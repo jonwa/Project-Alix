@@ -68,7 +68,10 @@ public class RasmusPortal : ObjectComponent
 		//}
 		
 		collider.transform.position = newPos + ExtraForward;
-		transform.parent.GetComponent<PortalTexture>().ChangeHouse();
+		if(collider.CompareTag("Player"))
+		{
+			transform.parent.GetComponent<PortalTexture>().ChangeHouse();
+		}
 	}
 	
 	//When we exit a portal we remove the object going through the portal from the hashset
