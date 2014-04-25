@@ -17,7 +17,7 @@ public class MoviePlayer : TriggerComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	private bool							m_Started;
+	private bool			m_Started;
 	#endregion
 
 	override public string Name
