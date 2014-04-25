@@ -76,5 +76,7 @@ public class RasmusPortal : ObjectComponent
 	{
 		m_Colliding.Remove(collider);
 	}
-	
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
