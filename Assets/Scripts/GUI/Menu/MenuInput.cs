@@ -21,6 +21,7 @@ public class MenuInput : MonoBehaviour
 	private bool m_Active = false;
 	#endregion
 
+
 	//get/set the value of m_Active
 	public bool Active
 	{

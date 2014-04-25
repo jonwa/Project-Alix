@@ -28,6 +28,8 @@ public class WindowButton : MonoBehaviour {
 		case Action.Continue:
 			m_Window.SetActive(false);
 			WindowHandler.Default();
+			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
+			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 			m_Window.transform.parent.GetComponent<MenuInput>().Active = false;
 		break;
 
