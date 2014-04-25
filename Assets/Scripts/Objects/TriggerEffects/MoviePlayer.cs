@@ -27,6 +27,7 @@ public class MoviePlayer : TriggerComponent
 
 	void PlayMovie()
 	{
+		Debug.Log ("Kommer hit 2");
 		renderer.material.mainTexture = m_Movie;
 		if (!m_Movie.isPlaying) 
 		{

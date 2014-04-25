@@ -53,6 +53,7 @@ public class TriggerEffect : ObjectComponent
 
 	public void ActivateTrigger()
 	{
+		Debug.Log ("Kommer hit");
 		for(int i = 0; i < m_Messages.Length; i++){
 			if(m_Messages[i].Equals("Effect"))
 			{
