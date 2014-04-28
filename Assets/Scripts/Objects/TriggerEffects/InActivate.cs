@@ -6,7 +6,7 @@ using System.Collections;
  * Modified by: 
  * 
  */
-
+[RequireComponent(typeof(State))]
 public class InActivate :  TriggerComponent
 {
 	#region PrivateMemberVariables
@@ -22,6 +22,14 @@ public class InActivate :  TriggerComponent
 	override public string Name
 	{ get{return"InActivate";}}
 	
-	public override void Serialize(ref JSONObject jsonObject){}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Serialize(ref JSONObject jsonObject)
+	{
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField(Name, jObject);
+		jObject.AddField("m_IsActive", m_IsActive);
+	}
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+		m_IsActive = jsonObject.GetField("m_IsActive").b;
+	}
 }

@@ -16,23 +16,33 @@ public class ChangeModel :  TriggerComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	private bool m_IsActive = true; 
-	private int counter = 0;
+	private int m_Counter = 0;
 	#endregion
 
 	// Update is called once per frame
 	public void ModelChange()
 	{
-		if (counter < m_MeshStages.Length) {
-			gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [counter];
-			renderer.material.mainTexture = m_TextureStages [counter];
-			counter++;
+		if (m_Counter < m_MeshStages.Length) {
+			gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
+			renderer.material.mainTexture = m_TextureStages [m_Counter];
+			m_Counter++;
 		}
 	}
 	
 	override public string Name
 	{ get{return"ChangeModel";}}
 	
-	public override void Serialize(ref JSONObject jsonObject){}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Serialize(ref JSONObject jsonObject)
+	{
+
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField(Name, jObject);
+		jObject.AddField("m_Counter",m_Counter);
+	}
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+		m_Counter = (int)jsonObject.GetField("m_Counter").n;
+		gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
+		renderer.material.mainTexture = m_TextureStages [m_Counter];
+	}
 }

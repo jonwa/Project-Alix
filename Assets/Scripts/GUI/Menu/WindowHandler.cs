@@ -17,7 +17,19 @@ public class WindowHandler : MonoBehaviour
 	private static int 		  m_PreviousID;
 	private static int		  m_CurrentID;
 	#endregion
-	
+
+	void Start()
+	{
+		
+		//TODO: foreach(string name in GameData.FileNames)
+		//		{
+		//      	button.GetComponentInChildren<UILabel>().text = name;
+		//      }
+		//	Should be added in WindowHandler!!!
+		//	where button should be a list of the save/load slots 
+	}
+
+
 	public static void Show(int id, GameObject window)
 	{	
 		m_CurrentWindow = window;
