@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /* Discription: Push Component
  * Used to push/pull doors, open Amnesia style
@@ -22,7 +23,7 @@ public class DoorDrag : ObjectComponent
 	private GameObject		m_Player;
 	private float 			m_Delta;
 	private Vector3 		m_RotationAxis;
-	private Transform[] 	m_Colliders;
+	private List<Transform> 	m_Colliders = new List<Transform> ();
 	#endregion
 	
 	#region PublicMemberVariables
@@ -37,20 +38,18 @@ public class DoorDrag : ObjectComponent
 	{
 		m_Camera = Camera.main.transform;
 		m_Player = GameObject.Find (m_PlayerName);
-		int children = transform.childCount;
-		//Debug.Log (children);
+		//int children = transform.childCount;
 		//for(int i = 0; i < children; i++)
 		//{
 		//	Transform trans = transform.GetChild(i);
 		//	Debug.Log(transform.GetChild(i));
 		//	Debug.Log(trans);
-		//	m_Colliders[i] = trans;
+		//	m_Colliders.Add(trans);
 		//}
-		////Debug.Log (m_Colliders.Length);
 	}
 	
 	void Update () 
-	{		
+	{	
 		if(!IsActive)
 		{
 			if(m_UnlockedCamera == false)
@@ -58,27 +57,37 @@ public class DoorDrag : ObjectComponent
 				m_Camera.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				m_UnlockedCamera = true;
 			}
-			if(m_IsRotating)
-			{
-				if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds))
-				{
-					Debug.Log("Hit 1");
-					m_ShoveSpeed = m_Player.GetComponent<Rigidbody>().velocity.magnitude;
-					if(m_ShoveSpeed > 0){
-						m_ShoveSpeed *= -1;
-					}
-				}
-				else if(m_Colliders[1].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds))
-				{
-					Debug.Log("Hit 2");
-					m_ShoveSpeed = m_Player.GetComponent<Rigidbody>().velocity.magnitude;
-					m_ShoveSpeed *= -1;
-					if(m_ShoveSpeed < 0){
-						m_ShoveSpeed *= -1;
-					}
-				}
-				transform.Rotate(m_RotationAxis, m_ShoveSpeed, Space.Self);
-			}
+			//if(m_IsRotating)
+			//{
+			//
+			//	if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) && m_Colliders[0].gameObject.activeInHierarchy)
+			//	{
+			//
+			//		m_Colliders[1].gameObject.SetActive(false);
+			//
+			//
+			//		Debug.Log("Hit 1");
+			//		m_ShoveSpeed = m_Player.GetComponent<Rigidbody>().velocity.magnitude;
+			//		if(m_ShoveSpeed > 0){
+			//			m_ShoveSpeed *= -1;
+			//		}
+			//		m_Colliders[1].GetComponent<BoxCollider>().enabled = false;
+			//	}
+			//	else if(m_Colliders[1].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) && m_Colliders[1].gameObject.activeInHierarchy)
+			//	{
+			//		m_Colliders[0].gameObject.SetActive(false);
+			//
+			//
+			//		Debug.Log("Hit 2");
+			//		m_ShoveSpeed = m_Player.GetComponent<Rigidbody>().velocity.magnitude;
+			//		m_ShoveSpeed *= -1;
+			//		if(m_ShoveSpeed < 0){
+			//			m_ShoveSpeed *= -1;
+			//		}
+			//		m_Colliders[0].GetComponent<BoxCollider>().enabled = false;
+			//	}
+			//	transform.Rotate(m_RotationAxis, m_ShoveSpeed, Space.Self);
+			//}
 		}
 		else
 		{
@@ -95,6 +104,8 @@ public class DoorDrag : ObjectComponent
 		//else
 		//{
 		//	m_IsRotating = false;
+		//	m_Colliders[0].gameObject.SetActive(true);
+		//	m_Colliders[1].gameObject.SetActive(true);
 		//}
 	}
 
