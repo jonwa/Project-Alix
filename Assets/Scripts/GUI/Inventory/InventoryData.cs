@@ -93,7 +93,8 @@ public class InventoryData : MonoBehaviour
 				{
 					raycast.Activate(go);
 				}
-				else if(inspect)
+				else 
+					if(inspect)
 				{
 					inspect.OrigionalPosition = controller.Position; 
 				}
