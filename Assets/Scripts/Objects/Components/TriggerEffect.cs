@@ -61,6 +61,7 @@ public class TriggerEffect : ObjectComponent
 			else
 			{
 				SendMessage(m_Messages[i]);
+				Debug.Log(m_Messages[i]);
 			}
 		}
 	}

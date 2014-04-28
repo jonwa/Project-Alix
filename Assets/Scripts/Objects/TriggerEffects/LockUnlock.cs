@@ -9,11 +9,11 @@ using System.Collections;
 [RequireComponent(typeof(Locked))]
 public class LockUnlock :  TriggerComponent
 {
-	public void Lock()
+	public void LockDoor()
 	{
 		gameObject.GetComponent<Locked>().Lock();
 	}
-	public void UnLock()
+	public void UnLockDoor()
 	{
 		gameObject.GetComponent<Locked>().UnLock();
 	}
