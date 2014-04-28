@@ -32,8 +32,6 @@ public class InventoryData : MonoBehaviour
 		m_Items        = new GameObject[m_MaxItems];
 	}
 
-
-
 	//Initializes the List of empty slots. 
 	//called from Inventory.cs
 	public static void AddSlot(GameObject slot)

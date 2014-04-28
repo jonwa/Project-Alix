@@ -44,16 +44,10 @@ public class Inventory : MonoBehaviour
 				GameObject go = NGUITools.AddChild(gameObject, m_Template);
 
 				UISprite sprite = go.GetComponent<UISprite> () as UISprite;
-				
 
 				int width  = sprite.width;
 				int height = sprite.height; 
 				go.transform.localPosition = new Vector3 ( width * (x + 0.5f) * m_Spacing, -(height * ( y + 0.5f ) * m_Padding), 0f);
-
-			//	ButtonSettings(go, 0, 0);
-
-				
-
 
 				InventoryItem slot = go.GetComponent<InventoryItem>();
 
@@ -89,45 +83,5 @@ public class Inventory : MonoBehaviour
 			sprite.height = theHeight;
 		}
 		#endregion
-		/*
-		#region Anchor calculation (this)
-		sprite.bottomAnchor.target   = transform.parent;
-		sprite.topAnchor.target 	 = transform.parent;
-		sprite.rightAnchor.target    = transform.parent;
-		sprite.leftAnchor.target     = transform.parent;
-
-		sprite.bottomAnchor.absolute = 15;
-		sprite.rightAnchor.absolute  = -8;
-
-		int topAbs  = sprite.bottomAnchor.absolute + sprite.height;
-		int leftAbs = sprite.rightAnchor.absolute  - sprite.width;
-
-		sprite.topAnchor.absolute  = topAbs;
-		sprite.leftAnchor.absolute = leftAbs;
-		#endregion*/
 	}
-
-	/*void ButtonSettings(GameObject go, int offsetX, int offsetY)
-	{
-		UISprite sprite = go.GetComponent<UISprite>() as UISprite;
-
-		Debug.Log("Sprite width: " + sprite.width);
-		Debug.Log("Sprite height: " + sprite.height);
-
-		Debug.Log("offsetY: " + offsetY);
-		Debug.Log("offsetX: " + offsetX);
-
-		sprite.topAnchor.target 	 = transform;
-		sprite.bottomAnchor.target	 = transform;
-		sprite.leftAnchor.target     = transform;
-		sprite.rightAnchor.target    = transform;
-
-		sprite.UpdateAnchors();
-
-		sprite.topAnchor.absolute    = -10;
-		sprite.leftAnchor.absolute   = 10;
-		sprite.bottomAnchor.absolute = 10;
-		sprite.rightAnchor.absolute  = -10;
-
-	}*/
 }
