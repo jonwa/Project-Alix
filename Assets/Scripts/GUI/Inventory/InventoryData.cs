@@ -97,7 +97,7 @@ public class InventoryData : MonoBehaviour
 				}
 				else if(inspect)
 				{
-					inspect.OrigionalPosition = controller.Position; 
+					inspect.OriginalPosition = controller.Position; 
 				}
 			}
 		}

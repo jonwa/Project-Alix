@@ -14,7 +14,6 @@ using System.Collections;
 public class PickUp : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public float m_InspectionViewDistance 	= 2.0f;
 	public float m_LerpSpeed			  	= 10f;
 	public string m_Input				  	= "Fire1";
 	[Range(0, 1)]public float m_ChangeSize	= 0.80f;
@@ -30,6 +29,7 @@ public class PickUp : ObjectComponent
 	private Transform	m_HoldObject;
 	private string 		m_InspectInput;
 	private bool		m_GotInspect		 = false;
+	private bool 		isInspecting = false;
 	#endregion
 	
 	void Start () 
@@ -56,26 +56,31 @@ public class PickUp : ObjectComponent
 	
 	public override void Interact ()
 	{
-
 //		bool ableToDrop = false;
 //
 //		if(IsActive)
 //		{
 //			Debug.Log ("Active");
 //
-			if(m_HoldingObject == true)
-			{
-				transform.localScale = m_OriginalScale * m_ChangeSize;
-				transform.position = m_HoldObject.transform.position;
-				transform.rotation = m_HoldObject.transform.rotation;
-				//ableToDrop = true;
-			}
+
+		if(gameObject.GetComponent<Inspect>())
+		{		
+			isInspecting = gameObject.GetComponent<Inspect>().IsInspecting;
+		}
+		if(m_HoldingObject && !isInspecting)
+		{
+			transform.localScale = m_OriginalScale * m_ChangeSize;
+			transform.position = m_HoldObject.transform.position;
+			transform.rotation = m_HoldObject.transform.rotation;
+			//ableToDrop = true;
 
 			m_DeActivateCounter 		= 0;
 			rigidbody.useGravity 		= false;
-			MoveToInspectDistance();
 			rigidbody.velocity   		= Vector3.zero;
 			rigidbody.angularVelocity 	= Vector3.zero;
+		}
+
+		MoveToInspectDistance();
 
 	//		if(Input.GetButton(m_Input) && ableToDrop)
 	//		{
@@ -99,9 +104,9 @@ public class PickUp : ObjectComponent
 	{
 		//transform.position	= Vector3.Lerp (transform.position, m_HoldObject.transform.position, Time.deltaTime * m_LerpSpeed / 10.0f);
 	
-		if(GetComponent<Inspect>())
+		if(GetComponent<Inspect>() && !isInspecting)
 		{
-			GetComponent<Inspect>().OrigionalPosition =  transform.position;
+			GetComponent<Inspect>().OriginalPosition = transform.position;
 		}
 		m_HoldingObject = true;
 	}
