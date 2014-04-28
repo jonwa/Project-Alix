@@ -16,45 +16,46 @@ public class MenuInput : MonoBehaviour
 	public bool 	  m_ButtonDetection = true;
 	public string 	  m_Input			= null; 
 	#endregion
+	
+	public bool Active{get;set;}
 
-	#region PrivateMemberVariables
-	private bool m_Active = false;
-	#endregion
-
-	//get/set the value of m_Active
-	public bool Active
+	void Start()
 	{
-		get { return m_Active;  }
-		set { m_Active = value; }
+		Active = true;
 	}
 
-	//contantly checks to see if esc button is pressed
+	//contantly checks to see if input button is pressed
 	//open or/and close the ingame menu.
 	void Update () 
 	{
 		if(m_ButtonDetection)
 		{
-			if (Input.GetButtonDown(m_Input) && !m_Active)
+			if (Input.GetButtonDown(m_Input))
 			{
-				m_Active = true; 
-				m_Window.SetActive(true);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
-				//freeze the camera position
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
-			}
-			else if(Input.GetButtonDown(m_Input) && m_Active)
-			{
-				m_Active = false;
-				m_Window.SetActive(false);
-				WindowHandler.Default(); 
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
-				//unfreeze the camera position
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+				if(Active && InputManager.Active)
+				{
+					InputManager.Active = false;
+					Active = false;
+					m_Window.SetActive(true);
+				}
+				else if(Active && !InputManager.Active)
+				{
+					return;
+				}
+				else
+				{
+					InputManager.Active = true;
+					Active = true;
+					m_Window.SetActive(false);
+					WindowHandler.Default(); 
+				}
+
+				InputManager.Reset();
 			}
 		}
 		else
 		{
-			if(m_Active)
+			if(Active)
 			{
 				m_Window.SetActive(true);
 				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
