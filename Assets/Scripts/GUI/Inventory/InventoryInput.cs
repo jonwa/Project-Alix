@@ -12,11 +12,12 @@ using System.Collections;
 public class InventoryInput : MonoBehaviour 
 {
 	#region PrivateMembrVariables
-	private string 	    m_ToggleButton = "Inventory"; 
+	private string m_Input = "Inventory"; 
 	#endregion
 
 	void Start()
 	{
+
 	}
 
 	void Update () 
@@ -26,22 +27,27 @@ public class InventoryInput : MonoBehaviour
 	
 	void ToggleInventoy()
 	{
-		if(Input.GetButtonDown(m_ToggleButton))
+		if(Input.GetButtonDown(m_Input))
 		{
-			if(InventoryData.Toggle)
+			if(InventoryData.Toggle && InputManager.Active)
 			{ 
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
-				gameObject.GetComponent<UIPlayTween>().Play (true);
-				InventoryData.Toggle = false; 
+				InputManager.Active = false;
+				InventoryData.Toggle = false;
+				gameObject.GetComponent<UIPlayTween>().Play (false);
+				InventoryData.UpdateInventory(); 
+			}
+			else if(InventoryData.Toggle && !InputManager.Active)
+			{
+				return;
 			}
 			else
 			{
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
-				gameObject.GetComponent<UIPlayTween>().Play (false);
-				InventoryData.Toggle = true; 
-
-				InventoryData.UpdateInventory(); 
+				InputManager.Active = true;
+				InventoryData.Toggle = true;
+				gameObject.GetComponent<UIPlayTween>().Play (true);
 			}
+
+			InputManager.Reset();
 		}
 	}
 }
