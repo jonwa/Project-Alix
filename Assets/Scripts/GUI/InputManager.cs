@@ -12,15 +12,19 @@ public class InputManager : MonoBehaviour
 {
 	public static bool Active{get;set;}
 
+	void Start()
+	{
+		Active = true;
+	}
+
 	public static void Reset()
 	{
-		Active = !Active;
-		if(Active)
+		if(!Active)
 		{
 			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 		}
-		else if(!Active)
+		else
 		{
 			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();

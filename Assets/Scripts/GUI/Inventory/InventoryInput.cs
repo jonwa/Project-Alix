@@ -12,11 +12,12 @@ using System.Collections;
 public class InventoryInput : MonoBehaviour 
 {
 	#region PrivateMembrVariables
-	private string 	    m_Input = "Inventory"; 
+	private string m_Input = "Inventory"; 
 	#endregion
 
 	void Start()
 	{
+
 	}
 
 	void Update () 
@@ -28,16 +29,22 @@ public class InventoryInput : MonoBehaviour
 	{
 		if(Input.GetButtonDown(m_Input))
 		{
-			InventoryData.Toggle = InputManager.Active;
-
-			if(InventoryData.Toggle)
+			if(InventoryData.Toggle && InputManager.Active)
 			{ 
-				gameObject.GetComponent<UIPlayTween>().Play (true);
+				InputManager.Active = false;
+				InventoryData.Toggle = false;
+				gameObject.GetComponent<UIPlayTween>().Play (false);
+				InventoryData.UpdateInventory(); 
+			}
+			else if(InventoryData.Toggle && !InputManager.Active)
+			{
+				return;
 			}
 			else
 			{
-				gameObject.GetComponent<UIPlayTween>().Play (false);
-				InventoryData.UpdateInventory(); 
+				InputManager.Active = true;
+				InventoryData.Toggle = true;
+				gameObject.GetComponent<UIPlayTween>().Play (true);
 			}
 
 			InputManager.Reset();
