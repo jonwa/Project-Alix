@@ -45,6 +45,7 @@ public class InventoryInput : MonoBehaviour
 				InputManager.Active = true;
 				InventoryData.Toggle = true;
 				gameObject.GetComponent<UIPlayTween>().Play (true);
+
 			}
 
 			InputManager.Reset();
