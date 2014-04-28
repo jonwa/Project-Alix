@@ -51,11 +51,8 @@ public class TriggerEffect : ObjectComponent
 		return m_CanBeTriggered;
 	}
 
-<<<<<<< HEAD
-	public void ActivateTrigger()
-=======
+
 	public void ActivateTriggerEffect()
->>>>>>> 88f73b61168ec194da55a071ea0425aafecbf502
 	{
 		for(int i = 0; i < m_Messages.Length; i++){
 			if(m_Messages[i].Equals("Effect"))
@@ -65,17 +62,11 @@ public class TriggerEffect : ObjectComponent
 			else
 			{
 				SendMessage(m_Messages[i]);
-<<<<<<< HEAD
-				Debug.Log(m_Messages[i]);
-			}
-		}
-	}
-=======
+
 			}
 		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
->>>>>>> 88f73b61168ec194da55a071ea0425aafecbf502
 }
