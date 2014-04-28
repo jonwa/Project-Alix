@@ -5,8 +5,10 @@ public class PortalTexture : MonoBehaviour
 {
 	private Camera 		  m_Camera;
 	private RenderTexture m_Texture;
-	private bool 		  m_Active = true;
-	public GameObject[]   m_Children;
+	private bool 		  m_Active = false;
+
+	public  GameObject[]  m_Children;
+	public  string		  m_Input = "u";
 	// Use this for initialization
 	void Start () 
 	{
@@ -18,16 +20,16 @@ public class PortalTexture : MonoBehaviour
 	void Update () 
 	{
 		m_Camera.targetTexture = m_Texture;
-		if(Input.GetKeyDown("u"))
+		if(Input.GetKeyDown(m_Input))
 		{
 			m_Active = !m_Active;
 			ChangePortal();
 		}
 	}
 
-	public void ChangeHouse()
+	public void ChangeHouse(int house)
 	{
-		m_Camera.GetComponent<CheckPlayer>().ChangeHouse();
+		m_Camera.GetComponent<CheckPlayer>().ChangeHouse(house);
 	}
 
 	public RenderTexture GetTextureForPortal()

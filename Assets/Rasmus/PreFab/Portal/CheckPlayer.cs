@@ -7,8 +7,9 @@ public class CheckPlayer : MonoBehaviour
 	public float  	  m_DoorHeight = 5.28f;
 	public float  	  m_DoorWidth  = 2.64f;
 	public float  	  m_FarPlane   = 100f;
-	public bool    	  m_House      = false;
-	public float 	  m_Distance   = 55.5f;
+	private bool      m_MyHouse    = true;
+	public float 	  m_DistanceX  = 55.5f;
+	public float 	  m_DistanceZ  = 0;
 	public GameObject m_Target1    = null;
 	public GameObject m_Target2    = null;
 	public float      m_Offset     = 1.23f;
@@ -17,7 +18,8 @@ public class CheckPlayer : MonoBehaviour
 	#region PrivateMemberVariables
 	private GameObject m_TargetToFollow = null;
 	private GameObject m_Player;
-	private float MaxView = 100;
+	private int 	   m_House 			= 0;
+	private float 	   m_MaxView 		= 100;
 	#endregion
 
 	// Use this for initialization
@@ -26,6 +28,8 @@ public class CheckPlayer : MonoBehaviour
 		m_TargetToFollow = m_Target1;
 		m_Player = Camera.main.gameObject;
 		GetComponent<Camera>().aspect = m_DoorWidth / m_DoorHeight;
+		m_DistanceX = m_Target1.transform.position.x - m_Target2.transform.position.x;
+		m_DistanceZ = m_Target1.transform.position.z - m_Target2.transform.position.z;
 	}
 	
 	// Update is called once per frame
@@ -37,22 +41,22 @@ public class CheckPlayer : MonoBehaviour
 		//2.64   F = (1.32/dist) * 100
 		//Calculate= Dörrbredd, Delat på avståndet, gånger farplane på kameran.
 		float calculate = ((m_DoorWidth/dist) * m_FarPlane);
-		if(calculate < MaxView){
+		if(calculate < m_MaxView){
 			GetComponent<Camera>().fieldOfView = calculate;
 		}
 		else
 		{
-			GetComponent<Camera>().fieldOfView = MaxView;
+			GetComponent<Camera>().fieldOfView = m_MaxView;
 		}
 
-		if(m_House == false)
+		if(m_MyHouse == false)
 		{
-			transform.position = m_Player.transform.position + new Vector3(m_Distance, 0, 0);
+			transform.position = m_Player.transform.position + new Vector3(m_DistanceX, 0, m_DistanceZ);
 			m_TargetToFollow = m_Target1;
 		}
 		else
 		{
-			transform.position = m_Player.transform.position + new Vector3(-m_Distance, 0, 0);
+			transform.position = m_Player.transform.position + new Vector3(-m_DistanceX, 0, -m_DistanceZ);
 			m_TargetToFollow = m_Target2;
 		}
 		//change -55.5f to house * distancebeetweenhouse
@@ -90,11 +94,26 @@ public class CheckPlayer : MonoBehaviour
 		//{
 		//	transform.position = m_Player.transform.position;
 		//}
+		UpdateHouse();
 		transform.LookAt(m_TargetToFollow.transform.position);
 	}
 
-	public void ChangeHouse()
+	public void ChangeHouse(int house)
 	{
-		m_House = !m_House;
+		m_Player.GetComponent<HouseCall>().SetHouseCall(house);
+		UpdateHouse();
+	}
+
+	public void UpdateHouse()
+	{
+		m_House = m_Player.GetComponent<HouseCall>().GetHouseCall();
+		if(m_House != m_Target1.GetComponent<RasmusPortal>().m_TargetHouse)
+		{
+			m_MyHouse = true;
+		}
+		else
+		{
+			m_MyHouse = false;
+		}
 	}
 }
