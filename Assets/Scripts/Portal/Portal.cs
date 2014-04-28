@@ -41,6 +41,7 @@ public class Portal : ObjectComponent
 		if (!m_Colliding.Contains(collider)) 
 		{
 			m_TargetPortal = transform.parent.GetComponent<PortalPairHandler>().GetRemotePortal(transform.name);
+			Vector3 ExtreForward = m_TargetPortal.transform.forward;
 
 			float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
 			collider.gameObject.transform.Rotate(0, 180+angle, 0);
@@ -63,7 +64,7 @@ public class Portal : ObjectComponent
 
 			m_TargetPortal.GetComponent<Portal>().m_Colliding.Add(collider);
 
-			collider.transform.position = newPos;
+			collider.transform.position = newPos + ExtreForward;
 		}
 		collider.name = collider.name.Replace("(Clone)","");
 	}

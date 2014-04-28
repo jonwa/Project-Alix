@@ -13,20 +13,22 @@ public class FirstPersonCamera : MonoBehaviour
 	#region PublicMemberVariables
 	public float m_minimumY = -60F;
 	public float m_maximumY = 60F;
-	public bool m_Oculus = false;
-	public bool m_Locked = false;
+	public bool  m_Oculus   = false;
+	public bool  m_Locked   = false;
+	public float m_Offset   = 1.23f;
 	//public bool m_XboxController = false;
 	public float m_sensitivity = 5;
 	#endregion
 
 	#region PrivateMemberVariables
-	private float m_rotationY = 0F;
+	private float 	   m_rotationY = 0F;
+	private GameObject m_Player;
 	#endregion
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		m_Player = transform.parent.gameObject;
 	}
 
 	// Update is called once per frame
