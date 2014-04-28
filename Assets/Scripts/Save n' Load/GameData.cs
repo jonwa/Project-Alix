@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 /*
  * Description: Used for saving and loading data about the game to/from JSON-files
  * 
@@ -17,7 +17,10 @@ public class GameData : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Q))
 		{
-			Load("filnamn");
+			foreach(string s in FileNames)
+			{
+				Debug.Log(s);
+			}
 		}
 	}
 
@@ -58,18 +61,23 @@ public class GameData : MonoBehaviour
 	{
 		get 
 		{
-			return null;
-		}
-		set
-		{
+			string[] filePaths = Directory.GetFiles("SaveData/", "*.SaveData",SearchOption.TopDirectoryOnly);
+			List<string> fileNames = filePaths.ToList();;
+			for(int i=0; i< fileNames.Count; ++i)
+			{
+				fileNames[i] = fileNames[i].Replace("SaveData", "");
+				fileNames[i] = fileNames[i].Replace(".", "");
+				fileNames[i] = fileNames[i].Replace("/", "");
+			}
 
+			return fileNames;
 		}
 	}
 
 	//Writes a string to specified file name.
 	static void WriteToFile(string fileName, string content)
 	{
-		System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName);
+		System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName+".SaveData");
 		file.Directory.Create(); // If the directory already exists, this method does nothing.
 		System.IO.File.WriteAllText(file.FullName, content);
 		
@@ -82,7 +90,7 @@ public class GameData : MonoBehaviour
 		string ret = "";
 		try
 		{
-			System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName);
+			System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName+".SaveData");
 			ret = System.IO.File.ReadAllText(file.FullName);
 			return ret;
 		}
