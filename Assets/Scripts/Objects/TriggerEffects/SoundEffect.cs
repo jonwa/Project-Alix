@@ -11,14 +11,18 @@ using FMOD.Studio;
  * 
  */
 
-public class SoundEffect : TriggerEffect 
+public class SoundEffect : TriggerComponent 
 {
+	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
 	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
 	private bool							m_Started;
+	#endregion
 
-	public FMODAsset				m_Asset;
+	#region PublicMemberVariables
+	public FMODAsset						m_Asset;
+	#endregion
 
 	override public string Name
 	{
@@ -26,7 +30,6 @@ public class SoundEffect : TriggerEffect
 	}
 	void Start()
 	{
-		Debug.Log ("Started" + m_Started);
 		m_Started = false;
 		CacheEventInstance();
 	}
@@ -112,15 +115,6 @@ public class SoundEffect : TriggerEffect
 	}
 
 
-	//Overload when saveing data for component.
-	public override void Serialize(ref JSONObject jsonObject)
-	{
-		
-	}
-	
-	//Overload when loading data for component.
-	public override void Deserialize(ref JSONObject jsonObject)
-	{
-		
-	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

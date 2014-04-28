@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 /*
  * Description: Used for saving and loading data about the game to/from JSON-files
  * 
@@ -13,27 +13,29 @@ using System.IO;
 public class GameData : MonoBehaviour 
 {
 
-	//void Update()
-	//{
-	//	if(Input.GetButton("Fire1"))
-	//	{
-	//		Save("filnamnLOL");
-	//	}
-	//	else if(Input.GetButtonDown("Fire2"))
-	//	{
-	//		Load("filnamnLOL");
-	//	}
-	//}
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.Q))
+		{
+			foreach(string s in FileNames)
+			{
+				Debug.Log(s);
+			}
+		}
+	}
 
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName)
 	{
 		fileName = fileName.ToLower();
-		JSONObject jsonObject = new JSONObject(JSONObject.Type.OBJECT);
+		JSONObject jsonObject = new JSONObject();
 		Serializer.Serialize(ref jsonObject);
 
-		string s = jsonObject.Print(true);
-		Debug.Log(s);
+		jsonObject.Bake();
+
+		//string s = jsonObject.str.Replace("\"",("\\"+"\""));
+		Debug.Log(jsonObject.str);
+
 		WriteToFile(fileName, jsonObject.Print());
 	}
 	
@@ -41,13 +43,17 @@ public class GameData : MonoBehaviour
 	public static void Load(string fileName)
 	{
 		fileName = fileName.ToLower();
+		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
 		JSONObject jsonObject = new JSONObject(fileContent);
 
+		//jsonObject.Bake();
+		//string s = jsonObject.Print(true);
+		//Debug.Log(s);
+
 		Deserializer.Deserialize(ref jsonObject);
 
-		string s = jsonObject.Print(true);
-		Debug.Log(s);
+
 	}
 
 	//list with filenames for all saved data
@@ -55,18 +61,23 @@ public class GameData : MonoBehaviour
 	{
 		get 
 		{
-			return null;
-		}
-		set
-		{
+			string[] filePaths = Directory.GetFiles("SaveData/", "*.SaveData",SearchOption.TopDirectoryOnly);
+			List<string> fileNames = filePaths.ToList();;
+			for(int i=0; i< fileNames.Count; ++i)
+			{
+				fileNames[i] = fileNames[i].Replace("SaveData", "");
+				fileNames[i] = fileNames[i].Replace(".", "");
+				fileNames[i] = fileNames[i].Replace("/", "");
+			}
 
+			return fileNames;
 		}
 	}
 
 	//Writes a string to specified file name.
 	static void WriteToFile(string fileName, string content)
 	{
-		System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName);
+		System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName+".SaveData");
 		file.Directory.Create(); // If the directory already exists, this method does nothing.
 		System.IO.File.WriteAllText(file.FullName, content);
 		
@@ -79,7 +90,7 @@ public class GameData : MonoBehaviour
 		string ret = "";
 		try
 		{
-			System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName);
+			System.IO.FileInfo file = new System.IO.FileInfo("SaveData/"+fileName+".SaveData");
 			ret = System.IO.File.ReadAllText(file.FullName);
 			return ret;
 		}

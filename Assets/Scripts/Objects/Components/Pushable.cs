@@ -102,4 +102,7 @@ public class Pushable : ObjectComponent
 			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition);
 		}
 	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
+
 }

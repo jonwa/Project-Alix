@@ -9,8 +9,17 @@ using System.Collections;
 
 public class LoadGameButton : MonoBehaviour 
 {
+	#region PublicMemberVariables
+	public UILabel m_InputText = null;
+	#endregion
+
 	void OnClick()
 	{
+		string input = m_InputText.text.ToString ();
 		
+		if(!string.IsNullOrEmpty(input))
+		{
+			GameData.Load(input);
+		}
 	}
 }

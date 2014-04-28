@@ -20,7 +20,7 @@ public class Padlock : ObjectComponent
 		if(IsActive && Input.GetButtonDown(m_Input))
 		{
 			m_Window.SetActive(true);
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHoover = false; 
+			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false; 
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 		}
 		else
@@ -28,4 +28,6 @@ public class Padlock : ObjectComponent
 			Activate();
 		}
 	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

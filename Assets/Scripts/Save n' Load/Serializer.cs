@@ -2,8 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/* Description: Finds all object in the scene that is serializeable, and calls all components serialize function writes to JSON-object
+ * 
+ *  Created by: Jimmy 2014-04-24
+ */
+
 public class Serializer : MonoBehaviour 
 {
+	//Calls Serialize function on all components that derives from SerializableObject
 	public static void Serialize(ref JSONObject jsonObject)
 	{
 		Id[] objectIds = Object.FindObjectsOfType<Id>();
@@ -17,31 +23,24 @@ public class Serializer : MonoBehaviour
 			jArr.AddField("Object", jComponentArr);
 			jComponentArr.AddField("Id", objId.ObjectId);
 
-			ObjectComponent[] components = objId.gameObject.GetComponents<ObjectComponent>();
-			foreach(ObjectComponent component in components)
+			SerializableObject[] components = objId.gameObject.GetComponents<SerializableObject>();
+			foreach(SerializableObject component in components)
 			{
 				component.Serialize(ref jComponentArr);
 			}
 
-			SerializeTransform(ref jsonObject, objId);
+			SerializeTransform(ref jComponentArr, objId);
 		}
 	}
 
+	//Special serialization for unitys transform
 	private static void SerializeTransform(ref JSONObject jsonObject, Id objId)
 	{
 		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
 		jsonObject.AddField ("Transform", jObject);
 
-		jsonObject.AddField ("Position X", objId.transform.localPosition.x);
-		jsonObject.AddField ("Position Y", objId.transform.localPosition.y);
-		jsonObject.AddField ("Position Z", objId.transform.localPosition.z);
-
-		jsonObject.AddField ("Rotation X", objId.transform.localRotation.x);
-		jsonObject.AddField ("Rotation Y", objId.transform.localRotation.y);
-		jsonObject.AddField ("Rotation Z", objId.transform.localRotation.z);
-
-		jsonObject.AddField ("Scale X",    objId.transform.localScale.x);
-		jsonObject.AddField ("Scale Y",    objId.transform.localScale.y);
-		jsonObject.AddField ("Scale Z",    objId.transform.localScale.z);
+		jObject.AddField ("Position", JSONTemplates.FromVector3(objId.transform.localPosition));
+		jObject.AddField ("Rotation", JSONTemplates.FromQuaternion(objId.transform.localRotation));
+		jObject.AddField ("Scale", JSONTemplates.FromVector3(objId.transform.localScale));
 	}
 }

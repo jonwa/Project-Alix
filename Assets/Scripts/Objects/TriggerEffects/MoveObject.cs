@@ -16,9 +16,9 @@ public class MoveObject :  TriggerComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	private int m_Counter = 0;
-	private int m_deActivteCounter = 0;
-	private bool m_Active;
+	private bool 	m_Active;
+	private int 	m_deActivteCounter;
+	private int 	m_Counter;
 	#endregion
 
 	void Update()
@@ -60,13 +60,18 @@ public class MoveObject :  TriggerComponent
 	override public string Name
 	{ get{return"MoveObject";}}
 	
-	//Overload when saveing data for component.
-	public virtual void Serialize(ref JSONObject jsonObject)
+	public override void Serialize(ref JSONObject jsonObject)
 	{
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField(Name, jObject);
+		jObject.AddField("m_Active", m_Active);
+		jObject.AddField("m_deActivteCounter", m_deActivteCounter);
+		jObject.AddField("m_Counter", m_Counter);
 	}
-	
-	//Overload when loading data for component.
-	public virtual void Deserialize(ref JSONObject jsonObject)
+	public override void Deserialize(ref JSONObject jsonObject)
 	{
+		m_Active = jsonObject.GetField("m_Active").b;
+		m_deActivteCounter = (int)jsonObject.GetField("m_deActivteCounter").n;
+		m_Counter = (int)jsonObject.GetField("m_Counter").n;
 	}
 }

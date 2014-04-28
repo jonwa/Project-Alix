@@ -146,4 +146,7 @@ public class Inspect : ObjectComponent
 		//Ignore collision with some object, determent by layer
 		Physics.IgnoreLayerCollision(9, 9, true);
 	}
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
