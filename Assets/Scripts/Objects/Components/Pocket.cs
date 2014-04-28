@@ -36,7 +36,8 @@ public class Pocket : ObjectComponent
 	void AddToInventory()
 	{
 		//TODO: Check to see if an object is already picked up? 
-		// 		Check to see if the inventory is full
+		// 		Check to see if the inventory is full?
+
 		InventoryData.AddItem(gameObject);
 		Camera.main.GetComponent<Raycasting>().Release();
 	}
