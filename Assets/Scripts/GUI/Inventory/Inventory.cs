@@ -54,11 +54,11 @@ public class Inventory : MonoBehaviour
 				if(slot != null)
 				{
 					slot.Slot = count;
-				}
-
-				++count; 
+				} 
 
 				InventoryData.AddSlot(go);
+
+				++count;
 			}
 		}
 	}

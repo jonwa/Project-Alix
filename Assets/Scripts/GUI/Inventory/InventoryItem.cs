@@ -38,8 +38,8 @@ public class InventoryItem : MonoBehaviour
 		}
 		else
 		{
-			GetComponentInChildren<UISprite>().spriteName = item;
-			GetComponent<UIButton>().normalSprite 		  = item; 
+			m_spritename = item;
+			ChangeTexture();
 		}
 	}
 
@@ -61,9 +61,20 @@ public class InventoryItem : MonoBehaviour
 	{
 		if(Occupied)
 		{
-			InventoryData.RemoveItem(m_Slot);
 			Occupied = false;
 			Replace(null);
+			InventoryData.RemoveItem(Slot);
+
+
+			// Shuts down the inventory window
+			InputManager.Active = true;
+			InventoryData.Toggle = true;
+			transform.parent.GetComponent<UIPlayTween>().Play (true);
+			InputManager.Reset();
+		}
+		else
+		{
+			InventoryData.NonOccupid();
 		}
 	}
 

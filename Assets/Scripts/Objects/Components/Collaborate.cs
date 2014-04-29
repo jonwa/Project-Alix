@@ -6,6 +6,7 @@ using System.Linq;
  * Created by: Robert Datum: 08/04/14
  * Modified by: Jimmy Datum 14/04/14
  * Modified by: Sebastian Datum 23/04/14: Changed the raycast to cast from the camera, and changed GetButtonDown to GetButtonUp
+ * Modified by: Jon Wahlstrom 2014-04-29 "added functionallity for collaborate hover effect"
  */
 [RequireComponent(typeof(PickUp))]
 public class Collaborate : ObjectComponent
