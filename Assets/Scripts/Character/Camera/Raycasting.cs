@@ -30,6 +30,8 @@ public class Raycasting : MonoBehaviour
 		set { m_ShowHover = value; }
 	}
 
+	public bool ShowCollaborateHover { get;set; }
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -143,9 +145,14 @@ public class Raycasting : MonoBehaviour
 			
 			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
 			{
-				HoverEffect hover = hit.collider.gameObject.GetComponent<HoverEffect>();
-				
-				if(hover != null)
+				CollaborateHoverEffect collaborateHover = hit.collider.gameObject.GetComponent<CollaborateHoverEffect>();
+				HoverEffect 		   hover		    = hit.collider.gameObject.GetComponent<HoverEffect>();
+
+				if(collaborateHover != null && ShowCollaborateHover)
+				{
+					Cursor.SetCursor(collaborateHover.HoverTexture, collaborateHover.Description, true);
+				}
+				else if(hover != null)
 				{
 					if(Input.GetButton(m_Input))
 					{

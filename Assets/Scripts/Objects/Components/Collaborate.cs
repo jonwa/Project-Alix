@@ -35,15 +35,17 @@ public class Collaborate : ObjectComponent
 	//}
 	void Update()
 	{
+
 	}
+
 	public override void Interact ()
 	{
+		RaycastHit hit;
+		Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		Debug.DrawRay (ray.origin, ray.direction * Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Color.green);
+
 		if(Input.GetButtonUp(m_Input))
 		{
-			RaycastHit hit;
-			Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-			Debug.DrawRay (ray.origin, ray.direction * Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Color.green);
-
 			// change m_Distance
 			if(Physics.Raycast (ray, out hit, Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Camera.main.gameObject.GetComponent<Raycasting>().m_LayerMask.value))
 			{
@@ -51,6 +53,8 @@ public class Collaborate : ObjectComponent
 				int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
 				if(m_ValidId.Contains(collisionId) && hoover != null)
 				{
+					Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
+
 					if(hoover.gameObject.GetComponent<TriggerEffect>())
 					{
 						hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
@@ -60,6 +64,24 @@ public class Collaborate : ObjectComponent
 						gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 					}
 				}
+			}
+		}
+		else
+		{
+			// change m_Distance
+			if(Physics.Raycast (ray, out hit, Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Camera.main.gameObject.GetComponent<Raycasting>().m_LayerMask.value))
+			{
+				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
+				int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
+
+				if(m_ValidId.Contains(collisionId) && hoover != null)
+				{
+					Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
+				}
+			}
+			else
+			{
+				Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = false;
 			}
 		}
 
