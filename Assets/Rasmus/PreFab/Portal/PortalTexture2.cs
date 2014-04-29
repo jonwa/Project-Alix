@@ -2,14 +2,14 @@
 using System.Collections;
 
 [RequireComponent(typeof(Locked))]
-public class PortalTexture : MonoBehaviour 
+public class PortalTexture2 : MonoBehaviour 
 {
 	private Camera 		  m_Camera;
 	private RenderTexture m_Texture;
 	private bool 		  m_Active  = false;
 	private bool 		  m_Allowed;
 	private int           m_LastInt;
-
+	
 	public  GameObject[]  m_Children;
 	public  string		  m_Input = "u";
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class PortalTexture : MonoBehaviour
 	{
 		m_Texture = new RenderTexture(512,512,24);
 		m_Camera = GetComponentInChildren<Camera>().camera;
-
+		
 		m_Allowed = GetComponent<Locked>().GetLocked();
 		ChangePortal();
 		m_LastInt = Camera.main.GetComponent<HouseCall>().GetTargetHouse();
@@ -38,20 +38,20 @@ public class PortalTexture : MonoBehaviour
 			UpdatePortal();
 		}
 	}
+	
+	public RenderTexture GetTextureForPortal()
+	{
+		return m_Texture;
+	}
 
-	private void UpdatePortal()
+	public void UpdatePortal()
 	{
 		for(int i=0; i<m_Children.Length; i++)
 		{
 			m_Children[i].SetActive(true);
 		}
 	}
-
-	public RenderTexture GetTextureForPortal()
-	{
-		return m_Texture;
-	}
-
+	
 	public void ChangePortal()
 	{
 		if(m_Active && !m_Allowed)
