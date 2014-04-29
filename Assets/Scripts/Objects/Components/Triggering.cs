@@ -10,7 +10,7 @@ Made By: Rasmus 08/04
 public class Triggering : ObjectComponent {
 	#region PublicMemberVariables
 	public int[]  m_Triggers;
-	public string m_Input 	 	= "q";
+	public string m_Input 	 	= "Fire1";
 	public bool   m_ActivateAll = false;
 	#endregion
 	
@@ -41,12 +41,23 @@ public class Triggering : ObjectComponent {
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		if(m_GameObjects == null)
+		{
+			m_Allowed 		= new bool[m_Triggers.Length];
+			tempArray 		= FindGameObjectsWithLayer(9);
+			m_GameObjects 	= new GameObject[m_Triggers.Length];
+			MakeGameObjectList(tempArray);
+			
+			for(int  i= 0; i < m_Triggers.Length; i++)
+			{
+				m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
+			}
+		}
 	}
 
 	public override void Interact ()
 	{
-		if(Input.GetKeyDown(m_Input))
+		if(Input.GetButtonDown(m_Input))
 		{
 			ActivateTrigger();
 		}
@@ -109,6 +120,7 @@ public class Triggering : ObjectComponent {
 		{
 			for(int j = 0; j < tempArray.Length; j++)
 			{
+
 				if(tempArray[j].gameObject.GetComponent<Id>() != null){
 					if(m_Triggers[i] == tempArray[j].gameObject.GetComponent<Id>().ObjectId)
 					{

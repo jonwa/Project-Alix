@@ -52,7 +52,7 @@
 			return o;
 		}
 		
-		half4 frag( fragmentInput l ) : COLOR
+		half4 frag( fragmentInput l) : COLOR
 		{
 			float4 maincol = tex2D(_MainTex, l.uv);
 			float4 texcol = tex2D(_NoiseTex, l.uv2);
