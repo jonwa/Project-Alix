@@ -17,11 +17,13 @@ public class TimeCollisionTrigger : ObjectComponent
 	private float m_Time;
 	private Id[]  m_ObjectIds;
 	private Id[]  m_FoundIDs;
+	private bool  m_HasTriggered = false;
 	#endregion
 	
 	#region PublicMemberVariables
 	public float m_TriggerTime;
 	public int[] m_IDs;
+	public bool m_TriggerOnce;
 	#endregion
 
 	void Start () 
@@ -42,6 +44,8 @@ public class TimeCollisionTrigger : ObjectComponent
 				foreach(Id id in m_FoundIDs)
 				{
 					id.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					//id.gameObject.GetComponent<CheckTrigger>().Trigger();
+					m_HasTriggered = true;
 				}
 				m_Active = false;
 			}

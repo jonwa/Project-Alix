@@ -14,11 +14,13 @@ public class TimeTrigger : ObjectComponent
 	private bool m_Active = false;
 	private float m_StartTime;
 	private float m_Time;
+	private bool m_HasTriggered = false;
 	#endregion
 	
 	#region PublicMemberVariables
 	public float m_TriggerTime;
 	public string[] m_Messages;
+	public bool m_TriggerOnce;
 	#endregion
 
 	
@@ -36,6 +38,8 @@ public class TimeTrigger : ObjectComponent
 			{
 				Debug.Log ("Trigger Time");
 				ActivateTriggerEffect();
+				//gameObject.GetComponent<CheckTrigger>().Trigger();
+				m_HasTriggered = true;
 				m_Active = false;
 			}
 		}
