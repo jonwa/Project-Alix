@@ -43,8 +43,6 @@ public class DoorDrag : ObjectComponent
 		for(int i = 0; i < children; i++)
 		{
 			Transform trans = transform.GetChild(i);
-			Debug.Log(transform.GetChild(i));
-			Debug.Log(trans);
 			m_Colliders.Add(trans);
 		}
 	}
