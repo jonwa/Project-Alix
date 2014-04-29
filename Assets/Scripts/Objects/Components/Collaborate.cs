@@ -51,7 +51,14 @@ public class Collaborate : ObjectComponent
 				int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
 				if(m_ValidId.Contains(collisionId) && hoover != null)
 				{
-					hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					if(hoover.gameObject.GetComponent<TriggerEffect>())
+					{
+						hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					}
+					if(gameObject.GetComponent<TriggerEffect>())
+					{
+						gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					}
 				}
 			}
 		}

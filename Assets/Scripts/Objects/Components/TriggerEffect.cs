@@ -51,6 +51,7 @@ public class TriggerEffect : ObjectComponent
 		return m_CanBeTriggered;
 	}
 
+
 	public void ActivateTriggerEffect()
 	{
 		Debug.Log ("Kommer hit");
@@ -62,6 +63,7 @@ public class TriggerEffect : ObjectComponent
 			else
 			{
 				SendMessage(m_Messages[i]);
+
 			}
 		}
 	}

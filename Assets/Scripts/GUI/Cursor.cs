@@ -96,6 +96,8 @@ public class Cursor : MonoBehaviour
 	void DrawDescription(bool show)
 	{
 		if(m_Description == null) return;
+		if(m_DescriptionGO == null) return;
+
 		if(show)
 		{
 			m_DescriptionGO.GetComponentInChildren<UILabel> ().text = m_Description;
