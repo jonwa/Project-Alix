@@ -64,7 +64,7 @@ public class Raycasting : MonoBehaviour
 				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
 
 
-				if((m_InteractingWith.GetComponent<PickUp>() == null || m_InteractingWith.GetComponent<Collaborate>() == null) && hoover != null)
+				if((m_InteractingWith.GetComponent<PickUp>() == null || m_InteractingWith.GetComponent<CollaborateTrigger>() == null) && hoover != null)
 				{
 					m_InteractingWith = null;
 				}

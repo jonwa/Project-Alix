@@ -17,7 +17,7 @@ public class PickUp : ObjectComponent
 	public float m_InspectionViewDistance 	= 2.0f;
 	public float m_LerpSpeed			  	= 10f;
 	public string m_Input				  	= "Fire1";
-	[Range(0, 1)]public float m_ChangeSize	= 0.80f;
+	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
 	public float m_ScaleTime			  	= 30f;
 	public float m_Force 					= 100f;
 	#endregion
