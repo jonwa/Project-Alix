@@ -24,6 +24,7 @@ public class DoorDrag : ObjectComponent
 	private float 				m_Delta;
 	private Vector3 			m_RotationAxis;
 	private List<Transform> 	m_Colliders = new List<Transform> ();
+	private /*public*/ bool			m_GotCollision = false;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -57,7 +58,7 @@ public class DoorDrag : ObjectComponent
 				m_Camera.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				m_UnlockedCamera = true;
 			}
-			if(m_IsRotating)
+			if(m_IsRotating && m_GotCollision)
 			{
 			
 				if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) && m_Colliders[0].gameObject.activeInHierarchy)
@@ -101,15 +102,17 @@ public class DoorDrag : ObjectComponent
 				DeActivate();
 			}
 		}
-		if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) || m_Colliders[1].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds))
-		{
-			m_IsRotating = true;
-		}
-		else
-		{
-			m_IsRotating = false;
-			m_Colliders[0].gameObject.SetActive(true);
-			m_Colliders[1].gameObject.SetActive(true);
+		if(m_GotCollision){
+			if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) || m_Colliders[1].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds))
+			{
+				m_IsRotating = true;
+			}	
+			else
+			{
+				m_IsRotating = false;
+				m_Colliders[0].gameObject.SetActive(true);
+				m_Colliders[1].gameObject.SetActive(true);
+			}
 		}
 	}
 

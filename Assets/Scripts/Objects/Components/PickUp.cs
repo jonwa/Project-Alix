@@ -56,13 +56,6 @@ public class PickUp : ObjectComponent
 	
 	public override void Interact ()
 	{
-//		bool ableToDrop = false;
-//
-//		if(IsActive)
-//		{
-//			Debug.Log ("Active");
-//
-
 		if(gameObject.GetComponent<Inspect>())
 		{		
 			isInspecting = gameObject.GetComponent<Inspect>().IsInspecting;
@@ -72,38 +65,17 @@ public class PickUp : ObjectComponent
 			transform.localScale = m_OriginalScale * m_ChangeSize;
 			transform.position = m_HoldObject.transform.position;
 			transform.rotation = m_HoldObject.transform.rotation;
-			//ableToDrop = true;
-
+	
 			m_DeActivateCounter 		= 0;
-			rigidbody.useGravity 		= false;
 			rigidbody.velocity   		= Vector3.zero;
 			rigidbody.angularVelocity 	= Vector3.zero;
+			rigidbody.useGravity 		= false;
 		}
-
 		MoveToInspectDistance();
-
-	//		if(Input.GetButton(m_Input) && ableToDrop)
-	//		{
-	//			Debug.Log ("Deactiv");
-	//			m_HoldingObject = false;
-	//		}
-	//	}
-
-	//	if(Input.GetButton(m_Input) && m_HoldingObject == false)
-	//	{
-	//		Debug.Log ("Gebutton");
-	//		Activate();
-	//		m_DeActivateCounter = 0;
-	//		m_HoldingObject = true;
-	//	}
-
-
 	}
 	
 	void MoveToInspectDistance()
-	{
-		//transform.position	= Vector3.Lerp (transform.position, m_HoldObject.transform.position, Time.deltaTime * m_LerpSpeed / 10.0f);
-	
+	{	
 		if(GetComponent<Inspect>() && !isInspecting)
 		{
 			GetComponent<Inspect>().OriginalPosition = transform.position;

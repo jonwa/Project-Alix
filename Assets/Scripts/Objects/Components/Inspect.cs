@@ -73,41 +73,35 @@ public class Inspect : ObjectComponent
 	void MoveToInspectDistance(bool shouldInspect)
 	{
 		Vector3 cameraPosition 		 = Camera.main.transform.position;
+		Vector3 targetPosition;
 		float   cameraObjectDistance = Vector3.Distance(cameraPosition, transform.position);
 		float	lerpSpeed			 = m_LerpSpeed;
 
-		//if(cameraObjectDistance > m_InspectionViewDistance)
-		//{ 
-			Vector3 targetPosition;
+		if(shouldInspect)
+		{
+			Vector3 cameraForward  = Camera.main.transform.forward.normalized;
+			gameObject.GetComponent<Gravity>().SetGravity(false);
+			cameraForward *= m_InspectionViewDistance;
+			targetPosition = cameraPosition+cameraForward;
+			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
+		}
+		else
+		{
+			targetPosition	   = m_OriginalPosition;
 
-			if(shouldInspect)
+		if(Vector3.Distance(transform.position, targetPosition) > 0.01)
 			{
-				Vector3 cameraForward  = Camera.main.transform.forward.normalized;
-
-				cameraForward *= m_InspectionViewDistance;
-				targetPosition = cameraPosition+cameraForward;
-				//transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
-				transform.position = targetPosition;
+				m_IsOriginalPosition = false;
+				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, lerpSpeed/10.0f);
+				transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed/10.0f);
+				gameObject.GetComponent<Gravity>().SetGravity(true);
 			}
 			else
 			{
-				targetPosition	   = m_OriginalPosition;
-
-				if(Vector3.Distance(transform.position, targetPosition) > 0.01)
-				{
-					m_IsOriginalPosition = false;
-					//transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, lerpSpeed/10.0f);
-					//transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed/10.0f);
-					transform.rotation =  m_OriginalRotation;
-					transform.position =  targetPosition;
-				}
-				else
-				{
-					m_IsOriginalPosition = true;
-					m_ShouldMoveBack 	 = false;
-				}
+				m_IsOriginalPosition = true;
+				m_ShouldMoveBack 	 = false;
 			}
-		//}
+		}
 	}
 
 	public Vector3 OriginalPosition
