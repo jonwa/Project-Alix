@@ -1,76 +1,77 @@
-﻿//Shader "Custom/BloodSplatter" 
-//{ 
+﻿Shader "Custom/BloodSplatter" 
+//{
+//	
 //	Properties 
 //	{ 
-//		_DoNotUseTex ("Base (RGB)", 2D) = "white" {} 
-//		_MainTex ("Texture", 2D) = "White"{}
-//		_Lerp ("Lerp", Range (0,1)) = 0.5
-//		_Color ("Color", Color) = (1,0,0,1)
-//
-//	}
-//	 
+//		_MainTex ("Do Not Use", 2D) = "white" {}
+//  		_Texture("Texture", 2D) = "white" {}
+//  		_Color ("Text Color", Color) = (1,0,0,1) 
+//	} 
+//	
 //	SubShader 
 //	{ 
-//		Tags 
-//		{
-//			"Queue" = "Transparent" 
-//		//	"IgnoreProjector" = "True"
-//			//"RenderType" = "Transparent"
-//		} 
-//	 //	Lighting Off Cull Off ZWrite Off Fog { Mode Off } 
-//	  // 	Blend SrcAlpha OneMinusSrcAlpha
-//	   	Pass
-//	   	{ 
-//	   		CGPROGRAM
-//			#pragma vertex vert
-//			#pragma fragment frag
-//		
-//			#include "UnityCG.cginc"
-//			
-//	   		sampler2D _DoNotUseTex;
-//			sampler2D _MainTex;
-// 			float _Lerp;
-//	   		
-//	   		SetTexture [_MainTex] 
-//	   		{ 
+//	   Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"  
+//}
+//	   Lighting Off Cull Off ZWrite Off Fog { Mode Off } 
+//	   Blend SrcAlpha OneMinusSrcAlpha 
+//	   Pass 
+//	   { 
+//	      Color [_Color] 
+//	      
+//	      SetTexture [_Texture]
+//	      {
 //	      		combine primary, texture * primary 
-//      		} 
-//   		
-//   				struct vertexInput
-//				{
-//					float4 vertex : POSITION;
-//					float4 texCoord : TEXCOORD0;
-//					float4 texCoord2 : TEXCOORD1;
-//				};
-//				
-//				struct fragmentInput
-//				{
-//					float4 pos : POSITION;
-//					half2 uv : TEXCOORD0;
-//					half2 uv2 : TEXCOORD1;
-//				};
-//				
-//				fragmentInput vert( vertexInput v )
-//				{
-//					fragmentInput o;
-//					
-//					o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
-//					o.uv = v.texCoord;
-//					o.uv2 = v.texCoord2;
-//					return o;
-//				}
-//   				half4 frag( fragmentInput l ) : COLOR
-//				{
-//					float4 doNotUse = tex2D(_DoNotUseTex, l.uv);
-//					float4 mainCol = tex2D(_MainTex, l.uv2);
-//					
-//					float4 finish = lerp(doNotUse, mainCol, _Lerp);
-//				
-//					return float4(finish);
-//				}
-//				ENDCG
-//		}
-//		
+//	      }
+//	   } 
 //	} 
 //}
-//*/
+
+{	Properties {
+		_MainTex ("Main Texture", 2D) = "white" {}
+		_Color ("Color", Color) = (1,1,1,1)
+		_Distort("Distort", vector) = (0.5, 0.5, 1.0, 1.0)
+		_OuterRadius ("Outer Radius", float) = 0.5
+		_InnerRadius ("Inner Radius", float) = -0.5
+		_Hardness("Hardness", float) = 1.0
+	}
+ 
+	SubShader {
+		Tags { "RenderType"="Transparent" "Queue"="Transparent" "AllowProjectors"="False" }
+ 
+		blend SrcAlpha OneMinusSrcAlpha
+ 
+		CGPROGRAM
+		#pragma surface surf NoLighting
+ 
+		fixed4 LightingNoLighting(SurfaceOutput s, fixed3 lightDir, fixed atten)
+		{
+			return fixed4(s.Albedo, s.Alpha);
+		}
+ 
+		sampler2D _MainTex;
+ 
+		struct Input
+		{
+			float2 uv_MainTex;
+		};
+ 
+		float4 _Color, _Distort;
+		float _OuterRadius, _InnerRadius, _Hardness;
+		void surf (Input IN, inout SurfaceOutput o)
+		{
+			half4 c = tex2D (_MainTex, IN.uv_MainTex);
+ 
+			float x = length((_Distort.xy - IN.uv_MainTex.xy) * _Distort.zw);
+ 
+			float rc = (_OuterRadius + _InnerRadius) * 0.5f; // "central" radius
+			float rd = _OuterRadius - rc; // distance from "central" radius to edge radii
+ 
+			float circleTest = saturate(abs(x - rc) / rd);
+ 
+			o.Albedo = _Color.rgb * c.rgb;
+			o.Alpha = (1.0f - pow(circleTest, _Hardness)) * _Color.a * c.a;
+		}
+		ENDCG
+	} 
+	FallBack "Diffuse"
+}

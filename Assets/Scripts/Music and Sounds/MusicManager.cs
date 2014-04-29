@@ -14,23 +14,35 @@ using FMOD.Studio;
 
 public class MusicManager : MonoBehaviour 
 {
+	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
-	private FMOD.Studio.ParameterInstance	m_Parameter0;
+	private FMOD.Studio.ParameterInstance	m_LocationParameter;
+	private FMOD.Studio.ParameterInstance	m_ProgressParameter;
 	private bool 							m_Started		= false;
 	private string 							m_Path;
+	#endregion
 
+	#region PublicMemberVariables
 	[Range(0,1)] public float				m_Element0;
 	[Range(0,1)] public float 				m_Element1;
 	public bool 							startEventOnAwake	= true;
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
+	#endregion
 
+	#region ParameterSetAndGetFunktions
 	public float Element0
 	{
 		set{ m_Element0 = value; }
 		get{ return m_Element0; }
 	}
 
+	public float Element1
+	{
+		set{ m_Element1 = value; }
+		get{ return m_Element1; }
+	}
+	#endregion
 	
 	void Start()
 	{
@@ -39,14 +51,17 @@ public class MusicManager : MonoBehaviour
 		{
 			StartEvent();
 		}
-		m_Event.getParameter(m_Parameters[0], out m_Parameter0);
+		m_Event.getParameter(m_Parameters[0], out m_LocationParameter);
+		m_Event.getParameter (m_Parameters [1], out m_ProgressParameter);
 
-		m_Parameter0.setValue (m_Element0);
+		m_LocationParameter.setValue (m_Element0);
+		m_ProgressParameter.setValue (m_Element1);
 	}
 
 	void Update()
 	{
-		m_Parameter0.setValue (m_Element0);
+		m_LocationParameter.setValue (m_Element0);
+		m_ProgressParameter.setValue (m_Element1);
 	}
 
 	void OnDisable()
