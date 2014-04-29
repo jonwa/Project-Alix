@@ -11,7 +11,6 @@ public class PortalTexture : MonoBehaviour
 	private int           m_LastInt;
 
 	public  GameObject[]  m_Children;
-	public  string		  m_Input = "u";
 	// Use this for initialization
 	void Start () 
 	{
@@ -27,11 +26,6 @@ public class PortalTexture : MonoBehaviour
 	void Update () 
 	{
 		m_Camera.targetTexture = m_Texture;
-		if(Input.GetKeyDown(m_Input))
-		{
-			m_Active = !m_Active;
-			ChangePortal();
-		}
 		if(m_LastInt != Camera.main.GetComponent<HouseCall>().GetTargetHouse())
 		{
 			m_LastInt = Camera.main.GetComponent<HouseCall>().GetTargetHouse();
@@ -41,9 +35,12 @@ public class PortalTexture : MonoBehaviour
 
 	private void UpdatePortal()
 	{
-		for(int i=0; i<m_Children.Length; i++)
+		if(GetComponent<Locked>().GetLocked() == false)
 		{
-			m_Children[i].SetActive(true);
+			for(int i=0; i<m_Children.Length; i++)
+			{
+				m_Children[i].SetActive(true);
+			}
 		}
 	}
 

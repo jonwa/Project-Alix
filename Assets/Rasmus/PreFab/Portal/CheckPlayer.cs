@@ -11,13 +11,12 @@ public class CheckPlayer : MonoBehaviour
 	#region PrivateMemberVariables
 	private int 	   m_TargetInt;
 	private float  	   m_FarPlane;
-	private bool       m_MyHouse    = true;
 	private float  	   m_DoorHeight;
 	private float  	   m_DoorWidth;
 	private float      m_DoorDepth;
 	private float 	   m_DistanceX;
 	private float      m_DistanceZ;
-	private GameObject m_TargetToFollow = null;
+	private GameObject m_TargetToFollow;
 	private GameObject m_Player;
 	private int 	   m_House;
 	private float 	   m_MaxView 		= 100;
