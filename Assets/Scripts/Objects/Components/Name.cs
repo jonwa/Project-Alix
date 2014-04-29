@@ -9,15 +9,15 @@ using System.Collections;
  * Modified By: 
  */
 
-public class Name : ObjectComponent {
-
+public class Name : ObjectComponent 
+{
 	#region PublicMemberVariables
 	public string m_Name; 
 	#endregion
 
 	public string ObjectName
 	{
-		get { return m_Name.ToLower(); }
+		get { return /*m_Name.ToLower();*/ null; }
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

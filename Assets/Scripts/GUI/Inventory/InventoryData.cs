@@ -110,6 +110,7 @@ public class InventoryData : MonoBehaviour
 				{
 					inspect.OrigionalPosition = controller.Position; 
 				}*/
+
 			}
 		}
 	}

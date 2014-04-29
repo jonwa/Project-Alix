@@ -9,31 +9,19 @@ using System.Linq;
  * Modified by: Jon Wahlstrom 2014-04-29 "added functionallity for collaborate hover effect"
  */
 [RequireComponent(typeof(PickUp))]
-public class Collaborate : ObjectComponent
+public class CollaborateTrigger : ObjectComponent
 {
 	#region PublicMemberVariables
 	public int[]	m_ValidId;
 	public string	m_Input = "Fire1";
+	public bool 	m_TriggerOnce = false;
 	#endregion
 	
 	#region PrivateMemberVariables
+	private bool	m_HasTriggered = false;
 	#endregion
 	
 
-	//void CheckCollision(GameObject obj)
-	//{
-	//
-	//	int collisionId = obj.GetComponent<Id>().ObjectId;
-	//	if(m_ValidId.Contains(collisionId))
-	//	{
-	//		obj.GetComponent<TriggerEffect>().ActivateTrigger();
-	//	}
-	//}
-	//
-	//void OnCollisionEnter(Collision Hit)
-	//{
-	//	CheckCollision(Hit.collider.gameObject);
-	//}
 	void Update()
 	{
 
@@ -59,6 +47,8 @@ public class Collaborate : ObjectComponent
 					if(hoover.gameObject.GetComponent<TriggerEffect>())
 					{
 						hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+						//hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
+						m_HasTriggered = true;
 					}
 					if(gameObject.GetComponent<TriggerEffect>())
 					{
