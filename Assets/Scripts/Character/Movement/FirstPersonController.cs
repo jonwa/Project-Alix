@@ -42,10 +42,11 @@ public class FirstPersonController : MonoBehaviour
 	// The function that handles all movement 
 	void Move(float deltaTime)
 	{
-		if(m_Grounded && !m_Locked)
+		//if(m_Grounded && !m_Locked)
+		if(!m_Locked)
 		{
-			Vector3 cameraPosition = Camera.main.transform.position;
-			Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY, cameraPosition.z);
+			//Vector3 cameraPosition = Camera.main.transform.position;
+			//Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY, cameraPosition.z);
 
 			Vector3 forward			= transform.forward.normalized*Input.GetAxis("Vertical");
 			Vector3 right			= -transform.right.normalized*Input.GetAxis("Horizontal");
@@ -62,7 +63,7 @@ public class FirstPersonController : MonoBehaviour
 			else if(Input.GetButton("Crouch"))
 			{
 				maxVelocity = m_ChrouchSpeed;
-				Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY/2, cameraPosition.z);
+				//Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY/2, cameraPosition.z);
 			}
 
 			targetVelocity	*= maxVelocity;
@@ -75,11 +76,11 @@ public class FirstPersonController : MonoBehaviour
 			rigidbody.AddForce(velocity, ForceMode.VelocityChange);
 
 			//Jump logic
-			if(Input.GetButton("Jump"))
-			{
-
-				rigidbody.velocity = new Vector3(rigidbody.velocity.x,CalculateJumpForce(),rigidbody.velocity.z);
-			}
+			//if(Input.GetButton("Jump"))
+			//{
+			//
+			//	rigidbody.velocity = new Vector3(rigidbody.velocity.x,CalculateJumpForce(),rigidbody.velocity.z);
+			//}
 		}
 		else if(m_Locked)
 		{

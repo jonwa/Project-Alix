@@ -16,6 +16,7 @@ public class InActivate :  TriggerComponent
 	public void DeActivate()
 	{
 		m_IsActive = false;
+		Camera.main.GetComponent<Raycasting> ().Release ();
 		gameObject.SetActive (m_IsActive);
 	}
 

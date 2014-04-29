@@ -51,6 +51,7 @@ public class TriggerEffect : ObjectComponent
 		return m_CanBeTriggered;
 	}
 
+
 	public void ActivateTriggerEffect()
 	{
 		for(int i = 0; i < m_Messages.Length; i++){
@@ -61,6 +62,7 @@ public class TriggerEffect : ObjectComponent
 			else
 			{
 				SendMessage(m_Messages[i]);
+
 			}
 		}
 	}

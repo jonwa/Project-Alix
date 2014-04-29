@@ -19,22 +19,20 @@ public class InventoryData : MonoBehaviour
 	#region PrivateMemberVariables
 	private static List<GameObject> m_Slots		   = new List<GameObject>();
 	private static GameObject[] 	m_Items		   = null;
-	private static bool 			m_Toggle	   = false; 
 	private static int 				m_MaxItemSlots = 0; 
 	private static GameObject		m_Player	   = null; 
 	#endregion
 
+	public static bool Toggle{get;set;}
+
 	void Start ()
 	{
+		Toggle 		   = true;
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
 	}
 
-	public static bool Toggle
-	{
-		get { return m_Toggle;  }
-		set { m_Toggle = value; }
-	}
+
 
 	//Initializes the List of empty slots. 
 	//called from Inventory.cs
@@ -59,7 +57,7 @@ public class InventoryData : MonoBehaviour
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
 
-				if(m_Toggle)
+				if(Toggle)
 				{
 						slot.Replace(name.ObjectName);
 				}
@@ -95,7 +93,8 @@ public class InventoryData : MonoBehaviour
 				{
 					raycast.Activate(go);
 				}
-				else if(inspect)
+				else 
+					if(inspect)
 				{
 					inspect.OriginalPosition = controller.Position; 
 				}

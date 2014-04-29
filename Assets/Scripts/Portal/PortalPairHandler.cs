@@ -15,7 +15,7 @@ public class PortalPairHandler : MonoBehaviour {
 		m_TargetPortals = new Transform[m_TargetPortalsId.Count];
 		for(int i=0; i < PortalManager.NumberOfStages-1; i++)
 		{
-			Debug.Log(i);
+			//Debug.Log(i);
 			m_TargetPortals[i] = GetTargetPortalPair(m_TargetPortalsId[i]);
 		}
 	}
@@ -39,7 +39,7 @@ public class PortalPairHandler : MonoBehaviour {
 	public Transform GetRemotePortal(string portalName)
 	{
 		Transform portalPair;
-		Debug.Log(PortalManager.GetCurrentTimeStage());
+		//Debug.Log(PortalManager.GetCurrentTimeStage());
 		if(m_TargetPortals[PortalManager.GetCurrentTimeStage()] == null)
 		{
 			portalPair = GetTargetPortalPair(m_TargetPortalsId[PortalManager.GetCurrentTimeStage()]);
@@ -49,11 +49,11 @@ public class PortalPairHandler : MonoBehaviour {
 			portalPair = m_TargetPortals[PortalManager.GetCurrentTimeStage()];
 		}
 
-		if(portalName == "Portal1")
+		if(portalName == "Portal2")
 		{
 			return portalPair.GetComponent<PortalPairHandler>().GetSecond();
 		}
-		else if(portalName == "Portal2")
+		else if(portalName == "Portal1")
 		{
 			return portalPair.GetComponent<PortalPairHandler>().GetFirst();
 		}
@@ -62,12 +62,12 @@ public class PortalPairHandler : MonoBehaviour {
 
 	public Transform GetFirst()
 	{
-		return transform.FindChild("Portal1");
+		return transform.FindChild("Portal2");
 	}
 
 	public Transform GetSecond()
 	{
-		return transform.FindChild("Portal2");
+		return transform.FindChild("Portal1");
 	}
 
 //	public Transform GetMyTarget()

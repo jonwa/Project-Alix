@@ -28,7 +28,9 @@ public class WindowButton : MonoBehaviour {
 		case Action.Continue:
 			m_Window.SetActive(false);
 			WindowHandler.Default();
-			m_Window.transform.parent.GetComponent<MenuInput>().Active = false;
+			InputManager.Active = true;
+			InputManager.Reset();
+			m_Window.transform.parent.GetComponent<MenuInput>().Active = true;
 		break;
 
 		case Action.Exit:
