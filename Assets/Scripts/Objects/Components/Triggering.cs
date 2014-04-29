@@ -10,7 +10,7 @@ Made By: Rasmus 08/04
 public class Triggering : ObjectComponent {
 	#region PublicMemberVariables
 	public int[]  m_Triggers;
-	public string m_Input 	 	= "q";
+	public string m_Input 	 	= "Fire1";
 	public bool   m_ActivateAll = false;
 	#endregion
 	
@@ -59,9 +59,7 @@ public class Triggering : ObjectComponent {
 	{
 		if(Input.GetButtonDown(m_Input))
 		{
-			Debug.Log("HEJHEJ");
 			ActivateTrigger();
-
 		}
 	}
 
@@ -71,7 +69,6 @@ public class Triggering : ObjectComponent {
 		//Gather new values in case of change
 		for(int i = 0; i < m_Triggers.Length; i++)
 		{
-			Debug.Log (m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering());
 			m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
 		}
 
