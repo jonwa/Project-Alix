@@ -4,18 +4,19 @@ using System.Collections;
 public class CheckPlayer : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public float  	  m_DoorHeight = 5.28f;
-	public float  	  m_DoorWidth  = 2.64f;
-	public float  	  m_FarPlane   = 100f;
+
+	private float  	  m_FarPlane;
 	private bool      m_MyHouse    = true;
-	public float 	  m_DistanceX  = 55.5f;
-	public float 	  m_DistanceZ  = 0;
 	public GameObject m_Target1    = null;
 	public GameObject m_Target2    = null;
-	public float      m_Offset     = 1.23f;
+	//public float      m_Offset     = 1.23f;
 	#endregion
 
 	#region PrivateMemberVariables
+	private float  	   m_DoorHeight;
+	private float  	   m_DoorWidth;
+	private float 	   m_DistanceX;
+	private float 	   m_DistanceZ;
 	private GameObject m_TargetToFollow = null;
 	private GameObject m_Player;
 	private int 	   m_House 			= 0;
@@ -26,10 +27,14 @@ public class CheckPlayer : MonoBehaviour
 	void Start () 
 	{
 		m_TargetToFollow = m_Target1;
-		m_Player = Camera.main.gameObject;
-		GetComponent<Camera>().aspect = m_DoorWidth / m_DoorHeight;
-		m_DistanceX = m_Target1.transform.position.x - m_Target2.transform.position.x;
-		m_DistanceZ = m_Target1.transform.position.z - m_Target2.transform.position.z;
+		m_Player         = Camera.main.gameObject;
+		m_DoorHeight     = m_Target1.transform.collider.bounds.size.y;
+		m_DoorWidth      = m_Target1.transform.collider.bounds.size.x;
+		m_DistanceX 	 = m_Target1.transform.position.x - m_Target2.transform.position.x;
+		m_DistanceZ 	 = m_Target1.transform.position.z - m_Target2.transform.position.z;
+		m_FarPlane       = GetComponent<Camera>().farClipPlane;
+
+		GetComponent<Camera>().aspect = m_DoorWidth/m_DoorHeight;
 	}
 	
 	// Update is called once per frame
@@ -59,41 +64,6 @@ public class CheckPlayer : MonoBehaviour
 			transform.position = m_Player.transform.position + new Vector3(-m_DistanceX, 0, -m_DistanceZ);
 			m_TargetToFollow = m_Target2;
 		}
-		//change -55.5f to house * distancebeetweenhouse
-		//if(m_House == 0)
-		//{
-		//	if(m_Player.transform.position.x < 28)
-		//	{
-		//		transform.position = m_Player.transform.position + new Vector3(55.5f, 0, 0);
-		//	}
-		//	else
-		//	{
-		//		transform.position = m_Player.transform.position;
-		//	}
-		//}
-		//else if(m_House == 1)
-		//{
-		//	if(m_Player.transform.position.x > 28)
-		//	{
-		//		transform.position = m_Player.transform.position + new Vector3(-55.5f, 0, 0);
-		//	}
-		//	else
-		//	{
-		//		transform.position = m_Player.transform.position;
-		//	}
-		//}
-		//if(m_Player.transform.position.x < 28 && m_House == 0)
-		//{
-		//	transform.position = m_Player.transform.position + new Vector3(55.5f, 0, 0);// + transform.forward*-1;
-		//}
-		//else if(m_Player.transform.position.x > 28 && m_House == 1)
-		//{
-		//	transform.position = m_Player.transform.position + new Vector3(-55.5f , 0, 0);// + transform.forward*-1;
-		//}
-		//else
-		//{
-		//	transform.position = m_Player.transform.position;
-		//}
 		UpdateHouse();
 		transform.LookAt(m_TargetToFollow.transform.position);
 	}
