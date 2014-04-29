@@ -28,7 +28,7 @@ public class FirstPersonCamera : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		m_Player = transform.parent.gameObject;
+		//m_Player = transform.parent.gameObject;
 	}
 
 	// Update is called once per frame
