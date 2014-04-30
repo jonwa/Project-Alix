@@ -12,12 +12,14 @@ public class Triggering : ObjectComponent {
 	public int[]  m_Triggers;
 	public string m_Input 	 	= "Fire1";
 	public bool   m_ActivateAll = false;
+	public bool   m_TriggerOnce = false;
 	#endregion
 	
 	#region PrivateMemberVariables
 	private int 		 m_ArrayPosition = 0;
 	private bool[] 		 m_Allowed;
 	private GameObject[] m_GameObjects   = null;
+	private bool 		 m_HasTriggered	 = false;
 	GameObject[] 		 tempArray		 = null;
 	#endregion
 
@@ -79,6 +81,8 @@ public class Triggering : ObjectComponent {
 				if(m_Allowed[i] == true)
 				{
 					m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					//m_GameObjects[i].gameObject.GetComponent<CheckTrigger>().Trigger();
+					m_HasTriggered = true;
 				}
 			}
 		}
@@ -87,6 +91,8 @@ public class Triggering : ObjectComponent {
 			if(m_Allowed[m_ArrayPosition] == true)
 			{
 				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTriggerEffect();
+				//m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>().Trigger();
+				m_HasTriggered = true;
 			}
 		}
 	}
