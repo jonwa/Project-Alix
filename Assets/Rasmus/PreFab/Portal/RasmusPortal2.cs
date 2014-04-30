@@ -9,10 +9,11 @@ using System.Linq;
  * Modified by:
  */
 
-public class RasmusPortal : ObjectComponent 
+public class RasmusPortal2 : ObjectComponent 
 {
 	#region PublicMemberVariables
 	public GameObject m_TargetPort;
+	public GameObject m_TargetPort2;
 	public int		  m_MyHouse;
 	#endregion
 	
@@ -21,10 +22,10 @@ public class RasmusPortal : ObjectComponent
 	private HashSet<Collider> m_Colliding = new HashSet<Collider>();
 	private RenderTexture	  m_Texture;
 	#endregion
-
+	
 	void Start()
 	{
-		m_Texture = transform.parent.GetComponent<PortalTexture>().GetTextureForPortal();
+		m_Texture = transform.parent.transform.parent.GetComponent<PortalTexture2>().GetTextureForPortal();
 		//m_Texture = new RenderTexture(512,512,24);
 		MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
 		mr.material = new Material(mr.material);
@@ -32,10 +33,10 @@ public class RasmusPortal : ObjectComponent
 		//m_Material = mr.material;
 		//Debug.Log("Startar");
 	}
-
+	
 	void Update()
 	{
-		m_Texture = transform.parent.GetComponent<PortalTexture>().GetTextureForPortal();
+		m_Texture = transform.parent.transform.parent.GetComponent<PortalTexture2>().GetTextureForPortal();
 		renderer.material.mainTexture = m_Texture;
 		CheckTargetHouse();
 		//Camera targetCam = transform.parent.GetComponent<Camera>().camera;
@@ -45,9 +46,13 @@ public class RasmusPortal : ObjectComponent
 	private void CheckTargetHouse()
 	{
 		int targetHouse = Camera.main.GetComponent<HouseCall>().GetTargetHouse();
-		if(targetHouse == m_TargetPort.GetComponent<RasmusPortal>().m_MyHouse)
+		if(targetHouse == m_TargetPort.GetComponent<RasmusPortal2>().m_MyHouse)
 		{
 			m_TargetPortal = m_TargetPort.transform;
+		}
+		else if(targetHouse == m_TargetPort2.GetComponent<RasmusPortal2>().m_MyHouse)
+		{
+			m_TargetPortal = m_TargetPort2.transform;
 		}
 		else
 		{
@@ -58,7 +63,7 @@ public class RasmusPortal : ObjectComponent
 	//When we collide with the portal we create a duplicate and 
 	void OnTriggerEnter(Collider collider)
 	{
-		m_TargetPortal 		 = m_TargetPort.transform;
+		//m_TargetPortal 		 = m_TargetPort.transform;
 		Vector3 ExtraForward = m_TargetPortal.transform.up;
 		
 		float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
@@ -70,7 +75,7 @@ public class RasmusPortal : ObjectComponent
 		collider.transform.position = newPos + ExtraForward;
 		if(collider.CompareTag("Player"))
 		{
-			Camera.main.GetComponent<HouseCall>().SetHouseCall(m_TargetPort.GetComponent<RasmusPortal>().m_MyHouse);
+			Camera.main.GetComponent<HouseCall>().SetHouseCall(m_TargetPortal.GetComponent<RasmusPortal2>().m_MyHouse);
 			Camera.main.GetComponent<HouseCall>().SetTargetHouse(m_MyHouse);
 		}
 	}
@@ -80,7 +85,7 @@ public class RasmusPortal : ObjectComponent
 	{
 		m_Colliding.Remove(collider);
 	}
-
+	
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
 }
