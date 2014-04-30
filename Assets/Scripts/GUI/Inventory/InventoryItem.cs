@@ -11,7 +11,6 @@ public class InventoryItem : MonoBehaviour
 {
 	#region PrivateMemberVariables
 	private int    m_Slot 		= 0; 
-	private bool   m_Occupied 	= false;
 	private string m_spritename = null; 
 	#endregion
 
@@ -21,14 +20,11 @@ public class InventoryItem : MonoBehaviour
 		set { m_Slot = value; }
 	}
 
-	public bool Occupied
-	{
-		get { return m_Occupied;  }
-		set { m_Occupied = value; }
-	}
+	public bool Occupied{get;set;}
 
 	void Start()
 	{
+		Occupied = false;
 		GetComponentInChildren<UILabel>().enabled = false;
 	}
 
@@ -42,8 +38,8 @@ public class InventoryItem : MonoBehaviour
 		}
 		else
 		{
-			GetComponentInChildren<UISprite>().spriteName = item;
-			GetComponent<UIButton>().normalSprite 		  = item; 
+			m_spritename = item;
+			ChangeTexture();
 		}
 	}
 
@@ -63,11 +59,22 @@ public class InventoryItem : MonoBehaviour
 
 	void OnClick()
 	{
-		if(m_Occupied)
+		if(Occupied)
 		{
-			InventoryData.RemoveItem(m_Slot);
-			m_Occupied = false;
+			Occupied = false;
 			Replace(null);
+			InventoryData.RemoveItem(Slot);
+
+
+			// Shuts down the inventory window
+			InputManager.Active = true;
+			InventoryData.Toggle = true;
+			transform.parent.GetComponent<UIPlayTween>().Play (true);
+			InputManager.Reset();
+		}
+		else
+		{
+			InventoryData.NonOccupid();
 		}
 	}
 

@@ -43,9 +43,13 @@ public class TimeCollisionTrigger : ObjectComponent
 				GetIDsToTrigger(m_FoundIDs);
 				foreach(Id id in m_FoundIDs)
 				{
+
 					id.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					//id.gameObject.GetComponent<CheckTrigger>().Trigger();
-					m_HasTriggered = true;
+					if(id.gameObject.GetComponent<CheckTrigger>() != null)
+					{
+						id.gameObject.GetComponent<CheckTrigger>().Trigger();
+						m_HasTriggered = true;
+					}
 				}
 				m_Active = false;
 			}
