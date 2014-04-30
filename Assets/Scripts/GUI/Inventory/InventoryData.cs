@@ -62,12 +62,14 @@ public class InventoryData : MonoBehaviour
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
 				
-				if(Toggle)
+				if(!Toggle)
 				{
+					Debug.Log("KUK TEXTUR HELVETE");
 					slot.Replace(name.ObjectName);
 				}
 				else
 				{
+					Debug.Log("KUKHELVET DELAYED: name: " + name.ObjectName);
 					slot.DelayedReplace(name.ObjectName);
 				}
 				UpdateInventory();
