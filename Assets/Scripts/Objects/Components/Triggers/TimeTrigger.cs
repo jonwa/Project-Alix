@@ -38,8 +38,11 @@ public class TimeTrigger : ObjectComponent
 			{
 				Debug.Log ("Trigger Time");
 				ActivateTriggerEffect();
-				//gameObject.GetComponent<CheckTrigger>().Trigger();
-				m_HasTriggered = true;
+				if(gameObject.GetComponent<CheckTrigger>() != null)
+				{
+					gameObject.GetComponent<CheckTrigger>().Trigger();
+					m_HasTriggered = true;
+				}
 				m_Active = false;
 			}
 		}

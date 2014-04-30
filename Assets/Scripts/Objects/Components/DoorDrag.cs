@@ -6,45 +6,36 @@ using System.Collections.Generic;
  * Used to push/pull doors, open Amnesia style
  * 
  * Created by: Sebastian Olsson 2014-04-08
- * Modified by:
+ * Modified by: Jimmy 2014-04-30
  */
 
-[RequireComponent(typeof(Rigidbody))]
+//[RequireComponent(typeof(Rigidbody))]
 public class DoorDrag : ObjectComponent
 {
 	#region PrivateMemberVariables
 	private float				m_DeActivateCounter		= 5;
 	private bool				m_UnlockedCamera		= true;
-	private bool				m_IsRotating			= false;
-	private float				m_Speed					= 5.0f;
+	//private bool				m_IsRotating			= false;
 	private float 				m_MouseXPosition;
 	private float 				m_MouseYPosition;
 	private Transform   		m_Camera;
 	private GameObject			m_Player;
 	private float 				m_Delta;
 	private Vector3 			m_RotationAxis;
-	private List<Transform> 	m_Colliders = new List<Transform> ();
-	private /*public*/ bool			m_GotCollision = false;
 	#endregion
 	
 	#region PublicMemberVariables
-	public string 		m_PlayerName		= "Player Controller Example";
+	public float		m_Speed				= 20.0f;
 	public string 		m_HorizontalInput;
 	public string 		m_VerticalInput;
 	public string 		m_Input;
-	public float		m_ShoveSpeed;
 	#endregion
 	
 	void Start () 
 	{
 		m_Camera = Camera.main.transform;
-		m_Player = GameObject.Find (m_PlayerName);
-		int children = transform.childCount;
-		for(int i = 0; i < children; i++)
-		{
-			Transform trans = transform.GetChild(i);
-			m_Colliders.Add(trans);
-		}
+		m_Player = Camera.main.transform.parent.gameObject;
+
 	}
 	
 	void Update () 
@@ -56,62 +47,15 @@ public class DoorDrag : ObjectComponent
 				m_Camera.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				m_UnlockedCamera = true;
 			}
-			if(m_IsRotating && m_GotCollision)
-			{
-			
-				if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) && m_Colliders[0].gameObject.activeInHierarchy)
-				{
-			
-					m_Colliders[1].gameObject.SetActive(false);
-			
-			
-					Debug.Log("Hit 1");
-					m_ShoveSpeed = m_Player.GetComponent<Rigidbody>().velocity.magnitude;
-					if(m_ShoveSpeed > 0){
-						m_ShoveSpeed *= -1;
-					}
-					m_Colliders[1].GetComponent<BoxCollider>().enabled = false;
-				}
-				else if(m_Colliders[1].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) && m_Colliders[1].gameObject.activeInHierarchy)
-				{
-					m_Colliders[0].gameObject.SetActive(false);
-			
-			
-					Debug.Log("Hit 2");
-					m_ShoveSpeed = m_Player.GetComponent<Rigidbody>().velocity.magnitude;
-					m_ShoveSpeed *= -1;
-					if(m_ShoveSpeed < 0){
-						m_ShoveSpeed *= -1;
-					}
-					m_Colliders[0].GetComponent<BoxCollider>().enabled = false;
-				}
-				if(gameObject.GetComponent<RotationLimit>())
-				{
-					m_ShoveSpeed = gameObject.GetComponent<RotationLimit>().CheckRotation(m_ShoveSpeed, "y");
-				}
-				transform.Rotate(m_RotationAxis, m_ShoveSpeed, Space.Self);
-			}
-		}
-		else
-		{
+
+		
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 10)
 			{
 				DeActivate();
 			}
 		}
-		if(m_GotCollision){
-			if(m_Colliders[0].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds) || m_Colliders[1].GetComponent<BoxCollider>().bounds.Intersects(m_Player.GetComponent<CapsuleCollider>().bounds))
-			{
-				m_IsRotating = true;
-			}	
-			else
-			{
-				m_IsRotating = false;
-				m_Colliders[0].gameObject.SetActive(true);
-				m_Colliders[1].gameObject.SetActive(true);
-			}
-		}
+		
 	}
 
 
@@ -143,7 +87,7 @@ public class DoorDrag : ObjectComponent
 		}
 		else
 		{
-			Camera.main.SendMessage("Release");
+			Camera.main.GetComponent<Raycasting>().Release();
 			DeActivate();
 		}
 	}
@@ -156,22 +100,22 @@ public class DoorDrag : ObjectComponent
 		if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
 		{
 			forward = new Vector3(0, 1 , 0);
-			m_Delta = (m_MouseYPosition + m_MouseXPosition) * m_Speed;
+			m_Delta = ((m_MouseYPosition + m_MouseXPosition) * m_Speed)*Time.deltaTime;
 		}
 		else if(m_Player.transform.forward.z <= -0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
 		{
 			forward = new Vector3(0, -1, 0);
-			m_Delta = (m_MouseYPosition + -m_MouseXPosition) * m_Speed;
+			m_Delta = ((m_MouseYPosition + -m_MouseXPosition) * m_Speed)*Time.deltaTime;
 		}
 		else if(m_Player.transform.forward.x <= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
 		{
 			forward = new Vector3(0, 1, 0);
-			m_Delta = (m_MouseYPosition + m_MouseXPosition) * m_Speed;
+			m_Delta = ((m_MouseYPosition + m_MouseXPosition) * m_Speed)*Time.deltaTime;
 		}
 		else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
 		{
 			forward = new Vector3(0, -1, 0);
-			m_Delta = (m_MouseYPosition + -m_MouseXPosition) * m_Speed;
+			m_Delta = ((m_MouseYPosition + -m_MouseXPosition) * m_Speed)*Time.deltaTime;
 		}
 		return forward;
 	}
