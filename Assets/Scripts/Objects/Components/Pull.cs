@@ -65,7 +65,7 @@ public class Pull : ObjectComponent
 		{
 			float m_move;
 			if(m_XRotation){
-				m_move = Input.GetAxis(m_MouseAxisInputX) * m_Sensitivity;
+				m_move = Input.GetAxis(m_MouseAxisInputX) * m_Sensitivity ;
 				//Pulls the lever in diffrent directions based on mouse input
 				//transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				if(gameObject.GetComponent<RotationLimit>())
