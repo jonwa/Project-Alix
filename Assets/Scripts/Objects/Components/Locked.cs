@@ -35,8 +35,6 @@ public class Locked : ObjectComponent
 	// Update is called once per frame
 	void Update() 
 	{
-		//Remove after testing
-		//m_Locked = m_LockedFromStart;
 	}
 
 	public void Lock()
