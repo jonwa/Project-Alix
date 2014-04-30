@@ -12,11 +12,11 @@ using System.Collections;
 public class Pocket : ObjectComponent
 {
 	#region PublicMemberVariables
-	public string		m_Input = "Pocket";
+	public string m_Input = "Pocket";
 	#endregion
 	
 	#region PrivateMemberVariables
-	private int			m_DeActivateCounter	= 0;
+	private int   m_DeActivateCounter	= 0;
 	#endregion
 
 	void Start()
@@ -35,7 +35,10 @@ public class Pocket : ObjectComponent
 	//Adds the item to the inventory
 	void AddToInventory()
 	{
-		InventoryData.AddItem(gameObject);
+		//TODO: Check to see if an object is already picked up? 
+		// 		Check to see if the inventory is full?
+
+		InventoryData.AddItem(gameObject, false);
 		Camera.main.GetComponent<Raycasting>().Release();
 	}
 

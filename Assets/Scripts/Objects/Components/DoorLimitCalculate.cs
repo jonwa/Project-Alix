@@ -36,7 +36,7 @@ public class DoorLimitCalculate : MonoBehaviour
 	{
 		if(m_LastRotation + 0.01 > transform.localRotation.eulerAngles.y && m_LastRotation - 0.01 < transform.localRotation.eulerAngles.y)
 		{
-			//Skillnad i float
+			//Skillnad i float, (WTF menas med det)?
 		}
 		else if(m_LastRotation + 50 > transform.localRotation.eulerAngles.y && m_LastRotation - 50 < transform.localRotation.eulerAngles.y)
 		{
