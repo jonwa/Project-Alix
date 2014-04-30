@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*
+
+Made by: Rasmus 29/04
+ */
+
 public class CheckPlayer : MonoBehaviour 
 {
 	#region PublicMemberVariables

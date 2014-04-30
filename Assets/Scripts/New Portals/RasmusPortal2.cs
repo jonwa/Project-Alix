@@ -65,6 +65,11 @@ public class RasmusPortal2 : ObjectComponent
 	{
 		//m_TargetPortal 		 = m_TargetPort.transform;
 		Vector3 ExtraForward = m_TargetPortal.transform.up;
+		//Debug.Log(m_TargetPortal.transform.up.x + " " + m_TargetPortal.transform.up.y + " " + m_TargetPortal.transform.up.z);
+		//if(m_TargetPortal.transform.up.z == 1 || m_TargetPortal.transform.up.z == -1)
+		//{
+		//	ExtraForward.y = 0;
+		//}
 		
 		float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
 		collider.gameObject.transform.Rotate(0, 180+angle, 0);
