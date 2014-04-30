@@ -17,24 +17,25 @@ public class MultipleCollaborationTrigger : ObjectComponent
 
 	public void AddToTriggeredList(int id)
 	{
+		Debug.Log("GOT ADD");
 		m_Triggered.Add(id);
 	}
 
 	void Update()
 	{
-		bool cuntains = false;
+		bool contains = false;
 		foreach(int i in m_NeedsToTriggerBeforeMe)
 		{
 			if(m_Triggered.Contains(i))
 			{
-				cuntains = true;	
+				contains = true;	
 			}
 			else
 			{
-				cuntains = false;
+				contains = false;
 			}
 
-			if(cuntains == false)
+			if(contains == false)
 			{
 				return;
 			}
@@ -42,7 +43,9 @@ public class MultipleCollaborationTrigger : ObjectComponent
 
 		if(!m_HasBeenTriggered)
 		{
+			Debug.Log("SENT TO DAD!");
 			Trigger();
+			m_HasBeenTriggered = true;
 		}
 	}
 
