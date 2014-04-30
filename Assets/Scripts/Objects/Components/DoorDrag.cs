@@ -9,14 +9,11 @@ using System.Collections.Generic;
  * Modified by: Jimmy 2014-04-30
  */
 
-//[RequireComponent(typeof(Rigidbody))]
 public class DoorDrag : ObjectComponent
 {
 	#region PrivateMemberVariables
 	private float				m_DeActivateCounter		= 5;
 	private bool				m_UnlockedCamera		= true;
-	//private bool				m_IsRotating			= false;
-	private float 				m_MouseXPosition;
 	private float 				m_MouseYPosition;
 	private Transform   		m_Camera;
 	private GameObject			m_Player;
@@ -26,7 +23,6 @@ public class DoorDrag : ObjectComponent
 	
 	#region PublicMemberVariables
 	public float		m_Speed				= 20.0f;
-	public string 		m_HorizontalInput;
 	public string 		m_VerticalInput;
 	public string 		m_Input;
 	#endregion
@@ -64,15 +60,16 @@ public class DoorDrag : ObjectComponent
 		if(IsActive)
 		{
 			m_RotationAxis = PlayerForward();
-			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
 			m_MouseYPosition = Input.GetAxis(m_VerticalInput);
 
-			if(m_MouseXPosition != 0 || m_MouseYPosition != 0)
+			if(m_MouseYPosition != 0)
 			{
+				Debug.Log("Delta: " + m_Delta);
 				if(gameObject.GetComponent<RotationLimit>())
 				{
 					m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
 				}
+
 				transform.Rotate(m_RotationAxis,m_Delta,Space.Self);
 
 			}
@@ -92,32 +89,51 @@ public class DoorDrag : ObjectComponent
 		}
 	}
 
+
+
+	Vector3 ClosestDirection(Vector3 v) 
+	{
+		Vector3[] compass = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+		float maxDot = -Mathf.Infinity;
+		Vector3 ret = Vector3.zero;
+		
+		foreach(Vector3 dir in compass) 
+		{
+			float t = Vector3.Dot(v, dir);
+			if (t > maxDot) 
+			{
+				ret = dir;
+				maxDot = t;
+			}
+		}
+		return ret;
+	}
+
 	//Changes m_Delta according to the direction the player is facing
 	private Vector3 PlayerForward()
 	{
-		Vector3 forward = new Vector3();
+		Vector3 forward = ClosestDirection(m_Player.transform.forward);
+		Vector3 ret = new Vector3();
+		if(forward == Vector3.forward)
+		{
+			ret = new Vector3(0, -1 , 0);
+		}
+		else if(forward == Vector3.back)
+		{
+			ret = new Vector3(0, 1 , 0);
+		}
+		else if(forward == Vector3.left)
+		{
+			ret = new Vector3(0, 1 , 0);
+		}
+		else if(forward == Vector3.right)
+		{
+			ret = new Vector3(0, -1 , 0);
+		}
 
-		if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
-		{
-			forward = new Vector3(0, 1 , 0);
-			m_Delta = ((m_MouseYPosition + m_MouseXPosition) * m_Speed)*Time.deltaTime;
-		}
-		else if(m_Player.transform.forward.z <= -0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
-		{
-			forward = new Vector3(0, -1, 0);
-			m_Delta = ((m_MouseYPosition + -m_MouseXPosition) * m_Speed)*Time.deltaTime;
-		}
-		else if(m_Player.transform.forward.x <= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
-		{
-			forward = new Vector3(0, 1, 0);
-			m_Delta = ((m_MouseYPosition + m_MouseXPosition) * m_Speed)*Time.deltaTime;
-		}
-		else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
-		{
-			forward = new Vector3(0, -1, 0);
-			m_Delta = ((m_MouseYPosition + -m_MouseXPosition) * m_Speed)*Time.deltaTime;
-		}
-		return forward;
+		m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+
+		return ret;
 	}
 
 	public void ReleaseDoor()
