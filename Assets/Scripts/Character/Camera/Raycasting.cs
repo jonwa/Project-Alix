@@ -6,7 +6,7 @@ using System.Collections;
  * until it hits an object with ObjectComponent's then activates Interact on that object.
  * 
  * Created by: Sebastian / Jimmy  Date: 2014-04-04
- * Modified by: Jon Wahlström 2014-04-21
+ * Modified by: Jon Wahlström 2014-04-29 "added collaborate hover effect"
  * 
  */
 
@@ -17,18 +17,22 @@ public class Raycasting : MonoBehaviour
 	public float  		m_Distance  	 = 10;
 	public string 		m_Input	 		 = "Fire1";
 	public LayerMask	m_LayerMask 	 = (1<<9);
-	public bool			m_HoldToInteract = false;
 	#endregion
 	#region PrivateMemberVariables
 	private GameObject m_InteractingWith;
-
+	private bool m_Release = false;
 	private bool m_ShowHover = true;
 	#endregion
+
+	// Used only for inventory swap functionallity
+	public GameObject InteractingWith{ get;set;}
 
 	public bool ShowHover
 	{
 		set { m_ShowHover = value; }
 	}
+
+	public bool ShowCollaborateHover { get;set; }
 
 	// Update is called once per frame
 	void Update () 
@@ -36,13 +40,12 @@ public class Raycasting : MonoBehaviour
 		// used for mouse cursor state
 		Cast (m_ShowHover);
 
-		if(m_HoldToInteract)
+		ClickToInteract();
+
+		if(m_Release)
 		{
-			HoldToInteract();
-		}
-		else
-		{
-			ClickToInteract();
+			m_InteractingWith = null;
+		    m_Release = false;
 		}
 	}
 
@@ -66,19 +69,20 @@ public class Raycasting : MonoBehaviour
 
 				if((m_InteractingWith.GetComponent<PickUp>() == null || m_InteractingWith.GetComponent<CollaborateTrigger>() == null) && hoover != null)
 				{
-					m_InteractingWith = null;
+					Release();
 				}
 
 			}
 			else
 			{
-				m_InteractingWith = null;
+				Release();
 			}
 		}
 		else if(m_InteractingWith != null)
 		{
-			if(Vector3.Distance(m_InteractingWith.transform.position,transform.position) > m_Distance){
-				m_InteractingWith = null;
+			if(Vector3.Distance(m_InteractingWith.transform.position,transform.position) > m_Distance)
+			{
+				Release();
 			}
 			else{
 				ObjectComponent[] objectArray;
@@ -88,28 +92,6 @@ public class Raycasting : MonoBehaviour
 					c.Interact();
 				}
 			}
-		}
-	}
-
-	// Calls Cast() while mouse button is hold down
-	void HoldToInteract()
-	{
-		if(Input.GetButton(m_Input) && m_InteractingWith == null)
-		{
-			Cast ();
-		}
-		else if(Input.GetButton(m_Input) && m_InteractingWith != null)
-		{
-			ObjectComponent[] objectArray;
-			objectArray = m_InteractingWith.GetComponents<ObjectComponent>();
-			foreach(ObjectComponent c in objectArray)
-			{
-				c.Interact();
-			}
-		}
-		else
-		{
-			m_InteractingWith = null;
 		}
 	}
 
@@ -123,6 +105,10 @@ public class Raycasting : MonoBehaviour
 		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
 		{
 			m_InteractingWith = hit.collider.gameObject;
+
+			//TODO:TEST
+			InteractingWith = hit.collider.gameObject;
+
 			ObjectComponent[] objectArray;
 			objectArray = m_InteractingWith.GetComponents<ObjectComponent>();
 
@@ -130,6 +116,10 @@ public class Raycasting : MonoBehaviour
 			{
 				c.Interact();
 			}
+		}
+		else
+		{
+			InteractingWith = null;
 		}
 	}
 
@@ -143,9 +133,16 @@ public class Raycasting : MonoBehaviour
 			
 			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
 			{
-				HoverEffect hover = hit.collider.gameObject.GetComponent<HoverEffect>();
-				
-				if(hover != null)
+				CollaborateHoverEffect collaborateHover = hit.collider.gameObject.GetComponent<CollaborateHoverEffect>();
+				HoverEffect 		   hover		    = hit.collider.gameObject.GetComponent<HoverEffect>();
+
+				// collaborate hover effect check
+				if(collaborateHover != null && ShowCollaborateHover)
+				{
+					Cursor.SetCursor(collaborateHover.HoverTexture, collaborateHover.Description, true);
+				}
+				// regular hover effect check
+				else if(hover != null)
 				{
 					if(Input.GetButton(m_Input))
 					{
@@ -182,11 +179,12 @@ public class Raycasting : MonoBehaviour
 	//Releases the grip of the object we are interacting with right now.
 	public void Release()
 	{
-		m_InteractingWith = null;
+		m_Release = true;
 	}
 
 	public void Activate(GameObject go)
 	{
 		m_InteractingWith = go; 
+		InteractingWith = go;
 	}
 }

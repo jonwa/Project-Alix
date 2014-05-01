@@ -15,7 +15,7 @@ public class Pushable : ObjectComponent
 	private float 		m_MouseYPosition;
 	private Vector3 	m_Delta				= Vector3.zero;
 	private float		m_DeActivateCounter	= 5;
-	private float		m_MoveSpeed			= 0.1f;
+
 	private bool		m_UnlockedCamera	= true;
 	private Transform   m_Camera;
 	private GameObject 	m_Player;
@@ -25,14 +25,14 @@ public class Pushable : ObjectComponent
 	public string 	m_HorizontalInput;
 	public string 	m_VerticalInput;
 	public string 	m_Input;
-	public string 	m_PlayerName			= "Player Controller Example";
+	public float	m_MoveSpeed			= 1f;
 	#endregion
 	
 	
 	void Start () 
 	{
 		m_Camera  = Camera.main.transform;
-		m_Player = GameObject.Find (m_PlayerName); 
+		m_Player  = m_Camera.transform.parent.gameObject; 
 	}
 	
 	void Update () 
@@ -83,23 +83,42 @@ public class Pushable : ObjectComponent
 		}
 	}
 
+	Vector3 ClosestDirection(Vector3 v) 
+	{
+		Vector3[] compass = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+		float maxDot = -Mathf.Infinity;
+		Vector3 ret = Vector3.zero;
+		
+		foreach(Vector3 dir in compass) 
+		{
+			float t = Vector3.Dot(v, dir);
+			if (t > maxDot) 
+			{
+				ret = dir;
+				maxDot = t;
+			}
+		}
+		return ret;
+	}
+
 	private void PlayerForward()
 	{
+		//Vector3
 		if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
 		{
-			m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition);
+			m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
 		}
 		else if(m_Player.transform.forward.z <= -0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
 		{
-			m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition);
+			m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
 		}
 		else if(m_Player.transform.forward.x <= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
 		{
-			m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition);
+			m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
 		}
 		else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
 		{
-			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition);
+			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
 		}
 	}
 	public override void Serialize(ref JSONObject jsonObject){}
