@@ -8,17 +8,14 @@ using System.Collections;
  */
 
 public class LoadGameButton : MonoBehaviour 
-{
-	#region PublicMemberVariables
-	public UILabel m_InputText = null;
-	#endregion
-
-	void OnClick()
+{	void OnClick()
 	{
-		string input = m_InputText.text.ToString ();
+		string input = GetComponentInChildren<UILabel>().text.ToString();
 		
-		if(!string.IsNullOrEmpty(input))
+		if(!string.IsNullOrEmpty(input) || input != "- EMPTY SLOT")
 		{
+			//TODO: 
+			// 	Need to load scene befor below
 			GameData.Load(input);
 		}
 	}

@@ -68,12 +68,14 @@ public class GameData : MonoBehaviour
 		get 
 		{
 			string[] filePaths = Directory.GetFiles("SaveData/", "*.SaveData",SearchOption.TopDirectoryOnly);
-			List<string> fileNames = filePaths.ToList();;
+			List<string> fileNames = filePaths.ToList();
+
 			for(int i=0; i< fileNames.Count; ++i)
 			{
 				fileNames[i] = fileNames[i].Replace("SaveData", "");
 				fileNames[i] = fileNames[i].Replace(".", "");
 				fileNames[i] = fileNames[i].Replace("/", "");
+
 				if(fileNames[i].Contains("autoSave_"))
 				{
 					string swap = fileNames[0];	
