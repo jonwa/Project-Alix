@@ -10,22 +10,32 @@ using System.Collections;
 
 public class MusicOptions : MonoBehaviour 
 {
-	[Range(0,1)]
-	public float m_MasterVolume 	= 1.0f;
+	#region PublicVariableMembers
+	[Range(0,1)] public float m_MasterVolume 	= 1.0f;
+	[Range(0,1)] public float m_SoundVolume		= 1.0f;
+	#endregion
 
 	private FMOD.Studio.MixerStrip masterBus;
+	private FMOD.Studio.MixerStrip soundBus;
 
 	void Start () 
 	{
-		FMOD.GUID guid;
-		FMOD.Studio.System system = FMOD_StudioSystem.instance.System;
-		ERRCHECK( system.lookupID("bus:/", out guid) );
-		ERRCHECK( system.getMixerStrip(guid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out masterBus) );
+		FMOD.GUID masterGuid;
+		FMOD.Studio.System masterSystem = FMOD_StudioSystem.instance.System;
+		ERRCHECK( masterSystem.lookupID("bus:/", out masterGuid) );
+		ERRCHECK( masterSystem.getMixerStrip(masterGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out masterBus) );
+
+		FMOD.GUID soundGuid;
+		FMOD.Studio.System soundSystem = FMOD_StudioSystem.instance.System;
+		ERRCHECK (soundSystem.lookupID ("bus:/", out soundGuid));
+		ERRCHECK (soundSystem.getMixerStrip (soundGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out soundBus));		
 	}
 
 	void Update () 
 	{
-		ERRCHECK (masterBus.setFaderLevel (m_MasterVolume));
+		ERRCHECK(masterBus.setFaderLevel(m_MasterVolume));
+		//Debug.Log (soundBus);
+		//ERRCHECK(soundBus.setFaderLevel(m_SoundVolume)); Hitta rätt namn till den
 	}
 
 	FMOD.RESULT ERRCHECK(FMOD.RESULT result)

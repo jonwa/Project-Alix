@@ -28,7 +28,11 @@ public class Pushable : ObjectComponent
 	public float	m_MoveSpeed			= 1f;
 	#endregion
 	
-	
+	public Vector3 Delta
+	{
+		get {return m_Delta;}
+	}
+
 	void Start () 
 	{
 		m_Camera  = Camera.main.transform;

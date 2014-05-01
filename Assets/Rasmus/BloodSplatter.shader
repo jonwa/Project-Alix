@@ -1,77 +1,172 @@
-﻿Shader "Custom/BloodSplatter" 
-//{
-//	
-//	Properties 
-//	{ 
-//		_MainTex ("Do Not Use", 2D) = "white" {}
-//  		_Texture("Texture", 2D) = "white" {}
-//  		_Color ("Text Color", Color) = (1,0,0,1) 
-//	} 
-//	
-//	SubShader 
-//	{ 
-//	   Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"  
-//}
-//	   Lighting Off Cull Off ZWrite Off Fog { Mode Off } 
-//	   Blend SrcAlpha OneMinusSrcAlpha 
-//	   Pass 
-//	   { 
-//	      Color [_Color] 
-//	      
-//	      SetTexture [_Texture]
-//	      {
-//	      		combine primary, texture * primary 
-//	      }
-//	   } 
-//	} 
-//}
-
-{	Properties {
-		_MainTex ("Main Texture", 2D) = "white" {}
-		_Color ("Color", Color) = (1,1,1,1)
-		_Distort("Distort", vector) = (0.5, 0.5, 1.0, 1.0)
-		_OuterRadius ("Outer Radius", float) = 0.5
-		_InnerRadius ("Inner Radius", float) = -0.5
-		_Hardness("Hardness", float) = 1.0
+﻿Shader "Custom/BloodSplatter"
+{ 
+	Properties 
+	{
+		_Color ("Main Color", Color) = (1, 1, 1, 1)
+		_Cutoff ("Base Alpha cutoff", Range (0,.9)) = .5
+		_Blend ("Blend", Range (0, 1) ) = 0.5 
+		_Texture1 ("Texture 1", 2D) = "" 
+        _Texture2 ("Texture 2", 2D) = ""
 	}
- 
-	SubShader {
-		Tags { "RenderType"="Transparent" "Queue"="Transparent" "AllowProjectors"="False" }
- 
-		blend SrcAlpha OneMinusSrcAlpha
- 
+
+	SubShader 
+	{
+		Tags { "Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout" }
+		Lighting off
+	
+		// Render both front and back facing polygons.
+		Cull Off
+	
+		// first pass:
+		//   render any pixels that are more than [_Cutoff] opaque
+		Pass 
+		{  
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+
+			struct appdata_t 
+			{
+				float4 vertex : POSITION;
+				float4 color : COLOR;
+				float2 texcoord : TEXCOORD0;
+			};
+
+			struct v2f 
+			{
+				float4 vertex : POSITION;
+				float4 color : COLOR;
+				float2 texcoord : TEXCOORD0;
+			};
+
+			sampler2D _Texture1;
+			sampler2D _Texture2;
+			float4 _Texture1_ST;
+			float4 _Texture2_ST;
+			float _Cutoff;
+			float _Blend;
+			
+			v2f vert (appdata_t v)
+			{
+				v2f o;
+				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.color = v.color;
+				o.texcoord = TRANSFORM_TEX(v.texcoord, _Texture1);
+				return o;
+			}
+			
+			float4 _Color;
+			half4 frag (v2f i) : COLOR
+			{
+				half4 col = lerp(tex2D(_Texture1, i.texcoord),tex2D(_Texture2, i.texcoord), _Blend);
+				clip(col.a - _Cutoff);
+				return col;
+			}
+		ENDCG
+	}
+
+	// Second pass:
+	//   render the semitransparent details.
+	Pass 
+	{
+		Tags { "RequireOption" = "SoftVegetation" }
+		
+		// Dont write to the depth buffer
+		ZWrite off
+		
+		// Set up alpha blending
+		Blend SrcAlpha OneMinusSrcAlpha
+		
 		CGPROGRAM
-		#pragma surface surf NoLighting
- 
-		fixed4 LightingNoLighting(SurfaceOutput s, fixed3 lightDir, fixed atten)
+		#pragma vertex vert
+		#pragma fragment frag
+			
+		#include "UnityCG.cginc"
+
+		struct appdata_t 
 		{
-			return fixed4(s.Albedo, s.Alpha);
-		}
- 
-		sampler2D _MainTex;
- 
-		struct Input
-		{
-			float2 uv_MainTex;
+			float4 vertex : POSITION;
+			float4 color : COLOR;
+			float2 texcoord : TEXCOORD0;
 		};
- 
-		float4 _Color, _Distort;
-		float _OuterRadius, _InnerRadius, _Hardness;
-		void surf (Input IN, inout SurfaceOutput o)
+
+		struct v2f 
 		{
-			half4 c = tex2D (_MainTex, IN.uv_MainTex);
- 
-			float x = length((_Distort.xy - IN.uv_MainTex.xy) * _Distort.zw);
- 
-			float rc = (_OuterRadius + _InnerRadius) * 0.5f; // "central" radius
-			float rd = _OuterRadius - rc; // distance from "central" radius to edge radii
- 
-			float circleTest = saturate(abs(x - rc) / rd);
- 
-			o.Albedo = _Color.rgb * c.rgb;
-			o.Alpha = (1.0f - pow(circleTest, _Hardness)) * _Color.a * c.a;
+			float4 vertex : POSITION;
+			float4 color : COLOR;
+			float2 texcoord : TEXCOORD0;
+		};
+
+		sampler2D _Texture1;
+		sampler2D _Texture2;
+		float4 _Texture1_ST;
+		float4 _Texture2_ST;
+		float _Cutoff;
+		float _Blend;
+
+		v2f vert (appdata_t v)
+		{
+			v2f o;
+			o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+			o.color = v.color;
+			o.texcoord = TRANSFORM_TEX(v.texcoord, _Texture1);
+			return o;
+		}
+		
+		float4 _Color;
+		half4 frag (v2f i) : COLOR
+		{
+			half4 col = lerp(tex2D(_Texture1, i.texcoord),tex2D(_Texture2, i.texcoord), _Blend);
+			clip(-(col.a - _Cutoff));
+			return col;
 		}
 		ENDCG
-	} 
-	FallBack "Diffuse"
+	}
+}
+
+SubShader 
+{
+	Tags { "IgnoreProjector"="True" "RenderType"="TransparentCutout" }
+	Lighting off
+	
+	// Render both front and back facing polygons.
+	Cull Off
+	
+	// first pass:
+	//   render any pixels that are more than [_Cutoff] opaque
+	Pass 
+	{  
+		AlphaTest Greater [_Cutoff]
+		SetTexture [_Texture1] 
+		{
+			constantColor [_Color]
+			combine texture * constant, texture * constant 
+		}
+	}
+
+	// Second pass:
+	//   render the semitransparent details.
+	Pass 
+	{
+		Tags { "RequireOption" = "SoftVegetation" }
+		
+		// Dont write to the depth buffer
+		ZWrite off
+		
+		// Only render pixels less or equal to the value
+		AlphaTest LEqual [_Cutoff]
+		
+		// Set up alpha blending
+		Blend SrcAlpha OneMinusSrcAlpha
+		
+		SetTexture [_Texture1] 
+		{
+			constantColor [_Color]
+			Combine texture * constant, texture * constant 
+		}
+	}
+}
+
 }
