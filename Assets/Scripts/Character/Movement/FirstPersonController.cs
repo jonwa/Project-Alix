@@ -42,7 +42,6 @@ public class FirstPersonController : MonoBehaviour
 	// The function that handles all movement 
 	void Move(float deltaTime)
 	{
-		//if(m_Grounded && !m_Locked)
 		if(!m_Locked)
 		{
 			//Vector3 cameraPosition = Camera.main.transform.position;
@@ -89,27 +88,6 @@ public class FirstPersonController : MonoBehaviour
 		//Gravity
 		rigidbody.AddForce(new Vector3(0, -m_Gravity*rigidbody.mass, 0));
 		m_Grounded = false;
-
-	}
-
-	float CalculateJumpForce()
-	{
-		return Mathf.Sqrt(2* m_JumpForce * m_Gravity);
-	}
-
-	/*
-	 * When the object collides with another object, cast a ray down, 
-	 * this is done to see if we are standing on something or colliding with a wall!
-	 */
-	void OnCollisionStay(Collision collisionInfo)
-	{
-		RaycastHit rayHitInfo;
-		Physics.Raycast(transform.position, transform.up*-1, out rayHitInfo, 1); 
-
-		if(rayHitInfo.collider != null)
-		{
-			m_Grounded = true;
-		}
 
 	}
 

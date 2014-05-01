@@ -15,7 +15,6 @@ public class FirstPersonCamera : MonoBehaviour
 	public float m_maximumY = 60F;
 	public bool  m_Oculus   = false;
 	public bool  m_Locked   = false;
-	public float m_Offset   = 1.23f;
 	//public bool m_XboxController = false;
 	public float m_sensitivity = 5;
 	#endregion

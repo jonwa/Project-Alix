@@ -22,12 +22,6 @@ public class Throw : ObjectComponent
 	{
 		m_CameraTransform = Camera.main.transform;
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
 
 	//Add a force onto the rigidbody and release the object
 	public override void Interact ()
