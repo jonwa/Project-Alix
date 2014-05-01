@@ -22,6 +22,9 @@ public class FlickeringLight : ObjectComponent
 	private Light m_Light;
 	#endregion
 
+	override public string Name
+	{ get{return"FlickeringLight";}}
+
 	void Start()
 	{
 		m_Light = this.GetComponent<Light>();

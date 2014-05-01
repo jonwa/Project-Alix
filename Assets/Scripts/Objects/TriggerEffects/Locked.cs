@@ -6,7 +6,7 @@ using System.Collections;
 Made By: Rasmus 08/04
  */
 
-public class Locked : ObjectComponent 
+public class Locked : TriggerComponent 
 {
 	#region PublicMemberVariables
 	public bool m_LockedFromStart = true;
@@ -30,11 +30,6 @@ public class Locked : ObjectComponent
 		{
 			m_Locked = false;
 		}
-	}
-	
-	// Update is called once per frame
-	void Update() 
-	{
 	}
 
 	public void Lock()

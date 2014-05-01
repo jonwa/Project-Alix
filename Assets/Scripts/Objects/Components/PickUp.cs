@@ -14,11 +14,8 @@ using System.Collections;
 public class PickUp : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public float m_LerpSpeed			  	= 10f;
-	public string m_Input				  	= "Fire1";
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
 	public float m_ScaleTime			  	= 30f;
-	public float m_Force 					= 100f;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -27,8 +24,6 @@ public class PickUp : ObjectComponent
 	private bool 		m_HoldingObject		 = false;
 	private Vector3		m_OriginalScale;
 	private Transform	m_HoldObject;
-	private string 		m_InspectInput;
-	private bool		m_GotInspect		 = false;
 	private bool 		isInspecting = false;
 	#endregion
 	

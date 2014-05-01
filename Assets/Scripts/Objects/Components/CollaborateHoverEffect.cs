@@ -15,7 +15,14 @@ public class CollaborateHoverEffect : ObjectComponent
 	public Texture m_ButtonDownHoverEffect = null;
 	public string  m_Description  = null;
 	#endregion
-	
+	public virtual string Name
+	{
+		get
+		{
+			return "CollaborateHoverEffect";
+		}
+	}
+
 	public Texture HoverTexture
 	{
 		get { return m_HoverEffect; }
