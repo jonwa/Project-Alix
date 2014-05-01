@@ -45,6 +45,7 @@ public class Locked : ObjectComponent
 	public void UnLock()
 	{
 		m_Locked = false;
+		Debug.Log ("UPPLÅST");
 	}
 
 	public bool GetLocked()

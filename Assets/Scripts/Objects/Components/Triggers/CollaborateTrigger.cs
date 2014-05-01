@@ -41,21 +41,21 @@ public class CollaborateTrigger : ObjectComponent
 				{
 					if(hoover.gameObject.GetComponent<TriggerEffect>())
 					{
-						hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+						hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
 						if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
 						{
 							hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
-							m_HasTriggered = true;
 						}
+						m_HasTriggered = true;
 					}
 					if(gameObject.GetComponent<TriggerEffect>())
 					{
-						gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+						gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
 						if(gameObject.GetComponent<CheckTrigger>() != null)
 						{
 							gameObject.GetComponent<CheckTrigger>().Trigger();
-							m_HasTriggered = true;
 						}
+						m_HasTriggered = true;
 					}
 				}
 			}
