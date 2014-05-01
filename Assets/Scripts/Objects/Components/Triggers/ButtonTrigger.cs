@@ -8,7 +8,8 @@ using System.Linq;
 	Made By: Robert 01/05-2014
  */
 
-public class ButtonTrigger : ObjectComponent {
+public class ButtonTrigger : ObjectComponent 
+{
 	#region PublicMemberVariables
 	public List<int>	m_Triggers = new List<int>();
 	public string 		m_Input 	 	= "Fire1";

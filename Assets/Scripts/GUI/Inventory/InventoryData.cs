@@ -64,12 +64,10 @@ public class InventoryData : MonoBehaviour
 				
 				if(!Toggle)
 				{
-					Debug.Log("KUK TEXTUR HELVETE");
 					slot.Replace(name.ObjectName);
 				}
 				else
 				{
-					Debug.Log("KUKHELVET DELAYED: name: " + name.ObjectName);
 					slot.DelayedReplace(name.ObjectName);
 				}
 				UpdateInventory();

@@ -2,6 +2,13 @@
 using System.Collections;
 using System.Collections.Generic; 
 
+/* Should be placed on the Load and Save object in menu hierarchy
+ * Handles the names for each slot. 
+ * 
+ * Created By: Jon Wahlström 2014-05-01
+ * Modified By: 
+ */
+
 public class SaveLoadGameButtonData : MonoBehaviour 
 {
 	#region PublicMemberVariables
