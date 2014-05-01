@@ -5,8 +5,6 @@ using System.Collections;
  * 
  * Created by: Robert Datum: 16/04-14
  * Modified by: 
- * 				
- * 
  */
 
 public class Pull : ObjectComponent
@@ -57,7 +55,6 @@ public class Pull : ObjectComponent
 	}
 	
 	//Lerps position and rotation of the object to the inspection Mode distance and back to original position/rotation
-
 	public override void Interact ()
 	{
 		//if we are active we rotate the object with the mouse here.
@@ -67,21 +64,14 @@ public class Pull : ObjectComponent
 			if(m_XRotation){
 				m_move = Input.GetAxis(m_MouseAxisInputX) * m_Sensitivity ;
 				//Pulls the lever in diffrent directions based on mouse input
-				//transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				if(gameObject.GetComponent<RotationLimit>())
 				{
-					//Debug.Log(m_moveY);
 					m_move = gameObject.GetComponent<RotationLimit>().CheckRotation(m_move,"x");
-					//Debug.Log(m_moveY);
 				}
-				//transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				transform.Rotate(m_move,0,0,Space.Self);
-				//transform.Rotate(
 			}
 			if(m_YRotation){
 				m_move = Input.GetAxis(m_MouseAxisInputY) * m_Sensitivity;
-				//Pulls the lever in diffrent directions based on mouse input
-				//transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				if(gameObject.GetComponent<RotationLimit>())
 				{
 					m_move = gameObject.GetComponent<RotationLimit>().CheckRotation(m_move,"y");
@@ -90,8 +80,6 @@ public class Pull : ObjectComponent
 			}
 			if(m_ZRotation){
 				m_move = Input.GetAxis(m_MouseAxisInputZ) * m_Sensitivity;
-				//Pulls the lever in diffrent directions based on mouse input
-				//transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				if(gameObject.GetComponent<RotationLimit>())
 				{
 					m_move = gameObject.GetComponent<RotationLimit>().CheckRotation(m_move,"z");

@@ -44,7 +44,6 @@ public class DoorDrag : ObjectComponent
 				m_UnlockedCamera = true;
 			}
 
-		
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 10)
 			{
@@ -64,7 +63,6 @@ public class DoorDrag : ObjectComponent
 
 			if(m_MouseYPosition != 0)
 			{
-				Debug.Log("Delta: " + m_Delta);
 				if(gameObject.GetComponent<RotationLimit>())
 				{
 					m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
@@ -89,8 +87,7 @@ public class DoorDrag : ObjectComponent
 		}
 	}
 
-
-
+	//Calculates the general direction of a vector v
 	Vector3 ClosestDirection(Vector3 v) 
 	{
 		Vector3[] compass = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
@@ -139,6 +136,14 @@ public class DoorDrag : ObjectComponent
 	public void ReleaseDoor()
 	{
 		Camera.main.SendMessage("Release");
+	}
+
+	public virtual string Name
+	{
+		get
+		{
+			return "DoorDrag";
+		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
