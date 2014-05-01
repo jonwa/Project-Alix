@@ -40,6 +40,7 @@ public class Locked : TriggerComponent
 	public void UnLock()
 	{
 		m_Locked = false;
+		Debug.Log ("UPPLÅST");
 	}
 
 	public bool GetLocked()
