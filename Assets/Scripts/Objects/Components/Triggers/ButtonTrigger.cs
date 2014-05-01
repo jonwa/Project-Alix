@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-/*Class for triggering something in a remote object
+/*Class for triggers on buttons in the GUI
 
-Made By: Rasmus 08/04
+	Made By: Robert 01/05-2014
  */
 
 public class ButtonTrigger : ObjectComponent {
