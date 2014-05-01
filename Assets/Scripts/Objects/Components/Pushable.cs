@@ -83,27 +83,8 @@ public class Pushable : ObjectComponent
 		}
 	}
 
-	Vector3 ClosestDirection(Vector3 v) 
-	{
-		Vector3[] compass = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
-		float maxDot = -Mathf.Infinity;
-		Vector3 ret = Vector3.zero;
-		
-		foreach(Vector3 dir in compass) 
-		{
-			float t = Vector3.Dot(v, dir);
-			if (t > maxDot) 
-			{
-				ret = dir;
-				maxDot = t;
-			}
-		}
-		return ret;
-	}
-
 	private void PlayerForward()
 	{
-		//Vector3
 		if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
 		{
 			m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
@@ -121,6 +102,7 @@ public class Pushable : ObjectComponent
 			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
 		}
 	}
+
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
 
