@@ -31,12 +31,6 @@ public class TriggerEffect : ObjectComponent
 			m_CanBeTriggered = false;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
 
 	public void AllowTriggering()
 	{
