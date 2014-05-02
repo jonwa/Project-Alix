@@ -57,8 +57,8 @@ public class MultipleCollaborationTrigger : ObjectComponent
 		{
 			if(m_Triggers.Contains(i.ObjectId))
 			{
-				Debug.Log("TRIGFGER SHIT!");
-				i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
+				i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+
 			}
 
 		}
