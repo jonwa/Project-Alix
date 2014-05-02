@@ -15,6 +15,14 @@ public class Padlock : ObjectComponent
 	public string 	  m_Input  = null; 
 	#endregion
 
+	void Update()
+	{
+		if(m_Window.activeInHierarchy == true)
+		{
+			InventoryData.NonOccupid();
+		}
+	}
+
 	public override void Interact ()
 	{
 		if(IsActive && Input.GetButtonDown(m_Input))
