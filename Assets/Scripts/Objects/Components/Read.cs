@@ -29,8 +29,8 @@ public class Read : ObjectComponent
 		if(IsActive && Input.GetButtonDown(m_Input))
 		{
 			m_Window.SetActive(true);
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false; 
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			Camera.main.GetComponent<Raycasting>().ShowHover = false; 
+			Camera.main.GetComponent<FirstPersonCamera>().LockCamera();
 		}
 		else
 		{

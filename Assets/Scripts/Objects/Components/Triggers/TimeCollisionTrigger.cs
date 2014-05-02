@@ -29,7 +29,7 @@ public class TimeCollisionTrigger : ObjectComponent
 	void Start () 
 	{
 		collider.isTrigger = true;
-		m_ObjectIds = Object.FindObjectsOfType<Id>();
+		m_ObjectIds =  Resources.FindObjectsOfTypeAll<Id>();
 		m_FoundIDs = new Id[m_IDs.Length];
 	}
 
