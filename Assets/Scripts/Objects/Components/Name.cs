@@ -17,11 +17,7 @@ public class Name : ObjectComponent
 
 	public string ObjectName
 	{
-<<<<<<< HEAD
 		get { return m_Name.ToLower(); }
-=======
-		get { return m_Name.ToLower();; }
->>>>>>> 2f510b1fe950fe326e727703f0ac78c3d233244e
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
