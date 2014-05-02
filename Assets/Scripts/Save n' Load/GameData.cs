@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
+using System.Threading;
 /*
  * Description: Used for saving and loading data about the game to/from JSON-files
  * 
@@ -11,23 +12,19 @@ using System;
  * 
  */
 
-public class GameData : MonoBehaviour 
+
+public class Manager : Singleton<Manager> {
+	protected Manager () {} // guarantee this will be always a singleton only - can't use the constructor!
+	
+	public string myGlobalVar = "whatever";
+}
+
+public class GameData : Singleton<GameData>
 {
+	protected GameData() { }
+
 	private static bool loadingIsDone = false;
-	private static GameData m_Instance;
 
-	static GameData Instance
-	{
-		get
-		{
-			if(m_Instance == null)
-			{
-				m_Instance = new GameData();
-			}
-
-			return m_Instance;	
-		}
-	}
 
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName, bool autoSave=false)
@@ -56,22 +53,25 @@ public class GameData : MonoBehaviour
 				}
 			}
 		}
-			WriteToFile(fileName, jsonObject.Print());
 
+		WriteToFile(fileName, jsonObject.Print());
 	}
 
 	IEnumerator loadLevel(string fileName)
 	{
+		DontDestroyOnLoad(this);
 		Debug.Log ("Loading level lolz! :) xD");
-		AsyncOperation sync = Application.LoadLevelAsync(fileName);
+		AsyncOperation sync = Application.LoadLevelAsync(1);
 
 		while(!sync.isDone)
 		{
-			yield return new WaitForSeconds(0.5f);
-			Debug.Log("Still loading!!!!! :((((((((((((");
+			Debug.Log("isDone "+sync.isDone);
+			Debug.Log("progr "+sync.progress);
+			yield return new WaitForSeconds(5f);
+
 		}
-
-
+		Debug.Log("isDone "+sync.isDone);
+		Debug.Log("progr "+sync.progress);
 
 
 		fileName = fileName.ToLower();
@@ -92,7 +92,12 @@ public class GameData : MonoBehaviour
 	//Loads json string from file and loads data to all objects in scene
 	public static void Load(string fileName)
 	{
-		Instance.loadLevel(fileName);
+
+		Debug.Log("Ät gul snö!");
+		Instance.StartCoroutine(Instance.loadLevel(fileName));
+
+
+		//Instance.loadLevel(fileName);
 	}
 
 	//list with filenames for all saved data

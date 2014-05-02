@@ -79,14 +79,15 @@ public class Deserializer : MonoBehaviour
 
 
 		GameObject ret = null;
-		Id[] objId = GameObject.FindObjectsOfType<Id>();
+		Id[] objId = Resources.FindObjectsOfTypeAll<Id>();
+			
 		foreach (Id obj in objId)
 		{
 			if (obj.ObjectId == id)
 			{
 				ret = obj.gameObject;
 			}
-			m_GameObjects.Add(obj.ObjectId, obj.gameObject);
+			m_GameObjects[obj.ObjectId]=  obj.gameObject;
 		}
 		return ret;
 	}
