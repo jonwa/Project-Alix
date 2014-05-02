@@ -39,30 +39,35 @@ public class CollaborateTrigger : ObjectComponent
 			if(Physics.Raycast (ray, out hit, Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Camera.main.gameObject.GetComponent<Raycasting>().m_LayerMask.value))
 			{
 				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
-				int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
-				if(m_ValidId.Contains(collisionId) && hoover != null)
+				if(hoover.gameObject.GetComponent<Id>() != null)
 				{
-					Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
-
-					if(hoover.gameObject.GetComponent<TriggerEffect>())
+					int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
+					if(m_ValidId.Contains(collisionId) && hoover != null)
 					{
-						hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
-						if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
+						Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
+					
+						if(hoover.gameObject.GetComponent<TriggerEffect>())
 						{
-							hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
+							hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+							if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
+							{
+								hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
+							}
+							m_HasTriggered = true;
 						}
-						m_HasTriggered = true;
-					}
-					if(gameObject.GetComponent<TriggerEffect>())
-					{
-						gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
-						if(gameObject.GetComponent<CheckTrigger>() != null)
+						if(gameObject.GetComponent<TriggerEffect>())
 						{
-							gameObject.GetComponent<CheckTrigger>().Trigger();
+							gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					
+							if(gameObject.GetComponent<CheckTrigger>() != null)
+							{
+								gameObject.GetComponent<CheckTrigger>().Trigger();
+							}
+							m_HasTriggered = true;
 						}
-						m_HasTriggered = true;
 					}
 				}
+
 			}
 		}
 		else
@@ -71,11 +76,14 @@ public class CollaborateTrigger : ObjectComponent
 			if(Physics.Raycast (ray, out hit, Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Camera.main.gameObject.GetComponent<Raycasting>().m_LayerMask.value))
 			{
 				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
-				int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
-
-				if(m_ValidId.Contains(collisionId) && hoover != null)
+				if(hoover.gameObject.GetComponent<Id>() != null)
 				{
-					Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
+					int collisionId = hoover.gameObject.GetComponent<Id>().ObjectId;
+				
+					if(m_ValidId.Contains(collisionId) && hoover != null)
+					{
+						Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
+					}
 				}
 			}
 			else

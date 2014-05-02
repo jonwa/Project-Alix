@@ -15,7 +15,7 @@ using FMOD.Studio;
 public class MoviePlayer : TriggerComponent 
 {
 	#region PublicMemberVariables
-	public MovieTexture[] 	m_Movies;
+	public MovieTexture 	m_Movie;
 	public int				m_TargetID;
 	#endregion
 
@@ -28,7 +28,7 @@ public class MoviePlayer : TriggerComponent
 		get{ return "PlayMovie"; }
 	}
 
-	void PlayMovie(int mov)
+	void PlayMovie()
 	{
 		GameObject TextureTarget = null;
 		List<Id> ids = UnityEngine.Object.FindObjectsOfType<Id>().ToList();
@@ -39,15 +39,9 @@ public class MoviePlayer : TriggerComponent
 				TextureTarget = i.gameObject;
 			}
 		}
-		TextureTarget.gameObject.renderer.material.mainTexture = m_Movies[mov];
-		if (!m_Movies[mov].isPlaying) 
-		{
-			for(int i = 0; i < m_Movies.Length; i++)
-			{
-				m_Movies[i].Stop();
-			}
-			m_Movies[mov].Play();
-		}
+		TextureTarget.gameObject.renderer.material.mainTexture = m_Movie;
+		m_Movie.Stop();
+		m_Movie.Play();
 	}
 
 	void Start () 

@@ -8,10 +8,10 @@ using System.Linq;
 	Made By: Robert 01/05-2014
  */
 
-public class ButtonTrigger : ObjectComponent {
+public class ButtonTrigger : ObjectComponent 
+{
 	#region PublicMemberVariables
 	public List<int>	m_Triggers = new List<int>();
-	public string 		m_Input 	 	= "Fire1";
 	public bool   		m_TriggerOnce = false;
 	#endregion
 	
@@ -39,7 +39,7 @@ public class ButtonTrigger : ObjectComponent {
 			{
 				if(m_Triggers.Contains(i.ObjectId))
 				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(i.gameObject.GetComponent<Id>().ObjectId);
+					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 					if(i.gameObject.GetComponent<CheckTrigger>() != null)
 					{
 						i.gameObject.GetComponent<CheckTrigger>().Trigger();

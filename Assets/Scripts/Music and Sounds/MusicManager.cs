@@ -18,6 +18,7 @@ public class MusicManager : MonoBehaviour
 	private FMOD.Studio.EventInstance 		m_Event;
 	private FMOD.Studio.ParameterInstance	m_LocationParameter;
 	private FMOD.Studio.ParameterInstance	m_ProgressParameter;
+	private FMOD.Studio.ParameterInstance	m_PauseParameter;
 	private bool 							m_Started		= false;
 	private string 							m_Path;
 	#endregion
@@ -25,6 +26,7 @@ public class MusicManager : MonoBehaviour
 	#region PublicMemberVariables
 	[Range(0,1)] public float				m_Element0;
 	[Range(0,1)] public float 				m_Element1;
+	[Range(0,1)] public float 				m_Element2;
 	public bool 							startEventOnAwake	= true;
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
@@ -42,6 +44,12 @@ public class MusicManager : MonoBehaviour
 		set{ m_Element1 = value; }
 		get{ return m_Element1; }
 	}
+
+	public float Element2
+	{
+		set{ m_Element2 = value; }
+		get{ return m_Element2; }
+	}
 	#endregion
 	
 	void Start()
@@ -53,15 +61,21 @@ public class MusicManager : MonoBehaviour
 		}
 		m_Event.getParameter(m_Parameters[0], out m_LocationParameter);
 		m_Event.getParameter (m_Parameters [1], out m_ProgressParameter);
+		m_Event.getParameter (m_Parameters [2], out m_PauseParameter);
+
 
 		m_LocationParameter.setValue (m_Element0);
 		m_ProgressParameter.setValue (m_Element1);
+		m_PauseParameter.setValue (m_Element2);
+
 	}
 
 	void Update()
 	{
 		m_LocationParameter.setValue (m_Element0);
 		m_ProgressParameter.setValue (m_Element1);
+		m_PauseParameter.setValue (m_Element1);
+
 	}
 
 	void OnDisable()

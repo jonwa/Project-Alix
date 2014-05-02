@@ -51,12 +51,14 @@ public class MultipleCollaborationTrigger : ObjectComponent
 
 	void Trigger()
 	{
-		List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
+		//THIS SHOT WORKS PERFECTLY! REPLACE EVERYWHERE!
+		List<Id> ids = Resources.FindObjectsOfTypeAll<Id>().ToList();
 		foreach(Id i in ids)
 		{
 			if(m_Triggers.Contains(i.ObjectId))
 			{
-				i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
+				i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+
 			}
 
 		}
