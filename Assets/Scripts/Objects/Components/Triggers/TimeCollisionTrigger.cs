@@ -29,7 +29,7 @@ public class TimeCollisionTrigger : ObjectComponent
 	void Start () 
 	{
 		collider.isTrigger = true;
-		m_ObjectIds = Object.FindObjectsOfType<Id>();
+		m_ObjectIds =  Resources.FindObjectsOfTypeAll<Id>();
 		m_FoundIDs = new Id[m_IDs.Length];
 	}
 
@@ -45,7 +45,7 @@ public class TimeCollisionTrigger : ObjectComponent
 					foreach(Id id in m_FoundIDs)
 					{
 			
-						id.GetComponent<TriggerEffect>().ActivateTriggerEffect(id.ObjectId);
+						id.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 						if(id.gameObject.GetComponent<CheckTrigger>() != null)
 						{
 							id.gameObject.GetComponent<CheckTrigger>().Trigger();

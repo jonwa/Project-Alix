@@ -22,7 +22,7 @@ public class DoorDrag : ObjectComponent
 	#endregion
 	
 	#region PublicMemberVariables
-	public float		m_Speed				= 20.0f;
+	public float		m_Speed				= 60.0f;
 	public string 		m_VerticalInput;
 	public string 		m_Input;
 	#endregion
