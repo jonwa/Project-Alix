@@ -14,8 +14,6 @@ public class LoadGameButton : MonoBehaviour
 		
 		if(!string.IsNullOrEmpty(input) || input != "- EMPTY SLOT")
 		{
-			//TODO: 
-			// 	Need to load scene befor below
 			GameData.Load(input);
 		}
 	}

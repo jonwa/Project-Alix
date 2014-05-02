@@ -11,8 +11,8 @@ using System.Linq;
 public class PadlockTrigger : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public List<int>	m_Triggers = new List<int>();
 	public int 			m_CorrectCode;
+	public List<int>	m_Triggers = new List<int>();
 	public GameObject[] m_PadlockNumbers;
 	public bool   		m_TriggerOnce = false;
 	#endregion
@@ -49,13 +49,10 @@ public class PadlockTrigger : ObjectComponent
 		if(InputCode == m_CorrectCode)
 		{
 			ActivateTrigger();
-			Debug.Log("Corr " + m_CorrectCode + " Input " + InputCode);
-			//TODO: TRIGGER THAT SHIT
 		}
 		else
 		{
 			Debug.Log("Corr " + m_CorrectCode + " Input " + InputCode);
-			//TODO: DONT TRIGGER THAT SHIT
 		}
 	}
 
@@ -69,7 +66,7 @@ public class PadlockTrigger : ObjectComponent
 			{
 				if(m_Triggers.Contains(i.ObjectId))
 				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(i.gameObject.GetComponent<Id>().ObjectId);
+					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 					if(i.gameObject.GetComponent<CheckTrigger>() != null)
 					{
 						i.gameObject.GetComponent<CheckTrigger>().Trigger();

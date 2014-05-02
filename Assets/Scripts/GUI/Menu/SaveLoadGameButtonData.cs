@@ -34,18 +34,24 @@ public class SaveLoadGameButtonData : MonoBehaviour
 		List<string> names = new List<string>();
 		names = GameData.FileNames;
 
-		int i = 0;
+		if(names.Count > 0)
+		{
+			int i = 0;
 
-		if(names[0].Contains("autoSave_"))
-		{
-			m_AutoSave.GetComponentInChildren<UILabel>().text = names[0];
-			++i;
-		}
-		
-		foreach(GameObject go in m_SlotNames)
-		{
-			go.GetComponentInChildren<UILabel>().text = names[i];
-			++i;
+			if(names[0].Contains("autoSave_"))
+			{
+				m_AutoSave.GetComponentInChildren<UILabel>().text = names[0];
+				++i;
+			}
+			
+			foreach(GameObject go in m_SlotNames)
+			{
+				if(i < names.Count)
+				{
+					go.GetComponentInChildren<UILabel>().text = names[i];
+					++i;
+				}
+			}
 		}
 	}
 }
