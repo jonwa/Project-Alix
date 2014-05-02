@@ -17,7 +17,7 @@ public class Name : ObjectComponent
 
 	public string ObjectName
 	{
-		get { return /*m_Name.ToLower();*/ null; }
+		get { return m_Name.ToLower(); }
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
