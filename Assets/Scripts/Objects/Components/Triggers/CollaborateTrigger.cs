@@ -55,6 +55,7 @@ public class CollaborateTrigger : ObjectComponent
 					}
 					if(gameObject.GetComponent<TriggerEffect>())
 					{
+						Debug.Log("BAJSAPA " + gameObject.GetComponent<Id>().ObjectId);
 						gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
 						if(gameObject.GetComponent<CheckTrigger>() != null)
 						{

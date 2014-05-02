@@ -51,9 +51,17 @@ public class TriggerEffect : ObjectComponent
 	{
 		for(int i = 0; i < m_Messages.Length; i++)
 		{
+			Debug.Log("allowed id:" + m_IDs[i] + " in ID: "+ ID);
 			if(m_IDs[i] == ID)
 			{
-				SendMessage(m_Messages[i],m_SubMessages[i]);
+				if(m_Messages[i] == "Activate")
+				{
+					gameObject.GetComponent<ActivateDeactivate>().Activate();
+				}
+				else
+				{
+					SendMessage(m_Messages[i],m_SubMessages[i]);
+				}
 			}
 		}
 	}
