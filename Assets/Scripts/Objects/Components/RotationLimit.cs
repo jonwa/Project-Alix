@@ -68,21 +68,6 @@ public class RotationLimit : ObjectComponent
 	// Update is called once per frame
 	void Update () 
 	{
-		//if ((m_LastRotation.x + 5 > transform.localRotation.eulerAngles.x && m_LastRotation.x - 5 < transform.localRotation.eulerAngles.x)
-		//{
-		//	m_Difference = transform.localRotation.eulerAngles -(m_LastRotation);
-		//	Vector3 Rotate;
-		//	Rotate.x = CheckRotation (m_Difference.x, "x");
-		//	Rotate.y = CheckRotation (m_Difference.y, "y");
-		//	Rotate.z = CheckRotation (m_Difference.z, "z");
-		//	transform.Rotate (Rotate,Space.Self);
-		//	Debug.Log (m_Difference);
-		//	m_Difference *= 0;
-		//}
-		//m_LastRotation = transform.localRotation.eulerAngles;
-		//Debug.Log (m_LastRotation);
-		//RotationHandler ();
-		//m_LastRotation = transform.localRotation.eulerAngles;
 		if(gameObject.GetComponent<Locked>())
 		{
 			m_IsLocked = gameObject.GetComponent<Locked> ().GetLocked ();
@@ -222,15 +207,7 @@ public class RotationLimit : ObjectComponent
 			transform.Rotate(0,0,angle,Space.Self);
 		}
 	}
-
-	void OnCollisionEnter()
-	{
-
-	}
-	void OnCollisionExit()
-	{
-
-	}
+	
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}

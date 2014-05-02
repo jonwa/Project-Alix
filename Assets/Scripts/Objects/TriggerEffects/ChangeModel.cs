@@ -23,8 +23,12 @@ public class ChangeModel :  TriggerComponent
 	public void ModelChange()
 	{
 		if (m_Counter < m_MeshStages.Length) {
-			gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
-			renderer.material.mainTexture = m_TextureStages [m_Counter];
+			if(m_MeshStages[m_Counter] != null){
+				gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
+			}
+			if(m_TextureStages[m_Counter] != null){
+				renderer.material.mainTexture = m_TextureStages [m_Counter];
+			}
 			m_Counter++;
 		}
 	}

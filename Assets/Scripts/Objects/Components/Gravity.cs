@@ -12,9 +12,9 @@ public class Gravity : ObjectComponent
 	#region PublicMemberVariables
 	public bool m_Gravity	= true;
 	#endregion
-	
-	#region PrivateMemberVariables
-	#endregion
+
+	override public string Name
+	{ get{return"Gravity";}}
 
 	// Use this for initialization
 	void Start () 
@@ -42,9 +42,9 @@ public class Gravity : ObjectComponent
 		}
 	}
 
-	public void SetGravity(bool bo)
+	public void SetGravity(bool gravity)
 	{
-		m_Gravity = bo;
+		m_Gravity = gravity;
 	}
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}

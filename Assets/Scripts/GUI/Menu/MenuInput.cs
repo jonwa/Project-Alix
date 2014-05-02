@@ -48,6 +48,7 @@ public class MenuInput : MonoBehaviour
 					Active = true;
 					m_Window.SetActive(false);
 					WindowHandler.Default(); 
+					PlatformWindowHandler.Default();
 				}
 
 				InputManager.Reset();

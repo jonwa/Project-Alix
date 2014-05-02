@@ -69,30 +69,39 @@ public class Triggering : ObjectComponent {
 	public void ActivateTrigger()
 	{
 		//Gather new values in case of change
-		for(int i = 0; i < m_Triggers.Length; i++)
-		{
-			m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
-		}
-
-		if(m_ActivateAll == true)
+		if(!m_HasTriggered)
 		{
 			for(int i = 0; i < m_Triggers.Length; i++)
 			{
-				if(m_Allowed[i] == true)
+				m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
+			}
+			
+			if(m_ActivateAll == true)
+			{
+				for(int i = 0; i < m_Triggers.Length; i++)
 				{
-					m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					//m_GameObjects[i].gameObject.GetComponent<CheckTrigger>().Trigger();
-					m_HasTriggered = true;
+					if(m_Allowed[i] == true)
+					{
+						m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
+						if(m_GameObjects[i].gameObject.GetComponent<CheckTrigger>() != null)
+						{
+							m_GameObjects[i].gameObject.GetComponent<CheckTrigger>().Trigger();
+						}
+						m_HasTriggered = true;
+					}
 				}
 			}
-		}
-		else
-		{
-			if(m_Allowed[m_ArrayPosition] == true)
+			else
 			{
-				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTriggerEffect();
-				//m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>().Trigger();
-				m_HasTriggered = true;
+				if(m_Allowed[m_ArrayPosition] == true)
+				{
+					m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTriggerEffect(gameObject.GetComponent<Id>().ObjectId);
+					if(m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>() != null)
+					{
+						m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>().Trigger();
+					}
+					m_HasTriggered = true;
+				}
 			}
 		}
 	}

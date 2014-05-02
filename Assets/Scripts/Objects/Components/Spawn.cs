@@ -44,11 +44,10 @@ public class Spawn : MonoBehaviour {
 			}
 		}
 	}
-
-	public void Spawned()
-	{
-		transform.position  = m_Position;
+	public void Spawned()	
+	{	
+		transform.position  = m_Position;	
 		m_Spawned 			= true;
-		m_Timer   			= 0;
+		m_Timer   			= 0;	
 	}
 }

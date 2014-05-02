@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using FMOD.Studio;
 
 /* Discription: MoviePlayer, starts a Movie, when triggered
@@ -13,7 +15,8 @@ using FMOD.Studio;
 public class MoviePlayer : TriggerComponent 
 {
 	#region PublicMemberVariables
-	public MovieTexture 	m_Movie;
+	public MovieTexture[] 	m_Movies;
+	public int				m_TargetID;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -25,13 +28,25 @@ public class MoviePlayer : TriggerComponent
 		get{ return "PlayMovie"; }
 	}
 
-	void PlayMovie()
+	void PlayMovie(int mov)
 	{
-		renderer.material.mainTexture = m_Movie;
-		if (!m_Movie.isPlaying) 
+		GameObject TextureTarget = null;
+		List<Id> ids = UnityEngine.Object.FindObjectsOfType<Id>().ToList();
+		foreach(Id i in ids)
 		{
-			m_Movie.Stop();
-			m_Movie.Play();
+			if(i.ObjectId == m_TargetID)
+			{
+				TextureTarget = i.gameObject;
+			}
+		}
+		TextureTarget.gameObject.renderer.material.mainTexture = m_Movies[mov];
+		if (!m_Movies[mov].isPlaying) 
+		{
+			for(int i = 0; i < m_Movies.Length; i++)
+			{
+				m_Movies[i].Stop();
+			}
+			m_Movies[mov].Play();
 		}
 	}
 

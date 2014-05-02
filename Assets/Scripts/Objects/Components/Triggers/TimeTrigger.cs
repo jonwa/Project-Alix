@@ -38,7 +38,10 @@ public class TimeTrigger : ObjectComponent
 			{
 				Debug.Log ("Trigger Time");
 				ActivateTriggerEffect();
-				//gameObject.GetComponent<CheckTrigger>().Trigger();
+				if(gameObject.GetComponent<CheckTrigger>() != null)
+				{
+					gameObject.GetComponent<CheckTrigger>().Trigger();
+				}
 				m_HasTriggered = true;
 				m_Active = false;
 			}
@@ -61,15 +64,18 @@ public class TimeTrigger : ObjectComponent
 
 	public void ActivateTriggerEffect()
 	{
-		for(int i = 0; i < m_Messages.Length; i++){
-			if(m_Messages[i].Equals("Effect"))
-			{
-				Debug.Log("Fått en triggerEffect");
-			}
-			else
-			{
-				SendMessage(m_Messages[i]);
-				
+		if(!m_HasTriggered)
+		{
+			for(int i = 0; i < m_Messages.Length; i++){
+				if(m_Messages[i].Equals("Effect"))
+				{
+					Debug.Log("Fått en triggerEffect");
+				}
+				else
+				{
+					SendMessage(m_Messages[i]);
+					
+				}
 			}
 		}
 	}

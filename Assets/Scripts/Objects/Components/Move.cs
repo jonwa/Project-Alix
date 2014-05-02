@@ -19,14 +19,11 @@ public class Move : ObjectComponent
 	#endregion
 
 	#region PublicMemberVariables
-	//public string	m_PlayerName				= "Player Controller Example";
 	public string	m_Input;
-	public float	m_DistanceToObject;
 	#endregion
 
 	void Start()
 	{
-		//Change "Player Controller Example" to whatever Player is called when finished
 		m_Player = Camera.main.transform.parent.gameObject; 
 		m_OriginalPlayerPosition = m_Player.transform.position;
 	}
@@ -54,9 +51,6 @@ public class Move : ObjectComponent
 			m_Offset = m_CurrentPlayerPosition - m_OriginalPlayerPosition;
 
 			transform.position += m_Offset;
-
-			//Debug.Log ("Distance to Object = "+m_DistanceToObject);
-			//Debug.Log ("mPlayer= "+ (m_Player.transform.position.magnitude - transform.position.magnitude));
 
 			m_OriginalPlayerPosition = m_CurrentPlayerPosition;
 		}
