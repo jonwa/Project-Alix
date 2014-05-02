@@ -35,24 +35,30 @@ public class TimeCollisionTrigger : ObjectComponent
 
 	void Update()
 	{
-		if (m_Active) 
-		{
-			m_Time = Time.time - m_StartTime;
-			if(m_Time >= m_TriggerTime)
+		if(!m_HasTriggered){
+			if (m_Active) 
 			{
-				GetIDsToTrigger(m_FoundIDs);
-				foreach(Id id in m_FoundIDs)
+				m_Time = Time.time - m_StartTime;
+				if(m_Time >= m_TriggerTime)
 				{
-
-					id.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					if(id.gameObject.GetComponent<CheckTrigger>() != null)
+					GetIDsToTrigger(m_FoundIDs);
+					foreach(Id id in m_FoundIDs)
 					{
-						id.gameObject.GetComponent<CheckTrigger>().Trigger();
+			
+						id.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+						if(id.gameObject.GetComponent<CheckTrigger>() != null)
+						{
+							id.gameObject.GetComponent<CheckTrigger>().Trigger();
+						}
 						m_HasTriggered = true;
 					}
+					m_Active = false;
 				}
-				m_Active = false;
 			}
+		}
+		else 
+		{
+			m_Active = false;
 		}
 	}
 

@@ -10,6 +10,7 @@ public class TriggerEffect : ObjectComponent
 {
 	#region PublicMemberVariables
 	public string[] m_Messages;
+	public int[]	m_SubMessages;
 	public bool     m_AllowedFromStart = true;
 	#endregion
 	
@@ -29,12 +30,6 @@ public class TriggerEffect : ObjectComponent
 			m_CanBeTriggered = false;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
-	}
 
 	public void AllowTriggering()
 	{
@@ -51,19 +46,20 @@ public class TriggerEffect : ObjectComponent
 		return m_CanBeTriggered;
 	}
 
-
 	public void ActivateTriggerEffect()
 	{
-		for(int i = 0; i < m_Messages.Length; i++){
-			if(m_Messages[i].Equals("Effect"))
+		for(int i = 0; i < m_Messages.Length; i++)
+		{
+
+			if(m_Messages[i] == "Activate")
 			{
-				Debug.Log("Fått en triggerEffect");
+				gameObject.GetComponent<ActivateDeactivate>().Activate();
 			}
 			else
 			{
-				SendMessage(m_Messages[i]);
-
+				SendMessage(m_Messages[i],m_SubMessages[i]);
 			}
+
 		}
 	}
 
