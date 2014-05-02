@@ -7,7 +7,7 @@ using System.Collections;
  * 
  */
 [RequireComponent(typeof(State))]
-public class InActivate :  TriggerComponent
+public class ActivateDeactivate :  TriggerComponent
 {
 	#region PrivateMemberVariables
 	private bool m_IsActive = true; 
@@ -16,8 +16,17 @@ public class InActivate :  TriggerComponent
 	public void DeActivate()
 	{
 		m_IsActive = false;
-		Camera.main.GetComponent<Raycasting> ().Release ();
+		if(Camera.main.GetComponent<Raycasting>().InteractingWith == gameObject)
+		{
+			Camera.main.GetComponent<Raycasting> ().Release ();
+		}
 		gameObject.SetActive (m_IsActive);
+	}
+
+	public void Activate()
+	{
+		m_IsActive = true;
+		gameObject.SetActive(m_IsActive);
 	}
 
 	override public string Name

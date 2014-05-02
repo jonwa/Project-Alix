@@ -40,7 +40,7 @@ public class ButtonTrigger : ObjectComponent
 			{
 				if(m_Triggers.Contains(i.ObjectId))
 				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect(i.gameObject.GetComponent<Id>().ObjectId);
+					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 					if(i.gameObject.GetComponent<CheckTrigger>() != null)
 					{
 						i.gameObject.GetComponent<CheckTrigger>().Trigger();
