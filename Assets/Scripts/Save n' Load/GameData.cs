@@ -13,6 +13,22 @@ using System;
 
 public class GameData : MonoBehaviour 
 {
+	private static bool loadingIsDone = false;
+	private static GameData m_Instance;
+
+	static GameData Instance
+	{
+		get
+		{
+			if(m_Instance == null)
+			{
+				m_Instance = new GameData();
+			}
+
+			return m_Instance;	
+		}
+	}
+
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName, bool autoSave=false)
 	{
@@ -43,11 +59,21 @@ public class GameData : MonoBehaviour
 			WriteToFile(fileName, jsonObject.Print());
 
 	}
-	
-	//Loads json string from file and loads data to all objects in scene
-	public static void Load(string fileName)
+
+	IEnumerator loadLevel(string fileName)
 	{
-		Debug.Log ("Now loading");
+		Debug.Log ("Loading level lolz! :) xD");
+		AsyncOperation sync = Application.LoadLevelAsync(fileName);
+
+		while(!sync.isDone)
+		{
+			yield return new WaitForSeconds(0.5f);
+			Debug.Log("Still loading!!!!! :((((((((((((");
+		}
+
+
+
+
 		fileName = fileName.ToLower();
 		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
@@ -56,8 +82,17 @@ public class GameData : MonoBehaviour
 		//jsonObject.Bake();
 		//string s = jsonObject.Print(true);
 		//Debug.Log(s);
-		
+		Debug.Log("Dezerializing");
 		Deserializer.Deserialize(ref jsonObject);
+
+
+		yield return null;
+	}
+
+	//Loads json string from file and loads data to all objects in scene
+	public static void Load(string fileName)
+	{
+		Instance.loadLevel(fileName);
 	}
 
 	//list with filenames for all saved data
