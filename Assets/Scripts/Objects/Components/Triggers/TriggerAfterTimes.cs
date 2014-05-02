@@ -3,40 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-/*Class for triggers on buttons in the GUI
-
-	Made By: Robert 01/05-2014
- */
-
-public class ButtonTrigger : ObjectComponent {
+public class TriggerAfterTimes : ObjectComponent 
+{
 	#region PublicMemberVariables
-	public List<int>	m_Triggers = new List<int>();
-	public bool   		m_TriggerOnce = false;
+	public int m_NumberOfTimes = 1;
+	public List<int> m_TriggerIds = new List<int>();
 	#endregion
-	
 	#region PrivateMemberVariables
-	private bool 		 m_HasTriggered	 = false;
+	private int m_Count = 0;
+	private bool m_HasTriggered = false;
 	#endregion
-	
-	// Use this for initialization
-	void Start () 
+
+	public void AddToCount()
 	{
+		m_Count++;
+		if(m_Count >= m_NumberOfTimes)
+		{
+			ActivateTrigger();
+		}
 	}
 
-	void OnClick()
-	{
-		ActivateTrigger();
-	}
-
-	//Will send activition to all TriggerID
 	void ActivateTrigger()
 	{
 		if(!m_HasTriggered)
 		{
-			List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
+			List<Id> ids = Resources.FindObjectsOfTypeAll<Id>().ToList();
 			foreach(Id i in ids)
 			{
-				if(m_Triggers.Contains(i.ObjectId))
+				if(m_TriggerIds.Contains(i.ObjectId))
 				{
 					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 					if(i.gameObject.GetComponent<CheckTrigger>() != null)
@@ -49,16 +43,7 @@ public class ButtonTrigger : ObjectComponent {
 			}
 		}
 	}
-			
+	//TODO: Add save/load
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
 }
-
-
-
-
-
-
-
-
-

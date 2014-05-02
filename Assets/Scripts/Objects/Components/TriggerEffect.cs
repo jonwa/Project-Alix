@@ -10,7 +10,7 @@ public class TriggerEffect : ObjectComponent
 {
 	#region PublicMemberVariables
 	public string[] m_Messages;
-	public int[]	m_SubMessages;
+	//public int[]	m_SubMessages;
 	public bool     m_AllowedFromStart = true;
 	#endregion
 	
@@ -57,7 +57,7 @@ public class TriggerEffect : ObjectComponent
 			}
 			else
 			{
-				SendMessage(m_Messages[i],m_SubMessages[i]);
+				SendMessage(m_Messages[i]);
 			}
 
 		}
