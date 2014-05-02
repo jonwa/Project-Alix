@@ -14,6 +14,13 @@ public class Read : ObjectComponent
 	public string 	  m_Input  = null; 
 	#endregion
 
+	void Update()
+	{
+		if(m_Window.activeInHierarchy == true)
+		{
+			InventoryData.NonOccupid();
+		}
+	}
 
 	public override void Interact ()
 	{

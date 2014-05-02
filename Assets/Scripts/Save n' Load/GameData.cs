@@ -13,20 +13,6 @@ using System;
 
 public class GameData : MonoBehaviour 
 {
-	static private GameData m_Instance;
-
-	public static GameData Instance {
-		get {
-			if (m_Instance == null)
-			{
-				GameObject go = new GameObject();
-				m_Instance = go.AddComponent<GameData>();
-				go.name = "singleton";
-			}
-			return m_Instance;
-		}
-	}
-
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName, bool autoSave=false)
 	{
@@ -61,23 +47,7 @@ public class GameData : MonoBehaviour
 	//Loads json string from file and loads data to all objects in scene
 	public static void Load(string fileName)
 	{
-		Debug.Log("GameData Load" + fileName);
-		Instance.StartCoroutine("LoadAsync", fileName);
-	}
-
-	AsyncOperation _async;
-
-	IEnumerator LoadAsync(string fileName)
-	{
-		_async = Application.LoadLevelAsync("JonsTestBana");
-
-		float progress = 0.0f;
-		while(progress <= 0.9999f)
-		{
-		    progress = _async.progress;
-			yield return new WaitForSeconds(5);
-		}
-
+		Debug.Log ("Now loading");
 		fileName = fileName.ToLower();
 		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
@@ -89,7 +59,6 @@ public class GameData : MonoBehaviour
 		
 		Deserializer.Deserialize(ref jsonObject);
 	}
-
 
 	//list with filenames for all saved data
 	public static List<string> FileNames
