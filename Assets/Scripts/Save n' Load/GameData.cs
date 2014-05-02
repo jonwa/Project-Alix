@@ -13,7 +13,6 @@ using System;
 
 public class GameData : MonoBehaviour 
 {
-
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName, bool autoSave=false)
 	{
@@ -48,18 +47,17 @@ public class GameData : MonoBehaviour
 	//Loads json string from file and loads data to all objects in scene
 	public static void Load(string fileName)
 	{
+		Debug.Log ("Now loading");
 		fileName = fileName.ToLower();
 		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
 		JSONObject jsonObject = new JSONObject(fileContent);
-
+		
 		//jsonObject.Bake();
 		//string s = jsonObject.Print(true);
 		//Debug.Log(s);
-
+		
 		Deserializer.Deserialize(ref jsonObject);
-
-
 	}
 
 	//list with filenames for all saved data
@@ -68,12 +66,14 @@ public class GameData : MonoBehaviour
 		get 
 		{
 			string[] filePaths = Directory.GetFiles("SaveData/", "*.SaveData",SearchOption.TopDirectoryOnly);
-			List<string> fileNames = filePaths.ToList();;
+			List<string> fileNames = filePaths.ToList();
+
 			for(int i=0; i< fileNames.Count; ++i)
 			{
 				fileNames[i] = fileNames[i].Replace("SaveData", "");
 				fileNames[i] = fileNames[i].Replace(".", "");
 				fileNames[i] = fileNames[i].Replace("/", "");
+
 				if(fileNames[i].Contains("autoSave_"))
 				{
 					string swap = fileNames[0];	
@@ -81,7 +81,6 @@ public class GameData : MonoBehaviour
 					fileNames[i] = swap;
 				}
 			}
-
 
 			return fileNames;
 		}
@@ -116,6 +115,6 @@ public class GameData : MonoBehaviour
 	}
 
 
-
+	
 
 }

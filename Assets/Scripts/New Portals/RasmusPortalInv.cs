@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+/* Description: Portalscript for single portals. No texture or cameras is needed for these as they will not be visible
+ * 
+ * Made by: Rasmus 29/4
+ */
+
 public class RasmusPortalInv : ObjectComponent 
 {
 	#region PublicMemberVariables

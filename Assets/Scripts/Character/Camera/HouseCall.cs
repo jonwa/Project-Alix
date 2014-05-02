@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*Description: Script for controlling what house the player is in and what house the player targets, made for portals
+
+Made by: Rasmus 29/04
+ */
+
 public class HouseCall : MonoBehaviour 
 {
+	#region PrivateMemberVariables
 	private int m_House  = 0;
 	private int m_Target = 0;
+	#endregion
+
 	// Use this for initialization
 	void Start () 
 	{

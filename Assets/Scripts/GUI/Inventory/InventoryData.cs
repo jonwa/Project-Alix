@@ -62,7 +62,7 @@ public class InventoryData : MonoBehaviour
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
 				
-				if(Toggle)
+				if(!Toggle)
 				{
 					slot.Replace(name.ObjectName);
 				}

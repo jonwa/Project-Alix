@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/*This script gives the texture for the portalmaterials. And also activates/deactivates portals and camera, hence it is the parent
+
+Made by: Rasmus 29/04
+ */
+
 [RequireComponent(typeof(Locked))]
 public class PortalTexture : MonoBehaviour 
 {

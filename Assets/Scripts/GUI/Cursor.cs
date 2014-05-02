@@ -16,6 +16,7 @@ public class Cursor : MonoBehaviour
 	#endregion
 
 	#region PrivateMemberVariables
+	private bool m_UsingOculus;
 	private static string m_Description;
 	private static Texture m_DefaultTexture;
 	private static Texture m_CrossHairTexture;
@@ -28,6 +29,7 @@ public class Cursor : MonoBehaviour
 	void Start()
 	{
 		Screen.showCursor  = false;
+		m_UsingOculus 	   = Camera.main.transform.parent.GetComponent<CharacterData>().GetOculus();
 
 		m_DefaultTexture   = m_DefaultCrossHair;
 		m_CrossHairTexture = m_DefaultCrossHair;
@@ -77,12 +79,32 @@ public class Cursor : MonoBehaviour
 	// Draw the cross hair in the center of the screen
 	void DrawCrossHair()
 	{
-		Rect position = new Rect (Screen.width  * 0.5f - m_CrossHairTexture.width  * 0.5f, 
-		                          Screen.height * 0.5f - m_CrossHairTexture.height * 0.5f, 
-		                          m_CrossHairTexture.width, 
-		                          m_CrossHairTexture.height);
+		Rect position;
+		if(m_UsingOculus == true)
+		{
+			position = new Rect (Screen.width  * 0.3f - m_CrossHairTexture.width  * 0.5f, 
+			                     Screen.height * 0.5f - m_CrossHairTexture.height * 0.5f, 
+			                          m_CrossHairTexture.width, 
+			                          m_CrossHairTexture.height);
+			
+			GUI.DrawTexture (position, m_CrossHairTexture);
+			
+			position = new Rect (Screen.width  * 0.7f - m_CrossHairTexture.width  * 0.5f, 
+			                     Screen.height * 0.5f - m_CrossHairTexture.height * 0.5f, 
+			                          m_CrossHairTexture.width, 
+			                          m_CrossHairTexture.height);
 
-		GUI.DrawTexture (position, m_CrossHairTexture);
+			GUI.DrawTexture (position, m_CrossHairTexture);
+		}
+		else
+		{
+			position = new Rect (Screen.width  * 0.5f - m_CrossHairTexture.width  * 0.5f, 
+			                          Screen.height * 0.5f - m_CrossHairTexture.height * 0.5f, 
+			                          m_CrossHairTexture.width, 
+			                          m_CrossHairTexture.height);
+			
+			GUI.DrawTexture (position, m_CrossHairTexture);
+		}
 	}
 
 	// Draw the mouse cursor, used whenever e.g. a menu or padlock is visible

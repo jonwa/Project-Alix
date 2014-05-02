@@ -34,7 +34,7 @@ public class FirstPersonController : MonoBehaviour
 
 	void Awake()
 	{
-		m_CameraPositionY = Camera.main.transform.position.y;
+		//m_CameraPositionY = Camera.main.transform.position.y;
 		rigidbody.useGravity = false;
 		rigidbody.freezeRotation = true;
 	}

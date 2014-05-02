@@ -28,7 +28,7 @@ public class MoviePlayer : TriggerComponent
 		get{ return "PlayMovie"; }
 	}
 
-	void PlayMovie(int mov)
+	void PlayMovie()
 	{
 		GameObject TextureTarget = null;
 		List<Id> ids = UnityEngine.Object.FindObjectsOfType<Id>().ToList();
