@@ -48,7 +48,6 @@ public class ObjectSound : ObjectComponent
 			StartEvent();
 			if(m_SubEvents != null)
 			{
-				Debug.Log ("Hejsan");
 				StartSubEvent();
 			}
 		}
@@ -71,23 +70,32 @@ public class ObjectSound : ObjectComponent
 	{
 		if (!m_Started) 
 		{
-			m_MouseYPosition = Input.GetAxis(m_Horizontal);
+		}
+	}
 
-			if(m_MouseYPosition != 0 && (getSubEventPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED ||
-			                             getSubEventPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING))
+	void DoorSound()
+	{
+
+	}
+
+	void DrawerSound()
+	{
+		m_MouseYPosition = Input.GetAxis(m_Horizontal);
+		
+		if(m_MouseYPosition != 0 && (getSubEventPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED ||
+		                             getSubEventPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING))
+		{
+			if(m_MouseYPosition > 0 && !m_Positive)
 			{
-				if(m_MouseYPosition > 0 && !m_Positive)
-				{
-					StartEvent();
-					m_Positive = true;
-					m_Negative = false;
-				}
-				else if(m_MouseYPosition < 0 && !m_Negative)
-				{
-					StartEvent();
-					m_Negative = true;
-					m_Positive = false;
-				}
+				StartEvent();
+				m_Positive = true;
+				m_Negative = false;
+			}
+			else if(m_MouseYPosition < 0 && !m_Negative)
+			{
+				StartEvent();
+				m_Negative = true;
+				m_Positive = false;
 			}
 		}
 	}

@@ -20,13 +20,14 @@ public class MusicOptions : MonoBehaviour
 	private FMOD.Studio.MixerStrip musicBus;
 	private FMOD.Studio.MixerStrip soundBus;
 
+
 	void Start () 
 	{
 		FMOD.GUID masterGuid;
 		FMOD.Studio.System masterSystem = FMOD_StudioSystem.instance.System;
 		ERRCHECK( masterSystem.lookupID("bus:/", out masterGuid) );
 		ERRCHECK( masterSystem.getMixerStrip(masterGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out masterBus) );
-
+	
 		FMOD.GUID musicGuid;
 		FMOD.Studio.System musicSystem = FMOD_StudioSystem.instance.System;
 		ERRCHECK (musicSystem.lookupID ("bus:/Music", out musicGuid));
@@ -35,15 +36,31 @@ public class MusicOptions : MonoBehaviour
 		FMOD.GUID soundGuid;
 		FMOD.Studio.System soundSystem = FMOD_StudioSystem.instance.System;
 		ERRCHECK (soundSystem.lookupID ("bus:/Sound", out soundGuid));
-		ERRCHECK (soundSystem.getMixerStrip (soundGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out soundBus));		
+		ERRCHECK (soundSystem.getMixerStrip (soundGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out soundBus));	
 	}
 
 	void Update () 
 	{
-		ERRCHECK(masterBus.setFaderLevel(m_MasterVolume));
-		//ERRCHECK (musicBus.setFaderLevel (m_MusicVolume));
-		//Debug.Log (soundBus);
-		//ERRCHECK(soundBus.setFaderLevel(m_SoundVolume));
+		//Debug.Log (getVolume (masterBus));
+		setVolume (masterBus, m_MasterVolume);
+
+		//Debug.Log (getVolume (musicBus));
+		setVolume (musicBus, m_MusicVolume);
+
+		//Debug.Log (getVolume (soundBus));
+		setVolume (soundBus, m_SoundVolume);
+	}
+
+	void setVolume(FMOD.Studio.MixerStrip p_Bus, float p_MasterVolume)
+	{
+		ERRCHECK(p_Bus.setFaderLevel(p_MasterVolume));
+	}
+
+	float getVolume(FMOD.Studio.MixerStrip p_Bus)
+	{
+		float volume;
+		ERRCHECK (p_Bus.getFaderLevel (out volume));
+		return volume;
 	}
 
 	FMOD.RESULT ERRCHECK(FMOD.RESULT result)
