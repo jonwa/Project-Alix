@@ -34,7 +34,6 @@ public class CheckPlayer : MonoBehaviour
 		m_DoorDepth      = m_Target1.transform.collider.bounds.size.z;
 		m_FarPlane       = GetComponent<Camera>().farClipPlane;
 
-		//Debug.Log(m_DoorHeight + " " + m_DoorWidth + " " + m_DoorDepth);
 		if(m_DoorWidth > 0.1)
 		{
 			GetComponent<Camera>().aspect = m_DoorWidth/m_DoorHeight;
@@ -48,6 +47,18 @@ public class CheckPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_Player != Camera.main.gameObject)
+		{
+			m_Player = Camera.main.gameObject;
+		}
+
+		CalculateFieldOfView();
+		MoveCamera();
+		transform.LookAt(m_TargetToFollow.transform.position);
+	}
+
+	private void CalculateFieldOfView()
+	{
 		float dist = Vector3.Distance(transform.position, m_TargetToFollow.transform.position);
 		//Calculate= Dörrbredd, Delat på avståndet, gånger farplane på kameran.
 		float calculate;
@@ -59,7 +70,7 @@ public class CheckPlayer : MonoBehaviour
 		{
 			calculate = ((m_DoorDepth/dist) * m_FarPlane);
 		}
-
+		
 		if(calculate < m_MaxView){
 			GetComponent<Camera>().fieldOfView = calculate;
 		}
@@ -67,9 +78,6 @@ public class CheckPlayer : MonoBehaviour
 		{
 			GetComponent<Camera>().fieldOfView = m_MaxView;
 		}
-
-		MoveCamera();
-		transform.LookAt(m_TargetToFollow.transform.position);
 	}
 
 	private void MoveCamera()

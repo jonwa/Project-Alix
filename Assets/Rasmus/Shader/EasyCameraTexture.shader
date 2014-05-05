@@ -1,4 +1,4 @@
-﻿Shader "Custom/Blood" 
+﻿Shader "Custom/EasyCameraTexture" 
 {
 	Properties 
 	{
@@ -19,7 +19,6 @@
 
 		sampler2D _MainTex;
 		sampler2D _SecondTex;
-		float4 _SecondTex_ST;
 		float _Lerp;
 		
 		/////////
@@ -43,7 +42,7 @@
 			
 			o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
 			o.uv = v.texCoord;
-			o.uv2 = TRANSFORM_TEX(v.texCoord2, _SecondTex);
+			o.uv2 = v.texCoord2;
 			
 			return o;
 		}
@@ -53,15 +52,9 @@
 			float4 maincol = tex2D(_MainTex, l.uv);
 			float4 texcol = tex2D(_SecondTex, l.uv2);
 			
-			if(_Lerp > 1)
-			{
-				_Lerp = 1;
-			}
-			
-			float4 Mix = lerp(tex2D(_SecondTex, l.uv), tex2D(_MainTex, l.uv), texcol.x);
-			float4 Mix2 = lerp(tex2D(_MainTex, l.uv), Mix, _Lerp);
+			float4 Mix = lerp(maincol, texcol, _Lerp);
 		
-			return float4(Mix2);
+			return float4(Mix);
 		}
 		
 		/////
