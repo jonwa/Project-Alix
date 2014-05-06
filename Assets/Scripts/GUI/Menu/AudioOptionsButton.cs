@@ -9,10 +9,33 @@ using System.Collections;
 
 public class AudioOptionsButton : MonoBehaviour 
 {
-	public GameObject m_VolumeScrollBar;
+	public enum Name{Master, Music, Sound, VoiceOver};
 
-	void OnDrag()
+	public Name m_Name = Name.Master;
+
+	void Update()
 	{
-		AudioOptionsWindow.ChangeVolume (m_VolumeScrollBar);
+		EventDelegate.Add(gameObject.GetComponent<UIScrollBar>().onChange, ChangeVolume);
+	}
+
+	void ChangeVolume()
+	{
+		float value = gameObject.GetComponent<UIScrollBar> ().value;
+		Debug.Log ("value " +  value);
+		switch (m_Name) 
+		{
+		case Name.Master:
+			AudioOptionsWindow.ChangeVolume ("master", value);
+			break;
+		case Name.Music:
+			AudioOptionsWindow.ChangeVolume ("music", value);
+			break;
+		case Name.Sound:
+			AudioOptionsWindow.ChangeVolume ("sound", value);
+			break; 
+		case Name.VoiceOver:
+			AudioOptionsWindow.ChangeVolume ("voiceOver", value);
+			break;
+		}
 	}
 }

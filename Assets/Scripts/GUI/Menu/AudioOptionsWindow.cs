@@ -9,8 +9,8 @@ using System.Collections;
 
 public class AudioOptionsWindow : MonoBehaviour 
 {
-	public static void ChangeVolume(GameObject current)
+	public static void ChangeVolume(string name, float value)
 	{
-		float value = current.GetComponent<UIScrollBar> ().value;
+		Camera.main.GetComponent<MusicOptions> ().setVolume (name, value);
 	}
 }
