@@ -24,9 +24,9 @@ public class DrawerSound : SoundComponent
 	public override void PlaySound()
 	{
 		m_MouseYPosition = Input.GetAxis(m_Horizontal);
-		
-		if(m_MouseYPosition != 0 && (getSubEventPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED ||
-		                             getSubEventPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING))
+
+		if(m_MouseYPosition != 0 && (getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED ||
+		                             getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING))
 		{
 			if(m_MouseYPosition > 0 && !m_Positive)
 			{
