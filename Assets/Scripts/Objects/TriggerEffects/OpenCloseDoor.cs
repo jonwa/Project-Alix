@@ -34,6 +34,8 @@ public class OpenCloseDoor :  TriggerComponent
 				{
 					transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,transform.localEulerAngles.y,m_ClosedAngle);
 				}
+
+				GetComponent<RotationLimit>().ResetRotation(m_angle);
 			}
 		}
 	}
