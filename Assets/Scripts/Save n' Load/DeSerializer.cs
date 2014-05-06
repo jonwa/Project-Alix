@@ -72,10 +72,10 @@ public class Deserializer : MonoBehaviour
 	//Gets the object with correct id
 	private static GameObject GetObjectWithId(int id)
 	{
-		if (m_GameObjects.ContainsKey(id))
-		{
-			return m_GameObjects[id];
-		}
+		//if (m_GameObjects.ContainsKey(id))
+		//{
+		//	return m_GameObjects[id];
+		//}
 
 
 		GameObject ret = null;

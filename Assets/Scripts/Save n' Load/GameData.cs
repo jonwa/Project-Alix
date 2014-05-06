@@ -25,6 +25,30 @@ public class GameData : Singleton<GameData>
 
 	private static bool loadingIsDone = false;
 
+	void Awake()
+	{
+		if(Instance != this)
+		{
+			DestroyImmediate(gameObject);
+		}
+	}
+
+	void Start()
+	{
+
+	}
+
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.P))
+		{
+			Save ("SaveAsFile");
+		}
+		else if(Input.GetKeyDown(KeyCode.L))
+		{
+			Load("SaveAsFile");
+		}
+	}
 
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName, bool autoSave=false)
@@ -61,13 +85,13 @@ public class GameData : Singleton<GameData>
 	{
 		DontDestroyOnLoad(this);
 		Debug.Log ("Loading level lolz! :) xD");
-		AsyncOperation sync = Application.LoadLevelAsync(1);
+		AsyncOperation sync = Application.LoadLevelAsync(0);
 
 		while(!sync.isDone)
 		{
 			Debug.Log("isDone "+sync.isDone);
 			Debug.Log("progr "+sync.progress);
-			yield return new WaitForSeconds(5f);
+			yield return new WaitForSeconds(2f);
 
 		}
 		Debug.Log("isDone "+sync.isDone);
