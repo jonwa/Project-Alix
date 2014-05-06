@@ -48,6 +48,9 @@ public class PadlockTrigger : ObjectComponent
 	{
 		if(InputCode == m_CorrectCode)
 		{
+			GameObject parent = transform.parent.gameObject;
+			GameObject parentsParent = parent.transform.parent.gameObject;
+			parentsParent.SetActive(false);
 			ActivateTrigger();
 		}
 		else
