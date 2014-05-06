@@ -14,13 +14,14 @@ public class InventoryData : MonoBehaviour
 {
 	#region PublicMemberVariables
 	public int 	  m_MaxItems   = 5;
+	public string m_PlayerName = "Player Controller Example";
 	#endregion
 
 	#region PrivateMemberVariables
 	private static List<GameObject> m_Slots		   = new List<GameObject>();
 	private static GameObject[] 	m_Items		   = null;
 	private static int 				m_MaxItemSlots = 0; 
-	private static GameObject		m_Player	   = null; 
+	private static GameObject		m_Player	   = null;
 	#endregion
 
 	public static bool Toggle{get;set;}
@@ -30,9 +31,8 @@ public class InventoryData : MonoBehaviour
 		Toggle 		   = true;
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
+		m_Player 	   = GameObject.Find(m_PlayerName);
 	}
-
-
 
 	//Initializes the List of empty slots. 
 	//called from Inventory.cs
@@ -42,29 +42,35 @@ public class InventoryData : MonoBehaviour
 	}
 
 	//add a object to the inventory, called from Pocket.cs
-	public static void AddItem(GameObject go)
+	public static void AddItem(GameObject go, bool swap)
 	{
+		if(!swap)
+		{
+			Camera.main.GetComponent<Raycasting>().InteractingWith = null; 
+		}
+
 		foreach(GameObject itemSlot in m_Slots)
 		{
 			InventoryItem slot = itemSlot.GetComponent<InventoryItem>();
 			if(!slot.Occupied)
 			{
-				go.SetActive(false);
 				Name name = go.GetComponent<Name>();
-
+				go.SetActive(false);
+				
 				if(name == null) return;
-
+				
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
-
-				if(Toggle)
+				
+				if(!Toggle)
 				{
-						slot.Replace(name.ObjectName);
+					slot.Replace(name.ObjectName);
 				}
 				else
 				{
 					slot.DelayedReplace(name.ObjectName);
 				}
+				UpdateInventory();
 				break;
 			}
 		}
@@ -91,13 +97,20 @@ public class InventoryData : MonoBehaviour
 
 				if(pickup)
 				{
+					if(raycast.InteractingWith != null)
+					{
+						AddItem(raycast.InteractingWith, true);
+						raycast.InteractingWith = go; 
+					}
 					raycast.Activate(go);
 				}
-				else 
-					if(inspect)
+
+
+				/*else if(inspect)
 				{
 					inspect.OrigionalPosition = controller.Position; 
-				}
+				}*/
+
 			}
 		}
 	}
@@ -106,10 +119,18 @@ public class InventoryData : MonoBehaviour
 	//the inventory as it gets active
 	public static void UpdateInventory()
 	{
-		foreach(GameObject item in m_Slots)
+		if(m_Slots.Count > 0)
 		{
-			InventoryItem slot = item.GetComponent<InventoryItem>();
-			slot.ChangeTexture();
+			foreach(GameObject item in m_Slots)
+			{
+				InventoryItem slot = item.GetComponent<InventoryItem>();
+				slot.ChangeTexture();
+			}
 		}
+	}
+
+	public static void NonOccupid()
+	{
+		Camera.main.GetComponent<Raycasting>().Activate(Camera.main.GetComponent<Raycasting>().InteractingWith);
 	}
 }

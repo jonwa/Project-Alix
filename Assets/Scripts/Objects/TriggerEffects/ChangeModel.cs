@@ -22,13 +22,23 @@ public class ChangeModel :  TriggerComponent
 	// Update is called once per frame
 	public void ModelChange()
 	{
-		if (m_Counter < m_MeshStages.Length) {
-			gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
-			renderer.material.mainTexture = m_TextureStages [m_Counter];
-			m_Counter++;
+		if (m_Counter < m_MeshStages.Length) 
+		{
+			if(m_MeshStages[m_Counter] != null)
+			{
+				gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
+			}
 		}
+		if (m_Counter < m_TextureStages.Length)
+		{
+			if(m_TextureStages[m_Counter] != null)
+			{
+				renderer.material.mainTexture = m_TextureStages [m_Counter];
+			}
+		}
+		m_Counter++;	
 	}
-	
+
 	override public string Name
 	{ get{return"ChangeModel";}}
 	

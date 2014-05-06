@@ -8,16 +8,24 @@ using System.Collections;
 
 public class WindowButton : MonoBehaviour {
 
-	public enum Action { Show, Continue, Exit };
+	public enum Action { NewGame, Show, Continue, Exit };
 	
 	public GameObject m_Window;
-	public int m_Id;
-	public Action m_Action = Action.Show;
+	public string	  m_LevelToLoad;
+	public int		  m_Id;
+	public Action 	  m_Action = Action.Show;
 	
 	void OnClick()
 	{
 		switch(m_Action)
 		{
+		case Action.NewGame:
+			WindowHandler.Default();
+			if(!string.IsNullOrEmpty(m_LevelToLoad))
+			{
+				Application.LoadLevel(m_LevelToLoad);
+			}
+			break;
 		case Action.Show:
 			if(m_Window != null)
 			{
@@ -26,11 +34,14 @@ public class WindowButton : MonoBehaviour {
 		break;	
 		
 		case Action.Continue:
+			InputManager.Active = true;
+			m_Window.transform.parent.GetComponent<MenuInput>().Active = true;
 			m_Window.SetActive(false);
 			WindowHandler.Default();
-			InputManager.Active = true;
+			PlatformWindowHandler.Default();
+
 			InputManager.Reset();
-			m_Window.transform.parent.GetComponent<MenuInput>().Active = true;
+
 		break;
 
 		case Action.Exit:

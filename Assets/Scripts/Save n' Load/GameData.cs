@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System;
 /*
  * Description: Used for saving and loading data about the game to/from JSON-files
  * 
@@ -12,20 +13,8 @@ using System.Linq;
 
 public class GameData : MonoBehaviour 
 {
-
-	void Update()
-	{
-		if(Input.GetKeyDown(KeyCode.Q))
-		{
-			foreach(string s in FileNames)
-			{
-				Debug.Log(s);
-			}
-		}
-	}
-
 	//Gets all information about all objects in scene and saves it to the a file.
-	public static void Save(string fileName)
+	public static void Save(string fileName, bool autoSave=false)
 	{
 		fileName = fileName.ToLower();
 		JSONObject jsonObject = new JSONObject();
@@ -33,27 +22,42 @@ public class GameData : MonoBehaviour
 
 		jsonObject.Bake();
 
-		//string s = jsonObject.str.Replace("\"",("\\"+"\""));
+
 		Debug.Log(jsonObject.str);
 
-		WriteToFile(fileName, jsonObject.Print());
+		if(autoSave)
+		{
+			DateTime date = DateTime.Now;
+			fileName = "autoSave_"+date.Year+"_"+date.Month+"_"+date.Day+"_"+date.Hour+"-"+date.Minute;
+
+
+			string[] autoSaveFiles = Directory.GetFiles("SaveData/","*.SaveData",SearchOption.TopDirectoryOnly);
+			foreach(string s in autoSaveFiles)
+			{
+				if(s.Contains("autoSave_"))
+				{
+					File.Delete(s);
+				}
+			}
+		}
+			WriteToFile(fileName, jsonObject.Print());
+
 	}
 	
 	//Loads json string from file and loads data to all objects in scene
 	public static void Load(string fileName)
 	{
+		Debug.Log ("Now loading");
 		fileName = fileName.ToLower();
 		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
 		JSONObject jsonObject = new JSONObject(fileContent);
-
+		
 		//jsonObject.Bake();
 		//string s = jsonObject.Print(true);
 		//Debug.Log(s);
-
+		
 		Deserializer.Deserialize(ref jsonObject);
-
-
 	}
 
 	//list with filenames for all saved data
@@ -62,17 +66,27 @@ public class GameData : MonoBehaviour
 		get 
 		{
 			string[] filePaths = Directory.GetFiles("SaveData/", "*.SaveData",SearchOption.TopDirectoryOnly);
-			List<string> fileNames = filePaths.ToList();;
+			List<string> fileNames = filePaths.ToList();
+
 			for(int i=0; i< fileNames.Count; ++i)
 			{
 				fileNames[i] = fileNames[i].Replace("SaveData", "");
 				fileNames[i] = fileNames[i].Replace(".", "");
 				fileNames[i] = fileNames[i].Replace("/", "");
+
+				if(fileNames[i].Contains("autoSave_"))
+				{
+					string swap = fileNames[0];	
+					fileNames[0] = fileNames[i];
+					fileNames[i] = swap;
+				}
 			}
 
 			return fileNames;
 		}
 	}
+
+
 
 	//Writes a string to specified file name.
 	static void WriteToFile(string fileName, string content)
@@ -101,6 +115,6 @@ public class GameData : MonoBehaviour
 	}
 
 
-
+	
 
 }

@@ -16,6 +16,7 @@ public class RotationLimit : ObjectComponent
 	public float m_NegativeY;
 	public float m_PositiveZ;
 	public float m_NegativeZ;
+	public float m_LockedLimit;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -24,6 +25,7 @@ public class RotationLimit : ObjectComponent
 	private Vector3 m_Difference;
 	private Vector3 m_Offset;
 	private Vector3 m_OriginalRotation;
+	private bool 	m_IsLocked;
 	#endregion
 	
 	// Use this for initialization
@@ -66,21 +68,10 @@ public class RotationLimit : ObjectComponent
 	// Update is called once per frame
 	void Update () 
 	{
-		//if ((m_LastRotation.x + 5 > transform.localRotation.eulerAngles.x && m_LastRotation.x - 5 < transform.localRotation.eulerAngles.x)
-		//{
-		//	m_Difference = transform.localRotation.eulerAngles -(m_LastRotation);
-		//	Vector3 Rotate;
-		//	Rotate.x = CheckRotation (m_Difference.x, "x");
-		//	Rotate.y = CheckRotation (m_Difference.y, "y");
-		//	Rotate.z = CheckRotation (m_Difference.z, "z");
-		//	transform.Rotate (Rotate,Space.Self);
-		//	Debug.Log (m_Difference);
-		//	m_Difference *= 0;
-		//}
-		//m_LastRotation = transform.localRotation.eulerAngles;
-		//Debug.Log (m_LastRotation);
-		RotationHandler ();
-		m_LastRotation = transform.localRotation.eulerAngles;
+		if(gameObject.GetComponent<Locked>())
+		{
+			m_IsLocked = gameObject.GetComponent<Locked> ().GetLocked ();
+		}
 	}
 	
 	public float CheckRotation(float angle, string axis)
@@ -91,27 +82,54 @@ public class RotationLimit : ObjectComponent
 		{
 			float CheckX = m_Rotation.x;
 			CheckX += angle;
-			if(CheckX > m_PositiveX)
-			{
-				angle = m_PositiveX - m_Rotation.x; 
+			if(m_IsLocked){
+				if(CheckX > m_LockedLimit)
+				{
+					angle = m_LockedLimit - m_Rotation.x;
+				}
+				else if(CheckX < (m_LockedLimit * -1))
+				{
+					angle = (m_LockedLimit * -1) + (m_Rotation.x * -1); 
+				}
 			}
-			else if(CheckX < m_NegativeX)
+			else
 			{
-				angle = m_NegativeX + (m_Rotation.x * -1); 
+				if(CheckX > m_PositiveX)
+				{
+					angle = m_PositiveX - m_Rotation.x; 
+				}
+				else if(CheckX < m_NegativeX)
+				{
+					angle = m_NegativeX + (m_Rotation.x * -1); 
+				}
 			}
+			
 			m_Rotation.x +=angle;
 		}
 		else if (axis.Equals ("y")) 
 		{
 			float CheckY = m_Rotation.y;
 			CheckY += angle;
-			if(CheckY > m_PositiveY)
-			{
-				angle = m_PositiveY - m_Rotation.y; 
+			if(m_IsLocked){
+				if(CheckY > m_LockedLimit)
+				{
+					angle = m_LockedLimit - m_Rotation.y;
+				}
+				else if(CheckY < (m_LockedLimit * -1))
+				{
+					angle = (m_LockedLimit * -1) + (m_Rotation.y * -1); 
+				}
 			}
-			else if(CheckY < m_NegativeY)
+			else
 			{
-				angle = m_NegativeY + (m_Rotation.y * -1); 
+				if(CheckY > m_PositiveY)
+				{
+					angle = m_PositiveY - m_Rotation.y; 
+				}
+				else if(CheckY < m_NegativeY)
+				{
+					angle = m_NegativeY + (m_Rotation.y * -1); 
+				}
 			}
 			m_Rotation.y +=angle;
 		}
@@ -119,13 +137,26 @@ public class RotationLimit : ObjectComponent
 		{
 			float CheckZ = m_Rotation.z;
 			CheckZ += angle;
-			if(CheckZ > m_PositiveX)
-			{
-				angle = m_PositiveX - m_Rotation.z; 
+			if(m_IsLocked){
+				if(CheckZ > m_LockedLimit)
+				{
+					angle = m_LockedLimit - m_Rotation.z;
+				}
+				else if(CheckZ < (m_LockedLimit * -1))
+				{
+					angle = (m_LockedLimit * -1) + (m_Rotation.z * -1); 
+				}
 			}
-			else if(CheckZ < m_NegativeX)
+			else
 			{
-				angle = m_NegativeX + (m_Rotation.z * -1); 
+				if(CheckZ > m_PositiveX)
+				{
+					angle = m_PositiveX - m_Rotation.z; 
+				}
+				else if(CheckZ < m_NegativeX)
+				{
+					angle = m_NegativeX + (m_Rotation.z * -1); 
+				}
 			}
 			m_Rotation.z +=angle;
 		}
@@ -176,15 +207,7 @@ public class RotationLimit : ObjectComponent
 			transform.Rotate(0,0,angle,Space.Self);
 		}
 	}
-
-	void OnCollisionEnter()
-	{
-
-	}
-	void OnCollisionExit()
-	{
-
-	}
+	
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
