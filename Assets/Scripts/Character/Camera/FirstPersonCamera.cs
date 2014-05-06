@@ -61,13 +61,17 @@ public class FirstPersonCamera : MonoBehaviour
 		//Camera with Oculus rift, for later use
 		else
 		{
+			if(m_Locked == false)
+			{
+				this.SendMessageUpwards("RotateCharacter", m_sensitivity);
+			}
 			//Shall be replaced for different input with oculus
-			float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivity;
-			
-			m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity;
-			m_rotationY = Mathf.Clamp (m_rotationY, m_minimumY, m_maximumY);
-			
-			transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
+			//float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * m_sensitivity;
+			//
+			//m_rotationY += Input.GetAxis("Mouse Y") * m_sensitivity;
+			//m_rotationY = Mathf.Clamp (m_rotationY, m_minimumY, m_maximumY);
+			//
+			//transform.localEulerAngles = new Vector3(-m_rotationY, rotationX, 0);
 
 			//this.SendMessageUpwards("RotateCharacter", m_sensitivity);
 			//this.SendMessageUpwards("RotateCharacterJoystick", m_sensitivity);

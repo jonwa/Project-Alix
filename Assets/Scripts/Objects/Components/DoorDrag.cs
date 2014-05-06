@@ -65,7 +65,7 @@ public class DoorDrag : ObjectComponent
 			{
 				if(gameObject.GetComponent<RotationLimit>())
 				{
-					m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
+					//m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
 				}
 
 				transform.Rotate(m_RotationAxis,m_Delta,Space.Self);
@@ -110,25 +110,35 @@ public class DoorDrag : ObjectComponent
 	private Vector3 PlayerForward()
 	{
 		Vector3 forward = ClosestDirection(m_Player.transform.forward);
+
+		//TODO: Jimmy ska skriva om allt detta (pushable style)
+		Vector3 objectGeneralForward = ClosestDirection(transform.forward);
+		Vector3 objectGeneralRight	 = ClosestDirection(transform.right);
+
+
 		Vector3 ret = new Vector3();
 		if(forward == Vector3.forward)
 		{
 			ret = new Vector3(0, -1 , 0);
+			m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
 		}
 		else if(forward == Vector3.back)
 		{
 			ret = new Vector3(0, 1 , 0);
+			m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
 		}
 		else if(forward == Vector3.left)
 		{
 			ret = new Vector3(0, 1 , 0);
+			m_Delta = ((-m_MouseYPosition ) * m_Speed)*Time.deltaTime;
 		}
 		else if(forward == Vector3.right)
 		{
 			ret = new Vector3(0, -1 , 0);
+			m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
 		}
 
-		m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+
 
 		return ret;
 	}
