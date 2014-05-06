@@ -85,6 +85,10 @@ public class CollaborateTrigger : ObjectComponent
 						Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
 					}
 				}
+				else
+				{
+					Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = false;
+				}
 			}
 			else
 			{

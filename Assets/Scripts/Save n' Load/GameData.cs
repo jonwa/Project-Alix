@@ -27,10 +27,7 @@ public class GameData : Singleton<GameData>
 
 	void Awake()
 	{
-		if(Instance != this)
-		{
-			DestroyImmediate(gameObject);
-		}
+		DontDestroyOnLoad(gameObject);
 	}
 
 	void Start()
@@ -85,7 +82,7 @@ public class GameData : Singleton<GameData>
 	{
 		DontDestroyOnLoad(this);
 		Debug.Log ("Loading level lolz! :) xD");
-		AsyncOperation sync = Application.LoadLevelAsync(0);
+		AsyncOperation sync = Application.LoadLevelAsync(2);
 
 		while(!sync.isDone)
 		{

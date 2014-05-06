@@ -11,10 +11,10 @@ using System.Collections;
 public class MusicOptions : MonoBehaviour 
 {
 	#region PublicVariableMembers
-	[Range(0,1)] public float m_MasterVolume 	= 1.0f;
-	[Range(0,1)] public float m_MusicVolume 	= 1.0f;
-	[Range(0,1)] public float m_SoundVolume		= 1.0f;
-	[Range(0,1)] public float m_VOVolume 		= 1.0f;
+	[Range(0,1)] private float m_MasterVolume 	= 1.0f;
+	[Range(0,1)] private float m_MusicVolume 	= 1.0f;
+	[Range(0,1)] private float m_SoundVolume	= 1.0f;
+	[Range(0,1)] private float m_VOVolume 		= 1.0f;
 	#endregion
 
 	private FMOD.Studio.MixerStrip masterBus;
