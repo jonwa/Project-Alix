@@ -51,6 +51,9 @@ public class PadlockTrigger : ObjectComponent
 			GameObject parent = transform.parent.gameObject;
 			GameObject parentsParent = parent.transform.parent.gameObject;
 			parentsParent.SetActive(false);
+			Camera.main.GetComponent<Raycasting>().ShowHover = true; 
+			Camera.main.GetComponent<FirstPersonCamera>().UnLockCamera();
+
 			ActivateTrigger();
 		}
 		else
