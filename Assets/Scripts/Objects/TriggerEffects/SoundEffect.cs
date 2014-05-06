@@ -22,6 +22,8 @@ public class SoundEffect : TriggerComponent
 
 	#region PublicMemberVariables
 	public FMODAsset						m_Asset;
+	public string[]							m_Parameters;
+	public float							m_Unlock;
 	#endregion
 
 	override public string Name
@@ -32,6 +34,8 @@ public class SoundEffect : TriggerComponent
 	{
 		m_Started = false;
 		CacheEventInstance();
+		m_Event.getParameter (m_Parameters[0], out m_Parameter);
+		Debug.Log (m_Parameter);
 	}
 
 	void PlaySoundEffect()
@@ -42,6 +46,7 @@ public class SoundEffect : TriggerComponent
 		}
 		if (!m_Started) 
 		{
+			m_Parameter.setValue(m_Unlock);
 			StartEvent();
 		}
 	}
