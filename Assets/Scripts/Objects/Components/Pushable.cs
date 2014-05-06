@@ -99,7 +99,7 @@ public class Pushable : ObjectComponent
 		}
 		else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
 		{
-			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition);
+			m_Delta = new Vector3(-m_MouseYPosition, 0, -m_MouseXPosition);
 		}
 	}
 	public override void Serialize(ref JSONObject jsonObject){}
