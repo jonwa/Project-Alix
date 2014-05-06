@@ -83,24 +83,81 @@ public class Pushable : ObjectComponent
 		}
 	}
 
+	//Calculates the general direction of a vector v
+	Vector3 ClosestDirection(Vector3 v) 
+	{
+		Vector3[] compass = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+		float maxDot = -Mathf.Infinity;
+		Vector3 ret = Vector3.zero;
+		
+		foreach(Vector3 dir in compass) 
+		{
+			float t = Vector3.Dot(v, dir);
+			if (t > maxDot) 
+			{
+				ret = dir;
+				maxDot = t;
+			}
+		}
+		return ret;
+	}
+
 	private void PlayerForward()
 	{
-		if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
+		Vector3 playerGeneralForward = ClosestDirection(m_Player.transform.forward);
+		Vector3 objectGeneralForward = ClosestDirection(transform.forward);
+		Vector3 objectGeneralRight	 = ClosestDirection(transform.right);
+
+		if(playerGeneralForward == objectGeneralForward)
 		{
-			m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
+			m_Delta = new Vector3(m_MouseXPosition, 0, m_MouseYPosition)*Time.deltaTime;
 		}
-		else if(m_Player.transform.forward.z <= -0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
+		else if(playerGeneralForward == -objectGeneralForward)
 		{
-			m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
+			m_Delta = new Vector3(m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
 		}
-		else if(m_Player.transform.forward.x <= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
-		{
-			m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
-		}
-		else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
+		else if(playerGeneralForward == objectGeneralRight)
 		{
 			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
 		}
+		else if(playerGeneralForward == -objectGeneralRight)
+		{
+			m_Delta = new Vector3(m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
+		}
+		//if(playerGeneralForward == Vector3.forward)
+		//{
+		//	m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
+		//}
+		//else if(playerGeneralForward == Vector3.back)
+		//{
+		//	m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
+		//}
+		//else if(playerGeneralForward == Vector3.left)
+		//{
+		//	m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
+		//}
+		//else if(playerGeneralForward == Vector3.right)
+		//{
+		//	m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
+		//}
+
+
+	//	if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
+	//	{
+	//		m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
+	//	}
+	//	else if(m_Player.transform.forward.z <= -0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
+	//	{
+	//		m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
+	//	}
+	//	else if(m_Player.transform.forward.x <= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
+	//	{
+	//		m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
+	//	}
+	//	else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
+	//	{
+	//		m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
+	//	}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

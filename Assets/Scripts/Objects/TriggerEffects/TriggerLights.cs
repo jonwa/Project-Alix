@@ -20,7 +20,7 @@ public class TriggerLights : TriggerComponent {
 
 	override public string Name
 	{
-		get{ return "LightSwitch"; }
+		get{ return "TriggerLights"; }
 	}
 
 	void LightSwitch()
