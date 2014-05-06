@@ -51,6 +51,7 @@ public class Deserializer : MonoBehaviour
 					}
 					else
 					{
+						Debug.Log("ADDING COMPONENT " + key);
 						component.gameObject.AddComponent(key);
 						component.Deserialize(ref jsonComponent);
 						Debug.LogWarning("Added a non original Component to gameObject!", component.gameObject);

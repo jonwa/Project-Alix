@@ -47,7 +47,7 @@ public class MusicOptions : MonoBehaviour
 
 	void Update () 
 	{
-		//Debug.Log (getVolume (masterBus));
+		/*//Debug.Log (getVolume (masterBus));
 		setVolume (masterBus, m_MasterVolume);
 
 		//Debug.Log (getVolume (musicBus));
@@ -57,15 +57,30 @@ public class MusicOptions : MonoBehaviour
 		setVolume (soundBus, m_SoundVolume);
 
 		//Debug.Log (getVolume(VOBus));
-		setVolume (VOBus, m_VOVolume);
+		setVolume (VOBus, m_VOVolume);*/
 	}
 
-	void setVolume(FMOD.Studio.MixerStrip p_Bus, float p_MasterVolume)
+	public void setVolume(/*FMOD.Studio.MixerStrip p_Bus*/ string name, float p_MasterVolume)
 	{
-		ERRCHECK(p_Bus.setFaderLevel(p_MasterVolume));
+		if(name == "master")
+		{
+			ERRCHECK(masterBus.setFaderLevel(p_MasterVolume));
+		}
+		else if(name == "music")
+		{
+			ERRCHECK(musicBus.setFaderLevel(p_MasterVolume));
+		}
+		else if(name == "sound")
+		{
+			ERRCHECK(soundBus.setFaderLevel(p_MasterVolume));
+		}
+		else if(name == "voiceOver")
+		{
+			ERRCHECK(VOBus.setFaderLevel(p_MasterVolume));
+		}
 	}
 
-	float getVolume(FMOD.Studio.MixerStrip p_Bus)
+	public float getVolume(FMOD.Studio.MixerStrip p_Bus)
 	{
 		float volume;
 		ERRCHECK (p_Bus.getFaderLevel (out volume));
