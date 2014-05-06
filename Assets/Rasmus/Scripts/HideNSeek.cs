@@ -23,12 +23,13 @@ public class HideNSeek : ObjectComponent
 
 	public override void Interact ()
 	{
+
 		int randomSpawn = Random.Range(0, m_SpawnPoints.Length);
 		transform.position = m_SpawnPoints[randomSpawn].transform.position;
 		if(started == true)
 		{
-			//Debug.Log("Found me");
 			transform.parent.GetComponent<HideScore>().AddScore();
+			Camera.main.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 		}
 		else
 		{
