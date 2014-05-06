@@ -13,31 +13,28 @@ using FMOD.Studio;
 public abstract class SoundComponent : ObjectComponent 
 {
 	#region PrivateMemberVariables
+	private FMOD.Studio.EventInstance 		m_Event;
+	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
 	#endregion
 	
 	#region PublicMemberVariables
-	public FMOD.Studio.EventInstance 	m_Event;
-	public FMOD.Studio.EventInstance 	m_SubEvent;
-	public FMODAsset					m_Asset;
-	public bool 						m_StartOnAwake	 	= true;
-	public string[]						m_SubEvents;
+	public FMODAsset						m_Asset;
+	public bool 							m_StartOnAwake	= true;
 	#endregion
 
-	public virtual void Start()
+
+
+	public void Start()
 	{
 		CacheEventInstance();
 		if (m_StartOnAwake) 
 		{
 			StartEvent();
-			if(m_SubEvents != null)
-			{
-				StartSubEvent();
-			}
 		}
 	}
 	
-	public virtual void Update()
+	void Update()
 	{
 		if (m_Event != null && m_Event.isValid ()) 
 		{
@@ -57,6 +54,7 @@ public abstract class SoundComponent : ObjectComponent
 
 	public override void Interact()
 	{
+
 		PlaySound ();
 	}
 
@@ -73,29 +71,8 @@ public abstract class SoundComponent : ObjectComponent
 		return FMOD.Studio.PLAYBACK_STATE.STOPPED;
 	}
 	
-	public FMOD.Studio.PLAYBACK_STATE getSubEventPlaybackState()
-	{
-		if (m_SubEvent == null || !m_SubEvent.isValid())
-			return FMOD.Studio.PLAYBACK_STATE.STOPPED;
-		
-		FMOD.Studio.PLAYBACK_STATE state = PLAYBACK_STATE.IDLE;
-		
-		if (ERRCHECK (m_SubEvent.getPlaybackState(out state)) == FMOD.RESULT.OK)
-		{
-			return state;
-		}
-		
-		
-		return FMOD.Studio.PLAYBACK_STATE.STOPPED;
-	}
-	
 	public void OnDisable()
 	{
-		if(m_SubEvents != null)
-		{
-			m_SubEvent.stop();
-			m_SubEvent.release();
-		}
 		m_Event.stop ();
 		m_Event.release ();
 	}
@@ -115,14 +92,8 @@ public abstract class SoundComponent : ObjectComponent
 		{
 			FMOD.Studio.UnityUtil.LogError("No Asset/path for the Event");
 		}
-		
-		if(m_SubEvents != null)
-		{
-			m_Event.createSubEvent(m_SubEvents[0], out m_SubEvent);
-		}
-		//m_Started = true;
 	}
-	
+
 	public void StartEvent()
 	{
 		if (m_Event == null || !m_Event.isValid())
@@ -133,10 +104,6 @@ public abstract class SoundComponent : ObjectComponent
 		if (m_Event != null && m_Event.isValid())
 		{
 			ERRCHECK(m_Event.start());
-			if(m_SubEvents != null)
-			{
-				StartSubEvent();
-			}
 		}
 		else
 		{
@@ -144,24 +111,16 @@ public abstract class SoundComponent : ObjectComponent
 		}
 	}
 	
-	public void StartSubEvent()
-	{
-		if(m_SubEvent != null && m_SubEvent.isValid())
-		{
-			ERRCHECK (m_SubEvent.start ());
-		}
-		else
-		{
-			FMOD.Studio.UnityUtil.LogError("SubEvent failed: " + m_Path);
-		}
-		
-	}
-	
 	//Checks for errors
 	public FMOD.RESULT ERRCHECK(FMOD.RESULT result)
 	{
 		FMOD.Studio.UnityUtil.ERRCHECK(result);
 		return result;
+	}
+
+	public FMOD.Studio.EventInstance Evt
+	{
+		get{return m_Event;}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
