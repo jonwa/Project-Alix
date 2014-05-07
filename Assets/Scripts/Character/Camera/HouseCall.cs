@@ -8,6 +8,10 @@ Made by: Rasmus 29/04
 
 public class HouseCall : MonoBehaviour 
 {
+	#region PublicMemberVariables
+	public int m_NumberOfHouses = 2;
+	#endregion
+
 	#region PrivateMemberVariables
 	private int m_House  = 0;
 	private int m_Target = 0;
@@ -24,9 +28,9 @@ public class HouseCall : MonoBehaviour
 	{
 		if(Input.GetKeyDown("t"))
 		{
-			if(m_Target == 2)
+			if(m_Target == m_NumberOfHouses)
 			{
-				m_Target=0;
+				m_Target = 0;
 			}
 			else
 			{

@@ -51,15 +51,14 @@ public class CheckPlayer2 : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_Player != Camera.main.gameObject)
+		{
+			m_Player = Camera.main.gameObject;
+		}
+
 		CalculateFieldOfView();
 		MoveCamera();
-
-		//UpdateHouse();
 		transform.LookAt(m_TargetToFollow.transform.position);
-		//if(Input.GetKeyDown("t"))
-		//{
-		//	//NextTargetHouse();
-		//}
 	}
 
 	private void CalculateFieldOfView()
@@ -119,17 +118,4 @@ public class CheckPlayer2 : MonoBehaviour
 
 		transform.position = m_Player.transform.position + new Vector3(differenceVector.x, 0, differenceVector.z);
 	}
-	
-	//public void UpdateHouse()
-	//{
-	//	m_House = m_Player.GetComponent<HouseCall>().GetHouseCall();
-	//	//if(m_House != m_Target1.GetComponent<RasmusPortal2>().m_TargetHouse)
-	//	//{
-	//	//	m_MyHouse = true;
-	//	//}
-	//	//else
-	//	//{
-	//	//	m_MyHouse = false;
-	//	//}
-	//}
 }

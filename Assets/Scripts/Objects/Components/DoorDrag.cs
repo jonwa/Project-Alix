@@ -19,6 +19,7 @@ public class DoorDrag : ObjectComponent
 	private GameObject			m_Player;
 	private float 				m_Delta;
 	private Vector3 			m_RotationAxis;
+	private Vector3 			m_ObjectGeneralForward;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -38,6 +39,10 @@ public class DoorDrag : ObjectComponent
 	{	
 		if(!IsActive)
 		{
+
+			m_ObjectGeneralForward = ClosestDirection(transform.forward);
+			//m_ObjectGeneralRight	 = ClosestDirection(transform.right);
+
 			if(m_UnlockedCamera == false)
 			{
 				m_Camera.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
@@ -65,7 +70,7 @@ public class DoorDrag : ObjectComponent
 			{
 				if(gameObject.GetComponent<RotationLimit>())
 				{
-					m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
+					//m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
 				}
 
 				transform.Rotate(m_RotationAxis,m_Delta,Space.Self);
@@ -110,27 +115,45 @@ public class DoorDrag : ObjectComponent
 	private Vector3 PlayerForward()
 	{
 		Vector3 forward = ClosestDirection(m_Player.transform.forward);
-		Vector3 ret = new Vector3();
-		if(forward == Vector3.forward)
+
+		//TODO: Jimmy ska skriva om allt detta (pushable style)
+
+		if(forward == m_ObjectGeneralForward)
 		{
-			ret = new Vector3(0, -1 , 0);
+			Debug.Log("forward");
+			m_Delta = ((-m_MouseYPosition)*m_Speed)*Time.deltaTime;
 		}
-		else if(forward == Vector3.back)
+		else if(forward == -m_ObjectGeneralForward)
 		{
-			ret = new Vector3(0, 1 , 0);
-		}
-		else if(forward == Vector3.left)
-		{
-			ret = new Vector3(0, 1 , 0);
-		}
-		else if(forward == Vector3.right)
-		{
-			ret = new Vector3(0, -1 , 0);
+			Debug.Log("backwards");
+			m_Delta = ((m_MouseYPosition)*m_Speed)*Time.deltaTime;
 		}
 
-		m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+		//Vector3 ret = new Vector3();
+		//if(forward == Vector3.forward)
+		//{
+		//	ret = new Vector3(0, -1 , 0);
+		//	m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+		//}
+		//else if(forward == Vector3.back)
+		//{
+		//	ret = new Vector3(0, 1 , 0);
+		//	m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+		//}
+		//else if(forward == Vector3.left)
+		//{
+		//	ret = new Vector3(0, 1 , 0);
+		//	m_Delta = ((-m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+		//}
+		//else if(forward == Vector3.right)
+		//{
+		//	ret = new Vector3(0, -1 , 0);
+		//	m_Delta = ((m_MouseYPosition ) * m_Speed)*Time.deltaTime;
+		//}
 
-		return ret;
+
+
+		return new Vector3(0,1,0);
 	}
 
 	public void ReleaseDoor()
