@@ -54,7 +54,6 @@ public abstract class SoundComponent : ObjectComponent
 
 	public override void Interact()
 	{
-
 		PlaySound ();
 	}
 

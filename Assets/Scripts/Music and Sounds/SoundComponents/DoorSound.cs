@@ -16,7 +16,7 @@ public class DoorSound : SoundComponent
 	private float							m_Rotation;
 	private bool							m_Locked;
 	private float							m_MouseMovement;
-	public float							m_Action;
+	private float							m_Action;
 	private int 							m_StartIterator 	= 0;
 	private FMOD.Studio.ParameterInstance	m_ActionParameter;
 	#endregion
@@ -42,7 +42,7 @@ public class DoorSound : SoundComponent
 
 		if(!m_Locked)
 		{
-			//Debug.Log (getPlaybackState());
+			Debug.Log (getPlaybackState());
 			if(m_MouseMovement != 0)
 			{
 				if(m_Open && (m_Rotation < m_StartRotation + m_Margin))
@@ -58,10 +58,14 @@ public class DoorSound : SoundComponent
 				m_ActionParameter.setValue(m_Action);
 				if(getPlaybackState() != FMOD.Studio.PLAYBACK_STATE.PLAYING)
 				{
+					Debug.Log ("START");
 					StartEvent();
 				}
-				Debug.Log (getPlaybackState());
 			}
+		}
+		else
+		{
+			//Locked sound goes here!
 		}
 
 	}

@@ -14,7 +14,7 @@ public class Raycasting : MonoBehaviour
 {
 
 	#region PublicMemberVariables
-	public float  		m_Distance  	 = 10;
+	public float  		m_Distance  	 = 3;
 	public string 		m_Input	 		 = "Fire1";
 	public LayerMask	m_LayerMask 	 = (1<<9);
 	#endregion
