@@ -21,6 +21,7 @@ public class MenuInput : MonoBehaviour
 	//open or/and close the ingame menu.
 	void Update () 
 	{
+		// ingame menu 
 		if(m_ButtonDetection)
 		{
 			WindowStatus status = gameObject.GetComponent<WindowStatus>();
@@ -28,6 +29,22 @@ public class MenuInput : MonoBehaviour
 			{
 				bool isActive = InputManager.RequestShowWindow(gameObject);
 				status.Activate((isActive == true) ? true : false);
+			}
+		}
+		// death menu
+		else
+		{
+			/*if(Active)
+			{
+				m_Window.SetActive(true);
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			}
+			else
+			{
+				m_Window.SetActive(false);
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 			}
 		}
 	}
