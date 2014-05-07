@@ -14,9 +14,9 @@ public class ShowMe : MonoBehaviour
 	{
 		if(Camera.main.GetComponent<CameraFilter>().GetWhatEffect() == 7 && Camera.main.GetComponent<CameraFilter>().GetEffectActive() == true)
 		{
-				renderer.enabled = true;
+			renderer.enabled = true;
 		}
-		else
+		else if(renderer.enabled == true)
 		{
 			renderer.enabled = false;
 		}
