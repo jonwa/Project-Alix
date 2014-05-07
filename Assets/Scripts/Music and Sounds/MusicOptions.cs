@@ -14,12 +14,13 @@ public class MusicOptions : MonoBehaviour
 	[Range(0,1)] public float m_MasterVolume 	= 1.0f;
 	[Range(0,1)] public float m_MusicVolume 	= 1.0f;
 	[Range(0,1)] public float m_SoundVolume		= 1.0f;
+	[Range(0,1)] public float m_VOVolume 		= 1.0f;
 	#endregion
 
 	private FMOD.Studio.MixerStrip masterBus;
 	private FMOD.Studio.MixerStrip musicBus;
 	private FMOD.Studio.MixerStrip soundBus;
-
+	private FMOD.Studio.MixerStrip VOBus;
 
 	void Start () 
 	{
@@ -32,7 +33,12 @@ public class MusicOptions : MonoBehaviour
 		FMOD.Studio.System musicSystem = FMOD_StudioSystem.instance.System;
 		ERRCHECK (musicSystem.lookupID ("bus:/Music", out musicGuid));
 		ERRCHECK (musicSystem.getMixerStrip (musicGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out musicBus));		
-		
+
+		FMOD.GUID VOGuid;
+		FMOD.Studio.System VOSystem = FMOD_StudioSystem.instance.System;
+		ERRCHECK (VOSystem.lookupID ("bus:/VO", out VOGuid));
+		ERRCHECK (VOSystem.getMixerStrip (VOGuid, FMOD.Studio.LOADING_MODE.BEGIN_NOW, out VOBus));	
+
 		FMOD.GUID soundGuid;
 		FMOD.Studio.System soundSystem = FMOD_StudioSystem.instance.System;
 		ERRCHECK (soundSystem.lookupID ("bus:/Sound", out soundGuid));
@@ -41,7 +47,7 @@ public class MusicOptions : MonoBehaviour
 
 	void Update () 
 	{
-		//Debug.Log (getVolume (masterBus));
+		/*//Debug.Log (getVolume (masterBus));
 		setVolume (masterBus, m_MasterVolume);
 
 		//Debug.Log (getVolume (musicBus));
@@ -49,14 +55,32 @@ public class MusicOptions : MonoBehaviour
 
 		//Debug.Log (getVolume (soundBus));
 		setVolume (soundBus, m_SoundVolume);
+
+		//Debug.Log (getVolume(VOBus));
+		setVolume (VOBus, m_VOVolume);*/
 	}
 
-	void setVolume(FMOD.Studio.MixerStrip p_Bus, float p_MasterVolume)
+	public void setVolume(/*FMOD.Studio.MixerStrip p_Bus*/ string name, float p_MasterVolume)
 	{
-		ERRCHECK(p_Bus.setFaderLevel(p_MasterVolume));
+		if(name == "master")
+		{
+			ERRCHECK(masterBus.setFaderLevel(p_MasterVolume));
+		}
+		else if(name == "music")
+		{
+			ERRCHECK(musicBus.setFaderLevel(p_MasterVolume));
+		}
+		else if(name == "sound")
+		{
+			ERRCHECK(soundBus.setFaderLevel(p_MasterVolume));
+		}
+		else if(name == "voiceOver")
+		{
+			ERRCHECK(VOBus.setFaderLevel(p_MasterVolume));
+		}
 	}
 
-	float getVolume(FMOD.Studio.MixerStrip p_Bus)
+	public float getVolume(FMOD.Studio.MixerStrip p_Bus)
 	{
 		float volume;
 		ERRCHECK (p_Bus.getFaderLevel (out volume));

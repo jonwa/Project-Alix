@@ -35,7 +35,6 @@ public class SoundEffect : TriggerComponent
 		m_Started = false;
 		CacheEventInstance();
 		m_Event.getParameter (m_Parameters[0], out m_Parameter);
-		Debug.Log (m_Parameter);
 	}
 
 	void PlaySoundEffect()
