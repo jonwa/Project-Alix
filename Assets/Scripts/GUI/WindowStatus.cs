@@ -1,10 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/* WindowStatus handles the activation and deactivation
+ * of GUI components. 
+ * 
+ * 
+ * Created By: Jon Wahlström 2014-05-07
+ * Modified By: 
+ */
+
 public class WindowStatus : MonoBehaviour 
 {
+	#region PublicMemberVariables
 	public enum Name{Menu, Inventory, Padlock, Book}; 
 	public Name m_Name = Name.Menu; 
+	#endregion
 
 	public void Activate(bool status)
 	{

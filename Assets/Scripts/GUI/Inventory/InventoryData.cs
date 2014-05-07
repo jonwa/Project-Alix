@@ -90,8 +90,6 @@ public class InventoryData : MonoBehaviour
 			m_Items[item] = null;
 			go.SetActive(true);
 
-			//this might need to be changed, simply reposition the origional pos of
-			//the pocketed object as the object is unpocketed. 
 			if(m_Player != null) 
 			{
 				FirstPersonController controller = m_Player.GetComponent<FirstPersonController>();

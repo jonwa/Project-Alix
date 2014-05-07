@@ -21,7 +21,13 @@ public class InputManager : MonoBehaviour
 
 	public static bool RequestShowWindow(GameObject window)
 	{
-		if(m_Current != null && Active)
+		// Can't open another GUI component while in menu
+		if(m_Current != null && m_Current != window && m_Current.GetComponent<WindowStatus>().m_Name == WindowStatus.Name.Menu && Active)
+		{
+			return false; 
+		}
+		// Inactivates the currect GUI component 
+		else if(m_Current != null && Active)
 		{
 			m_Current.GetComponent<WindowStatus>().Activate(false);
 			m_Current = null;
@@ -29,6 +35,7 @@ public class InputManager : MonoBehaviour
 			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 		}
+		// Can show the window that was requesting to be shown. 
 		else
 		{
 			m_Current = window;
