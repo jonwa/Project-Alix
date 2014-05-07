@@ -181,53 +181,6 @@ public class RotationLimit : ObjectComponent
 	}
 
 
-	//ROBERT!? ANVÄNDS DENNA KODEN NÅGON GÅNG OM INTE... TA BORT SKITEN! (är inte arg) :)
-	//void RotationHandler()
-	//{
-	//	float angle;
-	//	Vector3 current = transform.localRotation.eulerAngles + m_Offset;
-	//	Vector3 max;
-	//	max.x = m_OriginalRotation.x + m_Offset.x + m_PositiveX;
-	//	max.y = m_OriginalRotation.y + m_Offset.y + m_PositiveY;
-	//	max.z = m_OriginalRotation.z + m_Offset.z + m_PositiveZ;
-	//	Vector3 min;
-	//	min.x = m_OriginalRotation.x + m_Offset.x + m_NegativeX;
-	//	min.y = m_OriginalRotation.y + m_Offset.y + m_NegativeY;
-	//	min.z = m_OriginalRotation.z + m_Offset.z + m_NegativeZ;
-	//
-	//	if((current.x) > (max.x)){
-	//		angle = max.x - current.x;
-	//		angle = CheckRotation(angle, "x");
-	//		transform.Rotate(angle,0,0,Space.Self);
-	//	}
-	//	else if((current.x) < (min.x)){
-	//		angle = min.x + (current.x * -1);
-	//		angle = CheckRotation(angle, "x");
-	//		transform.Rotate(angle,0,0,Space.Self);
-	//	}
-	//	if((current.y) > (max.y)){
-	//		angle = max.y - current.y;
-	//		angle = CheckRotation(angle, "y");
-	//		transform.Rotate(0,angle,0,Space.Self);
-	//		Debug.Log(angle);
-	//	}
-	//	else if((current.y) < (min.y)){
-	//		angle = min.y + (current.y * -1);
-	//		angle = CheckRotation(angle, "y");
-	//		transform.Rotate(0,angle,0,Space.Self);
-	//	}
-	//	if((current.z) > (max.z)){
-	//		angle = max.z - current.z;
-	//		angle = CheckRotation(angle, "z");
-	//		transform.Rotate(0,0,angle,Space.Self);
-	//	}
-	//	else if((current.z) < (min.z)){
-	//		angle = min.z + (current.z * -1);
-	//		angle = CheckRotation(angle, "z");
-	//		transform.Rotate(0,0,angle,Space.Self);
-	//	}
-	//}
-	
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
