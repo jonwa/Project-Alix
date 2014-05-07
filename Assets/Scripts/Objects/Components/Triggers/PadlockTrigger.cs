@@ -48,11 +48,13 @@ public class PadlockTrigger : ObjectComponent
 	{
 		if(InputCode == m_CorrectCode)
 		{
-			GameObject parent = transform.parent.gameObject;
-			GameObject parentsParent = parent.transform.parent.gameObject;
-			parentsParent.SetActive(false);
-			Camera.main.GetComponent<Raycasting>().ShowHover = true; 
-			Camera.main.GetComponent<FirstPersonCamera>().UnLockCamera();
+			GameObject p = transform.parent.gameObject;
+			GameObject pp = p.transform.parent.gameObject;
+			GameObject ppp = pp.transform.parent.gameObject;
+
+			WindowStatus status = ppp.GetComponent<WindowStatus>();
+			bool isActive = InputManager.RequestShowWindow(ppp);
+			status.Activate((isActive == true) ? true : false);
 
 			ActivateTrigger();
 		}

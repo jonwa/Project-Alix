@@ -71,6 +71,6 @@ public class CharacterData : MonoBehaviour
 
 	public void ShowDeathMenu()
 	{
-		m_DeathMenu.GetComponent<MenuInput>().Active = true;
+		//m_DeathMenu.GetComponent<MenuInput>().Active = true;
 	}
 }

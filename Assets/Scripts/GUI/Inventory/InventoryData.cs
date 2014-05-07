@@ -31,7 +31,7 @@ public class InventoryData : MonoBehaviour
 	{
 		instance = this; 
 
-		Toggle 		   = true;
+		Toggle 		   = false;
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
 		m_Player 	   = GameObject.Find(m_PlayerName);
@@ -50,7 +50,7 @@ public class InventoryData : MonoBehaviour
 		if(!swap)
 		{
 			Camera.main.GetComponent<Raycasting>().InteractingWith = null; 
-			ToggleInventory ();
+			//ToggleInventory ();
 		}
 
 		foreach(GameObject itemSlot in m_Slots)
@@ -66,7 +66,7 @@ public class InventoryData : MonoBehaviour
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
 				
-				if(!Toggle)
+				if(Toggle)
 				{
 					slot.Replace(name.ObjectName);
 				}
@@ -126,14 +126,10 @@ public class InventoryData : MonoBehaviour
 		}
 	}
 
-	public static void NonOccupid()
+	/*private static void ToggleInventory()
 	{
-		Camera.main.GetComponent<Raycasting>().Activate(Camera.main.GetComponent<Raycasting>().InteractingWith);
-	}
+		//InputManager.Active = false;
 
-	private static void ToggleInventory()
-	{
-		InputManager.Active = false;
 		Toggle = false;
 		instance.GetComponent<UIPlayTween>().Play (false);
 
@@ -153,9 +149,11 @@ public class InventoryData : MonoBehaviour
 	private static void CloseInventory()
 	{
 		// Shuts down the inventory window
-		InputManager.Active = true;
+		//InputManager.Active = true;
+
 		Toggle = true;
 		instance.GetComponent<UIPlayTween>().Play (true);
-		InputManager.Reset();
-	}
+
+		//InputManager.Reset();
+	}*/
 }
