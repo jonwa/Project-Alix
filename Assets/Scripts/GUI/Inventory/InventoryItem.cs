@@ -64,13 +64,6 @@ public class InventoryItem : MonoBehaviour
 			Occupied = false;
 			Replace(null);
 			InventoryData.RemoveItem(Slot);
-
-
-			// Shuts down the inventory window
-			InputManager.Active = true;
-			InventoryData.Toggle = true;
-			transform.parent.GetComponent<UIPlayTween>().Play (true);
-			InputManager.Reset();
 		}
 		else
 		{

@@ -16,7 +16,7 @@ public class RotationLimit : ObjectComponent
 	public float m_NegativeY;
 	public float m_PositiveZ;
 	public float m_NegativeZ;
-	public float m_LockedLimit;
+	public float m_LockedLimit = 1.5f;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -73,7 +73,23 @@ public class RotationLimit : ObjectComponent
 			m_IsLocked = gameObject.GetComponent<Locked> ().GetLocked ();
 		}
 	}
-	
+
+	public void ResetRotation(string axis)
+	{
+		if(axis.Equals("x"))
+		{
+			m_Rotation.x = 0;
+		}
+		else if(axis.Equals("y"))
+		{
+			m_Rotation.y = 0;
+		}
+		else if(axis.Equals("z"))
+		{
+			m_Rotation.z = 0;
+		}
+	}
+
 	public float CheckRotation(float angle, string axis)
 	{
 

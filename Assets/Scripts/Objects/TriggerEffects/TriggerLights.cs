@@ -8,6 +8,7 @@ using System.Collections;
  * Modified by:
  */
 
+[RequireComponent(typeof(Light))]
 public class TriggerLights : TriggerComponent {
 
 	#region PublicMemberVariables
@@ -19,7 +20,7 @@ public class TriggerLights : TriggerComponent {
 
 	override public string Name
 	{
-		get{ return "LightSwitch"; }
+		get{ return "TriggerLights"; }
 	}
 
 	void LightSwitch()
@@ -38,6 +39,15 @@ public class TriggerLights : TriggerComponent {
 	{
 		m_Light = this.GetComponent<Light>();
 	}
-	public override void Serialize(ref JSONObject jsonObject){}
-	public override void Deserialize(ref JSONObject jsonObject){}
+	public override void Serialize(ref JSONObject jsonObject)
+	{
+		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
+		jsonObject.AddField(Name, jObject);
+		jObject.AddField("LightActive", m_Light.enabled);
+	}
+
+	public override void Deserialize(ref JSONObject jsonObject)
+	{
+		m_Light.enabled = (bool)jsonObject.GetField("LightActive").b;
+	}
 }

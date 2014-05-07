@@ -51,6 +51,7 @@ public class Deserializer : MonoBehaviour
 					}
 					else
 					{
+						Debug.Log("ADDING COMPONENT " + key);
 						component.gameObject.AddComponent(key);
 						component.Deserialize(ref jsonComponent);
 						Debug.LogWarning("Added a non original Component to gameObject!", component.gameObject);
@@ -72,21 +73,22 @@ public class Deserializer : MonoBehaviour
 	//Gets the object with correct id
 	private static GameObject GetObjectWithId(int id)
 	{
-		if (m_GameObjects.ContainsKey(id))
-		{
-			return m_GameObjects[id];
-		}
+		//if (m_GameObjects.ContainsKey(id))
+		//{
+		//	return m_GameObjects[id];
+		//}
 
 
 		GameObject ret = null;
-		Id[] objId = GameObject.FindObjectsOfType<Id>();
+		Id[] objId = Resources.FindObjectsOfTypeAll<Id>();
+			
 		foreach (Id obj in objId)
 		{
 			if (obj.ObjectId == id)
 			{
 				ret = obj.gameObject;
 			}
-			m_GameObjects.Add(obj.ObjectId, obj.gameObject);
+			m_GameObjects[obj.ObjectId]=  obj.gameObject;
 		}
 		return ret;
 	}
