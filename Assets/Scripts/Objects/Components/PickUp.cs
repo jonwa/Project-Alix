@@ -38,7 +38,7 @@ public class PickUp : ObjectComponent
 	void Update () 
 	{		
 		m_DeActivateCounter++;
-		if(m_DeActivateCounter >= 5)
+		if(m_DeActivateCounter >= 10)
 		{
 			if((m_OriginalScale-transform.localScale).magnitude > 0.1f)
 			{
@@ -48,7 +48,12 @@ public class PickUp : ObjectComponent
 			}
 		}
 	}
-	
+
+	public bool GetHoldingObject()
+	{
+		return m_HoldingObject;
+	}
+
 	public override void Interact ()
 	{
 		if(gameObject.GetComponent<Inspect>())
