@@ -55,8 +55,9 @@ public class MoviePlayer : TriggerComponent
 		if(m_NonTrigger)
 		{
 			gameObject.renderer.material.mainTexture = m_Movie;
-			m_Movie.Stop();
+			//m_Movie.Stop();
 			m_Movie.Play();
+			m_Movie.loop = true; 
 		}
 	}
 	
