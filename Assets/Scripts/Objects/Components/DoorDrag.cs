@@ -96,6 +96,7 @@ public class DoorDrag : ObjectComponent
 	Vector3 ClosestDirection(Vector3 v) 
 	{
 		Vector3[] compass = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+		//Vector3[] compass = { new Vector3(-1,0,1).normalized, Vector3.forward, new Vector3(1,0,1).normalized, new Vector3(-1,0,-1).normalized, Vector3.back, new Vector3(1,0,-1).normalized, Vector3.left, Vector3.right };
 		float maxDot = -Mathf.Infinity;
 		Vector3 ret = Vector3.zero;
 		
