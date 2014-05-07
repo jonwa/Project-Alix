@@ -70,7 +70,7 @@ public class DoorDrag : ObjectComponent
 			{
 				if(gameObject.GetComponent<RotationLimit>())
 				{
-					//m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
+					m_Delta = gameObject.GetComponent<RotationLimit>().CheckRotation(m_Delta, "y");
 				}
 
 				transform.Rotate(m_RotationAxis,m_Delta,Space.Self);
