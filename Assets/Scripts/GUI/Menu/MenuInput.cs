@@ -30,20 +30,5 @@ public class MenuInput : MonoBehaviour
 				status.Activate((isActive == true) ? true : false);
 			}
 		}
-		/*else
-		{
-			if(Active)
-			{
-				m_Window.SetActive(true);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
-			}
-			else
-			{
-				m_Window.SetActive(false);
-				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
-				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
-			}
-		}*/
 	}
 }
