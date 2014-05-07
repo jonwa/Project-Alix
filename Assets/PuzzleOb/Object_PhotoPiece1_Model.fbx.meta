@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7c6c13b696483ae4a97ebbb597dc1445
+guid: 46ff41420c4ba5241ba11538a57972c7
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: GlassShard
+    4300000: PhotpPiece1
     9500000: //RootNode
   materials:
     importMaterials: 1
