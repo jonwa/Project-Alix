@@ -79,7 +79,10 @@ public class RasmusPortal : ObjectComponent
 				Camera.main.GetComponent<HouseCall>().SetHouseCall(m_TargetPort.GetComponent<RasmusPortal>().m_MyHouse);
 				Camera.main.GetComponent<HouseCall>().SetTargetHouse(m_MyHouse);
 
-				Camera.main.GetComponent<Raycasting>().InteractingWith.transform.position = newPos + ExtraForward;
+				if(Camera.main.GetComponent<Raycasting>().HoldingInteractingWith() == true && Camera.main.GetComponent<Raycasting>().InteractingWith.GetComponent<PickUp>() != null)
+				{
+					Camera.main.GetComponent<Raycasting>().InteractingWith.transform.position = newPos + ExtraForward;
+				}
 			}
 		}
 	}
