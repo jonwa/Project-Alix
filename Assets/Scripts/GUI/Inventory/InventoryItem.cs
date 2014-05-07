@@ -67,7 +67,7 @@ public class InventoryItem : MonoBehaviour
 		}
 		else
 		{
-			InventoryData.NonOccupid();
+			//InventoryData.NonOccupid();
 		}
 	}
 
