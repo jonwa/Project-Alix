@@ -18,6 +18,7 @@ public class MoviePlayer : TriggerComponent
 	#region PublicMemberVariables
 	public MovieTexture 	m_Movie;
 	public int				m_TargetID;
+	public bool 			m_NonTrigger = false;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -59,6 +60,19 @@ public class MoviePlayer : TriggerComponent
 		m_Started = false;
 	}
 
+
+	void Update()
+	{
+		if(m_NonTrigger)
+		{
+			gameObject.renderer.material.mainTexture = m_Movie;
+			//m_Movie.Stop();
+			m_Movie.Play();
+			m_Movie.loop = true; 
+		}
+	}
+	
+
 	void PlayExitSound()
 	{
 		if(!m_Movie.isPlaying && m_HasStarted && m_Counter < 1)
@@ -70,10 +84,6 @@ public class MoviePlayer : TriggerComponent
 		}
 	}
 
-	void Update()
-	{
-		PlayExitSound ();
-	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}

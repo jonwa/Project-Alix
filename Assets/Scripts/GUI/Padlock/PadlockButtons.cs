@@ -34,12 +34,9 @@ public class PadlockButtons : MonoBehaviour
 			break;
 
 		case Action.Close:
-			if(m_Window == null) return; 
-
-			m_Window.SetActive(false);
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true; 
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
-			PadlockWindow.Close();
+			WindowStatus status = m_Window.GetComponent<WindowStatus>();
+			bool isActive = InputManager.RequestShowWindow(m_Window);
+			status.Activate((isActive == true) ? true : false);
 			break;
 		}
 

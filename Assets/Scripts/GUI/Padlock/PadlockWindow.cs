@@ -64,9 +64,4 @@ public class PadlockWindow : MonoBehaviour
 
 		m_Numbers[id].GetComponentInChildren<UILabel>().text = m_CurrentNumber.ToString();
 	}
-
-	public static void Close()
-	{
-
-	}
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /* Handles the inputs from any of the GUI components
  * This should be attached to the UI root
@@ -10,24 +11,40 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour 
 {
-	public static bool Active{get;set;}
+	private static bool Active{get;set;}
+	private static GameObject m_Current = null;
 
 	void Start()
 	{
-		Active = true;
+		Active = false;
 	}
 
-	public static void Reset()
+	public static bool RequestShowWindow(GameObject window)
 	{
-		if(!Active)
+		// Can't open another GUI component while in menu
+		if(m_Current != null && m_Current != window && m_Current.GetComponent<WindowStatus>().m_Name == WindowStatus.Name.Menu && Active)
 		{
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			return false; 
 		}
-		else
+		// Inactivates the currect GUI component 
+		else if(m_Current != null && Active)
 		{
+			m_Current.GetComponent<WindowStatus>().Activate(false);
+			m_Current = null;
+			Active = false; 
 			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 			Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 		}
+		// Can show the window that was requesting to be shown. 
+		else
+		{
+			m_Current = window;
+			Active = true;
+			
+			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
+			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+		}
+
+		return Active;
 	}
 }
