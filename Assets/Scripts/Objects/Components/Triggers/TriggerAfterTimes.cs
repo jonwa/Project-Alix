@@ -17,31 +17,36 @@ public class TriggerAfterTimes : ObjectComponent
 	public void AddToCount()
 	{
 		m_Count++;
-		if(m_Count >= m_NumberOfTimes)
+		Debug.Log("Debug mothafuckah!1");
+		if(m_Count >= m_NumberOfTimes && !m_HasTriggered)
 		{
+			m_HasTriggered = true;
+			Debug.Log("Debug mothafuckah!2");
 			ActivateTrigger();
 		}
 	}
 
 	void ActivateTrigger()
 	{
-		if(!m_HasTriggered)
+
+		Debug.Log("Debug mothafuckah!3");
+		List<Id> ids = Resources.FindObjectsOfTypeAll<Id>().ToList();
+		foreach(Id i in ids)
 		{
-			List<Id> ids = Resources.FindObjectsOfTypeAll<Id>().ToList();
-			foreach(Id i in ids)
+			Debug.Log("Debug mothafuckah!4");
+			if(m_TriggerIds.Contains(i.ObjectId))
 			{
-				if(m_TriggerIds.Contains(i.ObjectId))
+				Debug.Log("Debug mothafuckah!5");
+				i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+				if(i.gameObject.GetComponent<CheckTrigger>() != null)
 				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					if(i.gameObject.GetComponent<CheckTrigger>() != null)
-					{
-						i.gameObject.GetComponent<CheckTrigger>().Trigger();
-					}
-					m_HasTriggered = true;
+					i.gameObject.GetComponent<CheckTrigger>().Trigger();
 				}
-				
+
 			}
+			
 		}
+
 	}
 	//TODO: Add save/load
 	public override void Serialize(ref JSONObject jsonObject){}

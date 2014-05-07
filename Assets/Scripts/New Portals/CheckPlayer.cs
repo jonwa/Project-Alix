@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/*
+/*Decides where the camera should be placed so it will lock at the right Targetportal
 
 Made by: Rasmus 29/04
  */
@@ -19,11 +19,8 @@ public class CheckPlayer : MonoBehaviour
 	private float  	   m_DoorHeight;
 	private float  	   m_DoorWidth;
 	private float      m_DoorDepth;
-	private float 	   m_DistanceX;
-	private float      m_DistanceZ;
 	private GameObject m_TargetToFollow;
 	private GameObject m_Player;
-	private int 	   m_House;
 	private float 	   m_MaxView 		= 100;
 	#endregion
 
@@ -35,11 +32,8 @@ public class CheckPlayer : MonoBehaviour
 		m_DoorHeight     = m_Target1.transform.collider.bounds.size.y;
 		m_DoorWidth      = m_Target1.transform.collider.bounds.size.x;
 		m_DoorDepth      = m_Target1.transform.collider.bounds.size.z;
-		m_DistanceX 	 = m_Target1.transform.position.x - m_Target2.transform.position.x;
-		m_DistanceZ 	 = m_Target1.transform.position.z - m_Target2.transform.position.z;
 		m_FarPlane       = GetComponent<Camera>().farClipPlane;
 
-		//Debug.Log(m_DoorHeight + " " + m_DoorWidth + " " + m_DoorDepth);
 		if(m_DoorWidth > 0.1)
 		{
 			GetComponent<Camera>().aspect = m_DoorWidth/m_DoorHeight;
@@ -53,6 +47,18 @@ public class CheckPlayer : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if(m_Player != Camera.main.gameObject)
+		{
+			m_Player = Camera.main.gameObject;
+		}
+
+		CalculateFieldOfView();
+		MoveCamera();
+		transform.LookAt(m_TargetToFollow.transform.position);
+	}
+
+	private void CalculateFieldOfView()
+	{
 		float dist = Vector3.Distance(transform.position, m_TargetToFollow.transform.position);
 		//Calculate= Dörrbredd, Delat på avståndet, gånger farplane på kameran.
 		float calculate;
@@ -64,7 +70,7 @@ public class CheckPlayer : MonoBehaviour
 		{
 			calculate = ((m_DoorDepth/dist) * m_FarPlane);
 		}
-
+		
 		if(calculate < m_MaxView){
 			GetComponent<Camera>().fieldOfView = calculate;
 		}
@@ -72,20 +78,6 @@ public class CheckPlayer : MonoBehaviour
 		{
 			GetComponent<Camera>().fieldOfView = m_MaxView;
 		}
-
-		MoveCamera();
-		//if(m_MyHouse == false)
-		//{
-		//	transform.position = m_Player.transform.position + new Vector3(m_DistanceX, 0, m_DistanceZ);
-		//	m_TargetToFollow = m_Target1;
-		//}
-		//else
-		//{
-		//	transform.position = m_Player.transform.position + new Vector3(-m_DistanceX, 0, -m_DistanceZ);
-		//	m_TargetToFollow = m_Target2;
-		//}
-		UpdateHouse();
-		transform.LookAt(m_TargetToFollow.transform.position);
 	}
 
 	private void MoveCamera()
@@ -112,10 +104,5 @@ public class CheckPlayer : MonoBehaviour
 		Vector3 differenceVector = m_TargetToFollow.transform.position - playerTransform.position;
 		
 		transform.position = m_Player.transform.position + new Vector3(differenceVector.x, 0, differenceVector.z);
-	}
-
-	public void UpdateHouse()
-	{
-		m_House = m_Player.GetComponent<HouseCall>().GetHouseCall();
 	}
 }
