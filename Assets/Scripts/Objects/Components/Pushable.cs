@@ -99,11 +99,8 @@ public class Pushable : ObjectComponent
 		}
 		else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
 		{
-<<<<<<< HEAD
-			m_Delta = new Vector3(-m_MouseYPosition, 0, -m_MouseXPosition);
-=======
+
 			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
->>>>>>> 718fd913b7c29cdc30582dfe4c9a08cb42fcbc4a
 		}
 	}
 
