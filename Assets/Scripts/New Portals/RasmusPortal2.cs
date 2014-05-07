@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-/* Description: Makes the object able to pass through portals
+/* Description: Makes the object able to pass through portals, also tales the camera which House the player will be in and sets the targetHouse
+ * Made for tripleportals, it now has 2 target portals to choose between
  * 
- * Created by: Rasmus 24/4, made from Jimmy's code
+ * Created by: Rasmus 28/4, made from Jimmy's code
  * Modified by:
  */
 
@@ -25,7 +26,7 @@ public class RasmusPortal2 : ObjectComponent
 	
 	void Start()
 	{
-		m_Texture = transform.parent.transform.parent.GetComponent<PortalTexture2>().GetTextureForPortal();
+		m_Texture = transform.parent.transform.parent.GetComponent<PortalTexture>().GetTextureForPortal();
 		//m_Texture = new RenderTexture(512,512,24);
 		MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
 		mr.material = new Material(mr.material);
@@ -36,7 +37,7 @@ public class RasmusPortal2 : ObjectComponent
 	
 	void Update()
 	{
-		m_Texture = transform.parent.transform.parent.GetComponent<PortalTexture2>().GetTextureForPortal();
+		m_Texture = transform.parent.transform.parent.GetComponent<PortalTexture>().GetTextureForPortal();
 		renderer.material.mainTexture = m_Texture;
 		CheckTargetHouse();
 		//Camera targetCam = transform.parent.GetComponent<Camera>().camera;
