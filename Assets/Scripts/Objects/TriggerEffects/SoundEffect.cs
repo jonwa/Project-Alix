@@ -46,8 +46,6 @@ public class SoundEffect : TriggerComponent
 
 	public void PlaySoundEffect()
 	{
-		StartEvent();
-
 		if (getPlaybackState() != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
 		{
 			m_Started = false;

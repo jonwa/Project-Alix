@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FMOD.Studio;
 
 /* Discription: DoorSound
  * Play sound when interacting with doors
@@ -7,18 +8,18 @@ using System.Collections;
  * Created by: Sebastian Olsson 05/05-14
  * Modified by:
  */
-//TODO: Rotate 90 does not work, still need to add door drag sounds
 public class DoorSound : SoundComponent 
 {
 	#region PrivateMemberVariables
 	private bool							m_Open;
+	private bool							m_Closed;
 	private float							m_StartRotation;
 	private float							m_Rotation;
 	private bool							m_Locked;
 	private float							m_MouseMovement;
 	private float							m_Action;
+	private GameObject						m_GameObject;
 	private int 							m_StartIterator 	= 0;
-	private FMOD.Studio.ParameterInstance	m_ActionParameter;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -28,10 +29,12 @@ public class DoorSound : SoundComponent
 
 	void Start()
 	{
+		m_GameObject = this.gameObject;
 		CacheEventInstance();
-		Evt.getParameter(m_Parameters[0], out m_ActionParameter);
-
 		m_StartRotation = this.transform.eulerAngles.y;
+		m_Action = 1;
+		Evt.setParameterValue(m_Parameters[0], m_Action);
+		StartEvent ();
 	}
 	
 	public override void PlaySound()
@@ -39,34 +42,60 @@ public class DoorSound : SoundComponent
 		m_Locked = GetComponent<Locked> ().GetLocked ();
 		m_MouseMovement = Input.GetAxis ("Mouse Y");
 		m_Rotation = this.transform.eulerAngles.y;
+		Debug.Log (getPlaybackState ());
 
 		if(!m_Locked)
 		{
 			Debug.Log (getPlaybackState());
 			if(m_MouseMovement != 0)
 			{
-				if(m_Open && (m_Rotation < m_StartRotation + m_Margin))
+				if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.PLAYING)
 				{
-					m_Action = 0.15f;
-					m_Open = false;
+					if(!m_Open && (m_Rotation > (m_Margin + m_StartRotation)))
+					{
+						m_Action = 0.05f;
+						m_Open = true;
+						Evt.setParameterValue(m_Parameters[0], m_Action);
+						StartEvent();
+					}
+					else if(m_Open &&(m_Rotation <= (m_StartRotation + m_Margin)))
+					{
+						m_Action = 0.15f;
+						m_Open = false;
+						Evt.setParameterValue(m_Parameters[0], m_Action);
+						StartEvent();
+					}
 				}
-				if(!m_Open && (m_Rotation > m_Margin + m_StartRotation))
-				{
-					m_Action = 0.05f;
-					m_Open = true;
-				}
-				m_ActionParameter.setValue(m_Action);
-				if(getPlaybackState() != FMOD.Studio.PLAYBACK_STATE.PLAYING)
-				{
-					Debug.Log ("START");
-					StartEvent();
-				}
+
 			}
+			if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING)
+			{
+				m_Action = 0f;
+				Evt.setParameterValue(m_Parameters[0], m_Action);
+				Evt.stop();
+			}
+			if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED)
+			{
+				StartEvent();
+			}
+
 		}
 		else
 		{
-			//Locked sound goes here!
+			//if(m_MouseMovement != 0)
+			//{
+			//	m_Action = 0.35f;
+			//	m_Open = false;
+			//	Evt.setParameterValue(m_Parameters[0], m_Action);	
+			//}
 		}
 
+
+	}
+
+	void Update()
+	{
+		var attributes = UnityUtil.to3DAttributes (m_GameObject);
+		ERRCHECK (Evt.set3DAttributes(attributes));			
 	}
 }

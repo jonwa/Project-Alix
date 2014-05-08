@@ -36,15 +36,6 @@ public abstract class SoundComponent : ObjectComponent
 	
 	void Update()
 	{
-		if (m_Event != null && m_Event.isValid ()) 
-		{
-			var attributes = UnityUtil.to3DAttributes (gameObject);			
-			ERRCHECK (m_Event.set3DAttributes(attributes));			
-		} 
-		else 
-		{
-			m_Event = null;
-		}
 	}
 
 	public virtual void PlaySound()

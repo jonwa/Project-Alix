@@ -57,7 +57,6 @@ public class TimeTrigger : ObjectComponent
 		}
 		else
 		{
-			Debug.Log (m_Time);
 			m_Active = false;
 		}
 	}
