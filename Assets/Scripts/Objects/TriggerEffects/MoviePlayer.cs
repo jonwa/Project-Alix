@@ -17,6 +17,7 @@ public class MoviePlayer : TriggerComponent
 	#region PublicMemberVariables
 	public MovieTexture 	m_Movie;
 	public int				m_TargetID;
+	public bool 			m_NonTrigger = false;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -28,7 +29,7 @@ public class MoviePlayer : TriggerComponent
 		get{ return "PlayMovie"; }
 	}
 
-	void PlayMovie(int mov)
+	void PlayMovie()
 	{
 		GameObject TextureTarget = null;
 		List<Id> ids = UnityEngine.Object.FindObjectsOfType<Id>().ToList();
@@ -47,6 +48,17 @@ public class MoviePlayer : TriggerComponent
 	void Start () 
 	{
 		m_Started = false;
+	}
+
+	void Update()
+	{
+		if(m_NonTrigger)
+		{
+			gameObject.renderer.material.mainTexture = m_Movie;
+			//m_Movie.Stop();
+			m_Movie.Play();
+			m_Movie.loop = true; 
+		}
 	}
 	
 

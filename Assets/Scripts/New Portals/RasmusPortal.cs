@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-/* Description: Makes the object able to pass through portals
+/* Description: Makes the object able to pass through portals, also tales the camera which House the player will be in and sets the targetHouse
  * 
  * Created by: Rasmus 24/4, made from Jimmy's code
  * Modified by:

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System;
+using System.Threading;
 /*
  * Description: Used for saving and loading data about the game to/from JSON-files
  * 
@@ -11,8 +12,40 @@ using System;
  * 
  */
 
-public class GameData : MonoBehaviour 
+
+public class Manager : Singleton<Manager> {
+	protected Manager () {} // guarantee this will be always a singleton only - can't use the constructor!
+	
+	public string myGlobalVar = "whatever";
+}
+
+public class GameData : Singleton<GameData>
 {
+	protected GameData() { }
+
+	private static bool loadingIsDone = false;
+
+	void Awake()
+	{
+		DontDestroyOnLoad(gameObject);
+	}
+
+	void Start()
+	{
+
+	}
+
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.P))
+		{
+			Save ("SaveAsFile");
+		}
+		else if(Input.GetKeyDown(KeyCode.L))
+		{
+			Load("SaveAsFile");
+		}
+	}
 
 	//Gets all information about all objects in scene and saves it to the a file.
 	public static void Save(string fileName, bool autoSave=false)
@@ -41,25 +74,51 @@ public class GameData : MonoBehaviour
 				}
 			}
 		}
-			WriteToFile(fileName, jsonObject.Print());
 
+		WriteToFile(fileName, jsonObject.Print());
 	}
-	
-	//Loads json string from file and loads data to all objects in scene
-	public static void Load(string fileName)
+
+	IEnumerator loadLevel(string fileName)
 	{
+		DontDestroyOnLoad(this);
+		Debug.Log ("Loading level lolz! :) xD");
+		AsyncOperation sync = Application.LoadLevelAsync(2);
+
+		while(!sync.isDone)
+		{
+			Debug.Log("isDone "+sync.isDone);
+			Debug.Log("progr "+sync.progress);
+			yield return new WaitForSeconds(2f);
+
+		}
+		Debug.Log("isDone "+sync.isDone);
+		Debug.Log("progr "+sync.progress);
+
+
 		fileName = fileName.ToLower();
 		Debug.Log("Loading from file: "+fileName);
 		string fileContent = LoadFromFile(fileName);
 		JSONObject jsonObject = new JSONObject(fileContent);
-
+		
 		//jsonObject.Bake();
 		//string s = jsonObject.Print(true);
 		//Debug.Log(s);
-
+		Debug.Log("Dezerializing");
 		Deserializer.Deserialize(ref jsonObject);
 
 
+		yield return null;
+	}
+
+	//Loads json string from file and loads data to all objects in scene
+	public static void Load(string fileName)
+	{
+
+		Debug.Log("Ät gul snö!");
+		Instance.StartCoroutine(Instance.loadLevel(fileName));
+
+
+		//Instance.loadLevel(fileName);
 	}
 
 	//list with filenames for all saved data
@@ -68,12 +127,14 @@ public class GameData : MonoBehaviour
 		get 
 		{
 			string[] filePaths = Directory.GetFiles("SaveData/", "*.SaveData",SearchOption.TopDirectoryOnly);
-			List<string> fileNames = filePaths.ToList();;
+			List<string> fileNames = filePaths.ToList();
+
 			for(int i=0; i< fileNames.Count; ++i)
 			{
 				fileNames[i] = fileNames[i].Replace("SaveData", "");
 				fileNames[i] = fileNames[i].Replace(".", "");
 				fileNames[i] = fileNames[i].Replace("/", "");
+
 				if(fileNames[i].Contains("autoSave_"))
 				{
 					string swap = fileNames[0];	
@@ -81,7 +142,6 @@ public class GameData : MonoBehaviour
 					fileNames[i] = swap;
 				}
 			}
-
 
 			return fileNames;
 		}
@@ -116,6 +176,6 @@ public class GameData : MonoBehaviour
 	}
 
 
-
+	
 
 }

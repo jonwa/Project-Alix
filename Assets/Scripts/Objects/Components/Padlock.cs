@@ -11,23 +11,35 @@ using System.Collections;
 public class Padlock : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public GameObject m_Window = null; 
+	public GameObject m_Padlock = null; 
 	public string 	  m_Input  = null; 
 	#endregion
 
+	void Update()
+	{
+		if(m_Padlock.transform.GetChild(0).gameObject.activeInHierarchy == true)
+		{
+			Camera.main.GetComponent<Raycasting>().Activate(Camera.main.GetComponent<Raycasting>().InteractingWith);
+		}
+	}
+
 	public override void Interact ()
 	{
+		if(m_Padlock == null) return; 
+
+		WindowStatus status = m_Padlock.GetComponent<WindowStatus>();
+
 		if(IsActive && Input.GetButtonDown(m_Input))
 		{
-			m_Window.SetActive(true);
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false; 
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			bool isActive = InputManager.RequestShowWindow(m_Padlock);
+			status.Activate((isActive == true) ? true : false);
 		}
 		else
 		{
 			Activate();
 		}
 	}
+
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
 }

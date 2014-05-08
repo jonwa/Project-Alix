@@ -53,7 +53,6 @@ public class FlickeringLight : ObjectComponent
 				m_LampOn = false;
 				m_Light.enabled = false;
 			}
-
 			Camera.main.SendMessage("Release");
 		}
 	}
@@ -70,6 +69,7 @@ public class FlickeringLight : ObjectComponent
 		}
 		m_Randomizer = Random.Range(0,2);
 	}
+
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}

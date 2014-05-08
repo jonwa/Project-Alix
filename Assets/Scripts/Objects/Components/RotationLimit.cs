@@ -16,11 +16,11 @@ public class RotationLimit : ObjectComponent
 	public float m_NegativeY;
 	public float m_PositiveZ;
 	public float m_NegativeZ;
-	public float m_LockedLimit;
+	public float m_LockedLimit = 1.5f;
 	#endregion
 	
 	#region PrivateMemberVariables
-	private Vector3 m_Rotation;
+	public Vector3 m_Rotation;
 	private Vector3 m_LastRotation;
 	private Vector3 m_Difference;
 	private Vector3 m_Offset;
@@ -73,7 +73,23 @@ public class RotationLimit : ObjectComponent
 			m_IsLocked = gameObject.GetComponent<Locked> ().GetLocked ();
 		}
 	}
-	
+
+	public void ResetRotation(string axis)
+	{
+		if(axis.Equals("x"))
+		{
+			m_Rotation.x = 0;
+		}
+		else if(axis.Equals("y"))
+		{
+			m_Rotation.y = 0;
+		}
+		else if(axis.Equals("z"))
+		{
+			m_Rotation.z = 0;
+		}
+	}
+
 	public float CheckRotation(float angle, string axis)
 	{
 
@@ -110,7 +126,8 @@ public class RotationLimit : ObjectComponent
 		{
 			float CheckY = m_Rotation.y;
 			CheckY += angle;
-			if(m_IsLocked){
+			if(m_IsLocked)
+			{
 				if(CheckY > m_LockedLimit)
 				{
 					angle = m_LockedLimit - m_Rotation.y;
@@ -162,52 +179,8 @@ public class RotationLimit : ObjectComponent
 		}
 		return angle;
 	}
-	void RotationHandler()
-	{
-		float angle;
-		Vector3 current = transform.localRotation.eulerAngles + m_Offset;
-		Vector3 max;
-		max.x = m_OriginalRotation.x + m_Offset.x + m_PositiveX;
-		max.y = m_OriginalRotation.y + m_Offset.y + m_PositiveY;
-		max.z = m_OriginalRotation.z + m_Offset.z + m_PositiveZ;
-		Vector3 min;
-		min.x = m_OriginalRotation.x + m_Offset.x + m_NegativeX;
-		min.y = m_OriginalRotation.y + m_Offset.y + m_NegativeY;
-		min.z = m_OriginalRotation.z + m_Offset.z + m_NegativeZ;
 
-		if((current.x) > (max.x)){
-			angle = max.x - current.x;
-			angle = CheckRotation(angle, "x");
-			transform.Rotate(angle,0,0,Space.Self);
-		}
-		else if((current.x) < (min.x)){
-			angle = min.x + (current.x * -1);
-			angle = CheckRotation(angle, "x");
-			transform.Rotate(angle,0,0,Space.Self);
-		}
-		if((current.y) > (max.y)){
-			angle = max.y - current.y;
-			angle = CheckRotation(angle, "y");
-			transform.Rotate(0,angle,0,Space.Self);
-			Debug.Log(angle);
-		}
-		else if((current.y) < (min.y)){
-			angle = min.y + (current.y * -1);
-			angle = CheckRotation(angle, "y");
-			transform.Rotate(0,angle,0,Space.Self);
-		}
-		if((current.z) > (max.z)){
-			angle = max.z - current.z;
-			angle = CheckRotation(angle, "z");
-			transform.Rotate(0,0,angle,Space.Self);
-		}
-		else if((current.z) < (min.z)){
-			angle = min.z + (current.z * -1);
-			angle = CheckRotation(angle, "z");
-			transform.Rotate(0,0,angle,Space.Self);
-		}
-	}
-	
+
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}

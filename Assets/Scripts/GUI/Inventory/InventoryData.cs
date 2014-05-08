@@ -26,9 +26,12 @@ public class InventoryData : MonoBehaviour
 
 	public static bool Toggle{get;set;}
 
+	public static InventoryData instance; 
 	void Start ()
 	{
-		Toggle 		   = true;
+		instance = this; 
+
+		Toggle 		   = false;
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
 		m_Player 	   = GameObject.Find(m_PlayerName);
@@ -47,6 +50,7 @@ public class InventoryData : MonoBehaviour
 		if(!swap)
 		{
 			Camera.main.GetComponent<Raycasting>().InteractingWith = null; 
+			//ToggleInventory ();
 		}
 
 		foreach(GameObject itemSlot in m_Slots)
@@ -75,7 +79,7 @@ public class InventoryData : MonoBehaviour
 			}
 		}
 	}
-
+	
 	//Remove a selected object from the inventory
 	//called from InventoryItem.cs
 	public static void RemoveItem(int item)
@@ -86,8 +90,6 @@ public class InventoryData : MonoBehaviour
 			m_Items[item] = null;
 			go.SetActive(true);
 
-			//this might need to be changed, simply reposition the origional pos of
-			//the pocketed object as the object is unpocketed. 
 			if(m_Player != null) 
 			{
 				FirstPersonController controller = m_Player.GetComponent<FirstPersonController>();
@@ -104,13 +106,6 @@ public class InventoryData : MonoBehaviour
 					}
 					raycast.Activate(go);
 				}
-
-
-				/*else if(inspect)
-				{
-					inspect.OrigionalPosition = controller.Position; 
-				}*/
-
 			}
 		}
 	}
@@ -129,8 +124,34 @@ public class InventoryData : MonoBehaviour
 		}
 	}
 
-	public static void NonOccupid()
+	/*private static void ToggleInventory()
 	{
-		Camera.main.GetComponent<Raycasting>().Activate(Camera.main.GetComponent<Raycasting>().InteractingWith);
+		//InputManager.Active = false;
+
+		Toggle = false;
+		instance.GetComponent<UIPlayTween>().Play (false);
+
+		instance.StartCoroutine ("WaitAndReset");
 	}
+
+	IEnumerator WaitAndReset()
+	{
+		while(instance.GetComponent<TweenPosition>().enabled)
+		{
+			yield return new WaitForSeconds(0.5f);
+		}
+
+		CloseInventory ();
+	}
+
+	private static void CloseInventory()
+	{
+		// Shuts down the inventory window
+		//InputManager.Active = true;
+
+		Toggle = true;
+		instance.GetComponent<UIPlayTween>().Play (true);
+
+		//InputManager.Reset();
+	}*/
 }

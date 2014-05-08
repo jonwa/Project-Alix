@@ -10,20 +10,28 @@ using System.Collections;
 public class Read : ObjectComponent 
 {
 	#region publicMemberVariables
-	public GameObject m_Window = null;
+	public GameObject m_Book = null;
 	public string 	  m_Input  = null; 
 	#endregion
 
+	void Update()
+	{
+		if(m_Book.transform.GetChild(0).gameObject.activeInHierarchy == true)
+		{
+			Camera.main.GetComponent<Raycasting>().Activate(Camera.main.GetComponent<Raycasting>().InteractingWith);
+		}
+	}
 
 	public override void Interact ()
 	{
-		if(m_Window == null) return; 
+		if(m_Book == null) return; 
 
+		WindowStatus status = m_Book.GetComponent<WindowStatus>();
+		
 		if(IsActive && Input.GetButtonDown(m_Input))
 		{
-			m_Window.SetActive(true);
-			Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false; 
-			Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			bool isActive = InputManager.RequestShowWindow(m_Book);
+			status.Activate((isActive == true) ? true : false);
 		}
 		else
 		{

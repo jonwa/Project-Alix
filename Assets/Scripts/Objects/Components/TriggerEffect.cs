@@ -10,7 +10,7 @@ public class TriggerEffect : ObjectComponent
 {
 	#region PublicMemberVariables
 	public string[] m_Messages;
-	public int[]	m_SubMessages;
+	//public int[]	m_SubMessages;
 	public bool     m_AllowedFromStart = true;
 	#endregion
 	
@@ -50,8 +50,17 @@ public class TriggerEffect : ObjectComponent
 	{
 		for(int i = 0; i < m_Messages.Length; i++)
 		{
-			SendMessage(m_Messages[i],m_SubMessages[i]);
-		}
+
+			if(m_Messages[i] == "Activate")
+			{
+				gameObject.GetComponent<ActivateDeactivate>().Activate();
+			}
+			else
+			{
+				SendMessage(m_Messages[i]);
+			}
+
+		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
