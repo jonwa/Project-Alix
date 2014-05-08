@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GameScreen : ObjectComponent
 {
+	public GameObject m_game;
 	private int turnoff;
 	// Use this for initialization
 	void Start () 
@@ -26,6 +27,7 @@ public class GameScreen : ObjectComponent
 		renderer.enabled = true;
 		turnoff = 5;
 		Camera.main.GetComponent<FirstPersonCamera>().LockCamera();
+		m_game.GetComponent<GravityControl>().StartGame();
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
