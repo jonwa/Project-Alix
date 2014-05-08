@@ -62,7 +62,7 @@ public class InventoryData : MonoBehaviour
 				go.SetActive(false);
 				
 				if(name == null) return;
-				
+
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
 				
