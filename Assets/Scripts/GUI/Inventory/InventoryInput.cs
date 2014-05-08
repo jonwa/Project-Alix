@@ -15,26 +15,23 @@ public class InventoryInput : MonoBehaviour
 	private string m_Input = "Inventory"; 
 	#endregion
 
-	void Start()
-	{
-
-	}
-
 	void Update () 
-	{
-		ToggleInventoy();
-	}
-	
-	void ToggleInventoy()
 	{
 		if(Input.GetButtonDown(m_Input))
 		{
-			if(InventoryData.Toggle && InputManager.Active)
+			WindowStatus status = gameObject.GetComponent<WindowStatus>();
+			if(Input.GetButtonDown(m_Input))
+			{
+				bool isActive = InputManager.RequestShowWindow(gameObject);
+				status.Activate((isActive == true) ? true : false); 
+			}
+		}
+	}
+
+	/*if(InventoryData.Toggle && InputManager.Active)
 			{ 
 				InputManager.Active = false;
-				InventoryData.Toggle = false;
-				gameObject.GetComponent<UIPlayTween>().Play (false);
-				InventoryData.UpdateInventory(); 
+
 			}
 			else if(InventoryData.Toggle && !InputManager.Active)
 			{
@@ -47,7 +44,5 @@ public class InventoryInput : MonoBehaviour
 				gameObject.GetComponent<UIPlayTween>().Play (true);
 			}
 
-			InputManager.Reset();
-		}
-	}
+			InputManager.Reset();*/
 }
