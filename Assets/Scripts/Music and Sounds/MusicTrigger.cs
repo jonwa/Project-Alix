@@ -4,7 +4,7 @@ using System.Collections;
 /* Discription: Music Trigger
  * Used for changing values when entering a trigger
  * 
- * Created by: Sebastian Olsson 17/04-14
+ * Created by: Sebastian Olsson 06-05-14
  * Modified by:
  */
 [RequireComponent(typeof(BoxCollider))]
@@ -12,10 +12,11 @@ public class MusicTrigger : MonoBehaviour
 {
 
 	private bool						m_Entered 		= false;
-	private MusicManager 					m_MusicManager;
+	private MusicManager 				m_MusicManager;
 
 	public string						m_PlayerName	= "Player Controller Example";
 	[Range(0,1)]public float			m_Value;
+	public string						m_Parameter;
 
 	void Start () 
 	{
@@ -30,24 +31,26 @@ public class MusicTrigger : MonoBehaviour
 		{
 			if(!m_Entered)
 			{
-				m_MusicManager.Element0 = m_Value;
+				ChangeValue(m_Parameter, m_Value);
 				m_Entered = true;
 			}
 		}
 		m_Entered = false;
 	}
 
-	//Changes the value of the parameter so the music can change after entering the trigger NOT USED ATM
-	float ChangeValue(float p_Value)
+	void ChangeValue(string Parameter, float p_Value)
 	{
-		if (p_Value == 0) 
+		if(Parameter == "Location")
 		{
-			p_Value = 1;
+			m_MusicManager.Element0 = p_Value;
 		}
-		else if(p_Value == 1)
+		else if(Parameter == "Progress")
 		{
-			p_Value = 0;
+			m_MusicManager.Element1 = p_Value;
 		}
-		return p_Value;
+		else if(Parameter == "Pause and Death")
+		{
+			m_MusicManager.Element2 = p_Value;
+		}
 	}
 }
