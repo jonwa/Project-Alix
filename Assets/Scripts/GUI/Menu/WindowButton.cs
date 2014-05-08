@@ -34,14 +34,12 @@ public class WindowButton : MonoBehaviour {
 		break;	
 		
 		case Action.Continue:
-			InputManager.Active = true;
-			m_Window.transform.parent.GetComponent<MenuInput>().Active = true;
-			m_Window.SetActive(false);
+			WindowStatus status = m_Window.GetComponent<WindowStatus>();
+			bool isActive = InputManager.RequestShowWindow(m_Window);
+			status.Activate((isActive == true) ? true : false);
+
 			WindowHandler.Default();
 			PlatformWindowHandler.Default();
-
-			InputManager.Reset();
-
 		break;
 
 		case Action.Exit:
