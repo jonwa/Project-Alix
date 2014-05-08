@@ -20,12 +20,7 @@ public class CollaborateTrigger : ObjectComponent
 	#region PrivateMemberVariables
 	private bool	m_HasTriggered = false;
 	#endregion
-	
 
-	void Update()
-	{
-
-	}
 
 	public override void Interact ()
 	{
@@ -33,7 +28,7 @@ public class CollaborateTrigger : ObjectComponent
 		Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		Debug.DrawRay (ray.origin, ray.direction * Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Color.green);
 
-		if(Input.GetButtonUp(m_Input))
+		if(Input.GetButtonDown(m_Input))
 		{
 			// change m_Distance
 			if(Physics.Raycast (ray, out hit, Camera.main.gameObject.GetComponent<Raycasting>().m_Distance, Camera.main.gameObject.GetComponent<Raycasting>().m_LayerMask.value))
