@@ -45,7 +45,7 @@ public class MenuInput : MonoBehaviour
 				m_Window.SetActive(false);
 				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
 				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
-			}
+			}*/
 		}
 	}
 }

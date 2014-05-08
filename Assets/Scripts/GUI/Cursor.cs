@@ -26,6 +26,7 @@ public class Cursor : MonoBehaviour
 	private static bool m_ShowDescription = false;
 	#endregion
 
+
 	void Start()
 	{
 		Screen.showCursor  = false;
@@ -46,7 +47,7 @@ public class Cursor : MonoBehaviour
 		}
 		else
 		{
-			m_CrossHairTexture   = cursor;
+			m_CrossHairTexture = cursor;
 		}
 
 		if(string.IsNullOrEmpty(description))

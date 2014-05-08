@@ -19,7 +19,6 @@ public class ActivateDeactivate :  TriggerComponent
 		if(Camera.main.GetComponent<Raycasting>().InteractingWith == gameObject)
 		{
 			Camera.main.GetComponent<Raycasting> ().Release ();
-			Camera.main.GetComponent<Raycasting> ().ShowCollaborateHover = false; 
 		}
 		gameObject.SetActive (m_IsActive);
 	}
