@@ -17,6 +17,8 @@ public class MenuInput : MonoBehaviour
 	public string 	  m_Input			= null; 
 	#endregion
 
+	public bool 	  IsDeadMenuActive{get;set;}
+
 	//contantly checks to see if input button is pressed
 	//open or/and close the ingame menu.
 	void Update () 
@@ -34,7 +36,18 @@ public class MenuInput : MonoBehaviour
 		// death menu
 		else
 		{
-			// Don't know yet how to do this!!!
+			/*if(IsDeadMenuActive)
+			{
+				m_Window.SetActive(true);
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = false;
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
+			}
+			else
+			{
+				m_Window.SetActive(false);
+				Camera.main.gameObject.GetComponent<Raycasting>().ShowHover = true;
+				Camera.main.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			}*/
 		}
 	}
 }
