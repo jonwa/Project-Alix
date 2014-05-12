@@ -13,6 +13,11 @@ public class ActivateDeactivate :  TriggerComponent
 	private bool m_IsActive = true; 
 	#endregion
 	
+	void Start()
+	{
+		m_IsActive = gameObject.activeSelf;
+	}
+	
 	public void DeActivate()
 	{
 		m_IsActive = false;
@@ -30,7 +35,7 @@ public class ActivateDeactivate :  TriggerComponent
 	}
 
 	override public string Name
-	{ get{return"InActivate";}}
+	{ get{return"ActivateDeactivate";}}
 	
 	public override void Serialize(ref JSONObject jsonObject)
 	{
@@ -41,5 +46,7 @@ public class ActivateDeactivate :  TriggerComponent
 	public override void Deserialize(ref JSONObject jsonObject)
 	{
 		m_IsActive = jsonObject.GetField("m_IsActive").b;
+		Debug.Log("Active/Deactive: " + m_IsActive);
+		gameObject.SetActive(m_IsActive);
 	}
 }
