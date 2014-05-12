@@ -30,6 +30,7 @@ public class DoorSound : SoundComponent
 	{
 		CacheEventInstance();
 		Evt.getParameter(m_Parameters[0], out m_ActionParameter);
+
 		m_StartRotation = this.transform.eulerAngles.y;
 	}
 	

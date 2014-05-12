@@ -1,5 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: cebe3437b60a51c4199f08feb0050d68
+=======
+<<<<<<< HEAD
+guid: cebe3437b60a51c4199f08feb0050d68
+=======
+guid: 677574c82b7c71646a0e9cb324a52f8a
+>>>>>>> f1576cb0daee40a3847c1d30692ea3928905fc8a
+>>>>>>> 0af291b2343c851f62e07ba2cc320e0dbeb6962b
 MovieImporter:
   serializedVersion: 1
   quality: .5

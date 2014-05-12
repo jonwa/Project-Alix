@@ -23,7 +23,7 @@ public class SoundEffect : TriggerComponent
 	#region PublicMemberVariables
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
-	public float							m_Unlock;
+	public float							m_Element0;
 	#endregion
 
 	override public string Name
@@ -37,7 +37,7 @@ public class SoundEffect : TriggerComponent
 		m_Event.getParameter (m_Parameters[0], out m_Parameter);
 	}
 
-	void PlaySoundEffect()
+	public void PlaySoundEffect()
 	{
 		if (getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED) 
 		{
@@ -45,7 +45,7 @@ public class SoundEffect : TriggerComponent
 		}
 		if (!m_Started) 
 		{
-			m_Parameter.setValue(m_Unlock);
+			m_Parameter.setValue(m_Element0);
 			StartEvent();
 		}
 	}

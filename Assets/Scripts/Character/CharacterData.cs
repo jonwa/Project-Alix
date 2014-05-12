@@ -92,13 +92,15 @@ public class CharacterData : MonoBehaviour
 	{
 		if(m_UseUculus == true)
 		{
-			m_Camera.gameObject.SetActive(false);
-			m_Oculus.gameObject.SetActive(true);
+			m_Camera.SetActive(false);
+			m_Oculus.SetActive(true);
 		}
 		else
 		{
-			m_Camera.gameObject.SetActive(true);
-			m_Oculus.gameObject.SetActive(false);
+			m_Camera.SetActive(true);
+			Camera.main.enabled = true;
+			m_Camera.GetComponent<Camera>().enabled = true;
+			m_Oculus.SetActive(false);
 		}
 	}
 }
