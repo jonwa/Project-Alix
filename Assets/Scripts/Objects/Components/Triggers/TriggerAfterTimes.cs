@@ -8,6 +8,7 @@ public class TriggerAfterTimes : ObjectComponent
 	#region PublicMemberVariables
 	public int m_NumberOfTimes = 1;
 	public List<int> m_TriggerIds = new List<int>();
+	public List<string> m_Messages = new List<string>();
 	#endregion
 	#region PrivateMemberVariables
 	private int m_Count = 0;
@@ -43,6 +44,21 @@ public class TriggerAfterTimes : ObjectComponent
 					i.gameObject.GetComponent<CheckTrigger>().Trigger();
 				}
 
+			}
+			
+		}
+		
+		
+		//HERE IS SOME STUFF AKA TriggerEffect
+		for(int i = 0; i < m_Messages.Count; i++)
+		{		
+			if(m_Messages[i] == "Activate")
+			{
+				gameObject.GetComponent<ActivateDeactivate>().Activate();
+			}
+			else
+			{
+				SendMessage(m_Messages[i]);
 			}
 			
 		}
