@@ -16,18 +16,28 @@ public class HoverEffect : ObjectComponent
 	public string  m_Description  = null;
 	#endregion
 
+
 	public Texture HoverTexture
 	{
-		get { return m_HoverEffect; }
+		get 
+		{
+			return m_HoverEffect; 
+		}
 	}
 	public Texture ButtonDownHoverTexture
 	{
-		get { return m_ButtonDownHoverEffect; }
+		get 
+		{ 
+			return m_ButtonDownHoverEffect; 
+		}
 	}
 
 	public string Description
 	{
-		get { return m_Description; }
+		get 
+		{ 
+			return m_Description;
+		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

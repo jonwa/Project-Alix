@@ -6,13 +6,12 @@ using System.Collections;
  * until it hits an object with ObjectComponent's then activates Interact on that object.
  * 
  * Created by: Sebastian / Jimmy  Date: 2014-04-04
- * Modified by: Jon Wahlström 2014-04-29 "added collaborate hover effect"
+ * Modified by: Jon Wahlström 2014-04-29 "Added collaborate hover effect"
  * 
  */
 
 public class Raycasting : MonoBehaviour 
 {
-
 	#region PublicMemberVariables
 	public float  		m_Distance  	 = 3;
 	public string 		m_Input	 		 = "Fire1";
@@ -20,12 +19,12 @@ public class Raycasting : MonoBehaviour
 	#endregion
 	#region PrivateMemberVariables
 	private GameObject m_InteractingWith;
-	private bool m_Release = false;
-	private bool m_ShowHover = true;
+	private bool 	   m_Release = false;
+	private bool 	   m_ShowHover = true;
 	#endregion
 
 	// Used only for inventory swap functionallity
-	public GameObject InteractingWith{ get;set;}
+	public GameObject InteractingWith{ get;set; }
 
 	public bool ShowHover
 	{
@@ -33,6 +32,13 @@ public class Raycasting : MonoBehaviour
 	}
 
 	public bool ShowCollaborateHover { get;set; }
+
+	public bool IsPickedUp{get;set;}
+
+	void Start()
+	{
+		IsPickedUp = false; 
+	}
 
 	// Update is called once per frame
 	void Update () 
@@ -79,7 +85,6 @@ public class Raycasting : MonoBehaviour
 				{
 					Release();
 				}
-
 			}
 			else
 			{
@@ -115,7 +120,6 @@ public class Raycasting : MonoBehaviour
 		{
 			m_InteractingWith = hit.collider.gameObject;
 
-			//TODO:TEST
 			InteractingWith = hit.collider.gameObject;
 
 			ObjectComponent[] objectArray;
@@ -135,7 +139,7 @@ public class Raycasting : MonoBehaviour
 	void Cast(bool showHover)
 	{
 		if(showHover)
-		{
+		{ 
 			RaycastHit hit;
 			Ray ray = new Ray(transform.position, transform.forward);
 			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
@@ -150,9 +154,13 @@ public class Raycasting : MonoBehaviour
 				{
 					Cursor.SetCursor(collaborateHover.HoverTexture, collaborateHover.Description, true);
 				}
+				else if(IsPickedUp && collaborateHover == null)
+				{
+					Cursor.SetCursor(null, null, true);
+				}
 				// regular hover effect check
 				else if(hover != null)
-				{
+				{ 
 					if(Input.GetButton(m_Input))
 					{
 						if(hover.ButtonDownHoverTexture != null)
@@ -189,6 +197,9 @@ public class Raycasting : MonoBehaviour
 	public void Release()
 	{
 		m_Release = true;
+		
+		ShowCollaborateHover = false; 
+		IsPickedUp = false; 
 	}
 
 	public void Activate(GameObject go)

@@ -22,7 +22,7 @@ public class Locked : TriggerComponent
 	// Use this for initialization
 	void Start() 
 	{
-		if(m_LockedFromStart == true)
+		if(m_LockedFromStart)
 		{
 			m_Locked = true;
 		}
@@ -31,6 +31,8 @@ public class Locked : TriggerComponent
 			m_Locked = false;
 		}
 	}
+
+
 
 	public void Lock()
 	{
@@ -47,6 +49,7 @@ public class Locked : TriggerComponent
 	{
 		return m_Locked;
 	}
+	
 	public override void Serialize(ref JSONObject jsonObject)
 	{
 		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
@@ -56,5 +59,6 @@ public class Locked : TriggerComponent
 	public override void Deserialize(ref JSONObject jsonObject)
 	{
 		m_Locked = jsonObject.GetField("m_Locked").b;
+		Debug.Log("Door is: " + m_Locked);
 	}
 }
