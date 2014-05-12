@@ -61,10 +61,13 @@ public class BookWindow : MonoBehaviour
 	public static void Close()
 	{
 		m_PageCounter = 0; 
-		foreach(GameObject go in m_Pages)
+		if(m_Pages.Length > 0)
 		{
-			go.SetActive(false);
+			foreach(GameObject go in m_Pages)
+			{
+				go.SetActive(false);
+			}
+			m_Pages [m_PageCounter].SetActive (true);
 		}
-		m_Pages [m_PageCounter].SetActive (true);
 	}
 }
