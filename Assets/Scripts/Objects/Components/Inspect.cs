@@ -80,13 +80,17 @@ public class Inspect : ObjectComponent
 		if(shouldInspect)
 		{
 			Vector3 cameraForward  = Camera.main.transform.forward.normalized;
-			gameObject.GetComponent<Gravity>().SetGravity(false);
-			rigidbody.velocity   		= Vector3.zero;
-			rigidbody.angularVelocity 	= Vector3.zero;
-
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
+
+
+			if(gameObject.GetComponent<Rigidbody>() != null)
+			{
+				gameObject.GetComponent<Gravity>().SetGravity(false);
+				rigidbody.velocity   		= Vector3.zero;
+				rigidbody.angularVelocity 	= Vector3.zero;
+			}
 		}
 		else
 		{
@@ -97,7 +101,10 @@ public class Inspect : ObjectComponent
 				m_IsOriginalPosition = false;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, lerpSpeed/10.0f);
 				transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed/10.0f);
-				gameObject.GetComponent<Gravity>().SetGravity(true);
+				if(gameObject.GetComponent<Gravity>() != null)
+				{
+					gameObject.GetComponent<Gravity>().SetGravity(true);
+				}
 			}
 			else
 			{
