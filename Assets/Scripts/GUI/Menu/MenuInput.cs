@@ -21,6 +21,7 @@ public class MenuInput : MonoBehaviour
 	//open or/and close the ingame menu.
 	void Update () 
 	{
+		// ingame menu 
 		if(m_ButtonDetection)
 		{
 			WindowStatus status = gameObject.GetComponent<WindowStatus>();
@@ -29,6 +30,11 @@ public class MenuInput : MonoBehaviour
 				bool isActive = InputManager.RequestShowWindow(gameObject);
 				status.Activate((isActive == true) ? true : false);
 			}
+		}
+		// death menu
+		else
+		{
+			// Don't know yet how to do this!!!
 		}
 	}
 }

@@ -12,7 +12,7 @@ public class Serializer : MonoBehaviour
 	//Calls Serialize function on all components that derives from SerializableObject
 	public static void Serialize(ref JSONObject jsonObject)
 	{
-		Id[] objectIds = Object.FindObjectsOfType<Id>();
+		Id[] objectIds = Resources.FindObjectsOfTypeAll<Id>();
 
 		JSONObject jArr = new JSONObject(JSONObject.Type.ARRAY);
 		jsonObject.AddField("Objects", jArr);
