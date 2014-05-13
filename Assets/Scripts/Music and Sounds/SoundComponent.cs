@@ -103,7 +103,7 @@ public abstract class SoundComponent : ObjectComponent
 			FMOD.Studio.UnityUtil.LogError("Event failed: " + m_Path);
 		}
 	}
-	
+
 	//Checks for errors
 	public FMOD.RESULT ERRCHECK(FMOD.RESULT result)
 	{
