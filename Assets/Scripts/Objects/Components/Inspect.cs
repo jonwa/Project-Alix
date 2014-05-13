@@ -33,6 +33,7 @@ public class Inspect : ObjectComponent
 	{
 		m_OriginalPosition = transform.position;
 		m_OriginalRotation = transform.rotation;
+		
 	}
 
 	void Update()
@@ -124,6 +125,7 @@ public class Inspect : ObjectComponent
 		//if we are active we rotate the object with the mouse here.
 		if(IsActive)
 		{
+			Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
 			MoveToInspectDistance(true);
 
 			float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
@@ -153,6 +155,7 @@ public class Inspect : ObjectComponent
 		}
 		else
 		{
+			Camera.main.GetComponent<Raycasting>().Release();
 			//Camera.main.SendMessage("Release");
 			DeActivate();
 		}
