@@ -10,6 +10,7 @@ public class KillPlayer :  TriggerComponent
 {
 	public void Kill()
 	{
+
 		//Kalla på deathmenu som sedan sköter resten av "dödsdelen"
 	}
 
