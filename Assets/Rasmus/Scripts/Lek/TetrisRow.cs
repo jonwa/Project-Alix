@@ -8,9 +8,7 @@ public class TetrisRow : MonoBehaviour
 
 	private List<Collider> m_Hits = new List<Collider>();
 	private int m_MyRow;
-	private bool CheckOnce = true;
-	private int hej;
-	private int count;
+	//private bool CheckOnce = true;
 	// Use this for initialization
 	void Start () 
 	{
@@ -25,7 +23,7 @@ public class TetrisRow : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if(m_Hits.Count == 10)
+		if(m_Hits.Count >= 10)
 		{
 			Collider[] m_Obj = m_Hits.ToArray();
 			m_Obj = m_Hits.ToArray();
@@ -34,35 +32,19 @@ public class TetrisRow : MonoBehaviour
 				Destroy(m_Obj[i].gameObject);
 			}
 			m_RowDestroy.GetComponent<TetrisRowDestroy>().DestroyedRow(m_MyRow);
+			m_Hits.Clear();
 		}
 	}
 
 	public void MoveBlocks(int row)
 	{
-		hej = row;
-		tjo ();
-		//hej += row;
-		//count = 5;
-	}
-
-	private void tjo()
-	{
-		if(hej != 0)
+		Collider[] m_Obj = m_Hits.ToArray();
+		for(int i = 0; i < m_Obj.Length; i++)
 		{
-			Collider[] m_Obj = m_Hits.ToArray();
-			for(int i = 0; i < m_Obj.Length; i++)
-			{
-				m_Obj[i].gameObject.GetComponent<SingleBlock>().FallSteps(hej);
-			}
-			hej = 0;
+			m_Obj[i].gameObject.GetComponent<SingleBlock>().FallSteps(row);
 		}
 		m_Hits.Clear();
 	}
-
-	//public void LateUpdate()
-	//{
-	//	m_Hits.Clear();
-	//}
 
 	public void OnTriggerStay(Collider col)
 	{
@@ -74,6 +56,16 @@ public class TetrisRow : MonoBehaviour
 				{
 					m_Hits.Add(col);	
 				}
+			}
+		}
+	}
+	public void OnTriggerExit(Collider col)
+	{
+		if(col.tag == "Blocks")
+		{
+			if(m_Hits.Contains(col))
+			{
+				m_Hits.Remove(col);	
 			}
 		}
 	}

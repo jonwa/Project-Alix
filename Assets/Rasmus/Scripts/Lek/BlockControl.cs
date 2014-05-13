@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BlockControl : MonoBehaviour 
 {
 	#region PublicVaribles
+	public GameObject   m_GravityControl;
 	public GameObject[] m_Blocks;
 	public GameObject   m_StartPos;
 	public GameObject   m_Messure;
@@ -20,6 +21,7 @@ public class BlockControl : MonoBehaviour
 	private int     m_CurrentShape;
 	private int     m_Rot;
 	private bool    m_TwoRotations;
+	private int     m_TopSpawn = 18;
 	#endregion
 
 	// Use this for initialization
@@ -49,6 +51,7 @@ public class BlockControl : MonoBehaviour
 
 		PlaceBlocks();
 		m_GUI.GetComponent<TetrisGUI>().SetNextBlock(m_NextShape);
+		m_GravityControl.GetComponent<GravityControl>().NewBlock();
 	}
 
 	private GameObject CreateOneBlock()
@@ -175,13 +178,13 @@ public class BlockControl : MonoBehaviour
 				if(m_Rot == 0)
 				{
 					m_Rot++;
-					m_Blocks[1].transform.position += new Vector3(0, m_Dist * -1, 0);
-					m_Blocks[2].transform.position += new Vector3(m_Dist * -2, m_Dist * -1, 0);
+					m_Blocks[0].transform.position += new Vector3(m_Dist, 0, 0);
+					m_Blocks[1].transform.position += new Vector3(m_Dist, m_Dist * -2, 0);
 				}
 				else
 				{
-					m_Blocks[1].transform.position -= new Vector3(0, m_Dist * -1, 0);
-					m_Blocks[2].transform.position -= new Vector3(m_Dist * -2, m_Dist * -1, 0);
+					m_Blocks[0].transform.position -= new Vector3(m_Dist, 0, 0);
+					m_Blocks[1].transform.position -= new Vector3(m_Dist, m_Dist * -2, 0);
 					m_Rot--;
 				}
 			}
@@ -190,13 +193,13 @@ public class BlockControl : MonoBehaviour
 				if(m_Rot == 0)
 				{
 					m_Rot++;
-					m_Blocks[0].transform.position += new Vector3(0, m_Dist * -1, 0);
-					m_Blocks[3].transform.position += new Vector3(m_Dist * 2, m_Dist * -1, 0);
+					m_Blocks[0].transform.position += new Vector3(-m_Dist, m_Dist * -2, 0);
+					m_Blocks[1].transform.position += new Vector3(-m_Dist, 0, 0);
 				}
 				else
 				{
-					m_Blocks[0].transform.position -= new Vector3(0, m_Dist * -1, 0);
-					m_Blocks[3].transform.position -= new Vector3(m_Dist * 2, m_Dist * -1, 0);
+					m_Blocks[0].transform.position -= new Vector3(-m_Dist, m_Dist * -2, 0);
+					m_Blocks[1].transform.position -= new Vector3(-m_Dist, 0, 0);
 					m_Rot--;
 				}
 			}
@@ -329,11 +332,11 @@ public class BlockControl : MonoBehaviour
 			{
 				if(i != 3)
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), 13 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), m_TopSpawn * m_Dist, 0);
 				}
 				else
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + 2), 12 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + 2), (m_TopSpawn - 1) * m_Dist, 0);
 				}
 			}
 			m_TwoRotations = false;
@@ -343,7 +346,7 @@ public class BlockControl : MonoBehaviour
 		{
 			for(int i = 0; i < m_Blocks.Length; i++)
 			{
-				m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * 4, (12 + i) * m_Dist, 0);
+				m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * 4, ((m_TopSpawn - 1) + i) * m_Dist, 0);
 			}
 			m_TwoRotations = true;
 		}
@@ -354,11 +357,11 @@ public class BlockControl : MonoBehaviour
 			{
 				if(i != 3)
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), 13 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), m_TopSpawn * m_Dist, 0);
 				}
 				else
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * 4, 12 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * 4, (m_TopSpawn - 1)  * m_Dist, 0);
 				}
 			}
 			m_TwoRotations = false;
@@ -370,11 +373,11 @@ public class BlockControl : MonoBehaviour
 			{
 				if(i != 3)
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), 13 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), m_TopSpawn * m_Dist, 0);
 				}
 				else
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * 5, 12 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * 5, (m_TopSpawn - 1) * m_Dist, 0);
 				}
 			}
 			m_TwoRotations = false;
@@ -386,11 +389,11 @@ public class BlockControl : MonoBehaviour
 			{
 				if(i < 2)
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), 13 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), m_TopSpawn * m_Dist, 0);
 				}
 				else
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (2 + i), 12 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (2 + i), (m_TopSpawn - 1) * m_Dist, 0);
 				}
 			}
 			m_TwoRotations = true;
@@ -402,11 +405,11 @@ public class BlockControl : MonoBehaviour
 			{
 				if(i < 2)
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), 13 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), m_TopSpawn * m_Dist, 0);
 				}
 				else
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (1 + i), 12 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (1 + i), (m_TopSpawn - 1) * m_Dist, 0);
 				}
 			}
 			m_TwoRotations = true;
@@ -418,11 +421,11 @@ public class BlockControl : MonoBehaviour
 			{
 				if(i < 2)
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), 13 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (4 + i), m_TopSpawn * m_Dist, 0);
 				}
 				else
 				{
-					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (3 + i), 12 * m_Dist, 0);
+					m_Blocks[i].transform.position = m_Pos + new Vector3(-m_Dist * (3 + i), (m_TopSpawn - 1) * m_Dist, 0);
 				}
 			}
 			m_TwoRotations = true;

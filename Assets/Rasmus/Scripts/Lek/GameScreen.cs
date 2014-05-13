@@ -28,6 +28,10 @@ public class GameScreen : ObjectComponent
 		turnoff = 5;
 		Camera.main.GetComponent<FirstPersonCamera>().LockCamera();
 		m_game.GetComponent<GravityControl>().StartGame();
+		if(gameObject.audio.isPlaying == false)
+		{
+			gameObject.audio.Play();
+		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
