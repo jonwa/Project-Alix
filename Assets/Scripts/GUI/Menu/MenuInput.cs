@@ -13,7 +13,6 @@ public class MenuInput : MonoBehaviour
 {
 	#region PublicMemberVariables
 	public GameObject m_Window          = null; 
-	public bool 	  m_ButtonDetection = true;
 	public string 	  m_Input			= null; 
 	#endregion
 
@@ -21,14 +20,11 @@ public class MenuInput : MonoBehaviour
 	//open or/and close the ingame menu.
 	void Update () 
 	{
-		if(m_ButtonDetection)
+		WindowStatus status = gameObject.GetComponent<WindowStatus>();
+		if(Input.GetButtonDown(m_Input))
 		{
-			WindowStatus status = gameObject.GetComponent<WindowStatus>();
-			if(Input.GetButtonDown(m_Input))
-			{
-				bool isActive = InputManager.RequestShowWindow(gameObject);
-				status.Activate((isActive == true) ? true : false);
-			}
+			bool isActive = InputManager.RequestShowWindow(gameObject);
+			status.Activate((isActive == true) ? true : false);
 		}
 	}
 }

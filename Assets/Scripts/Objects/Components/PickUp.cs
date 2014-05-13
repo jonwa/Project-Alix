@@ -56,6 +56,7 @@ public class PickUp : ObjectComponent
 
 	public override void Interact ()
 	{
+		Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
 		if(gameObject.GetComponent<Inspect>())
 		{		
 			isInspecting = gameObject.GetComponent<Inspect>().IsInspecting;
