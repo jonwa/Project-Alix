@@ -20,6 +20,7 @@ public class DoorSound : SoundComponent
 	private float							m_Action;
 	private GameObject						m_GameObject;
 	private int 							m_StartIterator 	= 0;
+	private string							m_Input				= "Fire1";
 	#endregion
 	
 	#region PublicMemberVariables
@@ -80,17 +81,12 @@ public class DoorSound : SoundComponent
 			}
 
 		}
-		else
+		else if(m_Locked && Input.GetButtonDown(m_Input))
 		{
-			//if(m_MouseMovement != 0)
-			//{
-			//	m_Action = 0.35f;
-			//	m_Open = false;
-			//	Evt.setParameterValue(m_Parameters[0], m_Action);	
-			//}
+			m_Action = 0.35f;
+			Evt.setParameterValue(m_Parameters[0], m_Action);
+			StartEvent();
 		}
-
-
 	}
 
 	void Update()

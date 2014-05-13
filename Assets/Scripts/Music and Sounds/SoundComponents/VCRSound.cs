@@ -13,17 +13,14 @@ public class VCRSound : SoundComponent
 {
 	#region PrivateMemberVariables
 	private FMOD.Studio.ParameterInstance	m_ActionParameter;
-	private SoundEffect m_SoundEffect;
 	private GameObject						m_GameObject;
-
 	#endregion
 		
 	#region PublicMemberVariables
 	public string			m_Input = "Fire1";
 	public string[]			m_Parameters;
-	public int				m_VRCID;
 	#endregion
-		
+
 	void Start()
 	{
 		CacheEventInstance();
@@ -34,10 +31,7 @@ public class VCRSound : SoundComponent
 		
 	public override void PlaySound()
 	{
-	//	if(Input.GetButton(m_Input))
-		{
-			StartEvent ();
-		}
+		StartEvent ();
 	}
 
 	void Update()

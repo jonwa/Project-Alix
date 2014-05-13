@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FMOD.Studio;
 
 /* Discription: MoviePlayer, starts a Movie, when triggered
  * 
@@ -35,9 +36,9 @@ public class MoviePlayer : TriggerComponent
 		get{ return "PlayMovie"; }
 	}
 
-	public float Duration
+	public MovieTexture Movie
 	{
-		get{return m_Movie.duration;}
+		get{return m_Movie;}
 	}
 
 	void PlayMovie()

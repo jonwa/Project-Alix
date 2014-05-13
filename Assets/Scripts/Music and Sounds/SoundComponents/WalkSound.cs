@@ -8,7 +8,7 @@ using System.Collections;
  * Modified by:
  */
 
-//TODO: TYP ALLT
+//TODO: ALLT
 
 public class WalkSound : SoundComponent 
 {

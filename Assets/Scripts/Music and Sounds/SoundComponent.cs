@@ -63,8 +63,11 @@ public abstract class SoundComponent : ObjectComponent
 	
 	public void OnDisable()
 	{
-		m_Event.stop ();
-		m_Event.release ();
+		if(m_Event != null)
+		{
+			m_Event.stop ();
+			m_Event.release ();
+		}
 	}
 	
 	public void CacheEventInstance()
