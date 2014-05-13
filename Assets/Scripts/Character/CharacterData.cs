@@ -18,7 +18,6 @@ public class CharacterData : MonoBehaviour
 
 	#region PrivateMemberVariables
 	private static bool 		 m_Alive  = true;
-	private static int  		 m_Health = 1000;
 	private static CharacterData m_Instance;
 	#endregion
 
@@ -38,6 +37,8 @@ public class CharacterData : MonoBehaviour
 		return m_UseUculus;
 	}
 
+
+
 	//Set or get the player alive status
 	public static bool Alive
 	{
@@ -50,42 +51,14 @@ public class CharacterData : MonoBehaviour
 			m_Alive = value;
 			if(!m_Alive)
 			{
-				m_Instance.GetComponent<FirstPersonController>().LockPlayerMovement();
 				m_Instance.ShowDeathMenu();
-			}
-			else
-			{
-				m_Instance.GetComponent<FirstPersonController>().UnLockPlayerMovement();
-			}
-		}
-	}
-
-	//Set or get the health, also changes the players alive / dead status
-	public static int Health
-	{
-		get 
-		{ 
-			return m_Health; 
-		}
-		set 
-		{
-			if(value <= 0)
-			{
-				m_Health = 0;
-				m_Alive  = false;
-				m_Instance.ShowDeathMenu();
-			}
-			else
-			{
-				m_Health = value;
-				m_Alive  = true;
 			}
 		}
 	}
 
 	public void ShowDeathMenu()
 	{
-		//m_DeathMenu.GetComponent<MenuInput>().Active = true;
+		m_DeathMenu.GetComponent<ActivateDeathMenu>().Activate();
 	}
 
 	private void UpdateOculus()
