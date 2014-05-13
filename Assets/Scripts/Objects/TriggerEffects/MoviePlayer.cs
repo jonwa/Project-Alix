@@ -22,6 +22,13 @@ public class MoviePlayer : TriggerComponent
 
 	#region PrivateMemberVariables
 	private bool			m_Started;
+	private MovieAudio		m_MovieAudio;
+	private GameObject 		m_TextureTarget = null;
+	private float			m_StopValue = 0.15f;
+	private bool			m_HasStarted = false;
+	private int				m_Counter = 0;
+	private Texture			m_OriginalTexture;
+	private GameObject		m_Monitor;
 	#endregion
 
 	override public string Name
@@ -29,48 +36,47 @@ public class MoviePlayer : TriggerComponent
 		get{ return "PlayMovie"; }
 	}
 
+	public MovieTexture Movie
+	{
+		get{return m_Movie;}
+	}
+
 	void PlayMovie()
 	{
-		GameObject TextureTarget = null;
 		List<Id> ids = UnityEngine.Object.FindObjectsOfType<Id>().ToList();
 		foreach(Id i in ids)
 		{
 			if(i.ObjectId == m_TargetID)
 			{
-				TextureTarget = i.gameObject;
+				m_TextureTarget = i.gameObject;
+				m_Monitor = i.gameObject;
 			}
 		}
-		TextureTarget.gameObject.renderer.material.mainTexture = m_Movie;
+		m_MovieAudio = m_Monitor.GetComponent<MovieAudio> ();
+		m_TextureTarget.renderer.material.mainTexture = m_Movie;
 		m_Movie.Stop();
 		m_Movie.Play();
+		m_MovieAudio.PlaySound ();
+		m_HasStarted = true;
 	}
 
 	void Start () 
 	{
+		m_OriginalTexture = renderer.material.mainTexture;
 		m_Started = false;
 	}
+
 
 	void Update()
 	{
 		if(m_NonTrigger)
 		{
 			gameObject.renderer.material.mainTexture = m_Movie;
-			//m_Movie.Stop();
 			m_Movie.Play();
 			m_Movie.loop = true; 
 		}
 	}
-	
 
-	//Overload when saveing data for component.
-	public override void Serialize(ref JSONObject jsonObject)
-	{
-		
-	}
-	
-	//Overload when loading data for component.
-	public override void Deserialize(ref JSONObject jsonObject)
-	{
-		
-	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
