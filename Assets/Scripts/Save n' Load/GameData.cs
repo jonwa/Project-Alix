@@ -88,7 +88,7 @@ public class GameData : Singleton<GameData>
 		{
 			Debug.Log("isDone "+sync.isDone);
 			Debug.Log("progr "+sync.progress);
-			yield return new WaitForSeconds(2f);
+			yield return new WaitForSeconds(0.5f);
 
 		}
 		Debug.Log("isDone "+sync.isDone);
