@@ -7,7 +7,7 @@ public class GravityControl : MonoBehaviour
 
 	private float timer			= 0;
 	private float timePerUpdate = 0.5f;
-	private bool  m_Game 		= false;
+	private bool  m_Game 		= true;
 	private bool  m_StartGame1  = true;
 	// Use this for initialization
 	void Start () 
