@@ -12,7 +12,7 @@ using System.Collections;
 public class WindowStatus : MonoBehaviour 
 {
 	#region PublicMemberVariables
-	public enum Name{Menu, Inventory, Padlock, Book}; 
+	public enum Name	 {Menu, Inventory, Padlock, Book}; 
 	public Name m_Name = Name.Menu; 
 	#endregion
 
@@ -21,7 +21,16 @@ public class WindowStatus : MonoBehaviour
 		switch(m_Name)
 		{
 		case Name.Menu:
+
 			transform.GetChild(0).gameObject.SetActive(status);
+			if(status)
+			{
+				Time.timeScale = 0f; 
+			}
+			else
+			{
+				Time.timeScale = 1f;
+			}
 			break;
 		case Name.Inventory:
 			//InventoryData.Toggle = status;

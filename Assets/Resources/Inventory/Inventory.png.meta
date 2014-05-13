@@ -5,11 +5,7 @@ TextureImporter:
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-<<<<<<< HEAD:Assets/Rasmus/Interface_Blood.png.meta
-    linearTexture: 1
-=======
     linearTexture: 0
->>>>>>> 362f660176999811edf5f58554e0087607ca84f5:Assets/Resources/Inventory/Inventory.png.meta
     correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
@@ -17,7 +13,7 @@ TextureImporter:
     mipMapFadeDistanceEnd: 3
   bumpmap:
     convertToNormalMap: 0
-    externalNormalMap: 1
+    externalNormalMap: 0
     heightScale: .25
     normalMapFilter: 0
   isReadable: 0
@@ -40,13 +36,8 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spritePixelsToUnits: 100
-<<<<<<< HEAD:Assets/Rasmus/Interface_Blood.png.meta
-  alphaIsTransparency: 0
-  textureType: 1
-=======
   alphaIsTransparency: 1
   textureType: -1
->>>>>>> 362f660176999811edf5f58554e0087607ca84f5:Assets/Resources/Inventory/Inventory.png.meta
   buildTargetSettings: []
   spriteSheet:
     sprites: []
