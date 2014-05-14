@@ -42,7 +42,6 @@ public class PickUp : ObjectComponent
 		{
 			if((m_OriginalScale-transform.localScale).magnitude > 0.1f)
 			{
-				Physics.IgnoreLayerCollision(9, 9, false);
 				transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
 				m_HoldingObject = false;
 			}
