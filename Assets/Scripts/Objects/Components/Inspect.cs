@@ -159,8 +159,6 @@ public class Inspect : ObjectComponent
 			//Camera.main.SendMessage("Release");
 			DeActivate();
 		}
-		//Ignore collision with some object, determent by layer
-		Physics.IgnoreLayerCollision(9, 9, true);
 	}
 	public bool IsInspecting
 	{

@@ -47,7 +47,9 @@ public class Inventory : MonoBehaviour
 
 				int width  = sprite.width;
 				int height = sprite.height; 
-				go.transform.localPosition = new Vector3 ( width * (x + 0.5f) * m_Spacing, -(height * ( y + 0.5f ) * m_Padding), 0f);
+				go.transform.localPosition = new Vector3 ( width * (x + 0.5f) * m_Spacing, 
+				                                          -(height * ( y + 0.5f ) * m_Padding),
+				                                          0f);
 
 				InventoryItem slot = go.GetComponent<InventoryItem>();
 

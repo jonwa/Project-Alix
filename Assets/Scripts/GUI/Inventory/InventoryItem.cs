@@ -10,17 +10,11 @@ using System.Collections;
 public class InventoryItem : MonoBehaviour 
 {
 	#region PrivateMemberVariables
-	private int    m_Slot 		= 0; 
 	private string m_spritename = null; 
 	#endregion
 
-	public int Slot
-	{
-		get { return m_Slot;  }
-		set { m_Slot = value; }
-	}
-
-	public bool Occupied{get;set;}
+	public int 	Slot 	{ get; set; }
+	public bool Occupied{ get; set; }
 
 	void Start()
 	{
@@ -67,22 +61,7 @@ public class InventoryItem : MonoBehaviour
 		}
 		else
 		{
-			//InventoryData.NonOccupid();
+			Camera.main.GetComponent<Raycasting>().Activate(Camera.main.GetComponent<Raycasting>().InteractingWith);
 		}
-	}
-
-	void OnDrag(Vector2 delta)
-	{
-
-	}
-
-	void OnDrop(GameObject go)
-	{
-
-	}
-
-	void UpdateCursor()
-	{
-
 	}
 }
