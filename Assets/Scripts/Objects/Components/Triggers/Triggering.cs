@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /*Class for triggering something in a remote object
 
 Made By: Rasmus 08/04
+Modified By: Sebastian 14-05-2014: Changed ActivateTrigger so that it can be toggled
  */
 
 public class Triggering : ObjectComponent {
@@ -16,11 +17,11 @@ public class Triggering : ObjectComponent {
 	#endregion
 	
 	#region PrivateMemberVariables
-	private int 		 m_ArrayPosition = 0;
+	private int 		 m_ArrayPosition 		= 0;
 	private bool[] 		 m_Allowed;
-	private GameObject[] m_GameObjects   = null;
-	private bool 		 m_HasTriggered	 = false;
-	GameObject[] 		 tempArray		 = null;
+	private GameObject[] m_GameObjects   		= null;
+	private bool 		 m_HasTriggered	 		= false;
+	GameObject[] 		 tempArray		 		= null;
 	#endregion
 
 	// Use this for initialization
@@ -59,7 +60,7 @@ public class Triggering : ObjectComponent {
 
 	public override void Interact ()
 	{
-		if(Input.GetButtonDown(m_Input))
+		//if(Input.GetButtonDown(m_Input))
 		{
 			ActivateTrigger();
 		}
@@ -69,38 +70,34 @@ public class Triggering : ObjectComponent {
 	public void ActivateTrigger()
 	{
 		//Gather new values in case of change
-		if(!m_HasTriggered)
+
+		for(int i = 0; i < m_Triggers.Length; i++)
+		{
+			m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
+		}
+		
+		if(m_ActivateAll == true)
 		{
 			for(int i = 0; i < m_Triggers.Length; i++)
 			{
-				m_Allowed[i] = m_GameObjects[i].GetComponent<TriggerEffect>().GetAllowedTriggering();
-			}
-			
-			if(m_ActivateAll == true)
-			{
-				for(int i = 0; i < m_Triggers.Length; i++)
+				if(m_Allowed[i] == true)
 				{
-					if(m_Allowed[i] == true)
+					m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTriggerEffect();
+					if(m_GameObjects[i].gameObject.GetComponent<CheckTrigger>() != null)
 					{
-						m_GameObjects[i].GetComponent<TriggerEffect>().ActivateTriggerEffect();
-						if(m_GameObjects[i].gameObject.GetComponent<CheckTrigger>() != null)
-						{
-							m_GameObjects[i].gameObject.GetComponent<CheckTrigger>().Trigger();
-						}
-						m_HasTriggered = true;
+						m_GameObjects[i].gameObject.GetComponent<CheckTrigger>().Trigger();
 					}
 				}
 			}
-			else
+		}
+		else
+		{
+			if(m_Allowed[m_ArrayPosition] == true)
 			{
-				if(m_Allowed[m_ArrayPosition] == true)
+				m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTriggerEffect();
+				if(m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>() != null)
 				{
-					m_GameObjects[m_ArrayPosition].GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					if(m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>() != null)
-					{
-						m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>().Trigger();
-					}
-					m_HasTriggered = true;
+					m_GameObjects[m_ArrayPosition].gameObject.GetComponent<CheckTrigger>().Trigger();
 				}
 			}
 		}
