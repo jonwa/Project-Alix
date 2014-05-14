@@ -8,11 +8,16 @@ using System.Collections;
  */
 public class KillPlayer :  TriggerComponent
 {
-	public void Kill()
+	public void KillThePlayer()
 	{
-
+		CharacterData.Alive = false;
 		//Kalla på deathmenu som sedan sköter resten av "dödsdelen"
 	}
+	
+	//void OnTriggerEnter(Collider other)
+	//{
+	//	CharacterData.Alive = false;
+	//}
 
 	override public string Name
 	{ get{return"KillPlayer";}}
