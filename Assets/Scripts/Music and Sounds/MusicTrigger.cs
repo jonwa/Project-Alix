@@ -24,7 +24,6 @@ public class MusicTrigger : MonoBehaviour
 		m_MusicManager = GameObject.FindObjectOfType<MusicManager>() as MusicManager;
 	}
 
-	//Need to change when layout is known and how the music track looks
 	void OnTriggerEnter(Collider collider)
 	{
 		if (collider.gameObject.name == m_PlayerName) 

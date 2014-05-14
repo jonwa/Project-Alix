@@ -16,9 +16,6 @@ public class MusicManager : MonoBehaviour
 {
 	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
-	private FMOD.Studio.ParameterInstance	m_LocationParameter;
-	private FMOD.Studio.ParameterInstance	m_ProgressParameter;
-	private FMOD.Studio.ParameterInstance	m_PauseParameter;
 	private bool 							m_Started		= false;
 	private string 							m_Path;
 	#endregion
@@ -55,27 +52,21 @@ public class MusicManager : MonoBehaviour
 	void Start()
 	{
 		CacheEventInstance();
+		m_Event.setParameterValue (m_Parameters [0], m_Element0);
+		m_Event.setParameterValue (m_Parameters [1], m_Element1);
+		m_Event.setParameterValue (m_Parameters [2], m_Element2);
+
 		if (startEventOnAwake)
 		{
 			StartEvent();
 		}
-		m_Event.getParameter(m_Parameters[0], out m_LocationParameter);
-		m_Event.getParameter (m_Parameters [1], out m_ProgressParameter);
-		m_Event.getParameter (m_Parameters [2], out m_PauseParameter);
-
-
-		m_LocationParameter.setValue (m_Element0);
-		m_ProgressParameter.setValue (m_Element1);
-		m_PauseParameter.setValue (m_Element2);
-
 	}
 
 	void Update()
 	{
-		m_LocationParameter.setValue (m_Element0);
-		m_ProgressParameter.setValue (m_Element1);
-		m_PauseParameter.setValue (m_Element1);
-
+		m_Event.setParameterValue (m_Parameters [0], m_Element0);
+		m_Event.setParameterValue (m_Parameters [1], m_Element1);
+		m_Event.setParameterValue (m_Parameters [2], m_Element2);
 	}
 
 	void OnDisable()

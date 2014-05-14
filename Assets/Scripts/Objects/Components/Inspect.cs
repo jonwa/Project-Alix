@@ -33,6 +33,7 @@ public class Inspect : ObjectComponent
 	{
 		m_OriginalPosition = transform.position;
 		m_OriginalRotation = transform.rotation;
+		
 	}
 
 	void Update()
@@ -80,13 +81,17 @@ public class Inspect : ObjectComponent
 		if(shouldInspect)
 		{
 			Vector3 cameraForward  = Camera.main.transform.forward.normalized;
-			gameObject.GetComponent<Gravity>().SetGravity(false);
-			rigidbody.velocity   		= Vector3.zero;
-			rigidbody.angularVelocity 	= Vector3.zero;
-
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
+
+
+			if(gameObject.GetComponent<Rigidbody>() != null)
+			{
+				gameObject.GetComponent<Gravity>().SetGravity(false);
+				rigidbody.velocity   		= Vector3.zero;
+				rigidbody.angularVelocity 	= Vector3.zero;
+			}
 		}
 		else
 		{
@@ -97,7 +102,10 @@ public class Inspect : ObjectComponent
 				m_IsOriginalPosition = false;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, lerpSpeed/10.0f);
 				transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed/10.0f);
-				gameObject.GetComponent<Gravity>().SetGravity(true);
+				if(gameObject.GetComponent<Gravity>() != null)
+				{
+					gameObject.GetComponent<Gravity>().SetGravity(true);
+				}
 			}
 			else
 			{
@@ -117,6 +125,7 @@ public class Inspect : ObjectComponent
 		//if we are active we rotate the object with the mouse here.
 		if(IsActive)
 		{
+			Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
 			MoveToInspectDistance(true);
 
 			float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
@@ -146,11 +155,10 @@ public class Inspect : ObjectComponent
 		}
 		else
 		{
+			Camera.main.GetComponent<Raycasting>().Release();
 			//Camera.main.SendMessage("Release");
 			DeActivate();
 		}
-		//Ignore collision with some object, determent by layer
-		Physics.IgnoreLayerCollision(9, 9, true);
 	}
 	public bool IsInspecting
 	{

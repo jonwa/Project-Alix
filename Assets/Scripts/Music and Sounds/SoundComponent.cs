@@ -36,15 +36,6 @@ public abstract class SoundComponent : ObjectComponent
 	
 	void Update()
 	{
-		if (m_Event != null && m_Event.isValid ()) 
-		{
-			var attributes = UnityUtil.to3DAttributes (gameObject);			
-			ERRCHECK (m_Event.set3DAttributes(attributes));			
-		} 
-		else 
-		{
-			m_Event = null;
-		}
 	}
 
 	public virtual void PlaySound()
@@ -54,7 +45,6 @@ public abstract class SoundComponent : ObjectComponent
 
 	public override void Interact()
 	{
-
 		PlaySound ();
 	}
 
@@ -73,8 +63,11 @@ public abstract class SoundComponent : ObjectComponent
 	
 	public void OnDisable()
 	{
-		m_Event.stop ();
-		m_Event.release ();
+		if(m_Event != null)
+		{
+			m_Event.stop ();
+			m_Event.release ();
+		}
 	}
 	
 	public void CacheEventInstance()
@@ -110,7 +103,7 @@ public abstract class SoundComponent : ObjectComponent
 			FMOD.Studio.UnityUtil.LogError("Event failed: " + m_Path);
 		}
 	}
-	
+
 	//Checks for errors
 	public FMOD.RESULT ERRCHECK(FMOD.RESULT result)
 	{
