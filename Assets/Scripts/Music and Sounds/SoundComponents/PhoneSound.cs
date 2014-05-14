@@ -25,6 +25,11 @@ public class PhoneSound : SoundComponent
 	public string			m_Input = "Fire1";
 	#endregion
 
+	public FMODAsset Asset
+	{
+		get{ return m_Asset; }
+	}
+
 	public bool Ringing
 	{
 		get{return m_Ringing;}
