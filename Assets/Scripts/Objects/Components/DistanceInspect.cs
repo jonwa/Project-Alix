@@ -104,6 +104,7 @@ public class DistanceInspect : ObjectComponent
 	
 	public override void Interact ()
 	{
+		Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
 		//if we are active we rotate the object with the mouse here.
 		if(IsActive)
 		{
@@ -136,6 +137,7 @@ public class DistanceInspect : ObjectComponent
 		}
 		else
 		{
+			Camera.main.GetComponent<Raycasting>().Release();
 			//Camera.main.SendMessage("Release");
 			DeActivate();
 		}

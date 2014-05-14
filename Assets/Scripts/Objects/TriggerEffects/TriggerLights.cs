@@ -25,7 +25,7 @@ public class TriggerLights : TriggerComponent {
 
 	void LightSwitch()
 	{
-		if (m_Light.enabled == true) 
+		if (m_Light.enabled) 
 		{
 			m_Light.enabled = false;
 		}

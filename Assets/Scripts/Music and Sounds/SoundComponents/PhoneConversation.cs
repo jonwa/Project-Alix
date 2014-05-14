@@ -35,9 +35,11 @@ public class PhoneConversation : SoundComponent
 		}
 		if(!m_Ringing)
 		{
-			Evt.stop();
+			if(Evt != null)
+			{
+				Evt.stop();
+			}
 		}
-
 	}
 	
 	void Update () 
