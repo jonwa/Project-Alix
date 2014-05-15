@@ -55,6 +55,14 @@ public class DoorDrag : ObjectComponent
 				DeActivate();
 			}
 		}
+		else
+		{
+			if(Camera.main.GetComponent<Raycasting>().m_Distance < Vector3.Distance(Camera.main.transform.position, transform.position))
+			{
+				Camera.main.GetComponent<Raycasting>().Release();
+				m_Camera.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
+			}
+		}
 		
 	}
 
@@ -116,8 +124,6 @@ public class DoorDrag : ObjectComponent
 	private Vector3 PlayerForward()
 	{
 		Vector3 forward = ClosestDirection(m_Player.transform.forward);
-
-		//TODO: Jimmy ska skriva om allt detta (pushable style)
 
 		if(forward == m_ObjectGeneralForward)
 		{

@@ -16,6 +16,7 @@ public class PickUp : ObjectComponent
 	#region PublicMemberVariables
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
 	public float m_ScaleTime			  	= 30f;
+	public float m_DropPoint				= 10f;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -36,13 +37,14 @@ public class PickUp : ObjectComponent
 	}
 	
 	void Update () 
-	{		
+	{	
 		m_DeActivateCounter++;
 		if(m_DeActivateCounter >= 10)
 		{
-			if((m_OriginalScale-transform.localScale).magnitude > 0.1f)
+			if((m_OriginalScale-transform.localScale).magnitude > 0.001f)
 			{
 				transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
+				transform.position = m_CameraTransform.parent.transform.position + (m_CameraTransform.parent.transform.forward * m_DropPoint);
 				m_HoldingObject = false;
 			}
 		}
