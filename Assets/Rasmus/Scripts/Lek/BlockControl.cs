@@ -160,47 +160,71 @@ public class BlockControl : MonoBehaviour
 			{
 				if(m_Rot == 0)
 				{
-					m_Rot++;
-					m_Blocks[0].transform.position += new Vector3(m_Dist * 2, m_Dist * 2, 0);
-					m_Blocks[1].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-					m_Blocks[3].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+					if(m_Blocks[2].GetComponent<SingleBlock>().GetHitLeft() == false && m_Blocks[2].GetComponent<SingleBlock>().GetHitRight() == false)
+					{
+						m_Rot++;
+						m_Blocks[0].transform.position += new Vector3(m_Dist * 2, m_Dist * 2, 0);
+						m_Blocks[1].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
+						m_Blocks[3].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+					}
 				}
 				else
 				{
-					m_Blocks[0].transform.position -= new Vector3(m_Dist * 2, m_Dist * 2, 0);
-					m_Blocks[1].transform.position -= new Vector3(m_Dist * 1, m_Dist * 1, 0);
-					m_Blocks[3].transform.position -= new Vector3(m_Dist * -1, m_Dist * -1, 0);
-					m_Rot--;
+					if(m_Blocks[2].GetComponent<SingleBlock>().GetColliding() == false)
+					{
+						m_Blocks[0].transform.position -= new Vector3(m_Dist * 2, m_Dist * 2, 0);
+						m_Blocks[1].transform.position -= new Vector3(m_Dist * 1, m_Dist * 1, 0);
+						m_Blocks[3].transform.position -= new Vector3(m_Dist * -1, m_Dist * -1, 0);
+						m_Rot--;
+					}
 				}
 			}
 			else if(m_CurrentShape == 5)
 			{
 				if(m_Rot == 0)
 				{
-					m_Rot++;
-					m_Blocks[0].transform.position += new Vector3(m_Dist, 0, 0);
-					m_Blocks[1].transform.position += new Vector3(m_Dist, m_Dist * -2, 0);
+					if(m_Blocks[1].GetComponent<SingleBlock>().GetHitLeft() == false)
+					{
+						if(m_Blocks[2].GetComponent<SingleBlock>().GetColliding() == false)
+						{
+							m_Rot++;
+							m_Blocks[0].transform.position += new Vector3(m_Dist, 0, 0);
+							m_Blocks[1].transform.position += new Vector3(m_Dist, m_Dist * -2, 0);
+						}
+					}
 				}
 				else
 				{
-					m_Blocks[0].transform.position -= new Vector3(m_Dist, 0, 0);
-					m_Blocks[1].transform.position -= new Vector3(m_Dist, m_Dist * -2, 0);
-					m_Rot--;
+					if(m_Blocks[3].GetComponent<SingleBlock>().GetHitRight() == false)
+					{
+						m_Blocks[0].transform.position -= new Vector3(m_Dist, 0, 0);
+						m_Blocks[1].transform.position -= new Vector3(m_Dist, m_Dist * -2, 0);
+						m_Rot--;
+					}
 				}
 			}
 			else if(m_CurrentShape == 6)	
 			{
 				if(m_Rot == 0)
 				{
-					m_Rot++;
-					m_Blocks[0].transform.position += new Vector3(-m_Dist, m_Dist * -2, 0);
-					m_Blocks[1].transform.position += new Vector3(-m_Dist, 0, 0);
+					if(m_Blocks[1].GetComponent<SingleBlock>().GetHitRight() == false)
+					{
+						if(m_Blocks[3].GetComponent<SingleBlock>().GetColliding() == false)
+						{
+							m_Rot++;
+							m_Blocks[0].transform.position += new Vector3(-m_Dist, m_Dist * -2, 0);
+							m_Blocks[1].transform.position += new Vector3(-m_Dist, 0, 0);
+						}
+					}
 				}
 				else
 				{
-					m_Blocks[0].transform.position -= new Vector3(-m_Dist, m_Dist * -2, 0);
-					m_Blocks[1].transform.position -= new Vector3(-m_Dist, 0, 0);
-					m_Rot--;
+					if(m_Blocks[2].GetComponent<SingleBlock>().GetHitLeft() == false)
+					{
+						m_Blocks[0].transform.position -= new Vector3(-m_Dist, m_Dist * -2, 0);
+						m_Blocks[1].transform.position -= new Vector3(-m_Dist, 0, 0);
+						m_Rot--;
+					}
 				}
 			}
 		}
@@ -230,93 +254,138 @@ public class BlockControl : MonoBehaviour
 	{
 		if(m_Rot == 0)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * 2, 0, 0); 
-			m_Rot++;
+			if(m_Blocks[0].GetComponent<SingleBlock>().GetColliding() == false)
+			{
+				if(m_Blocks[1].GetComponent<SingleBlock>().GetColliding() == false)
+				{
+					m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
+					m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
+					m_Blocks[3].transform.position += new Vector3(m_Dist * 2, 0, 0); 
+					m_Rot++;
+				}
+			}
 		}
 		else if(m_Rot == 1)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-			m_Blocks[3].transform.position += new Vector3(0, m_Dist * 2, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetHitRight() == false && m_Blocks[1].GetComponent<SingleBlock>().GetHitLeft() == false)
+			{
+				if(m_Blocks[0].GetComponent<SingleBlock>().GetHitLeft() == false)
+				{
+					m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+					m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
+					m_Blocks[3].transform.position += new Vector3(0, m_Dist * 2, 0); 
+					m_Rot++;
+				}
+			}
 		}
 		else if(m_Rot == 2)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * -2, 0, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetColliding() == false)
+			{
+				m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
+				m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
+				m_Blocks[3].transform.position += new Vector3(m_Dist * -2, 0, 0); 
+				m_Rot++;
+			}
 		}
 		else if(m_Rot == 3)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
-			m_Blocks[3].transform.position += new Vector3(0, m_Dist * -2, 0); 
-			m_Rot = 0;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetHitLeft() == false && m_Blocks[1].GetComponent<SingleBlock>().GetHitRight() == false)
+			{
+				if(m_Blocks[0].GetComponent<SingleBlock>().GetHitRight() == false)
+				{
+					m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
+					m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+					m_Blocks[3].transform.position += new Vector3(0, m_Dist * -2, 0); 
+					m_Rot = 0;
+				}
+			}
 		}
 	}
 	private void RotateLBlock()
 	{
 		if(m_Rot == 0)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
-			m_Blocks[3].transform.position += new Vector3(0, m_Dist * 2, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetColliding() == false)
+			{
+				m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
+				m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
+				m_Blocks[3].transform.position += new Vector3(0, m_Dist * 2, 0); 
+				m_Rot++;
+			}
 		}
 		else if(m_Rot == 1)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * -2, 0, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetHitLeft() == false && m_Blocks[1].GetComponent<SingleBlock>().GetHitRight() == false)
+			{
+				if(m_Blocks[2].GetComponent<SingleBlock>().GetHitRight() == false)
+				{
+					m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+					m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
+					m_Blocks[3].transform.position += new Vector3(m_Dist * -2, 0, 0); 
+					m_Rot++;
+				}
+			}
 		}
 		else if(m_Rot == 2)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
-			m_Blocks[3].transform.position += new Vector3(0, m_Dist * -2, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetColliding() == false)
+			{
+				if(m_Blocks[2].GetComponent<SingleBlock>().GetColliding() == false)
+				{
+					m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
+					m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
+					m_Blocks[3].transform.position += new Vector3(0, m_Dist * -2, 0); 
+					m_Rot++;
+				}
+			}
 		}
 		else if(m_Rot == 3)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * 2, 0, 0); 
-			m_Rot = 0;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetHitLeft() == false && m_Blocks[1].GetComponent<SingleBlock>().GetHitRight() == false)
+			{
+				if(m_Blocks[2].GetComponent<SingleBlock>().GetHitLeft() == false)
+				{
+					m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
+					m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+					m_Blocks[3].transform.position += new Vector3(m_Dist * 2, 0, 0); 
+					m_Rot = 0;
+				}
+			}
 		}
 	}
-	private void RotateTBlock()
+	private void RotateTBlock()	
 	{
 		if(m_Rot == 0)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0); 
+			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
 			m_Rot++;
 		}
 		else if(m_Rot == 1)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetHitRight() == false)
+			{
+				m_Blocks[3].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
+				m_Rot++;
+			}
 		}
 		else if(m_Rot == 2)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * 1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0); 
-			m_Rot++;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetColliding() == false)
+			{
+				m_Blocks[0].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
+				m_Rot++;
+			}
 		}
 		else if(m_Rot == 3)
 		{
-			m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0);
-			m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0);
-			m_Blocks[3].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0);  
-			m_Rot = 0;
+			if(m_Blocks[1].GetComponent<SingleBlock>().GetHitLeft() == false)
+			{
+				m_Blocks[0].transform.position += new Vector3(m_Dist * 1, m_Dist * 1, 0); 
+				m_Blocks[2].transform.position += new Vector3(m_Dist * -1, m_Dist * -1, 0); 
+				m_Blocks[3].transform.position += new Vector3(m_Dist * 1, m_Dist * -1, 0); 
+				m_Rot = 0;
+			}
 		}
 	}
 	#endregion
