@@ -22,6 +22,7 @@ public class FindObjectsWithId : EditorWindow
 
 	Dictionary<GameObject, int> m_ObjectIDs = new Dictionary<GameObject, int>();
 	Dictionary<GameObject, int> m_Ids 		= new Dictionary<GameObject, int>();
+
 	void OnGUI()
 	{
 		bool apply = false; 
@@ -33,11 +34,10 @@ public class FindObjectsWithId : EditorWindow
 			DrawObjectsWithId();
 			
 			NGUIEditorTools.EndContents();
-			
 		}
 
 		GUILayout.Space (10f);
-		
+		 
 		GUILayout.BeginHorizontal ();
 		GUI.color = Color.green;
 		apply = GUILayout.Button ("Apply", GUILayout.Width(200));
@@ -73,7 +73,6 @@ public class FindObjectsWithId : EditorWindow
 		}
 
 		var duplicateValues = m_ObjectIDs.ToLookup(x => x.Value).Where(x => x.Count() > 1);
-		
 
 		foreach(var item in duplicateValues)  
 		{
@@ -127,7 +126,6 @@ public class FindObjectsWithId : EditorWindow
 				GUILayout.EndVertical();
 
 				GUILayout.EndHorizontal();
-
 			}
 		}
 	}
