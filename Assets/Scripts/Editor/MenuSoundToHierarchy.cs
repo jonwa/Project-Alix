@@ -18,7 +18,7 @@ public class MenuSoundToHierarchy : EditorWindow
 	private string[] m_RootNames = new string[10];
 	private int m_Index = 0;
 
-	[MenuItem("LOL/Button Sound")]
+	[MenuItem("LOL/Menu Button Sound")]
 	private static void showEditor ()
 	{
 		EditorWindow window = EditorWindow.GetWindow<MenuSoundToHierarchy> (false, "Tool");

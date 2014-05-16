@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RestartWallJumpGrej : MonoBehaviour {
 	public GameObject m_player;
-	private Vector3 m_startpos;
+	public Vector3 m_startpos;
 	// Use this for initialization
 	void Start () {
 		m_startpos = m_player.transform.position;
