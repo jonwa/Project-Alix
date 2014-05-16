@@ -48,8 +48,11 @@ public class PhoneConversation : SoundComponent
 	
 	void Update () 
 	{
-		var attributes = UnityUtil.to3DAttributes (m_GameObject);
-		ERRCHECK (Evt.set3DAttributes(attributes));			
+		if(m_Answered)
+		{
+			var attributes = UnityUtil.to3DAttributes (m_GameObject);
+			ERRCHECK (Evt.set3DAttributes(attributes));			
+		}
 
 		if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING)
 		{

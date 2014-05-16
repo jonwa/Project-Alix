@@ -18,7 +18,7 @@ public class WalkSound : SoundComponent
 	private float 		m_Time;
 	private float		m_StartTime;
 	private bool		m_FirstTime = true;
-	private string		m_WalkingOn;
+	private bool		m_PlayWalkingSound = true;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -26,7 +26,12 @@ public class WalkSound : SoundComponent
 	public string[]	m_Parameters;
 	public float	m_WalkingSoundSpeed = 0.7f;
 	#endregion
-	
+
+	public bool PlayWalkingSound
+	{
+		get{return m_PlayWalkingSound;}
+		set{m_PlayWalkingSound = value;}
+	}
 
 	public override void PlaySound()
 	{
@@ -43,10 +48,7 @@ public class WalkSound : SoundComponent
 				StartEvent();
 			}
 
-			m_WalkingOn = GetMaterial();
-
-			Debug.Log (m_WalkingOn);
-			switch(m_WalkingOn)
+			switch(GetMaterial())
 			{
 			case "Carpet":
 				m_Surface = 0.05f;
@@ -85,7 +87,7 @@ public class WalkSound : SoundComponent
 		RaycastHit hit;
 		Ray ray = new Ray(m_Player.transform.position, -transform.up);
 		//DEBUG RAY YEY
-		Debug.DrawRay (ray.origin, ray.direction * (m_Player.transform.lossyScale.y + 0.25f), Color.yellow);
+		Debug.DrawRay (ray.origin, ray.direction * (m_Player.transform.lossyScale.y + 0.10f), Color.yellow);
 
 		if(Physics.Raycast (ray, out hit, (m_Player.transform.lossyScale.y + 0.25f)))
 		{
@@ -105,6 +107,9 @@ public class WalkSound : SoundComponent
 
 	void FixedUpdate()
 	{
-		PlaySound ();
+		if(m_PlayWalkingSound)
+		{
+			PlaySound ();
+		}
 	}
 }
