@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using FMOD.Studio;
 
-
 /* Discription: SoundEffect, starts a soundeffect on trigger
  * 
  * Created by: Sebastian Olsson: 23-04-2014
@@ -18,18 +17,26 @@ public class SoundEffect : TriggerComponent
 	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
 	private bool							m_Started;
+	private int								m_Counter;
 	#endregion
 
 	#region PublicMemberVariables
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
-	public float							m_Element0;
+	public float							m_Value;
 	#endregion
 
 	override public string Name
 	{
 		get{ return "PlaySoundEffect"; }
 	}
+
+	public float Parameter
+	{
+		get{return m_Value; }
+		set{m_Value = value;}
+	}
+
 	void Start()
 	{
 		m_Started = false;
@@ -39,13 +46,13 @@ public class SoundEffect : TriggerComponent
 
 	public void PlaySoundEffect()
 	{
-		if (getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.STOPPED) 
+		if (getPlaybackState() != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
 		{
 			m_Started = false;
 		}
 		if (!m_Started) 
 		{
-			m_Parameter.setValue(m_Element0);
+			m_Parameter.setValue(m_Value);
 			StartEvent();
 		}
 	}
@@ -61,6 +68,7 @@ public class SoundEffect : TriggerComponent
 		{
 			m_Event = null;
 		}
+
 	}
 	
 	public FMOD.Studio.PLAYBACK_STATE getPlaybackState()
@@ -110,14 +118,13 @@ public class SoundEffect : TriggerComponent
 		}
 		m_Started = true;
 	}
-	
+
 	//Checks for errors
 	FMOD.RESULT ERRCHECK(FMOD.RESULT result)
 	{
 		FMOD.Studio.UnityUtil.ERRCHECK(result);
 		return result;
 	}
-
 
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}

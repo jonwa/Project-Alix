@@ -2,7 +2,7 @@
 using System.Collections;
 
 /* Component used in order to change the cursor depending on which object
- * is hoovered during collaboration. 
+ * is hovered during collaboration. 
  * 
  * Created By: Jon Wahlström 2014-04-16
  * Modified By: 
@@ -15,6 +15,7 @@ public class CollaborateHoverEffect : ObjectComponent
 	public Texture m_ButtonDownHoverEffect = null;
 	public string  m_Description  = null;
 	#endregion
+
 	public virtual string Name
 	{
 		get

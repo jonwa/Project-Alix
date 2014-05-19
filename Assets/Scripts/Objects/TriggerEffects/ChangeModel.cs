@@ -52,7 +52,15 @@ public class ChangeModel :  TriggerComponent
 	public override void Deserialize(ref JSONObject jsonObject)
 	{
 		m_Counter = (int)jsonObject.GetField("m_Counter").n;
-		gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_Counter];
-		renderer.material.mainTexture = m_TextureStages [m_Counter];
+		m_Counter--;
+		if(m_MeshStages.Length > 0 && m_Counter > m_MeshStages.Length)
+			gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages [m_MeshStages.Length-1];
+		else
+			gameObject.GetComponent<MeshFilter> ().mesh = m_MeshStages[m_Counter];
+			
+		if(m_TextureStages.Length > 0 && m_Counter > m_TextureStages.Length)
+			renderer.material.mainTexture = m_TextureStages [m_TextureStages.Length-1];
+		else
+			renderer.material.mainTexture = m_TextureStages [m_Counter];
 	}
 }

@@ -21,6 +21,11 @@ public class PlatformWindowHandler : MonoBehaviour
 	private static GameObject		 m_DefaultWindow = null; 
 	#endregion
 
+	void Update()
+	{
+		Debug.Log("Peek " + m_History.Peek().gameObject);
+	}
+
 	void Start()
 	{
 		if(m_InitialWindow != null)

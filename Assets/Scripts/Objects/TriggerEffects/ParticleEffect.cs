@@ -38,6 +38,8 @@ public class ParticleEffect : TriggerComponent
 	void Start () 
 	{
 		m_Particle = Instantiate(m_Particle, this.transform.position, this.transform.rotation) as ParticleSystem;
+		m_Particle.Stop();
+		m_Particle.Clear();	
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
