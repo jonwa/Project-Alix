@@ -19,7 +19,7 @@ public class SoundEffectChanger : EditorWindow
 		window.minSize = new Vector2 (250, 350);
 	}
 
-	private string[] m_SoundComponents = new string[12]{"None", "DoorSound", "DrawerSound", "MovieAudio", 
+	private string[] m_SoundComponents = new string[11]{"None", "DoorSound", "DrawerSound", 
 													   "PhoneConversation", "PhoneSound", "VCRSound", "WalkSound",
 													   "SoundEffect", "MusicManager", "MenuSound", "ObjectSound"};
 	private int m_SoundComponentIndex = 0;
@@ -136,9 +136,6 @@ public class SoundEffectChanger : EditorWindow
 		case "DrawerSound":
 			return go.GetComponent<DrawerSound>().m_Asset;
 			break;
-		case "MovieAudio":
-			return go.GetComponent<MovieAudio>().m_Asset;
-			break;
 		case "PhoneConversation":
 			return go.GetComponent<PhoneConversation>().m_Asset;
 			break;
@@ -184,9 +181,6 @@ public class SoundEffectChanger : EditorWindow
 				break;
 			case "DrawerSound":
 				go.GetComponent<DrawerSound>().m_Asset = asset;
-				break;
-			case "MovieAudio":
-				go.GetComponent<MovieAudio>().m_Asset = asset;
 				break;
 			case "PhoneConversation":
 				go.GetComponent<PhoneConversation>().m_Asset = asset;
