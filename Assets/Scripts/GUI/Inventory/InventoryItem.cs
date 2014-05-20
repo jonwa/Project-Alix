@@ -11,6 +11,7 @@ public class InventoryItem : MonoBehaviour
 {
 	#region PrivateMemberVariables
 	private string m_spritename = null; 
+	private string m_DefaultSpriteName = "Slot01";
 	#endregion
 
 	public int 	Slot 	{ get; set; }
@@ -26,8 +27,8 @@ public class InventoryItem : MonoBehaviour
 	{
 		if(item == null)
 		{
-			GetComponentInChildren<UISprite>().spriteName = "Default";
-			GetComponent<UIButton>().normalSprite 		  = "Default";
+			GetComponent<UISprite>().spriteName = m_DefaultSpriteName;
+			GetComponent<UIButton>().normalSprite = m_DefaultSpriteName;
 			m_spritename 								  = null; 
 		}
 		else
@@ -46,8 +47,8 @@ public class InventoryItem : MonoBehaviour
 	{
 		if(m_spritename != null) 
 		{
-			GetComponentInChildren<UISprite>().spriteName = m_spritename;
-			GetComponent<UIButton>().normalSprite 		  = m_spritename; 
+			GetComponent<UISprite>().spriteName = m_spritename;
+			GetComponent<UIButton>().normalSprite = m_spritename;
 		}
 	}
 
