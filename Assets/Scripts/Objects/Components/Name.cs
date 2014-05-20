@@ -12,12 +12,12 @@ using System.Collections;
 public class Name : ObjectComponent 
 {
 	#region PublicMemberVariables
-	public string m_Name; 
+	public string _Name; 
 	#endregion
 
 	public string ObjectName
 	{
-		get { return m_Name.ToLower(); }
+		get { return _Name.ToLower(); }
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

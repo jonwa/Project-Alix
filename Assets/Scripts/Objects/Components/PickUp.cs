@@ -16,7 +16,6 @@ public class PickUp : ObjectComponent
 	#region PublicMemberVariables
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
 	public float m_ScaleTime			  	= 30f;
-
 	public LayerMask	m_LayerMask 	 = (1<<9);
 	#endregion
 	

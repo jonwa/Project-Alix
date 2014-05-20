@@ -41,7 +41,10 @@ public class SoundEffect : TriggerComponent
 	{
 		m_Started = false;
 		CacheEventInstance();
-		m_Event.getParameter (m_Parameters[0], out m_Parameter);
+		if(m_Parameters != null)
+		{
+			m_Event.getParameter (m_Parameters[0], out m_Parameter);
+		}
 	}
 
 	public void PlaySoundEffect()

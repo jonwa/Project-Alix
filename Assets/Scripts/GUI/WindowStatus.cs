@@ -13,12 +13,12 @@ public class WindowStatus : MonoBehaviour
 {
 	#region PublicMemberVariables
 	public enum Name	 {Menu, Inventory, Padlock, Book}; 
-	public Name m_Name = Name.Menu; 
+	public Name _Name = Name.Menu; 
 	#endregion
 
 	public void Activate(bool status)
 	{
-		switch(m_Name)
+		switch(_Name)
 		{
 		case Name.Menu:
 

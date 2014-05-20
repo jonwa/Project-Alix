@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
 	public static bool RequestShowWindow(GameObject window)
 	{
 		// Can't open another GUI component while in menu
-		if(m_Current != null && m_Current != window && m_Current.GetComponent<WindowStatus>().m_Name == WindowStatus.Name.Menu && Active)
+		if(m_Current != null && m_Current != window && m_Current.GetComponent<WindowStatus>()._Name == WindowStatus.Name.Menu && Active)
 		{
 			return false; 
 		}
