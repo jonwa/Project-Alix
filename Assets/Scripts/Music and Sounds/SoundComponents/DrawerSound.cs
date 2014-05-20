@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using FMOD.Studio;
 
 /* Discription: DrawerSound
  * Play sound when interacting with drawers
@@ -14,12 +15,24 @@ public class DrawerSound : SoundComponent
 	private float 		m_MouseYPosition;
 	private bool 		m_Positive 			= false;
 	private bool 		m_Negative 			= false;
+	private GameObject	m_GameObject;
 	#endregion
 
 	#region PublicMemberVariables
 	public string		m_Horizontal		= "Mouse Y";
 	#endregion
 
+	void Start()
+	{
+		CacheEventInstance ();
+		m_GameObject = this.gameObject;
+	}
+
+	void Update()
+	{
+		var attributes = UnityUtil.to3DAttributes (m_GameObject);
+		ERRCHECK (Evt.set3DAttributes(attributes));
+	}
 
 	public override void PlaySound()
 	{
@@ -41,4 +54,6 @@ public class DrawerSound : SoundComponent
 			}
 		}
 	}
+
+
 }
