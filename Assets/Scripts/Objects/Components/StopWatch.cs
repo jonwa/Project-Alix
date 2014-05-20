@@ -34,4 +34,12 @@ public class StopWatch : ObjectComponent
 	}
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
+
+	void OnLevelWasLoaded()
+	{
+		_time = 0;
+		_active = false;
+	}
 }
+
+
