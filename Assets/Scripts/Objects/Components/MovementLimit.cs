@@ -19,9 +19,6 @@ public class MovementLimit : ObjectComponent
 	#endregion
 	
 	#region PrivateMemberVariables
-	private float m_OriginalX;
-	private float m_OriginalY;
-	private float m_OriginalZ;
 	private float MaxX;
 	private float MinX;
 	private float MaxY;
@@ -32,16 +29,13 @@ public class MovementLimit : ObjectComponent
 	
 	// Use this for initialization
 	void Start () 
-	{
-		m_OriginalX = gameObject.transform.localPosition.x;
-		m_OriginalY = gameObject.transform.localPosition.y;
-		m_OriginalZ = gameObject.transform.localPosition.z;
-		MaxX = m_OriginalX + m_PositiveX;
-		MinX = m_OriginalX - m_NegativeX;
-		MaxY = m_OriginalY + m_PositiveY;
-		MinY = m_OriginalY - m_NegativeY;
-		MaxZ = m_OriginalZ + m_PositiveZ;
-		MinZ = m_OriginalZ - m_NegativeZ;
+	{	
+		MaxX = gameObject.transform.localPosition.x + m_PositiveX;
+		MinX = gameObject.transform.localPosition.x - m_NegativeX;
+		MaxY = gameObject.transform.localPosition.y + m_PositiveY;
+		MinY = gameObject.transform.localPosition.y - m_NegativeY;
+		MaxZ = gameObject.transform.localPosition.z + m_PositiveZ;
+		MinZ = gameObject.transform.localPosition.z - m_NegativeZ;
 		Activate();
 	}
 	
