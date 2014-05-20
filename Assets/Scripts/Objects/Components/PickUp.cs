@@ -16,10 +16,13 @@ public class PickUp : ObjectComponent
 	#region PublicMemberVariables
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
 	public float m_ScaleTime			  	= 30f;
-	public float m_DropPoint				= 10f;
+
+	public LayerMask	m_LayerMask 	 = (1<<9);
 	#endregion
 	
 	#region PrivateMemberVariables
+	private float 		m_DropPointMax = 2.0f;	//Här kan du ändra martin.. 
+	private float		m_DropDistance = 2.0f; 
 	private Transform   m_CameraTransform;
 	private int			m_DeActivateCounter;
 	private bool 		m_HoldingObject		 = false;
@@ -44,8 +47,15 @@ public class PickUp : ObjectComponent
 			if((m_OriginalScale-transform.localScale).magnitude > 0.001f)
 			{
 				transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
-				//transform.position = m_CameraTransform.parent.transform.position + (m_CameraTransform.parent.transform.forward * m_DropPoint);
-				m_HoldingObject = false;
+				if(m_DeActivateCounter == 5)
+				{
+					Cast();
+					transform.position = m_CameraTransform.position + (m_CameraTransform.forward * m_DropDistance);
+					rigidbody.velocity   		= Vector3.zero;
+					rigidbody.angularVelocity 	= Vector3.zero;
+					m_HoldingObject = false;
+				}
+
 			}
 		}
 	}
@@ -68,16 +78,24 @@ public class PickUp : ObjectComponent
 			rigidbody.angularVelocity 	= Vector3.zero;
 			rigidbody.useGravity 		= false;
 		}
-		MoveToInspectDistance();
-	}
-	
-	void MoveToInspectDistance()
-	{	
-		if(GetComponent<Inspect>() && !isInspecting)
-		{
-			GetComponent<Inspect>().OriginalPosition = transform.position;
-		}
 		m_HoldingObject = true;
+	}
+
+	void Cast()
+	{
+		RaycastHit hit;
+		Ray ray = new Ray(m_CameraTransform.transform.position, m_CameraTransform.transform.forward);
+		Debug.DrawRay (ray.origin, ray.direction * m_DropPointMax, Color.magenta);
+
+		if (Physics.Raycast (ray, out hit, m_DropPointMax))
+		{
+			Debug.Log("hejsan hopp");
+			m_DropDistance = Vector3.Distance(hit.collider.gameObject.transform.position, m_CameraTransform.position)*0.9f;
+		}
+		else
+		{
+			m_DropDistance = m_DropPointMax;
+		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}
