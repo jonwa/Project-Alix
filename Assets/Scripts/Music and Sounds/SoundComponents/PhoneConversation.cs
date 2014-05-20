@@ -15,6 +15,8 @@ public class PhoneConversation : SoundComponent
 	#region PrivateMemberVariables
 	private bool 			m_Answered;
 	private bool			m_Ringing;
+	private GameObject						m_GameObject;
+	private bool			m_DonePlaying = false;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -22,6 +24,7 @@ public class PhoneConversation : SoundComponent
 
 	void Start () 
 	{
+		m_GameObject = this.gameObject;
 
 	}
 
@@ -29,9 +32,10 @@ public class PhoneConversation : SoundComponent
 	{
 		m_Answered = this.GetComponent<PhoneSound> ().Answered;
 		m_Ringing = this.GetComponent<PhoneSound> ().Ringing;
-		if(m_Answered)
+		if(m_Answered && !m_DonePlaying)
 		{
 			StartEvent();
+			m_DonePlaying = true;
 		}
 		if(!m_Ringing)
 		{
@@ -44,9 +48,14 @@ public class PhoneConversation : SoundComponent
 	
 	void Update () 
 	{
+		if(m_Answered)
+		{
+			var attributes = UnityUtil.to3DAttributes (m_GameObject);
+			ERRCHECK (Evt.set3DAttributes(attributes));			
+		}
+
 		if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING)
 		{
-			this.GetComponent<PhoneSound>().Answered = false;
 			Evt.stop();
 		}
 	}

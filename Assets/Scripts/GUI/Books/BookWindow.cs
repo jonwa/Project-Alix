@@ -32,7 +32,7 @@ public class BookWindow : MonoBehaviour
 				m_Pages[i] = go;
 				++i;
 			}
-			Debug.Log("Pages.size " + m_Pages.Length);
+			//Debug.Log("Pages.size " + m_Pages.Length);
 		}
 	}
 
