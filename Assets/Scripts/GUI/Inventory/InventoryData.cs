@@ -50,7 +50,6 @@ public class InventoryData : MonoBehaviour
 		if(!swap)
 		{
 			Camera.main.GetComponent<Raycasting>().InteractingWith = null; 
-			//ToggleInventory ();
 		}
 
 		foreach(GameObject itemSlot in m_Slots)
@@ -123,35 +122,4 @@ public class InventoryData : MonoBehaviour
 			}
 		}
 	}
-
-	/*private static void ToggleInventory()
-	{
-		//InputManager.Active = false;
-
-		Toggle = false;
-		instance.GetComponent<UIPlayTween>().Play (false);
-
-		instance.StartCoroutine ("WaitAndReset");
-	}
-
-	IEnumerator WaitAndReset()
-	{
-		while(instance.GetComponent<TweenPosition>().enabled)
-		{
-			yield return new WaitForSeconds(0.5f);
-		}
-
-		CloseInventory ();
-	}
-
-	private static void CloseInventory()
-	{
-		// Shuts down the inventory window
-		//InputManager.Active = true;
-
-		Toggle = true;
-		instance.GetComponent<UIPlayTween>().Play (true);
-
-		//InputManager.Reset();
-	}*/
 }

@@ -33,13 +33,8 @@ public class WindowStatus : MonoBehaviour
 			}
 			break;
 		case Name.Inventory:
-			//InventoryData.Toggle = status;
+			InventoryData.Toggle = status;
 			transform.GetChild(0).gameObject.SetActive(status);
-			//gameObject.GetComponent<UIPlayTween>().Play (status);
-			/*if(status)
-			{
-				InventoryData.UpdateInventory(); 
-			}*/
 			break;
 		case Name.Padlock:
 			transform.GetChild(0).gameObject.SetActive(status);
