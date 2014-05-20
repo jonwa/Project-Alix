@@ -32,8 +32,6 @@ public class Locked : TriggerComponent
 		}
 	}
 
-
-
 	public void Lock()
 	{
 		m_Locked = true;

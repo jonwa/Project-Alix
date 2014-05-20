@@ -48,7 +48,7 @@ public class WalkSound : SoundComponent
 				StartEvent();
 			}
 
-			switch(GetMaterial())
+			switch(m_Material)
 			{
 			case "Carpet":
 				m_Surface = 0.05f;
@@ -65,6 +65,7 @@ public class WalkSound : SoundComponent
 			if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING && m_Time >= m_WalkingSoundSpeed)
 			{
 				StartEvent();
+				Debug.Log (m_Time);
 				m_StartTime = Time.time;
 			}
 		}
@@ -86,7 +87,6 @@ public class WalkSound : SoundComponent
 	{
 		RaycastHit hit;
 		Ray ray = new Ray(m_Player.transform.position, -transform.up);
-		//DEBUG RAY YEY
 		Debug.DrawRay (ray.origin, ray.direction * (m_Player.transform.lossyScale.y + 0.10f), Color.yellow);
 
 		if(Physics.Raycast (ray, out hit, (m_Player.transform.lossyScale.y + 0.25f)))
@@ -101,15 +101,12 @@ public class WalkSound : SoundComponent
 
 	void Update () 
 	{
+		if(PlayWalkingSound)
+		{
+			PlaySound();
+		}
+
 		var attributes = UnityUtil.to3DAttributes (m_Player);
 		ERRCHECK (Evt.set3DAttributes(attributes));			
-	}
-
-	void FixedUpdate()
-	{
-		if(m_PlayWalkingSound)
-		{
-			PlaySound ();
-		}
 	}
 }
