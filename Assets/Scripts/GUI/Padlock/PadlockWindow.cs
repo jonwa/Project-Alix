@@ -32,7 +32,7 @@ public class PadlockWindow : MonoBehaviour
 			m_Numbers[i] = go;
 			++i;
 		}
-		Debug.Log("m_Numbers.Length: " + m_Numbers.Length);
+		//Debug.Log("m_Numbers.Length: " + m_Numbers.Length);
 	}
 
 	public static void NextNumber(int id)

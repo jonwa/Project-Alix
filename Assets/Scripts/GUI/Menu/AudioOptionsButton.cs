@@ -11,7 +11,7 @@ public class AudioOptionsButton : MonoBehaviour
 {
 	public enum Name{Master, Music, Sound, VoiceOver};
 
-	public Name m_Name = Name.Master;
+	public Name _Name = Name.Master;
 
 	void Update()
 	{
@@ -22,7 +22,7 @@ public class AudioOptionsButton : MonoBehaviour
 	{
 		float value = gameObject.GetComponent<UIScrollBar> ().value;
 		Debug.Log ("value " +  value);
-		switch (m_Name) 
+		switch (_Name) 
 		{
 		case Name.Master:
 			AudioOptionsWindow.ChangeVolume ("master", value);

@@ -16,7 +16,7 @@ public class PickUp : ObjectComponent
 	#region PublicMemberVariables
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
 	public float m_ScaleTime			  	= 30f;
-	public float m_DropPoint				= 10f;
+	public float m_DropPoint				= 2f;
 	#endregion
 	
 	#region PrivateMemberVariables

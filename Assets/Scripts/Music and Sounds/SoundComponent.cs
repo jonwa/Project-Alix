@@ -87,6 +87,22 @@ public abstract class SoundComponent : ObjectComponent
 		}
 	}
 
+	public void CacheEventInstance(FMODAsset p_Asset)
+	{
+		if (p_Asset != null)
+		{
+			m_Event = FMOD_StudioSystem.instance.GetEvent(p_Asset.id);
+		}
+		else if (!String.IsNullOrEmpty(m_Path))
+		{
+			m_Event = FMOD_StudioSystem.instance.GetEvent(m_Path);
+		}
+		else
+		{
+			FMOD.Studio.UnityUtil.LogError("No Asset/path for the Event");
+		}
+	}
+
 	public void StartEvent()
 	{
 		if (m_Event == null || !m_Event.isValid())
