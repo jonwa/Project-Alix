@@ -44,7 +44,7 @@ public class PickUp : ObjectComponent
 			if((m_OriginalScale-transform.localScale).magnitude > 0.001f)
 			{
 				transform.localScale = Vector3.Lerp(transform.localScale, m_OriginalScale, Time.deltaTime * m_ScaleTime);
-				transform.position = m_CameraTransform.parent.transform.position + (m_CameraTransform.parent.transform.forward * m_DropPoint);
+				//transform.position = m_CameraTransform.parent.transform.position + (m_CameraTransform.parent.transform.forward * m_DropPoint);
 				m_HoldingObject = false;
 			}
 		}

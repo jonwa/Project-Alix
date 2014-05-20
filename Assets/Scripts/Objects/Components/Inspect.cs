@@ -44,7 +44,7 @@ public class Inspect : ObjectComponent
 			{
 				MoveToInspectDistance(false);
 			}
-			if(m_DeActivateCounter > 4 &&  m_UnlockedCamera == false)
+			if(m_DeActivateCounter > 4 &&  m_UnlockedCamera == false && transform.position == m_OriginalPosition)
 			{
 				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
