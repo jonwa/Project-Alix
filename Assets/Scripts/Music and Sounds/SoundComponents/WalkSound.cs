@@ -35,7 +35,13 @@ public class WalkSound : SoundComponent
 
 	public override void PlaySound()
 	{
-		m_PlayerSpeed = this.gameObject.transform.rigidbody.velocity.normalized.magnitude;
+		Vector3 speed = new Vector3 ();
+		//m_PlayerSpeed = this.gameObject.transform.rigidbody.velocity.normalized.magnitude;
+		speed = new Vector3(this.gameObject.transform.rigidbody.velocity.normalized.x, 0, this.gameObject.transform.rigidbody.velocity.normalized.z);
+		m_PlayerSpeed = speed.normalized.magnitude;
+
+		Debug.Log (speed);
+
 		m_Time = Time.time - m_StartTime;
 
 		if(m_PlayerSpeed != 0)
