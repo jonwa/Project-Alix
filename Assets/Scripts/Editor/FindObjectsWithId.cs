@@ -21,9 +21,12 @@ public class FindObjectsWithId : EditorWindow
 	}
 
 	Dictionary<GameObject, int> m_ObjectIDs = new Dictionary<GameObject, int>();
+	Dictionary<GameObject, int> m_Ids 		= new Dictionary<GameObject, int>();
 
 	void OnGUI()
 	{
+		bool apply = false; 
+
 		NGUIEditorTools.DrawHeader ("Output", false);
 		{
 			NGUIEditorTools.BeginContents();
@@ -31,7 +34,19 @@ public class FindObjectsWithId : EditorWindow
 			DrawObjectsWithId();
 			
 			NGUIEditorTools.EndContents();
-			
+		}
+
+		GUILayout.Space (10f);
+		 
+		GUILayout.BeginHorizontal ();
+		GUI.color = Color.green;
+		apply = GUILayout.Button ("Apply", GUILayout.Width(200));
+		GUI.color = Color.white;
+		GUILayout.EndHorizontal ();
+		
+		if(apply)
+		{
+			ApplyChanges();
 		}
 	}
 
@@ -51,8 +66,13 @@ public class FindObjectsWithId : EditorWindow
 			}
 		}
 
+		foreach(KeyValuePair<GameObject, int> kvPair in m_ObjectIDs)
+		{
+			if(!m_Ids.ContainsKey(kvPair.Key))
+				m_Ids.Add(kvPair.Key, kvPair.Value);
+		}
+
 		var duplicateValues = m_ObjectIDs.ToLookup(x => x.Value).Where(x => x.Count() > 1);
-		
 
 		foreach(var item in duplicateValues)  
 		{
@@ -76,18 +96,17 @@ public class FindObjectsWithId : EditorWindow
 				GUILayout.BeginHorizontal();
 
 				int i = kvPair.Value;
-
+				GameObject go = kvPair.Key; 
 				GUILayout.BeginVertical();
 				if(values.Contains(i))
 				{
 					GUI.color = Color.cyan;
-					GameObject go = kvPair.Key; 
+
 					go = EditorGUILayout.ObjectField (go, typeof(GameObject), false) as GameObject;
 					GUI.color = Color.white;
 				}
 				else
 				{
-					GameObject go = kvPair.Key; 
 					go = EditorGUILayout.ObjectField (go, typeof(GameObject), false) as GameObject;
 				}
 				GUILayout.EndVertical(); 
@@ -96,19 +115,28 @@ public class FindObjectsWithId : EditorWindow
 				if(values.Contains(i))
 				{
 					GUI.color = Color.cyan;
-					i = EditorGUILayout.IntField(i);
+					m_Ids[go] = EditorGUILayout.IntField(m_Ids[go]);
 					GUI.color = Color.white;
 				}
 				else
 				{
-					i = EditorGUILayout.IntField(i);
+					m_Ids[go] = EditorGUILayout.IntField(m_Ids[go]);
 
 				}
 				GUILayout.EndVertical();
 
 				GUILayout.EndHorizontal();
-
 			}
+		}
+	}
+
+	private void ApplyChanges()
+	{
+		foreach(KeyValuePair<GameObject, int> kvPair in m_ObjectIDs)
+		{
+			GameObject go = kvPair.Key;
+
+			go.GetComponent<Id>().m_Id = m_Ids[go];
 		}
 	}
 }

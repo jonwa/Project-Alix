@@ -11,7 +11,9 @@ using System.Collections;
 public abstract class TriggerComponent : SerializableObject
 {
 	public virtual string Name
-	{ get{return"";}}
+	{
+		get{return"";}
+	}
 
 	// Use this for initialization
 	void Start()

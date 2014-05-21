@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RestartScene : MonoBehaviour {
-	// Use this for initialization
-	void Start () {
-	}
+public class RestartScene : MonoBehaviour 
+{
+	public string levelName = "Robert - Copy";
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown ("m")) 
 		{
-			Application.LoadLevel("Surf1.0");
+			Application.LoadLevel(levelName);
 		}
 	}
 }

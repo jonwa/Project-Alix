@@ -20,49 +20,16 @@ public class RotationLimit : ObjectComponent
 	#endregion
 	
 	#region PrivateMemberVariables
-	public Vector3 m_Rotation;
-	private Vector3 m_LastRotation;
-	private Vector3 m_Difference;
-	private Vector3 m_Offset;
-	private Vector3 m_OriginalRotation;
+	private Vector3 m_Rotation;
 	private bool 	m_IsLocked;
 	#endregion
 	
 	// Use this for initialization
 	void Start () 
 	{
-		m_OriginalRotation = transform.localRotation.eulerAngles;
-		m_LastRotation = m_OriginalRotation;
-		m_Offset = m_OriginalRotation - new Vector3(180,180,180);
-		Activate();
-		if(m_PositiveX > 180)
-		{
-			m_PositiveX = 180;
-		}
-		if(m_PositiveY > 180)
-		{
-			m_PositiveY = 180;
-		}
-		if(m_PositiveZ > 180)
-		{
-			m_PositiveZ = 180;
-		}
-		if(m_NegativeX > 180)
-		{
-			m_NegativeX = 180;
-		}
-		if(m_NegativeY > 180)
-		{
-			m_NegativeY = 180;
-		}
-		if(m_NegativeZ > 180)
-		{
-			m_NegativeZ = 180;
-		}
 		m_NegativeX *= -1;
 		m_NegativeY *= -1;
 		m_NegativeZ *= -1;
-		m_Offset *= -1;
 	}
 	
 	// Update is called once per frame
@@ -166,13 +133,13 @@ public class RotationLimit : ObjectComponent
 			}
 			else
 			{
-				if(CheckZ > m_PositiveX)
+				if(CheckZ > m_PositiveZ)
 				{
-					angle = m_PositiveX - m_Rotation.z; 
+					angle = m_PositiveZ - m_Rotation.z; 
 				}
-				else if(CheckZ < m_NegativeX)
+				else if(CheckZ < m_NegativeZ)
 				{
-					angle = m_NegativeX + (m_Rotation.z * -1); 
+					angle = m_NegativeZ + (m_Rotation.z * -1); 
 				}
 			}
 			m_Rotation.z +=angle;

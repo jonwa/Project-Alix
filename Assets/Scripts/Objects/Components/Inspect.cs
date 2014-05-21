@@ -19,12 +19,12 @@ public class Inspect : ObjectComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	private Vector3 	m_OriginalPosition;
+	public Vector3 	m_OriginalPosition;
 	private Quaternion  m_OriginalRotation;
 	private int			m_DeActivateCounter  = 0;
-	private bool		m_IsOriginalPosition = true;
+	public bool		m_IsOriginalPosition = true;
 	private bool		m_UnlockedCamera	 = true;
-	private bool		m_ShouldMoveBack	 = false;
+	public bool		m_ShouldMoveBack	 = false;
 	private bool		m_IsInspecting		 = false;
 	#endregion
 
@@ -44,7 +44,7 @@ public class Inspect : ObjectComponent
 			{
 				MoveToInspectDistance(false);
 			}
-			if(m_DeActivateCounter > 4 &&  m_UnlockedCamera == false)
+			if(m_DeActivateCounter > 4 &&  m_UnlockedCamera == false && m_IsOriginalPosition && Quaternion.Angle(transform.rotation, m_OriginalRotation) < 0.5f)
 			{
 				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().UnLockCamera();
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().UnLockPlayerMovement();
@@ -52,6 +52,10 @@ public class Inspect : ObjectComponent
 				m_ShouldMoveBack = false;
 				m_IsOriginalPosition = true;
 				m_IsInspecting = false;
+				if(gameObject.GetComponent<PickUp>() == null){
+					Camera.main.GetComponent<Raycasting>().Release();
+				}
+
 			}
 			m_DeActivateCounter++;
 		}
@@ -60,12 +64,7 @@ public class Inspect : ObjectComponent
 			m_DeActivateCounter++;
 			if(m_DeActivateCounter > 5)
 			{
-				if(!gameObject.GetComponent<PickUp>())
-				{
-					Camera.main.SendMessage("Release");
-				}
-			
-				DeActivate();
+				m_ShouldMoveBack = true;
 			}
 		}
 	}
@@ -84,6 +83,7 @@ public class Inspect : ObjectComponent
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
 			transform.position = Vector3.Lerp(transform.position, targetPosition, m_LerpSpeed/10.0f);
+			m_IsOriginalPosition = false;
 
 
 			if(gameObject.GetComponent<Rigidbody>() != null)
@@ -95,22 +95,20 @@ public class Inspect : ObjectComponent
 		}
 		else
 		{
-			targetPosition	   = m_OriginalPosition;
-
-		if(Vector3.Distance(transform.position, targetPosition) > 0.01)
+			if(Vector3.Distance(transform.position, m_OriginalPosition) > 0.01f  || Quaternion.Angle(transform.rotation, m_OriginalRotation) > 0.2f)
 			{
 				m_IsOriginalPosition = false;
 				transform.rotation = Quaternion.Lerp(transform.rotation, m_OriginalRotation, lerpSpeed/10.0f);
-				transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed/10.0f);
-				if(gameObject.GetComponent<Gravity>() != null)
-				{
-					gameObject.GetComponent<Gravity>().SetGravity(true);
-				}
+				transform.position = Vector3.Lerp(transform.position, m_OriginalPosition, lerpSpeed/10.0f);
 			}
-			else
+			else if(Vector3.Distance(transform.position, m_OriginalPosition) < 0.03f && Quaternion.Angle(transform.rotation, m_OriginalRotation) < 0.5f)
 			{
 				m_IsOriginalPosition = true;
 				m_ShouldMoveBack 	 = false;
+				if(gameObject.GetComponent<Rigidbody>() != null)
+				{
+					gameObject.GetComponent<Gravity>().SetGravity(true);
+				}
 			}
 		}
 	}
@@ -122,42 +120,47 @@ public class Inspect : ObjectComponent
 
 	public override void Interact ()
 	{
-		//if we are active we rotate the object with the mouse here.
-		if(IsActive)
-		{
-			Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
-			MoveToInspectDistance(true);
 
-			float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
-			float m_moveY = Input.GetAxis("Mouse Y") * m_Sensitivity;
-
-			//rotates the object based on mouse input
-			transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
-			transform.RotateAround(collider.bounds.center,Vector3.up, m_moveX);
-			m_IsInspecting = true;
-		}
 
 		//Check if we should inspect the object or not.
-		if(Input.GetButton(m_Input) && m_IsOriginalPosition)
+		if(Input.GetButton(m_Input)/* && m_IsOriginalPosition*/)
 		{
 			if(!IsActive)
 			{
 				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
-				m_OriginalPosition = transform.position;
-				m_OriginalRotation = transform.rotation;
+				if(gameObject.GetComponent<PickUp>() != null){
+					m_OriginalPosition = transform.position;
+					m_OriginalRotation = transform.rotation;
+				}
 				m_UnlockedCamera   = false;
 				m_ShouldMoveBack = true;
 			}
-
 			Activate();
 			m_DeActivateCounter = 0;
 		}
-		else
+
+		//if we are active we rotate the object with the mouse here.
+		if(IsActive)
 		{
-			Camera.main.GetComponent<Raycasting>().Release();
-			//Camera.main.SendMessage("Release");
-			DeActivate();
+			if(Input.GetButton(m_Input)){
+				Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
+				MoveToInspectDistance(true);
+				
+				float m_moveX = Input.GetAxis("Mouse X") * m_Sensitivity;
+				float m_moveY = Input.GetAxis("Mouse Y") * m_Sensitivity;
+				
+				//rotates the object based on mouse input
+				transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
+				transform.RotateAround(collider.bounds.center,Vector3.up, m_moveX);
+				m_IsInspecting = true;
+			}
+			else 
+			{
+				m_ShouldMoveBack = true;
+				Debug.Log("Yolo");
+				DeActivate();
+			}
 		}
 	}
 	public bool IsInspecting

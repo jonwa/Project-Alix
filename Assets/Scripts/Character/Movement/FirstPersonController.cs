@@ -86,7 +86,8 @@ public class FirstPersonController : MonoBehaviour
 			rigidbody.velocity = new Vector3(0f, 0f, 0f);
 		}
 		//Gravity
-		rigidbody.AddForce(new Vector3(0, -m_Gravity*rigidbody.mass, 0));
+		
+		rigidbody.AddForce(-transform.up*(m_Gravity*rigidbody.mass));
 		m_Grounded = false;
 
 	}

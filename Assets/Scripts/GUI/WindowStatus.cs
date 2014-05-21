@@ -13,12 +13,12 @@ public class WindowStatus : MonoBehaviour
 {
 	#region PublicMemberVariables
 	public enum Name	 {Menu, Inventory, Padlock, Book}; 
-	public Name m_Name = Name.Menu; 
+	public Name _Name = Name.Menu; 
 	#endregion
 
 	public void Activate(bool status)
 	{
-		switch(m_Name)
+		switch(_Name)
 		{
 		case Name.Menu:
 
@@ -33,13 +33,14 @@ public class WindowStatus : MonoBehaviour
 			}
 			break;
 		case Name.Inventory:
-			//InventoryData.Toggle = status;
-			transform.GetChild(0).gameObject.SetActive(status);
-			//gameObject.GetComponent<UIPlayTween>().Play (status);
-			/*if(status)
+			InventoryData.Toggle = status;
+			if(status)
+				transform.GetChild (0).transform.localPosition = new Vector3 (-0.7f, -0.75f, 0f);
+			else
 			{
-				InventoryData.UpdateInventory(); 
-			}*/
+				transform.GetChild (0).transform.localPosition = new Vector3 (-0.7f, -20f, 0f);
+			}
+			//transform.GetChild(0).gameObject.SetActive(status);
 			break;
 		case Name.Padlock:
 			transform.GetChild(0).gameObject.SetActive(status);

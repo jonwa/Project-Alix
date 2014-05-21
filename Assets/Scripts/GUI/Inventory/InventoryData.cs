@@ -35,6 +35,7 @@ public class InventoryData : MonoBehaviour
 		m_MaxItemSlots = m_MaxItems;
 		m_Items        = new GameObject[m_MaxItems];
 		m_Player 	   = GameObject.Find(m_PlayerName);
+		gameObject.transform.localPosition = new Vector3 (-0.7f, -20f, 0f);
 	}
 
 	//Initializes the List of empty slots. 
@@ -47,31 +48,37 @@ public class InventoryData : MonoBehaviour
 	//add a object to the inventory, called from Pocket.cs
 	public static void AddItem(GameObject go, bool swap)
 	{
+		Debug.Log ("AddItem start");
 		if(!swap)
 		{
 			Camera.main.GetComponent<Raycasting>().InteractingWith = null; 
-			//ToggleInventory ();
 		}
 
 		foreach(GameObject itemSlot in m_Slots)
 		{
+			
+			Debug.Log("For each");
 			InventoryItem slot = itemSlot.GetComponent<InventoryItem>();
 			if(!slot.Occupied)
 			{
+				Debug.Log("!slot.Occupied");
 				Name name = go.GetComponent<Name>();
-				go.SetActive(false);
-				
+
 				if(name == null) return;
 
 				slot.Occupied 	   = true;
 				m_Items[slot.Slot] = go;
-				
+				go.SetActive(false);
+				Camera.main.GetComponent<Raycasting>().Release();
+
 				if(Toggle)
 				{
+					Debug.Log("Toggle == true");
 					slot.Replace(name.ObjectName);
 				}
 				else
 				{
+					Debug.Log("Toggle == false");
 					slot.DelayedReplace(name.ObjectName);
 				}
 				UpdateInventory();
@@ -123,35 +130,4 @@ public class InventoryData : MonoBehaviour
 			}
 		}
 	}
-
-	/*private static void ToggleInventory()
-	{
-		//InputManager.Active = false;
-
-		Toggle = false;
-		instance.GetComponent<UIPlayTween>().Play (false);
-
-		instance.StartCoroutine ("WaitAndReset");
-	}
-
-	IEnumerator WaitAndReset()
-	{
-		while(instance.GetComponent<TweenPosition>().enabled)
-		{
-			yield return new WaitForSeconds(0.5f);
-		}
-
-		CloseInventory ();
-	}
-
-	private static void CloseInventory()
-	{
-		// Shuts down the inventory window
-		//InputManager.Active = true;
-
-		Toggle = true;
-		instance.GetComponent<UIPlayTween>().Play (true);
-
-		//InputManager.Reset();
-	}*/
 }
