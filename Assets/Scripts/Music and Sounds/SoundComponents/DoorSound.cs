@@ -11,16 +11,16 @@ using FMOD.Studio;
 public class DoorSound : SoundComponent 
 {
 	#region PrivateMemberVariables
-	private bool							m_Open;
-	private bool							m_Closed;
-	private float							m_StartRotation;
-	private float							m_Rotation;
-	private bool							m_Locked;
-	private float							m_MouseMovement;
-	private float							m_Action;
-	private GameObject						m_GameObject;
-	private int 							m_StartIterator 	= 0;
-	private string							m_Input				= "Fire1";
+	private bool			m_Open;
+	private bool			m_Closed;
+	private float			m_StartRotation;
+	private float			m_Rotation;
+	private bool			m_Locked;
+	private float			m_MouseMovement;
+	private float			m_Action;
+	private GameObject		m_GameObject;
+	private int 			m_StartIterator 	= 0;
+	private string			m_Input				= "Fire1";
 	#endregion
 	
 	#region PublicMemberVariables
@@ -35,7 +35,10 @@ public class DoorSound : SoundComponent
 		m_StartRotation = this.transform.eulerAngles.y;
 		m_Action = 1;
 		Evt.setParameterValue(m_Parameters[0], m_Action);
-		StartEvent ();
+		if(m_StartOnAwake)
+		{
+			StartEvent ();
+		}
 	}
 	
 	public override void PlaySound()

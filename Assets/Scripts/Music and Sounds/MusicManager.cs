@@ -5,12 +5,11 @@ using System.Runtime.InteropServices;
 using FMOD.Studio;
 
 /* Discription: Music Managers
- * Managing the Music with FMOD
+ * Managing the Music with FMOD, has full controll over the music
  * 
  * Created by: Sebastian Olsson 15/04-14
  * Modified by:
  */
-//TODO: Rensa scriptet på skit, skriv ett smidigt sätt att lägga till parametrar vid behov.
 
 public class MusicManager : MonoBehaviour 
 {
@@ -21,40 +20,30 @@ public class MusicManager : MonoBehaviour
 	#endregion
 
 	#region PublicMemberVariables
-	[Range(0,1)] public float				m_Element0;
-	[Range(0,1)] public float 				m_Element1;
-	[Range(0,1)] public float 				m_Element2;
+	[Range(0,1)] public float				m_Location;
+	[Range(0,1)] public float 				m_Progress;
+	[Range(0,1)] public float 				m_PauseAndDeath;
 	public bool 							startEventOnAwake	= true;
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
 	#endregion
 
-	#region ParameterSetAndGetFunktions
-	public float Element0
+	public FMOD.Studio.EventInstance GetEvent
 	{
-		set{ m_Element0 = value; }
-		get{ return m_Element0; }
+		get{ return m_Event; }
 	}
 
-	public float Element1
+	public void SetParameterValue(string p_Name, float p_Value)
 	{
-		set{ m_Element1 = value; }
-		get{ return m_Element1; }
+		m_Event.setParameterValue (p_Name, p_Value);
 	}
 
-	public float Element2
-	{
-		set{ m_Element2 = value; }
-		get{ return m_Element2; }
-	}
-	#endregion
-	
 	void Start()
 	{
 		CacheEventInstance();
-		m_Event.setParameterValue (m_Parameters [0], m_Element0);
-		m_Event.setParameterValue (m_Parameters [1], m_Element1);
-		m_Event.setParameterValue (m_Parameters [2], m_Element2);
+		m_Event.setParameterValue (m_Parameters [0], m_Location);
+		m_Event.setParameterValue (m_Parameters [1], m_Progress);
+		m_Event.setParameterValue (m_Parameters [2], m_PauseAndDeath);
 
 		if (startEventOnAwake)
 		{
@@ -64,9 +53,6 @@ public class MusicManager : MonoBehaviour
 
 	void Update()
 	{
-		m_Event.setParameterValue (m_Parameters [0], m_Element0);
-		m_Event.setParameterValue (m_Parameters [1], m_Element1);
-		m_Event.setParameterValue (m_Parameters [2], m_Element2);
 	}
 
 	void OnDisable()
