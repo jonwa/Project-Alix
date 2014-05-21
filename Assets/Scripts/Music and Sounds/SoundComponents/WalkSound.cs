@@ -3,9 +3,9 @@ using System.Collections;
 using FMOD.Studio;
 
 /* Discription: WalkSound
- * Sound for footsteps
+ * Sound for footsteps, put this script on the player
  * 
- * Created by: Sebastian Olsson 14/05-14
+ * Created by: Sebastian Olsson 21/05-14
  * Modified by:
  */
 
@@ -19,10 +19,10 @@ public class WalkSound : SoundComponent
 	private float		m_StartTime;
 	private bool		m_FirstTime = true;
 	private bool		m_PlayWalkingSound = true;
+	private string		m_Material;
 	#endregion
 	
 	#region PublicMemberVariables
-	public string	m_Material;
 	public string[]	m_Parameters;
 	public float	m_WalkingSoundSpeed = 0.7f;
 	#endregion
@@ -35,7 +35,7 @@ public class WalkSound : SoundComponent
 
 	public override void PlaySound()
 	{
-		m_PlayerSpeed = Camera.main.transform.parent.gameObject.transform.rigidbody.velocity.normalized.magnitude;
+		m_PlayerSpeed = this.gameObject.transform.rigidbody.velocity.normalized.magnitude;
 		m_Time = Time.time - m_StartTime;
 
 		if(m_PlayerSpeed != 0)
@@ -48,7 +48,7 @@ public class WalkSound : SoundComponent
 				StartEvent();
 			}
 
-			switch(m_Material)
+			switch(GetMaterial())
 			{
 			case "Carpet":
 				m_Surface = 0.05f;
@@ -80,7 +80,7 @@ public class WalkSound : SoundComponent
 	{
 		CacheEventInstance();
 		m_StartTime = Time.time;
-		m_Player = Camera.main.transform.parent.gameObject;
+		m_Player = this.gameObject;
 	}
 
 	string GetMaterial()
@@ -91,9 +91,9 @@ public class WalkSound : SoundComponent
 
 		if(Physics.Raycast (ray, out hit, (m_Player.transform.lossyScale.y + 0.25f)))
 		{
-			if(hit.collider.gameObject.GetComponent<WalkSound>() != null)
+			if(hit.collider.gameObject.GetComponent<FloorMaterial>() != null)
 			{
-				return hit.collider.gameObject.GetComponent<WalkSound>().m_Material;
+				return hit.collider.gameObject.GetComponent<FloorMaterial>().m_Material;
 			}
 		}
 		return null;
@@ -101,12 +101,15 @@ public class WalkSound : SoundComponent
 
 	void Update () 
 	{
+		var attributes = UnityUtil.to3DAttributes (m_Player);
+		ERRCHECK (Evt.set3DAttributes(attributes));			
+	}
+
+	void FixedUpdate()
+	{
 		if(PlayWalkingSound)
 		{
 			PlaySound();
 		}
-
-		var attributes = UnityUtil.to3DAttributes (m_Player);
-		ERRCHECK (Evt.set3DAttributes(attributes));			
 	}
 }
