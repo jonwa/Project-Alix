@@ -66,13 +66,6 @@ public class DoorSound : SoundComponent
 						Evt.setParameterValue(m_Parameters[0], m_Action);
 						StartEvent();
 					}
-					else if(m_Open && (m_Rotation > (m_Margin + m_StartRotation)))
-					{
-						m_Action = 0.45f;
-						Evt.setParameterValue(m_Parameters[0], m_Action);
-
-						StartEvent();
-					}
 				}
 
 			}
