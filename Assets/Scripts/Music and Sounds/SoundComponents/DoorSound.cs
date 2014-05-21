@@ -35,10 +35,7 @@ public class DoorSound : SoundComponent
 		m_StartRotation = this.transform.eulerAngles.y;
 		m_Action = 1;
 		Evt.setParameterValue(m_Parameters[0], m_Action);
-		if(m_StartOnAwake)
-		{
-			StartEvent ();
-		}
+		StartEvent ();
 	}
 	
 	public override void PlaySound()
@@ -46,11 +43,11 @@ public class DoorSound : SoundComponent
 		m_Locked = GetComponent<Locked> ().GetLocked ();
 		m_MouseMovement = Input.GetAxis ("Mouse Y");
 		m_Rotation = this.transform.eulerAngles.y;
-		Debug.Log (getPlaybackState ());
+		//Debug.Log (getPlaybackState ());
 
 		if(!m_Locked)
 		{
-			Debug.Log (getPlaybackState());
+			//Debug.Log (getPlaybackState());
 			if(m_MouseMovement != 0)
 			{
 				if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.PLAYING)
@@ -69,12 +66,19 @@ public class DoorSound : SoundComponent
 						Evt.setParameterValue(m_Parameters[0], m_Action);
 						StartEvent();
 					}
+					else if(m_Open && (m_Rotation > (m_Margin + m_StartRotation)))
+					{
+						m_Action = 0.45f;
+						Evt.setParameterValue(m_Parameters[0], m_Action);
+
+						StartEvent();
+					}
 				}
 
 			}
 			if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING)
 			{
-				m_Action = 0f;
+				m_Action = 1f;
 				Evt.setParameterValue(m_Parameters[0], m_Action);
 				Evt.stop();
 			}

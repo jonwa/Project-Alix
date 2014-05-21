@@ -65,7 +65,7 @@ public class WalkSound : SoundComponent
 			if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING && m_Time >= m_WalkingSoundSpeed)
 			{
 				StartEvent();
-				Debug.Log (m_Time);
+				//Debug.Log (m_Time);
 				m_StartTime = Time.time;
 			}
 		}
