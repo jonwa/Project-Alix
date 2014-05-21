@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using FMOD.Studio;
 
+/* Discription: AudioStack
+ * Used to play multiple sounds one after the other
+ * 
+ * Created by: Sebastian Olsson 20/05-14
+ * Modified by:
+ */
+
 public class AudioStack : SoundComponent
 {
 	#region PrivateMemberVariables
@@ -28,7 +35,10 @@ public class AudioStack : SoundComponent
 
 	void PlayMovieSound()
 	{
-		Evt.stop ();
+		if(Evt != null)
+		{
+			Evt.stop ();
+		}
 		if(m_SoundStack.Count != 0)
 		{
 
@@ -52,7 +62,8 @@ public class AudioStack : SoundComponent
 	void Start () 
 	{
 		m_Counter = 0;
-		if(m_StartOnAwake)
+
+		if(m_StartOnAwake && Evt != null)
 		{
 			CacheEventInstance();
 			StartEvent();
@@ -77,8 +88,10 @@ public class AudioStack : SoundComponent
 				PlayMovieSound();
 			}
 		}
-
-		var attributes = UnityUtil.to3DAttributes (m_GameObject);
-		ERRCHECK (Evt.set3DAttributes(attributes));
+		if(Evt != null)
+		{
+			var attributes = UnityUtil.to3DAttributes (m_GameObject);
+			ERRCHECK (Evt.set3DAttributes(attributes));
+		}
 	}
 }

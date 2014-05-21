@@ -27,22 +27,4 @@ public class InventoryInput : MonoBehaviour
 			}
 		}
 	}
-
-	/*if(InventoryData.Toggle && InputManager.Active)
-			{ 
-				InputManager.Active = false;
-
-			}
-			else if(InventoryData.Toggle && !InputManager.Active)
-			{
-				return;
-			}
-			else
-			{
-				InputManager.Active = true;
-				InventoryData.Toggle = true;
-				gameObject.GetComponent<UIPlayTween>().Play (true);
-			}
-
-			InputManager.Reset();*/
 }

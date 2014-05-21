@@ -16,7 +16,7 @@ public class PortalTexture : MonoBehaviour
 	private int           m_LastInt;
 
 	public  GameObject[]  m_Children;
-	// Use this for initialization
+
 	void Start () 
 	{
 		m_Texture = new RenderTexture(512,512,24);
@@ -27,7 +27,6 @@ public class PortalTexture : MonoBehaviour
 		m_LastInt = Camera.main.GetComponent<HouseCall>().GetTargetHouse();
 	}
 	
-	// Update is called once per frame
 	void Update () 
 	{
 		m_Camera.targetTexture = m_Texture;

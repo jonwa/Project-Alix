@@ -39,7 +39,6 @@ public class Pocket : ObjectComponent
 		// 		Check to see if the inventory is full?
 
 		InventoryData.AddItem(gameObject, false);
-		Camera.main.GetComponent<Raycasting>().Release();
 	}
 
 	//Calls for the move to inventory function and then deactivates this item.
