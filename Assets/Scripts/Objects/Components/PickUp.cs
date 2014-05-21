@@ -88,8 +88,10 @@ public class PickUp : ObjectComponent
 
 		if (Physics.Raycast (ray, out hit, m_DropPointMax))
 		{
-			Debug.Log("hejsan hopp");
-			m_DropDistance = Vector3.Distance(hit.collider.gameObject.transform.position, m_CameraTransform.position)*0.9f;
+			m_DropDistance = Vector3.Distance(hit.point, m_CameraTransform.position);
+			Debug.Log(m_DropDistance);
+			m_DropDistance *= 0.88f;
+			Debug.Log(m_DropDistance);
 		}
 		else
 		{

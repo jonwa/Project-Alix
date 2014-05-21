@@ -62,7 +62,6 @@ public class FirstPersonController : MonoBehaviour
 			else if(Input.GetButton("Crouch"))
 			{
 				maxVelocity = m_ChrouchSpeed;
-				//Camera.main.transform.position = new Vector3(cameraPosition.x, m_CameraPositionY/2, cameraPosition.z);
 			}
 
 			targetVelocity	*= maxVelocity;
@@ -74,12 +73,6 @@ public class FirstPersonController : MonoBehaviour
 			//add movement force, x/z
 			rigidbody.AddForce(velocity, ForceMode.VelocityChange);
 
-			//Jump logic
-			//if(Input.GetButton("Jump"))
-			//{
-			//
-			//	rigidbody.velocity = new Vector3(rigidbody.velocity.x,CalculateJumpForce(),rigidbody.velocity.z);
-			//}
 		}
 		else if(m_Locked)
 		{
