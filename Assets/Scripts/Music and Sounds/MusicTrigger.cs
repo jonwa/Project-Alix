@@ -5,23 +5,27 @@ using System.Collections;
  * Used for changing values when entering a trigger
  * 
  * Created by: Sebastian Olsson 06-05-14
- * Modified by:
+ * Modified by: Sebastian: 21-05-14: Removed bad code
  */
+
 [RequireComponent(typeof(BoxCollider))]
 public class MusicTrigger : MonoBehaviour 
 {
 
 	private bool						m_Entered 		= false;
 	private MusicManager 				m_MusicManager;
+	private FMOD.Studio.EventInstance 	m_Event;
+	private string						m_PlayerName;
 
-	public string						m_PlayerName	= "Player Controller Example";
 	[Range(0,1)]public float			m_Value;
 	public string						m_Parameter;
 
 	void Start () 
 	{
 		collider.isTrigger = true;
+		m_PlayerName = Camera.main.transform.parent.gameObject.name;
 		m_MusicManager = GameObject.FindObjectOfType<MusicManager>() as MusicManager;
+		m_Event = m_MusicManager.GetEvent;
 	}
 
 	void OnTriggerEnter(Collider collider)
@@ -37,19 +41,8 @@ public class MusicTrigger : MonoBehaviour
 		m_Entered = false;
 	}
 
-	void ChangeValue(string Parameter, float p_Value)
+	void ChangeValue(string p_Parameter, float p_Value)
 	{
-		if(Parameter == "Location")
-		{
-			m_MusicManager.Element0 = p_Value;
-		}
-		else if(Parameter == "Progress")
-		{
-			m_MusicManager.Element1 = p_Value;
-		}
-		else if(Parameter == "Pause and Death")
-		{
-			m_MusicManager.Element2 = p_Value;
-		}
+		m_MusicManager.SetParameterValue(p_Parameter, p_Value);
 	}
 }

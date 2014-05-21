@@ -11,16 +11,16 @@ using FMOD.Studio;
 public class DoorSound : SoundComponent 
 {
 	#region PrivateMemberVariables
-	private bool							m_Open;
-	private bool							m_Closed;
-	private float							m_StartRotation;
-	private float							m_Rotation;
-	private bool							m_Locked;
-	private float							m_MouseMovement;
-	private float							m_Action;
-	private GameObject						m_GameObject;
-	private int 							m_StartIterator 	= 0;
-	private string							m_Input				= "Fire1";
+	private bool			m_Open;
+	private bool			m_Closed;
+	private float			m_StartRotation;
+	private float			m_Rotation;
+	private bool			m_Locked;
+	private float			m_MouseMovement;
+	private float			m_Action;
+	private GameObject		m_GameObject;
+	private int 			m_StartIterator 	= 0;
+	private string			m_Input				= "Fire1";
 	#endregion
 	
 	#region PublicMemberVariables
@@ -43,11 +43,11 @@ public class DoorSound : SoundComponent
 		m_Locked = GetComponent<Locked> ().GetLocked ();
 		m_MouseMovement = Input.GetAxis ("Mouse Y");
 		m_Rotation = this.transform.eulerAngles.y;
-		Debug.Log (getPlaybackState ());
+		//Debug.Log (getPlaybackState ());
 
 		if(!m_Locked)
 		{
-			Debug.Log (getPlaybackState());
+			//Debug.Log (getPlaybackState());
 			if(m_MouseMovement != 0)
 			{
 				if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.PLAYING)
@@ -66,12 +66,19 @@ public class DoorSound : SoundComponent
 						Evt.setParameterValue(m_Parameters[0], m_Action);
 						StartEvent();
 					}
+					else if(m_Open && (m_Rotation > (m_Margin + m_StartRotation)))
+					{
+						m_Action = 0.45f;
+						Evt.setParameterValue(m_Parameters[0], m_Action);
+
+						StartEvent();
+					}
 				}
 
 			}
 			if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING)
 			{
-				m_Action = 0f;
+				m_Action = 1f;
 				Evt.setParameterValue(m_Parameters[0], m_Action);
 				Evt.stop();
 			}
