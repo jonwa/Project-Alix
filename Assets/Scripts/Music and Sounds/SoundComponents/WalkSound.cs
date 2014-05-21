@@ -37,7 +37,7 @@ public class WalkSound : SoundComponent
 	{
 		m_PlayerSpeed = this.gameObject.transform.rigidbody.velocity.normalized.magnitude;
 		m_Time = Time.time - m_StartTime;
-
+		Debug.Log (this.gameObject.transform.rigidbody.velocity.normalized);
 		if(m_PlayerSpeed != 0)
 		{
 			if(m_FirstTime)
