@@ -116,6 +116,6 @@ public class CheckPlayer2 : MonoBehaviour
 		}
 		Vector3 differenceVector = m_TargetToFollow.transform.position - playerTransform.position;
 
-		transform.position = m_Player.transform.position + new Vector3(differenceVector.x, 0, differenceVector.z);
+		transform.position = m_Player.transform.position + new Vector3(differenceVector.x, differenceVector.y, differenceVector.z);
 	}
 }

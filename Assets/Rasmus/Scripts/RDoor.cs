@@ -1,52 +1,118 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RDoor : MonoBehaviour 
+public class RDoor : ObjectComponent
 {
-	public float test		= 0;
-	public float test2		= 0;
-	public float MaxAngle	= 90;
-	public float MinAngel	= 270;
+	private Vector3 m_Start;
+	private bool 	m_Positive;
+	private bool 	m_UseX;
+	private float   m_Counter;
+	private bool 	m_Active;
 	// Use this for initialization
 	void Start () 
 	{
-
+		DecideBools();
 	}
-	
-	// Update is called once per frame
+
+	private void DecideBools()
+	{
+		m_Start = transform.position;
+		if(transform.forward.x > 0.5)
+		{
+			m_Positive = false;
+			m_UseX = true;
+		}
+		if(transform.forward.x < -0.5)
+		{
+			m_Positive = true;
+			m_UseX = true;
+		}
+		if(transform.forward.z > 0.5)
+		{
+			m_Positive = true;
+			m_UseX = false;
+		}
+		if(transform.forward.z < -0.5)
+		{
+			m_Positive = false;
+			m_UseX = false;
+		}
+	}
+
 	void Update () 
 	{
-		if(Input.GetKey("t"))
+		if(m_Active == true)
 		{
-			Vector3 pointVec = transform.localPosition;
-			//pointVec.x -= renderer.bounds.size.x/2;
-			
-			transform.RotateAround(pointVec, transform.up, test);
-		}
-		if(Input.GetKey("y"))
-		{
-			Vector3 pointVec = transform.localPosition;
-			//pointVec.x -= renderer.bounds.size.x/2;
-			
-			transform.RotateAround(pointVec, transform.up, -test);
+			if(m_Counter > 0)
+			{
+				m_Counter-= Time.deltaTime;
+			}
+			else
+			{
+				m_Active = false;
+				Camera.main.GetComponent<Raycasting>().Release();
+				Camera.main.GetComponent<FirstPersonCamera>().UnLockCamera();
+			}
 		}
 	}
 
-	public void RotateDoorClock()
+	public override void Interact()
 	{
-		if(transform.rotation.eulerAngles.y < MaxAngle){
-			Vector3 pointVec = transform.localPosition;
-			transform.RotateAround(pointVec, transform.up, test);
-		}
-		Debug.Log(transform.rotation.eulerAngles.y);
-	}
-	public void RotateDoorUnClock()
-	{
-		if(transform.rotation.eulerAngles.y > MinAngel)
+
+		if(GetComponent<Locked>().GetLocked() == false)
 		{
-			Vector3 pointVec = transform.localPosition;
-			transform.RotateAround(pointVec, transform.up, -test);
+			if(m_Active == false)
+			{
+				DecideBools();
+			}
+			m_Active = true;
+			CheckPositive();
+			m_Counter = 0.3f;
+			Camera.main.GetComponent<FirstPersonCamera>().LockCamera();
 		}
-		Debug.Log(transform.rotation.eulerAngles.y);
+		else
+		{
+			Debug.Log("Låst dörr");
+			Camera.main.GetComponent<Raycasting>().Release();
+		}
 	}
+
+	private void CheckPositive()
+	{
+		float mFloat;
+		if(m_UseX == false)
+		{
+			mFloat = m_Start.x - Camera.main.transform.position.x;
+		}
+		else
+		{
+			mFloat = m_Start.z - Camera.main.transform.position.z;
+		}
+
+		if(m_Positive == true)
+		{
+			if(mFloat > 0)
+			{
+				transform.parent.GetComponent<RDoorDad>().DadRotation2();
+			}
+			else
+			{
+				transform.parent.GetComponent<RDoorDad>().DadRotation1();
+			}
+		}
+		else
+		{
+			if(mFloat > 0)
+			{
+				transform.parent.GetComponent<RDoorDad>().DadRotation1();
+			}
+			else
+			{
+				transform.parent.GetComponent<RDoorDad>().DadRotation2();
+			}
+		}
+	}
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

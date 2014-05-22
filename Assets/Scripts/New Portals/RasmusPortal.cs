@@ -58,20 +58,32 @@ public class RasmusPortal : ObjectComponent
 	//When we collide with the portal we create a duplicate and 
 	void OnTriggerEnter(Collider collider)
 	{
-		m_TargetPortal 		 = m_TargetPort.transform;
-		Vector3 ExtraForward = m_TargetPortal.transform.up;
-		
-		float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
-		collider.gameObject.transform.Rotate(0, 180+angle, 0);
-		
-		Quaternion q1  = Quaternion.FromToRotation(transform.up, m_TargetPortal.up);					
-		Vector3 newPos = m_TargetPortal.position + q1 * (collider.transform.position - transform.position);
-		
-		collider.transform.position = newPos + ExtraForward;
-		if(collider.CompareTag("Player"))
+		if(collider.gameObject.GetComponent<PickUp>() != null && collider.gameObject.GetComponent<PickUp>().GetHoldingObject() == true)
 		{
-			Camera.main.GetComponent<HouseCall>().SetHouseCall(m_TargetPort.GetComponent<RasmusPortal>().m_MyHouse);
-			Camera.main.GetComponent<HouseCall>().SetTargetHouse(m_MyHouse);
+
+		}
+		else
+		{
+			m_TargetPortal 		 = m_TargetPort.transform;
+			Vector3 ExtraForward = m_TargetPortal.transform.up;
+			
+			float angle = m_TargetPortal.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y;
+			collider.gameObject.transform.Rotate(0, 180+angle, 0);
+			
+			Quaternion q1  = Quaternion.FromToRotation(transform.up, m_TargetPortal.up);					
+			Vector3 newPos = m_TargetPortal.position + q1 * (collider.transform.position - transform.position);
+			
+			collider.transform.position = newPos + ExtraForward;
+			if(collider.CompareTag("Player"))
+			{
+				Camera.main.GetComponent<HouseCall>().SetHouseCall(m_TargetPort.GetComponent<RasmusPortal>().m_MyHouse);
+				Camera.main.GetComponent<HouseCall>().SetTargetHouse(m_MyHouse);
+
+				if(Camera.main.GetComponent<Raycasting>().HoldingInteractingWith() == true && Camera.main.GetComponent<Raycasting>().InteractingWith.GetComponent<PickUp>() != null)
+				{
+					Camera.main.GetComponent<Raycasting>().InteractingWith.transform.position = newPos + ExtraForward;
+				}
+			}
 		}
 	}
 	
