@@ -20,6 +20,7 @@ public class WalkSound : SoundComponent
 	private bool		m_FirstTime = true;
 	private bool		m_PlayWalkingSound = true;
 	private string		m_Material;
+	private Vector3 	m_LastPosition;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -35,17 +36,15 @@ public class WalkSound : SoundComponent
 
 	public override void PlaySound()
 	{
-		Vector3 speed = new Vector3 ();
-		//m_PlayerSpeed = this.gameObject.transform.rigidbody.velocity.normalized.magnitude;
-		speed = new Vector3(this.gameObject.transform.rigidbody.velocity.normalized.x, 0, this.gameObject.transform.rigidbody.velocity.normalized.z);
-		m_PlayerSpeed = speed.normalized.magnitude;
-
-		Debug.Log (speed);
+		Vector3 position = this.gameObject.GetComponent<FirstPersonController> ().Position;
 
 		m_Time = Time.time - m_StartTime;
-
-		if(m_PlayerSpeed != 0)
+		//Debug.Log ("LastPOs = " + m_LastPosition);
+		//Debug.Log ("Position: " + position);
+		if(m_LastPosition != position)
 		{
+			m_LastPosition = position;
+
 			if(m_FirstTime)
 			{
 				m_FirstTime = false;
@@ -53,40 +52,41 @@ public class WalkSound : SoundComponent
 				Evt.setParameterValue (m_Parameters [0], m_Surface);
 				StartEvent();
 			}
-
-			switch(GetMaterial())
+			else
 			{
-			case "Carpet":
-				m_Surface = 0.05f;
-				Evt.setParameterValue(m_Parameters[0], m_Surface);
-				break;
-			case "Wood":
-				m_Surface = 0.15f;
-				Evt.setParameterValue(m_Parameters[0], m_Surface);
-				break;
-			case "None":
-				break;
-			}
-
-			if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING && m_Time >= m_WalkingSoundSpeed)
-			{
-				StartEvent();
-				//Debug.Log (m_Time);
-				m_StartTime = Time.time;
+				switch(GetMaterial())
+				{
+				case "Carpet":
+					m_Surface = 0.05f;
+					Evt.setParameterValue(m_Parameters[0], m_Surface);
+					break;
+				case "Wood":
+					m_Surface = 0.15f;
+					Evt.setParameterValue(m_Parameters[0], m_Surface);
+					break;
+				case "None":
+					break;
+				}
+				
+				if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING && m_Time >= m_WalkingSoundSpeed)
+				{
+					StartEvent();
+					//Debug.Log (m_Time);
+					m_StartTime = Time.time;
+				}
 			}
 		}
-		//Låter skumt
-		//else
-		//{
-		//	Evt.stop();
-		//	m_FirstTime = true;
-		//}
+		else
+		{
+			//Debug.Log ("STOP");
+		}
 	}
 	void Start () 
 	{
 		CacheEventInstance();
 		m_StartTime = Time.time;
 		m_Player = this.gameObject;
+		m_LastPosition = this.gameObject.GetComponent<FirstPersonController> ().Position;
 	}
 
 	string GetMaterial()
@@ -99,7 +99,7 @@ public class WalkSound : SoundComponent
 		{
 			if(hit.collider.gameObject.GetComponent<FloorMaterial>() != null)
 			{
-				return hit.collider.gameObject.GetComponent<FloorMaterial>().m_Material;
+				return hit.collider.gameObject.GetComponent<FloorMaterial>().FloorType;
 			}
 		}
 		return null;
