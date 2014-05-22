@@ -19,7 +19,7 @@ public class PickUp : ObjectComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	private LayerMask	m_LayerMask = (1 << 0) | (1 << 1) |  (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 9) | (1 << 10) | (1 << 11) |  (1 << 14) | (1 << 15) | (1 << 15);
+	private LayerMask	m_LayerMask = (1 << 0) | (1 << 1) |  (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 9) | (1 << 10) | (1 << 11) |  (1 << 14) | (1 << 15) | (1 << 16);
 	private float 		m_DropPointMax = 2.0f;	//Här kan du ändra martin.. 
 	private float		m_DropDistance = 2.0f; 
 	private Transform   m_CameraTransform;
@@ -41,7 +41,7 @@ public class PickUp : ObjectComponent
 	void Update () 
 	{	
 		m_DeActivateCounter++;
-		if(m_DeActivateCounter >= 10)
+		if(m_DeActivateCounter >= 5)
 		{
 			if((m_OriginalScale-transform.localScale).magnitude > 0.001f)
 			{
