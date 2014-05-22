@@ -15,11 +15,11 @@ public class PickUp : ObjectComponent
 {
 	#region PublicMemberVariables
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
-	public float m_ScaleTime			  	= 30f;
-	public LayerMask	m_LayerMask 	 = (1<<9);
+	public float 		m_ScaleTime			= 30f;
 	#endregion
-	
+
 	#region PrivateMemberVariables
+	private LayerMask	m_LayerMask = (1 << 0) | (1 << 1) |  (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 9) | (1 << 10) | (1 << 11) |  (1 << 14) | (1 << 15) | (1 << 15);
 	private float 		m_DropPointMax = 2.0f;	//Här kan du ändra martin.. 
 	private float		m_DropDistance = 2.0f; 
 	private Transform   m_CameraTransform;
