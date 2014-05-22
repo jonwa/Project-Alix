@@ -10,15 +10,24 @@ using System.Linq;
 public class MultipleCollaborationTrigger : ObjectComponent 
 {
 	public List<int>	m_NeedsToTriggerBeforeMe = new List<int>();
-	public List<int>	m_Triggers = new List<int>();
-
-	private bool m_HasBeenTriggered = false;
-	private List<int> m_Triggered = new List<int>();
+	
+	private List<int> 	m_Triggered = new List<int>();
 
 	public void AddToTriggeredList(int id)
 	{
-		Debug.Log("GOT ADD");
 		m_Triggered.Add(id);
+	}
+
+	void Start()
+	{
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
+		{
+			if(c.Multiple){
+				m_NeedsToTriggerBeforeMe = c.m_IDsMulti;
+			}
+		}
 	}
 
 	void Update()
@@ -40,27 +49,18 @@ public class MultipleCollaborationTrigger : ObjectComponent
 				return;
 			}
 		}
-
-		if(!m_HasBeenTriggered)
-		{
-			Debug.Log("SENT TO DAD!");
 			Trigger();
-			m_HasBeenTriggered = true;
-		}
 	}
 
 	void Trigger()
 	{
-		//THIS SHOT WORKS PERFECTLY! REPLACE EVERYWHERE!
-		List<Id> ids = Resources.FindObjectsOfTypeAll<Id>().ToList();
-		foreach(Id i in ids)
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
 		{
-			if(m_Triggers.Contains(i.ObjectId))
-			{
-				i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-
+			if(c.Multiple){
+				c.ActivateTriggerEffect();
 			}
-
 		}
 	}
 
@@ -68,8 +68,6 @@ public class MultipleCollaborationTrigger : ObjectComponent
 	{
 		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
 		jsonObject.AddField(Name, jObject);
-		jObject.AddField("m_HasBeenTriggered", m_HasBeenTriggered);
-
 
 		JSONObject jTriggeredArr = new JSONObject(JSONObject.Type.ARRAY);
 		jObject.AddField("m_Triggered", jTriggeredArr);
@@ -81,8 +79,6 @@ public class MultipleCollaborationTrigger : ObjectComponent
 
 	public override void Deserialize(ref JSONObject jsonObject)
 	{
-		m_HasBeenTriggered = (bool)jsonObject.GetField("m_HasBeenTriggered").b;
-
 		JSONObject jTriggeredArr = jsonObject.GetField("m_Triggered");
 		for(int i=0; i < jTriggeredArr.list.Count; ++i)
 		{

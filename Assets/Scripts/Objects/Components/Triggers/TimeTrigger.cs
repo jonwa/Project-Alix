@@ -14,42 +14,48 @@ public class TimeTrigger : ObjectComponent
 	private bool m_Active = false;
 	private float m_StartTime;
 	private float m_Time;
-	private bool m_HasTriggered = false;
+	private float m_TriggerTime;
 	#endregion
-	
-	#region PublicMemberVariables
-	public float m_TriggerTime;
-	public string[] m_Messages;
-	public bool m_TriggerOnce;
-	#endregion
-
 	
 	override public string Name
 	{
 		get{ return "StartTimer"; }
 	}
 
+	void Start(){
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
+		{
+			if(c.Time){
+				m_TriggerTime = c.m_TimeDelay;
+			}
+		}
+	}
+
 	void Update () 
 	{
 		if (m_Active) 
 		{
+			Debug.Log(m_Time);
 			m_Time = Time.time - m_StartTime;
 			if(m_Time >= m_TriggerTime)
 			{
-				Debug.Log ("Trigger Time");
-				ActivateTriggerEffect();
-				if(gameObject.GetComponent<CheckTrigger>() != null)
+				SuperTrigger[] triggerArray;
+				triggerArray = gameObject.GetComponents<SuperTrigger>();
+				foreach(SuperTrigger c in triggerArray)
 				{
-					gameObject.GetComponent<CheckTrigger>().Trigger();
+					if(c.Time){
+						c.ActivateTriggerEffect();
+					}
 				}
-				m_HasTriggered = true;
-				m_Active = false;
 			}
 		}
 	}
 
 	void StartTimer()
 	{
+		Debug.Log("TimeStart");
 		m_StartTime = Time.time;
 		if (!m_Active) 
 		{
@@ -61,23 +67,6 @@ public class TimeTrigger : ObjectComponent
 		}
 	}
 
-	public void ActivateTriggerEffect()
-	{
-		if(!m_HasTriggered)
-		{
-			for(int i = 0; i < m_Messages.Length; i++){
-				if(m_Messages[i].Equals("Effect"))
-				{
-					Debug.Log("Fått en triggerEffect");
-				}
-				else
-				{
-					SendMessage(m_Messages[i]);
-					
-				}
-			}
-		}
-	}
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
 }

@@ -12,16 +12,23 @@ public class ButtonTrigger : ObjectComponent
 {
 	#region PublicMemberVariables
 	public List<int>	m_Triggers = new List<int>();
-	public bool   		m_TriggerOnce = false;
-	#endregion
-	
-	#region PrivateMemberVariables
-	private bool 		 m_HasTriggered	 = false;
 	#endregion
 	
 	// Use this for initialization
 	void Start () 
 	{
+		if(gameObject.GetComponent<SuperTrigger>())
+		{
+			SuperTrigger[] triggerArray;
+			triggerArray = gameObject.GetComponents<SuperTrigger>();
+			foreach(SuperTrigger c in triggerArray)
+			{
+				if(c.Button)
+				{
+					m_Triggers = c.m_IDsTrigger;
+				}
+			}
+		}
 	}
 
 	void OnClick()
@@ -32,22 +39,24 @@ public class ButtonTrigger : ObjectComponent
 	//Will send activition to all TriggerID
 	void ActivateTrigger()
 	{
-		if(!m_HasTriggered)
+		List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
+		foreach(Id i in ids)
 		{
-			List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
-			foreach(Id i in ids)
+			if(m_Triggers.Contains(i.ObjectId))
 			{
-				if(m_Triggers.Contains(i.ObjectId))
+				if(i.gameObject.GetComponent<SuperTrigger>())
 				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					if(i.gameObject.GetComponent<CheckTrigger>() != null)
+					SuperTrigger[] triggerArray;
+					triggerArray = i.gameObject.GetComponents<SuperTrigger>();
+					foreach(SuperTrigger c in triggerArray)
 					{
-						i.gameObject.GetComponent<CheckTrigger>().Trigger();
+						if(c.Button){
+							c.ActivateTriggerEffect();
+						}
 					}
-					m_HasTriggered = true;
 				}
-				
 			}
+			
 		}
 	}
 			
