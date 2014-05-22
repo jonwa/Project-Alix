@@ -67,7 +67,6 @@ public class CollaborateTrigger : ObjectComponent
 							foreach(SuperTrigger c in triggerArray)
 							{
 								if(c.CollaborateSelf){
-									Debug.Log("Collaborate");
 									c.ActivateTriggerEffect();
 								}
 							}

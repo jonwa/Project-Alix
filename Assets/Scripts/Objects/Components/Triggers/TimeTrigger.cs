@@ -37,7 +37,6 @@ public class TimeTrigger : ObjectComponent
 	{
 		if (m_Active) 
 		{
-			Debug.Log(m_Time);
 			m_Time = Time.time - m_StartTime;
 			if(m_Time >= m_TriggerTime)
 			{
@@ -55,7 +54,6 @@ public class TimeTrigger : ObjectComponent
 
 	void StartTimer()
 	{
-		Debug.Log("TimeStart");
 		m_StartTime = Time.time;
 		if (!m_Active) 
 		{
