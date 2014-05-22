@@ -43,7 +43,8 @@ public class CollaborateTrigger : ObjectComponent
 					
 						if(hoover.gameObject.GetComponent<TriggerEffect>())
 						{
-							hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+							hoover.gameObject.SendMessage("ActivateTriggerEffect");
+							//hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 							if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
 							{
 								hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
