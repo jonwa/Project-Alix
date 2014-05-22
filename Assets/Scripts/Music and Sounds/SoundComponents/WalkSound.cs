@@ -37,14 +37,14 @@ public class WalkSound : SoundComponent
 	public override void PlaySound()
 	{
 		Vector3 position = this.gameObject.GetComponent<FirstPersonController> ().Position;
+		m_PlayerSpeed = this.gameObject.rigidbody.velocity.normalized.magnitude;
 
+		//Debug.Log (Vector3.Distance(position, m_LastPosition));
 		m_Time = Time.time - m_StartTime;
-		//Debug.Log ("LastPOs = " + m_LastPosition);
-		//Debug.Log ("Position: " + position);
-		if(m_LastPosition != position)
+		//if(m_LastPosition != position)
+		if(Vector3.Distance(position, m_LastPosition) > 0.075f)
 		{
 			m_LastPosition = position;
-
 			if(m_FirstTime)
 			{
 				m_FirstTime = false;
@@ -64,21 +64,18 @@ public class WalkSound : SoundComponent
 					m_Surface = 0.15f;
 					Evt.setParameterValue(m_Parameters[0], m_Surface);
 					break;
-				case "None":
-					break;
 				}
 				
 				if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING && m_Time >= m_WalkingSoundSpeed)
 				{
 					StartEvent();
-					//Debug.Log (m_Time);
 					m_StartTime = Time.time;
 				}
 			}
 		}
 		else
 		{
-			//Debug.Log ("STOP");
+			m_LastPosition = position;
 		}
 	}
 	void Start () 
