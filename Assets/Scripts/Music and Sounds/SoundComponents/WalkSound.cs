@@ -21,11 +21,14 @@ public class WalkSound : SoundComponent
 	private bool		m_PlayWalkingSound = true;
 	private string		m_Material;
 	private Vector3 	m_LastPosition;
+	private float		m_SprintSpeed = 0.075f;
+	private float		m_WalkingSoundSpeed;
 	#endregion
 	
 	#region PublicMemberVariables
 	public string[]	m_Parameters;
-	public float	m_WalkingSoundSpeed = 0.7f;
+	private float	m_DistanceBeforeSound = 0.055f;
+
 	#endregion
 
 	public bool PlayWalkingSound
@@ -37,13 +40,23 @@ public class WalkSound : SoundComponent
 	public override void PlaySound()
 	{
 		Vector3 position = this.gameObject.GetComponent<FirstPersonController> ().Position;
+		float distance;
 
+		m_PlayerSpeed = this.gameObject.rigidbody.velocity.normalized.magnitude;
+		distance = Vector3.Distance (position, m_LastPosition);
 		m_Time = Time.time - m_StartTime;
-		//Debug.Log ("LastPOs = " + m_LastPosition);
-		//Debug.Log ("Position: " + position);
-		if(m_LastPosition != position)
+
+		Debug.Log (Vector3.Distance(position, m_LastPosition));
+
+		if(distance > (m_DistanceBeforeSound))
 		{
 			m_LastPosition = position;
+			m_WalkingSoundSpeed = 0.75f;
+
+			if(distance > m_SprintSpeed)
+			{
+				m_WalkingSoundSpeed = 0.55f;
+			}
 
 			if(m_FirstTime)
 			{
@@ -64,21 +77,18 @@ public class WalkSound : SoundComponent
 					m_Surface = 0.15f;
 					Evt.setParameterValue(m_Parameters[0], m_Surface);
 					break;
-				case "None":
-					break;
 				}
 				
 				if(getPlaybackState() == PLAYBACK_STATE.SUSTAINING && m_Time >= m_WalkingSoundSpeed)
 				{
 					StartEvent();
-					//Debug.Log (m_Time);
 					m_StartTime = Time.time;
 				}
 			}
 		}
 		else
 		{
-			//Debug.Log ("STOP");
+			m_LastPosition = position;
 		}
 	}
 	void Start () 
