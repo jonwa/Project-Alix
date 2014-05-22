@@ -50,6 +50,7 @@ public class SuperTrigger : ObjectComponent
 		{		
 			m_HasTriggered[i] = false;
 		}
+
 		if (m_CollaborateSelf) {
 			gameObject.AddComponent<CollaborateTrigger>();
 		}
