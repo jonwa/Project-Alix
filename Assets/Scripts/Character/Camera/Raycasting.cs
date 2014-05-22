@@ -43,6 +43,18 @@ public class Raycasting : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		RaycastHit hit;
+		Ray ray = new Ray(transform.position, transform.forward);
+		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
+		
+		if(Physics.Raycast (ray, out hit, m_Distance, (1<<9)|(1<<16) ))
+		{
+			if(hit.collider.gameObject.layer == (16))
+			{
+				return;
+			}
+		}	
+	
 		// used for mouse cursor state
 		Cast (m_ShowHover);
 
