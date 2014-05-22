@@ -65,6 +65,7 @@ public class FirstPersonController : MonoBehaviour
 			}
 
 			targetVelocity	*= maxVelocity;
+
 			velocity  		 = (targetVelocity-velocity);
 			velocity.x 		 = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
 			velocity.y 		 = 0; 
@@ -72,7 +73,6 @@ public class FirstPersonController : MonoBehaviour
 
 			//add movement force, x/z
 			rigidbody.AddForce(velocity, ForceMode.VelocityChange);
-
 		}
 		else if(m_Locked)
 		{
