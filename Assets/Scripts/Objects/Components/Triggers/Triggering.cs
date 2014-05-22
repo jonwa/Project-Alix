@@ -26,7 +26,7 @@ public class Triggering : ObjectComponent
 	}
 	
 	//Will send activition to all TriggerID
-	void ActivateTrigger()
+	public void ActivateTrigger()
 	{
 		if(!m_HasTriggered)
 		{
