@@ -10,27 +10,6 @@ using System.Linq;
 
 public class ButtonTrigger : ObjectComponent 
 {
-	#region PublicMemberVariables
-	public List<int>	m_Triggers = new List<int>();
-	#endregion
-	
-	// Use this for initialization
-	void Start () 
-	{
-		if(gameObject.GetComponent<SuperTrigger>())
-		{
-			SuperTrigger[] triggerArray;
-			triggerArray = gameObject.GetComponents<SuperTrigger>();
-			foreach(SuperTrigger c in triggerArray)
-			{
-				if(c.Button)
-				{
-					m_Triggers = c.m_IDsTrigger;
-				}
-			}
-		}
-	}
-
 	void OnClick()
 	{
 		ActivateTrigger();
@@ -39,24 +18,13 @@ public class ButtonTrigger : ObjectComponent
 	//Will send activition to all TriggerID
 	void ActivateTrigger()
 	{
-		List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
-		foreach(Id i in ids)
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
 		{
-			if(m_Triggers.Contains(i.ObjectId))
-			{
-				if(i.gameObject.GetComponent<SuperTrigger>())
-				{
-					SuperTrigger[] triggerArray;
-					triggerArray = i.gameObject.GetComponents<SuperTrigger>();
-					foreach(SuperTrigger c in triggerArray)
-					{
-						if(c.Button){
-							c.ActivateTriggerEffect();
-						}
-					}
-				}
+			if(c.Multiple){
+				c.ActivateTriggerEffect();
 			}
-			
 		}
 	}
 			

@@ -12,25 +12,8 @@ public class PadlockTrigger : ObjectComponent
 {
 	#region PublicMemberVariables
 	public int 			m_CorrectCode;
-	public List<int>	m_Triggers = new List<int>();
 	public GameObject[] m_PadlockNumbers;
 	#endregion
-
-	void Start () 
-	{
-		if(gameObject.GetComponent<SuperTrigger>())
-		{
-			SuperTrigger[] triggerArray;
-			triggerArray = gameObject.GetComponents<SuperTrigger>();
-			foreach(SuperTrigger c in triggerArray)
-			{
-				if(c.Padlock)
-				{
-					m_Triggers = c.m_IDsTrigger;
-				}
-			}
-		}
-	}
 
 	private int InputCode
 	{
@@ -78,24 +61,13 @@ public class PadlockTrigger : ObjectComponent
 	//Will send activition to all TriggerID
 	void ActivateTrigger()
 	{
-		List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
-		foreach(Id i in ids)
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
 		{
-			if(m_Triggers.Contains(i.ObjectId))
-			{
-				if(i.gameObject.GetComponent<SuperTrigger>())
-				{
-					SuperTrigger[] triggerArray;
-					triggerArray = i.gameObject.GetComponents<SuperTrigger>();
-					foreach(SuperTrigger c in triggerArray)
-					{
-						if(c.Padlock){
-							c.ActivateTriggerEffect();
-						}
-					}
-				}
+			if(c.Multiple){
+				c.ActivateTriggerEffect();
 			}
-			
 		}
 	}
 	

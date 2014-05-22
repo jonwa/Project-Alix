@@ -26,21 +26,21 @@ public class SuperTrigger : ObjectComponent
 	public List<int> m_IDsMulti;
 
 	public bool m_Button;
-	public List<int> m_IDsButton;
 
 	public bool m_Padlock;
-	public List<int> m_IDsPadlock;
 	#endregion
 
 	#region FirstList
 	public  List<string> m_MessageAlways = new List<string>();
 	public  List<bool> 	 m_TriggerOnce 	 = new List<bool>();	
 	private List<bool> 	 m_HasTriggered	 = new List<bool>();
+	public bool m_AlwaysRunning;
 	#endregion
 	
 	#region
 	public List<string> m_MessageCount = new List<string>();
 	public List<int>	m_CounterValue = new List<int>();
+	public bool m_CounterOnly;
 	#endregion
 	
 	void Start()
@@ -75,10 +75,16 @@ public class SuperTrigger : ObjectComponent
 	}
 
 	public bool CollaborateGet
-	{get { return m_CollaborateGet; }}
+	{
+		get { return m_CollaborateGet;  }
+		set { m_CollaborateGet = value; }
+	}
 
 	public bool CollaborateSelf
-	{get { return m_CollaborateSelf; }}
+	{
+		get { return m_CollaborateSelf; }
+		set { m_CollaborateSelf = value; }
+	}
 
 	public bool TriggerGet
 	{get { return m_TriggerGet; }}
