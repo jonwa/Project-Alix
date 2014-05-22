@@ -36,8 +36,6 @@ public class WalkSound : SoundComponent
 
 	public override void PlaySound()
 	{
-<<<<<<< HEAD
-=======
 		Vector3 position = this.gameObject.GetComponent<FirstPersonController> ().Position;
 
 		m_Time = Time.time - m_StartTime;
@@ -47,7 +45,6 @@ public class WalkSound : SoundComponent
 		{
 			m_LastPosition = position;
 
->>>>>>> 3687087669129f322af8f9c2a4cc965e131e734c
 			if(m_FirstTime)
 			{
 				m_FirstTime = false;
@@ -78,20 +75,11 @@ public class WalkSound : SoundComponent
 					m_StartTime = Time.time;
 				}
 			}
-<<<<<<< HEAD
-		//Låter skumt
-		//else
-		//{
-		//	Evt.stop();
-		//	m_FirstTime = true;
-		//}
-=======
 		}
 		else
 		{
 			//Debug.Log ("STOP");
 		}
->>>>>>> 3687087669129f322af8f9c2a4cc965e131e734c
 	}
 	void Start () 
 	{
