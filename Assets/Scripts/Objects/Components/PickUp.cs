@@ -37,6 +37,11 @@ public class PickUp : ObjectComponent
 		m_HoldObject		= m_CameraTransform.FindChild("ObjectHoldPosition");
 		m_HoldingObject 	= false;
 	}
+
+	public Vector3 OriginalScale
+	{
+		get{return m_OriginalScale; }
+	}
 	
 	void Update () 
 	{	
