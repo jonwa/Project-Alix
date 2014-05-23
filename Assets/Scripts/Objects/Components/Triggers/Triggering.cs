@@ -10,53 +10,53 @@ using System.Linq;
 
 public class Triggering : ObjectComponent 
 {
-	#region PublicMemberVariables
-	public List<int>	m_Triggers = new List<int>();
-	public bool   		m_TriggerOnce = false;
-	#endregion
-	
-	#region PrivateMemberVariables
-	private bool 		 m_HasTriggered	 = false;
-	#endregion
-	
+	private List<int> m_TriggerIDs;
 
-	void OnClick()
+	void Start()
 	{
-		ActivateTrigger();
+		if(gameObject.GetComponent<SuperTrigger>())
+		{
+			SuperTrigger[] triggerArray;
+			triggerArray = gameObject.GetComponents<SuperTrigger>();
+			foreach(SuperTrigger c in triggerArray)
+			{
+				if(c.TriggerSelf)
+				{
+					m_TriggerIDs = c.m_IDsTrigger;
+				}
+			}
+		}
 	}
-	
+		
 	//Will send activition to all TriggerID
 	public void ActivateTrigger()
 	{
-		if(!m_HasTriggered)
+		List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
+		foreach(Id i in ids)
 		{
-			List<Id> ids = Resources.FindObjectsOfTypeAll<Id>().ToList();
-			foreach(Id i in ids)
+			if(m_TriggerIDs.Contains(i.ObjectId))
 			{
-				if(m_Triggers.Contains(i.ObjectId))
+				if(i.gameObject.GetComponent<SuperTrigger>())
 				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					if(i.gameObject.GetComponent<CheckTrigger>() != null)
+					SuperTrigger[] triggerArray;
+					triggerArray = i.gameObject.GetComponents<SuperTrigger>();
+					foreach(SuperTrigger c in triggerArray)
 					{
-						i.gameObject.GetComponent<CheckTrigger>().Trigger();
+						if(c.TriggerGet){
+							c.ActivateTriggerEffect();
+						}
 					}
-					m_HasTriggered = true;
-				}	
+				}
 			}
+			
 		}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject)
 	{
-		JSONObject jObject = new JSONObject(JSONObject.Type.OBJECT);
-		jsonObject.AddField(Name, jObject);
-		jObject.AddField("m_HasTriggered", m_HasTriggered);
-
-		JSONObject jAllowedArr = new JSONObject(JSONObject.Type.ARRAY);
 	}
 	public override void Deserialize(ref JSONObject jsonObject)
 	{
-		m_HasTriggered = (bool)jsonObject.GetField("m_HasTriggered").b;
 	}
 }
 

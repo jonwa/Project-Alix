@@ -12,13 +12,7 @@ public class PadlockTrigger : ObjectComponent
 {
 	#region PublicMemberVariables
 	public int 			m_CorrectCode;
-	public List<int>	m_Triggers = new List<int>();
 	public GameObject[] m_PadlockNumbers;
-	public bool   		m_TriggerOnce = false;
-	#endregion
-
-	#region PrivateMemberVariables
-	private bool 		 m_HasTriggered	 = false;
 	#endregion
 
 	private int InputCode
@@ -67,21 +61,12 @@ public class PadlockTrigger : ObjectComponent
 	//Will send activition to all TriggerID
 	void ActivateTrigger()
 	{
-		if(!m_HasTriggered)
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
 		{
-			List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
-			foreach(Id i in ids)
-			{
-				if(m_Triggers.Contains(i.ObjectId))
-				{
-					i.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					if(i.gameObject.GetComponent<CheckTrigger>() != null)
-					{
-						i.gameObject.GetComponent<CheckTrigger>().Trigger();
-					}
-					m_HasTriggered = true;
-				}
-				
+			if(c.Multiple){
+				c.ActivateTriggerEffect();
 			}
 		}
 	}

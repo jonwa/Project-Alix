@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 /* Discription: ObjectComponent class for interactions between two specific objects
  * 
@@ -12,16 +13,22 @@ using System.Linq;
 public class CollaborateTrigger : ObjectComponent
 {
 	#region PublicMemberVariables
-	public int[]	m_ValidId;
-	public string	m_Input = "Fire1";
-	public bool 	m_TriggerOnce = false;
-	public bool 	m_ReleaseOnTrigger = false;
-	#endregion
-	
-	#region PrivateMemberVariables
-	private bool	m_HasTriggered = false;
+	private List<int>	m_ValidId = new List<int>();
+	private string		m_Input;
 	#endregion
 
+	void Start()
+	{
+		SuperTrigger[] triggerArray;
+		triggerArray = gameObject.GetComponents<SuperTrigger>();
+		foreach(SuperTrigger c in triggerArray)
+		{
+			if(c.CollaborateSelf){
+				m_ValidId = c.m_IDsCollaborate;
+				m_Input = c.m_CollaborateInput;
+			}
+		}
+	}
 
 	public override void Interact ()
 	{
@@ -42,32 +49,26 @@ public class CollaborateTrigger : ObjectComponent
 					{
 						Camera.main.GetComponent<Raycasting>().ShowCollaborateHover = true;
 					
-						if(hoover.gameObject.GetComponent<TriggerEffect>())
+						if(hoover.gameObject.GetComponent<SuperTrigger>())
 						{
-							hoover.gameObject.SendMessage("ActivateTriggerEffect");
-
-							//hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-							if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
+							SuperTrigger[] triggerArray;
+							triggerArray = hoover.gameObject.GetComponents<SuperTrigger>();
+							foreach(SuperTrigger c in triggerArray)
 							{
-								hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
+								if(c.CollaborateGet){
+									c.ActivateTriggerEffect();
+								}
 							}
-							m_HasTriggered = true;
 						}
-						if(gameObject.GetComponent<TriggerEffect>())
+						if(gameObject.GetComponent<SuperTrigger>())
 						{
-							gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
-					
-							if(gameObject.GetComponent<CheckTrigger>() != null)
+							SuperTrigger[] triggerArray;
+							triggerArray = gameObject.GetComponents<SuperTrigger>();
+							foreach(SuperTrigger c in triggerArray)
 							{
-								gameObject.GetComponent<CheckTrigger>().Trigger();
-							}
-							m_HasTriggered = true;
-
-							if(m_ReleaseOnTrigger)
-							{
-								Camera.main.GetComponent<Raycasting>().Release();
-
-								// Set new pos to object via hide n seek
+								if(c.CollaborateSelf){
+									c.ActivateTriggerEffect();
+								}
 							}
 						}
 					}
