@@ -21,4 +21,9 @@ public class RestartWallJumpGrej : MonoBehaviour {
 	{
 		m_startpos = pos;
 	}
+
+	public Vector3 GetPos()
+	{
+		return m_startpos;
+	}
 }

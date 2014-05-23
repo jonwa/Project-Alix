@@ -19,12 +19,12 @@ public class Inspect : ObjectComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	public Vector3 	m_OriginalPosition;
+	private Vector3 	m_OriginalPosition;
 	private Quaternion  m_OriginalRotation;
 	private int			m_DeActivateCounter  = 0;
-	public bool		m_IsOriginalPosition = true;
+	private bool		m_IsOriginalPosition = true;
 	private bool		m_UnlockedCamera	 = true;
-	public bool		m_ShouldMoveBack	 = false;
+	private bool		m_ShouldMoveBack	 = false;
 	private bool		m_IsInspecting		 = false;
 	#endregion
 

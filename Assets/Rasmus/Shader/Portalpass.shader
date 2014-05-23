@@ -42,11 +42,6 @@
 			half2 uv2 : TEXCOORD1;
 		};
 		
-		//float rand(vec2 co)
-		//{
-		//	return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-		//};
-		
 		fragmentInput vert( vertexInput v )
 		{
 			fragmentInput o;
@@ -54,7 +49,6 @@
 			o.pos = mul( UNITY_MATRIX_MVP, v.vertex );
 			o.uv = v.texCoord;
 			o.uv2 = v.texCoord2;
-			//o.uv2.x = fract(sin(dot(o.uv2 ,vec2(12.9898,78.233))) * 43758.5453);;
 			
 			
 			o.uv2.x += tan(_Time.z * _xCoord); + o.uv2.y;

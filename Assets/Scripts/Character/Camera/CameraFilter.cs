@@ -12,7 +12,6 @@ public class CameraFilter : MonoBehaviour
 	#region PublicMemberVariables
 	public Material     m_DefaultMaterial;
 	public GameObject[] m_Materials;
-
 	#endregion
 
 	#region PrivateMemberVariables
@@ -53,6 +52,15 @@ public class CameraFilter : MonoBehaviour
 				ResetDefualt();
 			}
 		}
+	}
+
+	public bool GetEffectActive()
+	{
+		return m_EffectActive;
+	}
+	public int GetWhatEffect()
+	{
+		return m_WhatEffect;
 	}
 
 	private void ResetDefualt()
@@ -143,28 +151,6 @@ public class CameraFilter : MonoBehaviour
 		{
 			SetVariables();
 		}
-		//if(m_EffectActive == true)
-		//{
-			//m_DefaultMaterial.
-			//if(m_WhatEffect == 5)
-			//{
-			//	Material test = new Material(m_Materials[5]);
-			//	test.SetTexture("_SecondTex", m_Materials[0].GetTexture("_NoiseTex"));
-			//	test.SetTexture("_ThirdTex", m_Materials[1].GetTexture("_NoiseTex"));
-			//	//test.Lerp(test, m_Materials[3], 0.5f);
-			//	//test.Lerp(test, m_Materials[4], 0.5f);
-			//
-			//	Graphics.Blit (source, destination, test);
-			//}
-			//else
-			//{
-			//	Graphics.Blit (source, destination, m_Materials[m_WhatEffect]);
-			//}
-		//}
-		//else
-		//{
-		//	Graphics.Blit (source, destination, m_DefaultMaterial);
-		//}
 		Graphics.Blit (source, destination, m_DefaultMaterial);
 	}
 

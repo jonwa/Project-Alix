@@ -123,9 +123,21 @@ public class WalkSound : SoundComponent
 
 	void FixedUpdate()
 	{
-		if(PlayWalkingSound)
+		Vector3 speed = new Vector3 ();
+		//m_PlayerSpeed = this.gameObject.transform.rigidbody.velocity.normalized.magnitude;
+		speed = new Vector3(this.gameObject.transform.rigidbody.velocity.normalized.x, 0, this.gameObject.transform.rigidbody.velocity.normalized.z);
+		m_PlayerSpeed = speed.normalized.magnitude;
+		
+		Debug.Log (speed);
+		
+		m_Time = Time.time - m_StartTime;
+		Debug.Log (m_PlayerSpeed);
+		if(m_PlayerSpeed != 0)
 		{
-			PlaySound();
+			if(PlayWalkingSound)
+			{
+				PlaySound();
+			}
 		}
 	}
 }
