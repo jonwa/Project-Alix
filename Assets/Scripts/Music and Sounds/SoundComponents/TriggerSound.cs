@@ -13,6 +13,7 @@ public class TriggerSound : SoundComponent
 {
 	#region PrivateMemberVariables
 	private bool m_Played = false;
+	private bool m_Holding = false;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -22,7 +23,7 @@ public class TriggerSound : SoundComponent
 
 	public override void PlaySound()
 	{
-		if(getPlaybackState() != PLAYBACK_STATE.PLAYING && !m_Played)
+		if(getPlaybackState() != PLAYBACK_STATE.PLAYING && m_Holding && !m_Played)
 		{
 			m_Played = true;
 			switch(m_Object)
@@ -32,7 +33,7 @@ public class TriggerSound : SoundComponent
 			}
 			StartEvent ();
 		}
-		else if(m_Played && Input.GetButtonDown(m_Input) && getPlaybackState() == PLAYBACK_STATE.SUSTAINING)
+		else if(!m_Holding && m_Played)
 		{
 			m_Played = false;
 		}
@@ -45,6 +46,10 @@ public class TriggerSound : SoundComponent
 
 	void Update () 
 	{
+		if(this.gameObject.GetComponent<PickUp>() != null)
+		{
+			m_Holding = this.gameObject.GetComponent<PickUp>().GetHoldingObject();
+		}		
 		var attributes = UnityUtil.to3DAttributes (this.gameObject);
 		ERRCHECK (Evt.set3DAttributes(attributes));		
 	}

@@ -14,9 +14,8 @@ public class SoundEffect : TriggerComponent
 {
 	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
-	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
-	private bool							m_Started;
+	private bool							m_Started = false;
 	private int								m_Counter;
 	#endregion
 
@@ -26,10 +25,10 @@ public class SoundEffect : TriggerComponent
 	public float							m_Value;
 	#endregion
 
-	override public string Name
-	{
-		get{ return "PlaySoundEffect"; }
-	}
+	//override public string Name
+	//{
+	//	get{ return "PlaySoundEffect"; }
+	//}
 
 	public float Parameter
 	{
@@ -39,12 +38,7 @@ public class SoundEffect : TriggerComponent
 
 	void Start()
 	{
-		m_Started = false;
 		CacheEventInstance();
-		if(m_Parameters != null)
-		{
-			m_Event.getParameter (m_Parameters[0], out m_Parameter);
-		}
 	}
 
 	public void PlaySoundEffect()
@@ -55,7 +49,10 @@ public class SoundEffect : TriggerComponent
 		}
 		if (!m_Started) 
 		{
-			m_Parameter.setValue(m_Value);
+			if(m_Parameters.Length != 0)
+			{
+				m_Event.setParameterValue(m_Parameters[0], m_Value);
+			}
 			StartEvent();
 		}
 	}

@@ -7,6 +7,7 @@ public class MenuSound : MonoBehaviour
 {
 	public FMODAsset m_Asset;
 	public string	 m_MenuType;
+	public string[]	 m_Parameters;
 
 	private FMOD.Studio.EventInstance 	m_Event;
 	private string 						m_Path;
@@ -74,10 +75,14 @@ public class MenuSound : MonoBehaviour
 
 	void OnHover(bool status)
 	{
-		if(m_Menu)
+		if(status)
 		{
-			if(status)
+			if(m_Menu)
 			{
+				if(m_Parameters.Length != 0)
+				{
+					m_Event.setParameterValue(m_Parameters[0], 0.05f);
+				}
 				StartEvent();
 			}
 		}
@@ -87,6 +92,10 @@ public class MenuSound : MonoBehaviour
 	{
 		if(m_Menu || m_Book || m_Padlock)
 		{
+			if(m_Menu && m_Parameters.Length != 0)
+			{
+				m_Event.setParameterValue(m_Parameters[0], 0.15f);
+			}
 			StartEvent ();
 		}
 		if(m_Padlock)
