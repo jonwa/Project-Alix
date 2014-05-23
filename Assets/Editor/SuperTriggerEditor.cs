@@ -2,10 +2,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor (typeof(SuperTrigger))]
+//[CustomEditor (typeof(SuperTrigger))]
 public class SuperTriggerEditor : Editor
 {
-	//public void OnInspectorGUI1()
+	/*//public void OnInspectorGUI1()
 	public override void OnInspectorGUI()
     {
 		SuperTrigger ST = (SuperTrigger)target;
@@ -219,5 +219,5 @@ public class SuperTriggerEditor : Editor
 	void CollisionLayout(SuperTrigger ST)
 	{
 		ST.m_Collision = EditorGUILayout.Toggle ("Collision: ", ST.m_Collision, GUILayout.Height (15));
-	}
+	}*/
 }

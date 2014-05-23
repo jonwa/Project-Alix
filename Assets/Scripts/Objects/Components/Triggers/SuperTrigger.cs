@@ -6,40 +6,70 @@ using System.Linq;
 public class SuperTrigger : ObjectComponent 
 {
 	#region TriggerTypes
+	[HideInInspector, SerializeField]
 	public bool m_CollaborateSelf;
+
+	[HideInInspector, SerializeField]
 	public List<int> m_IDsCollaborate;
+
+	[HideInInspector, SerializeField]
 	public string m_CollaborateInput = "Fire1";
 
+	[HideInInspector, SerializeField]
 	public bool m_CollaborateGet;
 
+	[HideInInspector, SerializeField]
 	public bool m_TriggerSelf;
+
+	[HideInInspector, SerializeField]
 	public List<int> m_IDsTrigger;
 
+	[HideInInspector, SerializeField]
 	public bool m_TriggerGet;
 
+	[HideInInspector, SerializeField]
 	public bool m_Time;
+
+	[HideInInspector, SerializeField]
 	public int 	m_TimeDelay;
 
+	[HideInInspector, SerializeField]
 	public bool m_Collision;
 
+	[HideInInspector, SerializeField]
 	public bool m_Multiple;
+
+	[HideInInspector, SerializeField]
 	public List<int> m_IDsMulti;
 
+	[HideInInspector, SerializeField]
 	public bool m_Button;
 
+	[HideInInspector, SerializeField]
 	public bool m_Padlock;
 	#endregion
 
 	#region FirstList
+	[HideInInspector, SerializeField]
 	public  List<string> m_MessageAlways = new List<string>();
-	public  List<bool> 	 m_TriggerOnce 	 = new List<bool>();	
+
+	[HideInInspector, SerializeField]
+	public  List<bool> 	 m_TriggerOnce 	 = new List<bool>();
+
 	private List<bool> 	 m_HasTriggered	 = new List<bool>();
+
+	[HideInInspector, SerializeField]
 	public bool m_AlwaysRunning;
 	#endregion
 	
 	#region
+	[HideInInspector, SerializeField]
 	public List<string> m_MessageCount = new List<string>();
+
+	[HideInInspector, SerializeField]
 	public List<int>	m_CounterValue = new List<int>();
+
+	[HideInInspector, SerializeField]
 	public bool m_CounterOnly;
 	#endregion
 	
@@ -73,7 +103,6 @@ public class SuperTrigger : ObjectComponent
 			gameObject.AddComponent<PadlockTrigger>();
 		}
 	}
-
 	public bool CollaborateGet
 	{
 		get { return m_CollaborateGet;  }
