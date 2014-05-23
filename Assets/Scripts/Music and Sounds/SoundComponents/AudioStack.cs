@@ -28,6 +28,11 @@ public class AudioStack : SoundComponent
 	public float[]			m_ParameterValues;
 	#endregion
 
+	public PLAYBACK_STATE PlaybackState
+	{
+		get{ return getPlaybackState ();}
+	}
+
 	public int Counter
 	{
 		get{return m_Counter;}
@@ -65,7 +70,8 @@ public class AudioStack : SoundComponent
 
 		if(m_StartOnAwake && Evt != null)
 		{
-			CacheEventInstance();
+			Debug.Log ("START " + m_Asset); 
+			CacheEventInstance(m_Asset);
 			StartEvent();
 		}
 

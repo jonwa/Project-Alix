@@ -3,6 +3,13 @@ using System;
 using System.Collections;
 using FMOD.Studio;
 
+/* Discription: PortalSound
+ * The sound that portals make when you interact with them
+ * 
+ * Created By: Sebastian Olsson: 15-05-14
+ * Modified by: 
+ */
+
 public class PortalSound : SoundComponent
 {
 	#region PrivateMemberVariables
