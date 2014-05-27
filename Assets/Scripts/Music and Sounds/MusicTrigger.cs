@@ -9,7 +9,7 @@ using System.Collections;
  */
 
 [RequireComponent(typeof(BoxCollider))]
-public class MusicTrigger : MonoBehaviour 
+public class MusicTrigger : TriggerComponent 
 {
 
 	private bool						m_Entered 		= false;
@@ -19,6 +19,7 @@ public class MusicTrigger : MonoBehaviour
 
 	[Range(0,1)]public float			m_Value;
 	public string						m_Parameter;
+	public bool 						m_PlayMoreThenOnce;
 
 	void Start () 
 	{
@@ -26,6 +27,16 @@ public class MusicTrigger : MonoBehaviour
 		m_PlayerName = Camera.main.transform.parent.gameObject.name;
 		m_MusicManager = GameObject.FindObjectOfType<MusicManager>() as MusicManager;
 		m_Event = m_MusicManager.GetEvent;
+	}
+
+	override public string Name
+	{
+		get{return"MusicParameter";}
+	}
+
+	void MusicParameter()
+	{
+		ChangeValue (m_Parameter, m_Value);
 	}
 
 	void OnTriggerEnter(Collider collider)
@@ -45,4 +56,7 @@ public class MusicTrigger : MonoBehaviour
 	{
 		m_MusicManager.SetParameterValue(p_Parameter, p_Value);
 	}
+
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }
