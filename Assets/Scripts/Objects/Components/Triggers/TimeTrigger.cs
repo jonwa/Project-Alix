@@ -33,11 +33,12 @@ public class TimeTrigger : ObjectComponent
 	{
 		if (m_Active) 
 		{
+			Debug.Log("Time Trigger update active");
 			m_Time = Time.time - m_StartTime;
 			if(m_Time >= m_TriggerTime)
 			{
 				Debug.Log ("Trigger Time");
-				ActivateTriggerEffect();
+				ActivateTimeTrigger();
 				if(gameObject.GetComponent<CheckTrigger>() != null)
 				{
 					gameObject.GetComponent<CheckTrigger>().Trigger();
@@ -61,7 +62,7 @@ public class TimeTrigger : ObjectComponent
 		}
 	}
 
-	public void ActivateTriggerEffect()
+	void ActivateTimeTrigger()
 	{
 		if(!m_HasTriggered)
 		{
@@ -72,6 +73,7 @@ public class TimeTrigger : ObjectComponent
 				}
 				else
 				{
+					Debug.Log("SendMessage TimeTrigger");
 					SendMessage(m_Messages[i]);
 					
 				}

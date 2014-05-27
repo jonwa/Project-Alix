@@ -19,12 +19,12 @@ public class Inspect : ObjectComponent
 	#endregion
 
 	#region PrivateMemberVariables
-	public Vector3 	m_OriginalPosition;
+	private Vector3 	m_OriginalPosition;
 	private Quaternion  m_OriginalRotation;
 	private int			m_DeActivateCounter  = 0;
-	public bool		m_IsOriginalPosition = true;
+	private bool		m_IsOriginalPosition = true;
 	private bool		m_UnlockedCamera	 = true;
-	public bool		m_ShouldMoveBack	 = false;
+	private bool		m_ShouldMoveBack	 = false;
 	private bool		m_IsInspecting		 = false;
 	#endregion
 
@@ -42,6 +42,7 @@ public class Inspect : ObjectComponent
 		{
 			if(m_ShouldMoveBack)
 			{
+				ShouldCollide(true);
 				MoveToInspectDistance(false);
 			}
 			if(m_DeActivateCounter > 4 &&  m_UnlockedCamera == false && m_IsOriginalPosition && Quaternion.Angle(transform.rotation, m_OriginalRotation) < 0.5f)
@@ -52,7 +53,8 @@ public class Inspect : ObjectComponent
 				m_ShouldMoveBack = false;
 				m_IsOriginalPosition = true;
 				m_IsInspecting = false;
-				if(gameObject.GetComponent<PickUp>() == null){
+				if(gameObject.GetComponent<PickUp>() == null)
+				{
 					Camera.main.GetComponent<Raycasting>().Release();
 				}
 
@@ -88,7 +90,8 @@ public class Inspect : ObjectComponent
 
 			if(gameObject.GetComponent<Rigidbody>() != null)
 			{
-				gameObject.GetComponent<Gravity>().SetGravity(false);
+				if(gameObject.GetComponent<Gravity>() != null)
+					gameObject.GetComponent<Gravity>().SetGravity(false);
 				rigidbody.velocity   		= Vector3.zero;
 				rigidbody.angularVelocity 	= Vector3.zero;
 			}
@@ -118,6 +121,26 @@ public class Inspect : ObjectComponent
 		set { m_OriginalPosition = value; } 
 	}
 
+
+	void ShouldCollide(bool yes)
+	{
+		if(GetComponent<BoxCollider>() != null)
+		{
+			foreach(BoxCollider c in GetComponents<BoxCollider>())
+			{
+				c.enabled = yes;
+			}
+			
+		}
+		else if(GetComponent<MeshCollider>() != null)
+		{
+			foreach(MeshCollider c in GetComponents<MeshCollider>())
+			{
+				c.enabled = yes;
+			}
+		}
+	}
+	
 	public override void Interact ()
 	{
 
@@ -143,7 +166,8 @@ public class Inspect : ObjectComponent
 		//if we are active we rotate the object with the mouse here.
 		if(IsActive)
 		{
-			if(Input.GetButton(m_Input)){
+			if(Input.GetButton(m_Input))
+			{
 				Camera.main.GetComponent<Raycasting>().IsPickedUp = true; 
 				MoveToInspectDistance(true);
 				
@@ -154,6 +178,7 @@ public class Inspect : ObjectComponent
 				transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				transform.RotateAround(collider.bounds.center,Vector3.up, m_moveX);
 				m_IsInspecting = true;
+				ShouldCollide(false);
 			}
 			else 
 			{

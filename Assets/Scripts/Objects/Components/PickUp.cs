@@ -15,11 +15,11 @@ public class PickUp : ObjectComponent
 {
 	#region PublicMemberVariables
 	[Range(0, 2)]public float m_ChangeSize	= 0.80f;
-	public float m_ScaleTime			  	= 30f;
-	public LayerMask	m_LayerMask 	 = (1<<9);
+	public float 		m_ScaleTime			= 30f;
 	#endregion
-	
+
 	#region PrivateMemberVariables
+	private LayerMask	m_LayerMask = (1 << 0) | (1 << 1) |  (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 9) | (1 << 10) | (1 << 11) |  (1 << 14) | (1 << 15) | (1 << 16);
 	private float 		m_DropPointMax = 2.0f;	//Här kan du ändra martin.. 
 	private float		m_DropDistance = 2.0f; 
 	private Transform   m_CameraTransform;
@@ -37,11 +37,16 @@ public class PickUp : ObjectComponent
 		m_HoldObject		= m_CameraTransform.FindChild("ObjectHoldPosition");
 		m_HoldingObject 	= false;
 	}
+
+	public Vector3 OriginalScale
+	{
+		get{return m_OriginalScale; }
+	}
 	
 	void Update () 
 	{	
 		m_DeActivateCounter++;
-		if(m_DeActivateCounter >= 10)
+		if(m_DeActivateCounter >= 5)
 		{
 			if((m_OriginalScale-transform.localScale).magnitude > 0.001f)
 			{
@@ -93,8 +98,10 @@ public class PickUp : ObjectComponent
 
 		if (Physics.Raycast (ray, out hit, m_DropPointMax))
 		{
-			Debug.Log("hejsan hopp");
-			m_DropDistance = Vector3.Distance(hit.collider.gameObject.transform.position, m_CameraTransform.position)*0.9f;
+			m_DropDistance = Vector3.Distance(hit.point, m_CameraTransform.position);
+			Debug.Log(m_DropDistance);
+			m_DropDistance *= 0.88f;
+			Debug.Log(m_DropDistance);
 		}
 		else
 		{

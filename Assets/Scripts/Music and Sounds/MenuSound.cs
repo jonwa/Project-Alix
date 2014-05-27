@@ -6,13 +6,30 @@ using FMOD.Studio;
 public class MenuSound : MonoBehaviour 
 {
 	public FMODAsset m_Asset;
-	private FMOD.Studio.EventInstance 		m_Event;
-	private string 							m_Path;
+	public string	 m_MenuType;
+	public string[]	 m_Parameters;
+
+	private FMOD.Studio.EventInstance 	m_Event;
+	private string 						m_Path;
+	private bool						m_Menu = false;
+	private bool						m_Padlock = false;
+	private bool						m_Book = false;
 
 	void Start()
 	{
 		CacheEventInstance ();
-
+		switch(m_MenuType)
+		{
+		case "Menu":
+			m_Menu = true;
+			break;
+		case "Padlock":
+			m_Padlock = true;
+			break;
+		case "Book":
+			m_Book = true;
+			break;
+		}
 	}
 
 	void CacheEventInstance()
@@ -60,13 +77,37 @@ public class MenuSound : MonoBehaviour
 	{
 		if(status)
 		{
-			Debug.Log("Hover");
-			StartEvent();
+			if(m_Menu)
+			{
+				if(m_Parameters.Length != 0)
+				{
+					m_Event.setParameterValue(m_Parameters[0], 0.05f);
+				}
+				StartEvent();
+			}
 		}
 	}
 
 	void OnClick()
 	{
-		StartEvent ();
+		if(m_Menu || m_Book || m_Padlock)
+		{
+			if(m_Menu && m_Parameters.Length != 0)
+			{
+				m_Event.setParameterValue(m_Parameters[0], 0.15f);
+			}
+			StartEvent ();
+		}
+		if(m_Padlock)
+		{
+			if(this.gameObject.GetComponent<PadlockTrigger>() != null)
+			{
+				bool isLocked = this.gameObject.GetComponent<PadlockTrigger>().Locked;
+				if(!isLocked)
+				{
+					StartEvent ();
+				}
+			}
+		}
 	}
 }

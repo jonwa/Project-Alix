@@ -15,6 +15,7 @@ public class CollaborateTrigger : ObjectComponent
 	public int[]	m_ValidId;
 	public string	m_Input = "Fire1";
 	public bool 	m_TriggerOnce = false;
+	public bool 	m_ReleaseOnTrigger = false;
 	#endregion
 	
 	#region PrivateMemberVariables
@@ -43,7 +44,9 @@ public class CollaborateTrigger : ObjectComponent
 					
 						if(hoover.gameObject.GetComponent<TriggerEffect>())
 						{
-							hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+							hoover.gameObject.SendMessage("ActivateTriggerEffect");
+
+							//hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
 							if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
 							{
 								hoover.gameObject.GetComponent<CheckTrigger>().Trigger();
@@ -59,10 +62,16 @@ public class CollaborateTrigger : ObjectComponent
 								gameObject.GetComponent<CheckTrigger>().Trigger();
 							}
 							m_HasTriggered = true;
+
+							if(m_ReleaseOnTrigger)
+							{
+								Camera.main.GetComponent<Raycasting>().Release();
+
+								// Set new pos to object via hide n seek
+							}
 						}
 					}
 				}
-
 			}
 		}
 		else

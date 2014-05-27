@@ -5,7 +5,7 @@ using System.Linq;
 /* 
  * 
  * Created By: Jon Wahlström 2014-05-01
- * Modified By: 
+ * Modified By: Sebastian Olsson: 23-05-14: Added m_Locked to check if the padlock is unlocked
  */
 
 public class PadlockTrigger : ObjectComponent 
@@ -19,7 +19,13 @@ public class PadlockTrigger : ObjectComponent
 
 	#region PrivateMemberVariables
 	private bool 		 m_HasTriggered	 = false;
+	private bool		 m_Locked 		 = true;
 	#endregion
+
+	public bool Locked
+	{
+		get{ return m_Locked; }
+	}
 
 	private int InputCode
 	{
@@ -57,6 +63,7 @@ public class PadlockTrigger : ObjectComponent
 			status.Activate((isActive == true) ? true : false);
 
 			ActivateTrigger();
+			m_Locked = false;
 		}
 		else
 		{
