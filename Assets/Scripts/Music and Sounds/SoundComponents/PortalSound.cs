@@ -29,7 +29,6 @@ public class PortalSound : SoundComponent
 
 	void OnTriggerEnter(Collider collider)
 	{
-<<<<<<< HEAD
 		if (collider.gameObject.name == m_PlayerName )
 		{
 			Debug.Log ("PLAYOR = " + m_Player);
@@ -42,19 +41,7 @@ public class PortalSound : SoundComponent
 
 			}
 		} 
-=======
-		Debug.Log (collider.gameObject.name);
-		//if (collider.gameObject.name == m_PlayerName )
-		//{
-		//	Debug.Log ("PLAYOR = " + m_Player);
-		//	if(getPlaybackState() != PLAYBACK_STATE.PLAYING)
-		//	{
-		//		Debug.Log ("PLAYER = " + m_Player);
-		//		CacheEventInstance();
-		//		StartEvent();
-		//	}
-		//} 
->>>>>>> fffac5ea64f69762172d2ecb3f7c275cbdea941f
+
 	}
 
 	void Update () 
