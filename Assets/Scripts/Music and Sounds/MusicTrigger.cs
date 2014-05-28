@@ -6,20 +6,21 @@ using System.Collections;
  * 
  * Created by: Sebastian Olsson 06-05-14
  * Modified by: Sebastian: 21-05-14: Removed bad code
+ * 				Seabstian: 28-05-14: Added function to have a sound play just once
  */
 
 [RequireComponent(typeof(BoxCollider))]
 public class MusicTrigger : TriggerComponent 
 {
 
-	private bool						m_Entered 		= false;
+	public bool							m_Entered 		= false;
 	private MusicManager 				m_MusicManager;
 	private FMOD.Studio.EventInstance 	m_Event;
 	private string						m_PlayerName;
+	private int							m_TimesEntered = 0;
 
 	[Range(0,1)]public float			m_Value;
 	public string						m_Parameter;
-	public bool 						m_PlayMoreThenOnce;
 
 	void Start () 
 	{
@@ -29,11 +30,6 @@ public class MusicTrigger : TriggerComponent
 		m_Event = m_MusicManager.GetEvent;
 	}
 
-	override public string Name
-	{
-		get{return"MusicParameter";}
-	}
-
 	void MusicParameter()
 	{
 		ChangeValue (m_Parameter, m_Value);
@@ -41,7 +37,7 @@ public class MusicTrigger : TriggerComponent
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if (collider.gameObject.name == m_PlayerName) 
+		if (collider.gameObject.name == m_PlayerName ) 
 		{
 			if(!m_Entered)
 			{
@@ -49,7 +45,6 @@ public class MusicTrigger : TriggerComponent
 				m_Entered = true;
 			}
 		}
-		m_Entered = false;
 	}
 
 	void ChangeValue(string p_Parameter, float p_Value)
