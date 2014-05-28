@@ -21,7 +21,6 @@ public class PhoneSound : SoundComponent
 	
 	#region PublicMemberVariables
 	public string[]			m_Parameters;
-	public bool				m_StartOnTrigger;
 	public string			m_Input = "Fire1";
 	#endregion
 
@@ -42,10 +41,20 @@ public class PhoneSound : SoundComponent
 		set{m_Answered = value;}
 	}
 
+	public void Play()
+	{
+		if(Evt != null)
+		{
+			Debug.Log("RINGRING");
+			CacheEventInstance();
+			StartEvent ();
+		}
+	}
+
 	void Start () 
 	{
 		CacheEventInstance();
-		if(m_StartOnAwake || m_StartOnTrigger)
+		if(m_StartOnAwake)
 		{
 			m_Ringing = true;
 			m_Action = 0.05f;

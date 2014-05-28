@@ -18,7 +18,6 @@ public class Triggering : ObjectComponent
 	#region PrivateMemberVariables
 	private bool 		 m_HasTriggered	 = false;
 	#endregion
-	
 
 	void OnClick()
 	{
