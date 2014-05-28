@@ -96,7 +96,65 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 271
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface55
+        weight: 1
+      - path: polySurface60
+        weight: 1
+      - path: polySurface61
+        weight: 1
+      - path: polySurface64
+        weight: 1
+      - path: polySurface68
+        weight: 1
+      - path: polySurface69
+        weight: 1
+      - path: polySurface72
+        weight: 1
+      - path: polySurface76
+        weight: 1
+      - path: polySurface81
+        weight: 1
+      - path: polySurface86
+        weight: 1
+      - path: polySurface91
+        weight: 1
+      - path: polySurface101
+        weight: 1
+      - path: polySurface107
+        weight: 1
+      - path: polySurface109
+        weight: 1
+      - path: polySurface110
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
