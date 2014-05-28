@@ -12,15 +12,31 @@ using System.Collections;
 [RequireComponent(typeof(BoxCollider))]
 public class MusicTrigger : TriggerComponent 
 {
-
-	public bool							m_Entered 		= false;
+	#region PrivateMemberVariables
+	private bool						m_Entered 		= false;
 	private MusicManager 				m_MusicManager;
 	private FMOD.Studio.EventInstance 	m_Event;
 	private string						m_PlayerName;
 	private int							m_TimesEntered = 0;
-
+	#endregion
+	#region PublicMemberVariables
 	[Range(0,1)]public float			m_Value;
 	public string						m_Parameter;
+	public bool							m_IsTrigger;
+	#endregion
+
+	override public string Name
+	{
+		get{return"TriggerMusic";}
+	}
+
+	void TriggerMusic()
+	{
+		if(m_IsTrigger)
+		{
+			ChangeValue (m_Parameter, m_Value);
+		}
+	}
 
 	void Start () 
 	{
@@ -37,12 +53,15 @@ public class MusicTrigger : TriggerComponent
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if (collider.gameObject.name == m_PlayerName ) 
+		if(!m_IsTrigger)
 		{
-			if(!m_Entered)
+			if (collider.gameObject.name == m_PlayerName ) 
 			{
-				ChangeValue(m_Parameter, m_Value);
-				m_Entered = true;
+				if(!m_Entered)
+				{
+					ChangeValue(m_Parameter, m_Value);
+					m_Entered = true;
+				}
 			}
 		}
 	}

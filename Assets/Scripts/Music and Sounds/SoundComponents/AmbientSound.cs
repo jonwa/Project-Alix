@@ -25,4 +25,9 @@ public class AmbientSound : SoundComponent
 		CacheEventInstance ();
 		StartEvent ();
 	}
+
+	public void TurnOff()
+	{
+		Evt.stop ();
+	}
 }
