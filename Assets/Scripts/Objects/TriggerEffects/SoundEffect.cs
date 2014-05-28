@@ -23,6 +23,8 @@ public class SoundEffect : TriggerComponent
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
 	public float							m_Value;
+	public bool								m_StartOnAwake = false;
+
 	#endregion
 
 	//override public string Name
@@ -39,6 +41,10 @@ public class SoundEffect : TriggerComponent
 	void Start()
 	{
 		CacheEventInstance();
+		if(m_StartOnAwake)
+		{
+			StartEvent();
+		}
 	}
 
 	public void PlaySoundEffect()
@@ -69,6 +75,15 @@ public class SoundEffect : TriggerComponent
 			m_Event = null;
 		}
 
+	}
+
+	void OnDisable()
+	{
+		if(m_Event != null)
+		{
+			m_Event.stop ();
+			m_Event.release ();
+		}
 	}
 	
 	public FMOD.Studio.PLAYBACK_STATE getPlaybackState()

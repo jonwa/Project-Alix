@@ -92,7 +92,16 @@ public class MenuSoundTrigger : MonoBehaviour
 				bool locked = this.gameObject.GetComponent<PadlockTrigger>().Locked;
 				if(!locked)
 				{
+<<<<<<< HEAD
 					StartEvent();
+=======
+					m_Event.setParameterValue("Outcome", 0.05f);
+					StartEvent ();
+>>>>>>> 9424d0f05c02386b14231245ebebfe0f49931dd3
+				}
+				else
+				{
+					m_Event.setParameterValue("Outcome", 0.15f);
 				}
 			}
 		}

@@ -9,7 +9,7 @@ using FMOD.Studio;
  * Created By: Sebastian Olsson: 15-05-14
  * Modified by: 
  */
-
+//TODO Put in parent to portals
 public class PortalSound : SoundComponent
 {
 	#region PrivateMemberVariables
@@ -19,8 +19,9 @@ public class PortalSound : SoundComponent
 	
 	void Start () 
 	{
-		m_PlayerName = Camera.main.transform.parent.gameObject.name;
 		m_Player = Camera.main.transform.parent.gameObject;
+		m_PlayerName = m_Player.name;
+
 		CacheEventInstance ();
 	}
 
@@ -28,9 +29,10 @@ public class PortalSound : SoundComponent
 	{
 		if (collider.gameObject.name == m_PlayerName )
 		{
-			Debug.Log (getPlaybackState());
+			Debug.Log ("PLAYOR = " + m_Player);
 			if(getPlaybackState() != PLAYBACK_STATE.PLAYING)
 			{
+				Debug.Log ("PLAYER = " + m_Player);
 				CacheEventInstance();
 				StartEvent();
 				Debug.Log(getPlaybackState());
