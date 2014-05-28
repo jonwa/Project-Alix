@@ -26,12 +26,12 @@ public class PortalSound : SoundComponent
 	
 	void Start () 
 	{
-		m_Player = Camera.main.transform.parent.gameObject;
-		m_PlayerName = m_Player.name;
+				m_Player = Camera.main.transform.parent.gameObject;
+				m_PlayerName = m_Player.name;
 
-		CacheEventInstance ();
+				CacheEventInstance ();
 
-<<<<<<< HEAD
+	}
 	void OnTriggerEnter(Collider collider)
 	{
 		if (collider.gameObject.name == m_PlayerName )
@@ -47,8 +47,6 @@ public class PortalSound : SoundComponent
 			}
 		} 
 
-=======
->>>>>>> 63d0c826954f4ab4fa1fa2dd4b13847e7aaef569
 	}
 
 	void Update () 

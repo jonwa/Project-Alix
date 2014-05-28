@@ -106,7 +106,7 @@ public class MoveObject :  TriggerComponent
 	}
 	
 	override public string Name
-	{ get{return"MoveObject";}}
+	{ get{return"ReLocate";}}
 	
 	public override void Serialize(ref JSONObject jsonObject)
 	{
