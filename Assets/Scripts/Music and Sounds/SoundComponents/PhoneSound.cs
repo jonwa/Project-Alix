@@ -47,6 +47,10 @@ public class PhoneSound : SoundComponent
 		{
 			Debug.Log("RINGRING");
 			CacheEventInstance();
+
+			m_Ringing = true;
+			m_Action = 0.05f;
+			Evt.setParameterValue(m_Parameters[0], m_Action);
 			StartEvent ();
 		}
 	}
