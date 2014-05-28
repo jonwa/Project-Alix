@@ -13,6 +13,7 @@ public class CollisionSound : SoundComponent
 {
 	#region PrivateMemberVariables
 	private int		m_Counter = 0;
+	private string						m_PlayerName;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -21,22 +22,26 @@ public class CollisionSound : SoundComponent
 
 	void OnTriggerEnter(Collider collider)
 	{
-		if(getPlaybackState() != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+		if (collider.gameObject.name == m_PlayerName ) 
 		{
-			if(m_Counter < m_NumberOfTimes)
+			if(getPlaybackState() != FMOD.Studio.PLAYBACK_STATE.PLAYING)
 			{
-				++m_Counter;
-				StartEvent();
-			}
-			else if(m_NumberOfTimes == 0)
-			{
-				StartEvent();
+				if(m_Counter < m_NumberOfTimes)
+				{
+					++m_Counter;
+					StartEvent();
+				}
+				else if(m_NumberOfTimes == 0)
+				{
+					StartEvent();
+				}
 			}
 		}
 	}
 
 	void Start () 
 	{
+		m_PlayerName = Camera.main.transform.parent.gameObject.name;
 		collider.isTrigger = true;
 		CacheEventInstance ();
 	}

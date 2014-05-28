@@ -33,6 +33,8 @@ public class PortalSound : SoundComponent
 			{
 				CacheEventInstance();
 				StartEvent();
+				Debug.Log(getPlaybackState());
+
 			}
 		} 
 	}
