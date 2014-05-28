@@ -15,8 +15,14 @@ public class PortalSound : SoundComponent
 	#region PrivateMemberVariables
 	private string			m_PlayerName;
 	private GameObject		m_Player;
-	private Collider		m_Collider;
+	private bool			m_Colliding;
 	#endregion
+
+	public PLAYBACK_STATE GetPlayBackState
+	{
+		get{return getPlaybackState();}
+	}
+
 	
 	void Start () 
 	{
@@ -24,26 +30,18 @@ public class PortalSound : SoundComponent
 		m_PlayerName = m_Player.name;
 
 		CacheEventInstance ();
-		//m_Collider = this.gameObject.
-	}
 
-	void OnTriggerEnter(Collider collider)
-	{
-		Debug.Log (collider.gameObject.name);
-		//if (collider.gameObject.name == m_PlayerName )
-		//{
-		//	Debug.Log ("PLAYOR = " + m_Player);
-		//	if(getPlaybackState() != PLAYBACK_STATE.PLAYING)
-		//	{
-		//		Debug.Log ("PLAYER = " + m_Player);
-		//		CacheEventInstance();
-		//		StartEvent();
-		//	}
-		//} 
 	}
 
 	void Update () 
 	{
+		m_Colliding = GetComponentInChildren<PortalChildScript> ().Colliding;
+		if(m_Colliding && getPlaybackState() != PLAYBACK_STATE.PLAYING)
+		{
+			GetComponentInChildren<PortalChildScript> ().Colliding = false;
+			StartEvent();
+		}
+
 		var attributes = UnityUtil.to3DAttributes (m_Player);
 		ERRCHECK (Evt.set3DAttributes(attributes));	
 	}
