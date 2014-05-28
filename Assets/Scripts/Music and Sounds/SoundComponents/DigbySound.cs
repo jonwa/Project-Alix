@@ -8,10 +8,9 @@ public class DigbySound : ObjectComponent
 
 	#endregion
 	#region PrivateMemberVariables
-	private float	m_Distance;
-	private bool	m_Played;
-	private bool	m_Entered 		= false;
-	private bool	m_Line1 		= false;
+	private bool			m_Played;
+	private DigbyFoundYou	m_Digby;
+	private bool			m_Active = false;
 	#endregion
 
 	public override void Interact()
@@ -22,7 +21,6 @@ public class DigbySound : ObjectComponent
 			m_Played = true;
 			this.GetComponent<AudioStack>().Play ();
 		}
-	
 	}
 
 	void Start () 
@@ -32,10 +30,11 @@ public class DigbySound : ObjectComponent
 	void Update () 
 	{
 		AudioStack audiostack = this.GetComponent<AudioStack> ();
-		if(audiostack.SoundStackCount == 0 && audiostack.getPlaybackState() == PLAYBACK_STATE.SUSTAINING)
+		if(audiostack.SoundStackCount == 0 && audiostack.getPlaybackState() == PLAYBACK_STATE.SUSTAINING && !m_Active)
 		{
-			//TODO: Check if player is in a safe zone else die :>
-			Debug.Log ("DÖD Motha fucka");
+			m_Active = true;
+			m_Digby = GameObject.FindObjectOfType<DigbyFoundYou>() as DigbyFoundYou;
+			m_Digby.Play();
 		}
 
 	}
