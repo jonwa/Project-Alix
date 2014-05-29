@@ -20,7 +20,7 @@ public class KillPlayer :  TriggerComponent
 	//}
 
 	override public string Name
-	{ get{return"KillPlayer";}}
+	{ get{return"KillThePlayer";}}
 	
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
