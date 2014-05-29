@@ -12,25 +12,31 @@ using FMOD.Studio;
 public class TriggerSound : SoundComponent
 {
 	#region PrivateMemberVariables
-	private bool m_Played = false;
-	private bool m_Holding = false;
+	private bool 		m_Played = false;
+	private bool 		m_Holding = false;
+	private GameObject 	m_Player;
+	private int			m_PlayedCounter = 0;
 	#endregion
 	
 	#region PublicMemberVariables
-	public string m_Input;
-	public string	m_Object;
+	public string	m_Parameter;
+	public float	m_Value;
+	public int		m_TimesToPlay;
+	public string 	m_Input = "Fire1";
+	//public string	m_Object;
 	#endregion
 
 	public override void PlaySound()
 	{
-		if(getPlaybackState() != PLAYBACK_STATE.PLAYING && m_Holding && !m_Played)
+		if(m_TimesToPlay == 0)
 		{
+			--m_PlayedCounter;
+		}
+		if(getPlaybackState() != PLAYBACK_STATE.PLAYING && m_Holding && !m_Played && m_PlayedCounter < m_TimesToPlay)
+		{
+			++m_PlayedCounter;
 			m_Played = true;
-			switch(m_Object)
-			{
-			default:
-				break;
-			}
+			Evt.setParameterValue(m_Parameter, m_Value);
 			StartEvent ();
 		}
 		else if(!m_Holding && m_Played)
@@ -41,6 +47,7 @@ public class TriggerSound : SoundComponent
 
 	void Start () 
 	{
+		m_Player = Camera.main.transform.parent.gameObject;
 		CacheEventInstance ();
 	}
 
@@ -50,7 +57,7 @@ public class TriggerSound : SoundComponent
 		{
 			m_Holding = this.gameObject.GetComponent<PickUp>().GetHoldingObject();
 		}		
-		var attributes = UnityUtil.to3DAttributes (this.gameObject);
+		var attributes = UnityUtil.to3DAttributes (m_Player);
 		ERRCHECK (Evt.set3DAttributes(attributes));		
 	}
 }
