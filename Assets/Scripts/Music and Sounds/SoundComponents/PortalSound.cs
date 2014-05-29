@@ -9,13 +9,12 @@ using FMOD.Studio;
  * Created By: Sebastian Olsson: 15-05-14
  * Modified by: 
  */
-//TODO Put in parent to portals
 public class PortalSound : SoundComponent
 {
 	#region PrivateMemberVariables
-	private string			m_PlayerName;
-	private GameObject		m_Player;
-	private bool			m_Colliding;
+	private string				m_PlayerName;
+	private GameObject			m_Player;
+	private PortalChildScript[]	m_PortalChildScripts;
 	#endregion
 
 	public PLAYBACK_STATE GetPlayBackState
@@ -29,6 +28,7 @@ public class PortalSound : SoundComponent
 				m_Player = Camera.main.transform.parent.gameObject;
 				m_PlayerName = m_Player.name;
 
+<<<<<<< HEAD
 				CacheEventInstance ();
 
 	}
@@ -47,15 +47,22 @@ public class PortalSound : SoundComponent
 			}
 		} 
 
+=======
+		CacheEventInstance ();
+>>>>>>> ef3d8a91a3ac4b4ae4142cc36cbde87e57623931
 	}
 
 	void Update () 
 	{
-		m_Colliding = GetComponentInChildren<PortalChildScript> ().Colliding;
-		if(m_Colliding && getPlaybackState() != PLAYBACK_STATE.PLAYING)
+		m_PortalChildScripts = GetComponentsInChildren<PortalChildScript> ();
+
+		foreach(PortalChildScript p in m_PortalChildScripts)
 		{
-			GetComponentInChildren<PortalChildScript> ().Colliding = false;
-			StartEvent();
+			if(p.Colliding && getPlaybackState() != PLAYBACK_STATE.PLAYING)
+			{
+				p.Colliding = false;
+				StartEvent();
+			}
 		}
 
 		var attributes = UnityUtil.to3DAttributes (m_Player);

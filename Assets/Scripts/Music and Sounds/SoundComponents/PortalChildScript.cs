@@ -26,7 +26,6 @@ public class PortalChildScript : MonoBehaviour
 	{
 		if(collider.gameObject.name == m_Player.name && !m_IsColliding)
 		{
-			Debug.Log ("Collider");
 			m_IsColliding = true;
 		}
 	}
