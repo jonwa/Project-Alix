@@ -27,8 +27,7 @@ public class PortalSound : SoundComponent
 	{
 				m_Player = Camera.main.transform.parent.gameObject;
 				m_PlayerName = m_Player.name;
-
-<<<<<<< HEAD
+		
 				CacheEventInstance ();
 
 	}
@@ -46,10 +45,6 @@ public class PortalSound : SoundComponent
 
 			}
 		} 
-
-=======
-		CacheEventInstance ();
->>>>>>> ef3d8a91a3ac4b4ae4142cc36cbde87e57623931
 	}
 
 	void Update () 
