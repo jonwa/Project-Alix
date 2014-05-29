@@ -12,45 +12,73 @@ using FMOD.Studio;
 public class TriggerSound : SoundComponent
 {
 	#region PrivateMemberVariables
-	private bool m_Played = false;
-	private bool m_Holding = false;
+	private bool 		m_Played = false;
+	private bool 		m_Holding = false;
+	private GameObject 	m_Player;
+	private int			m_PlayedCounter = 0;
+	private Inspect		m_Inspect;
+	private bool		m_IsInspecting = false;
 	#endregion
 	
 	#region PublicMemberVariables
-	public string m_Input;
-	public string	m_Object;
+	public string	m_Parameter;
+	public float	m_Value;
+	public int		m_TimesToPlay;
+	public string 	m_Input = "Fire1";
 	#endregion
 
-	public override void PlaySound()
+	void Play()
 	{
-		if(getPlaybackState() != PLAYBACK_STATE.PLAYING && m_Holding && !m_Played)
+		if(m_TimesToPlay == 0)
 		{
+			--m_PlayedCounter;
+		}
+		if(getPlaybackState() != PLAYBACK_STATE.PLAYING && m_PlayedCounter < m_TimesToPlay)
+		{
+			++m_PlayedCounter;
 			m_Played = true;
-			switch(m_Object)
+			if(m_Parameter != null)
 			{
-			default:
-				break;
+				Evt.setParameterValue(m_Parameter, m_Value);
 			}
 			StartEvent ();
-		}
-		else if(!m_Holding && m_Played)
-		{
-			m_Played = false;
 		}
 	}
 
 	void Start () 
 	{
+		m_Player = Camera.main.transform.parent.gameObject;
 		CacheEventInstance ();
+	}
+
+	void OnTriggerEnter(Collider collider)
+	{
+		if(collider.gameObject.name == m_Player.name)
+		{
+			Play ();
+		}
 	}
 
 	void Update () 
 	{
-		if(this.gameObject.GetComponent<PickUp>() != null)
+		if(this.GetComponent<Inspect>() != null)
 		{
-			m_Holding = this.gameObject.GetComponent<PickUp>().GetHoldingObject();
-		}		
-		var attributes = UnityUtil.to3DAttributes (this.gameObject);
+			m_IsInspecting = this.GetComponent<Inspect> ().IsInspecting;
+			if(m_IsInspecting && !m_Played)
+			{
+				m_Played = true;
+				Play();
+				
+				m_IsInspecting = false;
+				this.GetComponent<Inspect>().IsInspecting = false;
+			}
+			else if(m_Played && getPlaybackState() == PLAYBACK_STATE.SUSTAINING && !m_IsInspecting)
+			{
+				m_Played = false;
+			}
+		}
+
+		var attributes = UnityUtil.to3DAttributes (m_Player);
 		ERRCHECK (Evt.set3DAttributes(attributes));		
 	}
 }
