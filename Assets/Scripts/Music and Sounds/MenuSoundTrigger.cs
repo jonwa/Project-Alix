@@ -16,11 +16,14 @@ public class MenuSoundTrigger : MonoBehaviour
 	public string	m_SoundType;
 	private FMOD.Studio.EventInstance 		m_Event;
 	private string 							m_Path;
+	private GameObject					m_GameObject;
 	private bool						m_Padlock = false;
 	private bool						m_Book = false;
 	
 	void Start()
 	{
+		m_GameObject = GameObject.Find ("Object_Padlock_model");
+
 		CacheEventInstance ();
 		switch(m_SoundType)
 		{
@@ -73,7 +76,13 @@ public class MenuSoundTrigger : MonoBehaviour
 		FMOD.Studio.UnityUtil.ERRCHECK(result);
 		return result;
 	}
-	
+
+	void Update()
+	{
+		var attributes = UnityUtil.to3DAttributes (m_GameObject);
+		ERRCHECK (m_Event.set3DAttributes(attributes));
+	}
+
 	void OnClick()
 	{
 		if(m_Padlock)

@@ -25,10 +25,26 @@ public class PortalSound : SoundComponent
 	
 	void Start () 
 	{
-		m_Player = Camera.main.transform.parent.gameObject;
-		m_PlayerName = m_Player.name;
+				m_Player = Camera.main.transform.parent.gameObject;
+				m_PlayerName = m_Player.name;
+		
+				CacheEventInstance ();
 
-		CacheEventInstance ();
+	}
+	void OnTriggerEnter(Collider collider)
+	{
+		if (collider.gameObject.name == m_PlayerName )
+		{
+			Debug.Log ("PLAYOR = " + m_Player);
+			if(getPlaybackState() != PLAYBACK_STATE.PLAYING)
+			{
+				Debug.Log ("PLAYER = " + m_Player);
+				CacheEventInstance();
+				StartEvent();
+				Debug.Log(getPlaybackState());
+
+			}
+		} 
 	}
 
 	void Update () 

@@ -31,13 +31,13 @@ public class TimeTrigger : ObjectComponent
 
 	void Update () 
 	{
+
 		if (m_Active) 
 		{
-			Debug.Log("Time Trigger update active");
 			m_Time = Time.time - m_StartTime;
+			Debug.Log (m_Time);
 			if(m_Time >= m_TriggerTime)
 			{
-				Debug.Log ("Trigger Time");
 				ActivateTimeTrigger();
 				if(gameObject.GetComponent<CheckTrigger>() != null)
 				{
