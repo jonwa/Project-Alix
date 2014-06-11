@@ -38,11 +38,13 @@ public class CameraFilter : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		/*
 		if(Input.GetKeyDown("o"))
 		{
 			UseEffect(m_WhatEffect);
 		}
 		m_DefaultMaterial.SetFloat("_Random", Random.Range(0f, 1f));
+		*/
 		TestShaders();
 		if(m_EffectActive == true)
 		{
@@ -117,6 +119,7 @@ public class CameraFilter : MonoBehaviour
 		}
 	}
 	#endregion
+	 
 
 	public void UseEffect(int effect)
 	{

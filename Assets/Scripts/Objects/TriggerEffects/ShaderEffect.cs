@@ -30,6 +30,10 @@ public class ShaderEffect : TriggerComponent
 	{
 		Camera.main.GetComponent<CameraFilter>().UseEffect(1);
 	}
+	public void Shader2()
+	{
+		Camera.main.GetComponent<CameraFilter>().UseEffect(2);
+	}
 
 	void Start () 
 	{

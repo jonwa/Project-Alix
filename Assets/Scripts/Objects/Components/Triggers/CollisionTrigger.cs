@@ -8,7 +8,8 @@ using System.Collections;
 
 public class CollisionTrigger : MonoBehaviour {
 	#region PrivateMemberVariables
-	private bool m_HasTriggered = false;
+	private bool 	m_HasTriggered = false;
+	private string	m_PlayerName;
 	#endregion
 	
 	#region PublicMemberVariables
@@ -18,7 +19,7 @@ public class CollisionTrigger : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-	
+		m_PlayerName = Camera.main.transform.parent.gameObject.name;
 	}
 	
 	// Update is called once per frame
@@ -27,14 +28,18 @@ public class CollisionTrigger : MonoBehaviour {
 	
 	}
 
-	public void OnTriggerEnter()
+	public void OnTriggerEnter(Collider collider)
 	{
-		if(m_HasTriggered == false)
+		if (collider.gameObject.name == m_PlayerName ) 
 		{
-			ActivateTriggerEffect();
-			if(m_TriggerOnce == true)
+			Debug.Log("jAPP FUNKER");
+			if(m_HasTriggered == false)
 			{
-				m_HasTriggered = true;
+				ActivateTriggerEffect();
+				if(m_TriggerOnce == true)
+				{
+					m_HasTriggered = true;
+				}
 			}
 		}
 	}

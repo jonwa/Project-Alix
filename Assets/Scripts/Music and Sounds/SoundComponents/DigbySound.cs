@@ -2,74 +2,42 @@
 using System.Collections;
 using FMOD.Studio;
 
-public class DigbySound : SoundComponent
+public class DigbySound : ObjectComponent
 {
 	#region PublicMemberVariables
-	public string[]	m_Parameters;
 
 	#endregion
 	#region PrivateMemberVariables
-	private float	m_Distance;
-	public float	m_Line;
-	public bool		m_DigbyPuzzle;
-	private bool	m_Entered 		= false;
-	private string	m_PlayerName;
-	private bool	m_Line1 		= false;
+	private bool			m_Played;
+	private DigbyFoundYou	m_Digby;
+	private bool			m_Active = false;
 	#endregion
 
-	public bool DigbyPuzzle
-	{
-		get{return m_DigbyPuzzle;}
-		set{m_DigbyPuzzle = value;}
-	}
-
-	public override void PlaySound()
+	public override void Interact()
 	{
 		Camera.main.SendMessage("Release");
-		if(!m_Line1)
+		if(!m_Played)
 		{
-			ChangeValue (m_Parameters [0], m_Line);
-			StartEvent ();
-			m_Line1 = true;
+			m_Played = true;
+			this.GetComponent<AudioStack>().Play ();
 		}
-
 	}
 
 	void Start () 
 	{
-		CacheEventInstance ();
-		m_PlayerName = Camera.main.transform.parent.gameObject.name;
 	}
 
 	void Update () 
 	{
-		var attributes = UnityUtil.to3DAttributes (this.gameObject);
-		ERRCHECK (Evt.set3DAttributes(attributes));	
-	}
-	
-	//void OnTriggerEnter(Collider collider)
-	//{
-	//	if(m_DigbyPuzzle)
-	//	{
-	//		if (collider.gameObject.name == m_PlayerName) 
-	//		{
-	//			if(!m_Entered && !m_Line1)
-	//			{
-	//				ChangeValue(m_Parameters[0], 0.05f);
-	//				m_Line1 = true;
-	//				m_Entered = true;
-	//			}
-	//		}
-	//	}
-	//}
-	//
-	//void OnTriggerExit(Collider collider)
-	//{
-	//	//m_Entered = false;
-	//}
+		AudioStack audiostack = this.GetComponent<AudioStack> ();
+		if(audiostack.SoundStackCount == 0 && audiostack.getPlaybackState() == PLAYBACK_STATE.SUSTAINING && !m_Active)
+		{
+			m_Active = true;
+			m_Digby = GameObject.FindObjectOfType<DigbyFoundYou>() as DigbyFoundYou;
+			m_Digby.Play();
+		}
 
-	void ChangeValue(string p_Parameter, float p_Value)
-	{
-		Evt.setParameterValue(p_Parameter, p_Value);
 	}
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

@@ -9,15 +9,29 @@ using System.Collections;
  * Modified By: 
  */
 
-public class ActivateDeathMenu : MonoBehaviour 
+public class ActivateDeathMenu : TriggerComponent 
 {
 	public GameObject _window; 
 
-	public void Activate() 
+	public void ActivateWindow() 
 	{
 		WindowStatus status = gameObject.GetComponent<WindowStatus>();
 		_window.SetActive(true);	
 		bool isActive = InputManager.RequestShowWindow(gameObject);
 		status.Activate(isActive);
 	}
+
+	public void DeactivateWindow() 
+	{
+		WindowStatus status = gameObject.GetComponent<WindowStatus>();
+		_window.SetActive(false);	
+		//bool isActive = InputManager.RequestShowWindow(gameObject);
+		status.Activate(false);
+	}
+
+	override public string Name
+	{ get{return"ActivateWindow";}}
+	
+	public override void Serialize(ref JSONObject jsonObject){}
+	public override void Deserialize(ref JSONObject jsonObject){}
 }

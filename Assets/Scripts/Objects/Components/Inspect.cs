@@ -191,6 +191,7 @@ public class Inspect : ObjectComponent
 	public bool IsInspecting
 	{
 		get{ return m_IsInspecting; }
+		set{ m_IsInspecting = value;}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

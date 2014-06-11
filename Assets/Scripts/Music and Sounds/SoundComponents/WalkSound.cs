@@ -45,9 +45,7 @@ public class WalkSound : SoundComponent
 		m_PlayerSpeed = this.gameObject.rigidbody.velocity.normalized.magnitude;
 		distance = Vector3.Distance (position, m_LastPosition);
 		m_Time = Time.time - m_StartTime;
-
-		Debug.Log (Vector3.Distance(position, m_LastPosition));
-
+		
 		if(distance > (m_DistanceBeforeSound))
 		{
 			m_LastPosition = position;
@@ -128,10 +126,8 @@ public class WalkSound : SoundComponent
 		speed = new Vector3(this.gameObject.transform.rigidbody.velocity.normalized.x, 0, this.gameObject.transform.rigidbody.velocity.normalized.z);
 		m_PlayerSpeed = speed.normalized.magnitude;
 		
-		Debug.Log (speed);
-		
+
 		m_Time = Time.time - m_StartTime;
-		Debug.Log (m_PlayerSpeed);
 		if(m_PlayerSpeed != 0)
 		{
 			if(PlayWalkingSound)

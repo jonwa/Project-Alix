@@ -38,6 +38,11 @@ public class MusicManager : MonoBehaviour
 		m_Event.setParameterValue (p_Name, p_Value);
 	}
 
+	public void TurnOff()
+	{
+		m_Event.stop ();
+	}
+
 	void Start()
 	{
 		CacheEventInstance();
