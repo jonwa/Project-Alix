@@ -1,13 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/* The cursor used for the game. This can be in 
- * two different states, crosshair and regular mouse pointer
- * This handles the current state of the cursor.
- * 
- * Created By: Jon Wahlström 2014-04-21
- * Modified By: 
- */
+//TODO: Pretty much everything, get it working with the different scenes
 
 public class MenuCursor : MonoBehaviour 
 {
