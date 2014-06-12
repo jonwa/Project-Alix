@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using FMOD.Studio;
-
 public class FlashlightSound : SoundComponent
 {
 	#region PrivateMemberVariables

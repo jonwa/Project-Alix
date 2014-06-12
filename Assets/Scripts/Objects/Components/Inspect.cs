@@ -14,7 +14,7 @@ public class Inspect : ObjectComponent
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  = 20.0f;
 	public float m_InspectionViewDistance = 2.0f;
-	public float m_LerpSpeed			  = 1f;
+	public float m_LerpSpeed			  = 5f;
 	public string m_Input				  = "Fire2"; 
 	#endregion
 
