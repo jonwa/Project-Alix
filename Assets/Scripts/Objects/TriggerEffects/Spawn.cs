@@ -27,8 +27,9 @@ public class Spawn : MonoBehaviour {
 	{
 		m_Position 			= transform.position;
 		m_RestingPosition 	= transform.position + new Vector3(0, 20, 0);
-		m_Timer    			= m_Delay + 1;
+		m_Timer    			= m_Delay;
 		m_Spawned  			= true;
+		transform.position  = m_RestingPosition;
 	}
 	
 	// Update is called once per frame
@@ -44,7 +45,7 @@ public class Spawn : MonoBehaviour {
 			}
 		}
 	}
-	public void Spawned()	
+	public void SpawnObject()
 	{	
 		transform.position  = m_Position;	
 		m_Spawned 			= true;

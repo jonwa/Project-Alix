@@ -1,47 +1,13 @@
 fileFormatVersion: 2
-guid: c3ca2c1ef54a79848b3a843676a68fd1
+guid: 4c1b35e9403390449aa88a1c54595f3d
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: polySurface2
-    100002: polySurface3
-    100004: polySurface4
-    100006: polySurface5
-    100008: polySurface6
-    100010: polySurface7
-    100012: pSphere2
-    100014: pSphere3
-    100016: //RootNode
-    100018: skirt_Group2
-    100020: skirt_Group3
-    100022: transform1
-    100024: transform2
-    100026: transform3
-    100028: transform4
-    100030: transform5
-    100032: transform6
-    100034: transform7
-    400000: polySurface2
-    400002: polySurface3
-    400004: polySurface4
-    400006: polySurface5
-    400008: polySurface6
-    400010: polySurface7
-    400012: pSphere2
-    400014: pSphere3
-    400016: //RootNode
-    400018: skirt_Group2
-    400020: skirt_Group3
-    400022: transform1
-    400024: transform2
-    400026: transform3
-    400028: transform4
-    400030: transform5
-    400032: transform6
-    400034: transform7
-    2300000: polySurface7
-    3300000: polySurface7
-    4300000: polySurface7
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: polySurface1
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -61,7 +27,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .100000001
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

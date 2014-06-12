@@ -18,6 +18,7 @@ public class FlashlightSound : SoundComponent
 	{
 		if(Camera.main.transform.GetComponentInChildren<FlashLight>().ToggleLight && getPlaybackState() != PLAYBACK_STATE.PLAYING)
 		{
+			Debug.Log ("PLAY");
 			StartEvent();
 			Camera.main.transform.GetComponentInChildren<FlashLight>().ToggleLight = false;
 		}

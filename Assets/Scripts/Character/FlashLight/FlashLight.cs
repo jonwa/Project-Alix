@@ -39,7 +39,6 @@ public class FlashLight : ObjectComponent {
 	{
 		m_OnOff = !m_OnOff;
 		gameObject.GetComponent<Light>().enabled = m_OnOff;
-		m_Toggle = false;
 	}
 
 	public void Find()
