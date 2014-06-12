@@ -24,13 +24,12 @@ public class SoundEffect : TriggerComponent
 	public string[]							m_Parameters;
 	public float							m_Value;
 	public bool								m_StartOnAwake = false;
-
 	#endregion
 
-	//override public string Name
-	//{
-	//	get{ return "PlaySoundEffect"; }
-	//}
+	override public string Name
+	{
+		get{ return "PlaySoundEffect"; }
+	}
 
 	public float Parameter
 	{

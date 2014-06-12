@@ -10,7 +10,14 @@ public class FlashLight : ObjectComponent {
 
 	#region PrivateMemeberVariables
 	private bool m_CanUse = false;
+	private bool m_Toggle = false;
 	#endregion
+
+	public bool ToggleLight
+	{
+		get{return m_Toggle;}
+		set{m_Toggle = value;}
+	}
 
 	// Use this for initialization
 	void Start ()
@@ -21,8 +28,9 @@ public class FlashLight : ObjectComponent {
 	// Update is called once per frame
 	void Update ()
 	{
-		if(m_CanUse && Input.GetButtonDown(m_Input))
+		if(m_CanUse && Input.GetButtonDown(m_Input) && !m_Toggle)
 		{
+			m_Toggle = true;
 			Toggle();
 		}
 	}
@@ -33,8 +41,10 @@ public class FlashLight : ObjectComponent {
 		gameObject.GetComponent<Light>().enabled = m_OnOff;
 	}
 
-	public void Find(){
-		if(!m_CanUse){
+	public void Find()
+	{
+		if(!m_CanUse)
+		{
 			m_CanUse = true;
 		}
 	}

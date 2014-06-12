@@ -98,6 +98,7 @@ public class MenuSoundTrigger : MonoBehaviour
 				else
 				{
 					m_Event.setParameterValue("Outcome", 0.15f);
+					StartEvent ();
 				}
 			}
 		}

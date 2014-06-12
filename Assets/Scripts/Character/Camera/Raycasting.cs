@@ -208,11 +208,13 @@ public class Raycasting : MonoBehaviour
 			}
 			else
 			{
+
 				Cursor.SetCursor(null, null, true);
 			}
 		}
 		else
 		{
+			Debug.Log ("NO SHIE");
 			Cursor.SetCursor(null, null, false);
 		}
 	}
