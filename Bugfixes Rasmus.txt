@@ -13,6 +13,7 @@ defaultshader fixad
 flyttad nyckel från arbetsrum till bibliotek
 Lagt till ljus till lampan på byrån direkt efter portalen
 lagt till bord och ljus vid kassetbandet
+fixat så att man tar upp ficklampan och raycast får en release
 
 Nya buggar:
 1. Man kan komma för långt från lådor om man börjar dra bort dom från spelaren från raycastens maxlängd
