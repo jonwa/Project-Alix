@@ -75,7 +75,7 @@ public class CameraFilter : MonoBehaviour
 		m_DefaultMaterial.SetInt("_BlackAndWhite", 0);
 		m_DefaultMaterial.SetInt("_BlackAndWhiteEffect", 0);
 	}
-	/*
+
 	#region test
 	private void TestShaders()
 	{
@@ -120,7 +120,7 @@ public class CameraFilter : MonoBehaviour
 			UseEffect(9);
 		}
 	}
-	#endregion*/
+	#endregion
 	 
 
 	public void UseEffect(int effect)
