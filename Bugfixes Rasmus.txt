@@ -20,3 +20,5 @@ Nya buggar:
 
 2. Står man maxlängd från dörren och klickar på den kan man hamna i ett buggit läge så det inte går att interigera med andra objekt som vanligt. Går att lösa ingame genom att klicka på samma dörr igen samtidigt som du står närmare
 (lågprio då folk inte verkar råka ut för det ofta)
+
+3. Om man interigerar med object som sedan försvinner kan man ha glömt av att köra release på raycast
