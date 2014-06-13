@@ -1,0 +1,22 @@
+12/6 - 13/6
+Gjort ny scen BugFixSga, där jag implementerat följande:
+
+Alla golv har nu större boxcollider, inget skall falla igenom golven
+Portal fixad, kan se tillbaka till hub
+Byrolåda i arbetsrum nu oflyttbar
+fixat längd på raycast = 2
+tv fixat
+lådar i badrum klipper inte botten
+köket låst från början
+videoband fixat
+defaultshader fixad
+flyttad nyckel från arbetsrum till bibliotek
+Lagt till ljus till lampan på byrån direkt efter portalen
+lagt till bord och ljus vid kassetbandet
+
+Nya buggar:
+1. Man kan komma för långt från lådor om man börjar dra bort dom från spelaren från raycastens maxlängd
+(lågprio)
+
+2. Står man maxlängd från dörren och klickar på den kan man hamna i ett buggit läge så det inte går att interigera med andra objekt som vanligt. Går att lösa ingame genom att klicka på samma dörr igen samtidigt som du står närmare
+(lågprio då folk inte verkar råka ut för det ofta)
