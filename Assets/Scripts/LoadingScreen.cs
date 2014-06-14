@@ -15,13 +15,15 @@ public class LoadingScreen : MonoBehaviour
 	//GameObject trans;
 
 	// Use this for initialization
-	void Start() {
+	void Start() 
+	{
 		StartLoading();
 		//trans = GameObject.FindWithTag ("Progressbar");
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		m_TimeUntilNextLoad -= Time.deltaTime;
 		float progress = async.progress;
 		if((Input.GetButtonDown("Menu") || m_TimeUntilNextLoad <= 0f) && m_ShowLabel)
@@ -48,7 +50,8 @@ public class LoadingScreen : MonoBehaviour
 		}
 	}
 
-	public void StartLoading() {
+	public void StartLoading() 
+	{
 		StartCoroutine("load");
 	}
 	
