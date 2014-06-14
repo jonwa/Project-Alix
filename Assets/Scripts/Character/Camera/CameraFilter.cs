@@ -45,7 +45,7 @@ public class CameraFilter : MonoBehaviour
 		}
 		m_DefaultMaterial.SetFloat("_Random", Random.Range(0f, 1f));
 		*/
-		TestShaders();
+		//TestShaders();
 		if(m_EffectActive == true)
 		{
 			m_Timer -= Time.deltaTime;
@@ -54,6 +54,8 @@ public class CameraFilter : MonoBehaviour
 				ResetDefualt();
 			}
 		}
+
+		m_DefaultMaterial.SetFloat("_Random", Random.Range(0f, 1f));
 	}
 
 	public bool GetEffectActive()
