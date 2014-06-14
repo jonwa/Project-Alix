@@ -15,6 +15,11 @@ public class Padlock : ObjectComponent
 	public string 	  m_Input  = null; 
 	#endregion
 
+	void Start()
+	{
+		Camera.main.GetComponent<Raycasting>().Release();
+	}
+
 	void Update()
 	{
 		if(m_Padlock.transform.GetChild(0).gameObject.activeInHierarchy == true)
@@ -36,6 +41,7 @@ public class Padlock : ObjectComponent
 		}
 		else
 		{
+			Camera.main.GetComponent<Raycasting>().Release();
 			Activate();
 		}
 	}

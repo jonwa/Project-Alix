@@ -143,8 +143,6 @@ public class Inspect : ObjectComponent
 	
 	public override void Interact ()
 	{
-
-
 		//Check if we should inspect the object or not.
 		if(Input.GetButton(m_Input)/* && m_IsOriginalPosition*/)
 		{
@@ -183,7 +181,6 @@ public class Inspect : ObjectComponent
 			else 
 			{
 				m_ShouldMoveBack = true;
-				Debug.Log("Yolo");
 				DeActivate();
 			}
 		}

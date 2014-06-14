@@ -22,16 +22,17 @@ public class MenuSoundTrigger : MonoBehaviour
 	
 	void Start()
 	{
-		m_GameObject = GameObject.Find ("Object_Padlock_model");
 
 		CacheEventInstance ();
 		switch(m_SoundType)
 		{
 		case "Padlock":
 			m_Padlock = true;
+			m_GameObject = GameObject.Find ("Object_Padlock_model");
 			break;
 		case "Book":
 			m_Book = true;
+			m_GameObject = GameObject.Find("Diary 1");
 			break;
 		}
 	}
