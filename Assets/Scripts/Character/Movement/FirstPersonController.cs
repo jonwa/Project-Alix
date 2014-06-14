@@ -66,6 +66,7 @@ public class FirstPersonController : MonoBehaviour
 			}
 
 			targetVelocity	*= maxVelocity;
+
 			velocity  		 = (targetVelocity-velocity);
 			velocity.x 		 = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
 			velocity.y 		 = 0; 
@@ -73,6 +74,7 @@ public class FirstPersonController : MonoBehaviour
 
 			//add movement force, x/z
 			rigidbody.AddForce(velocity, ForceMode.VelocityChange);
+<<<<<<< HEAD
 
 			//Jump logic
 			//if(Input.GetButton("Jump"))
@@ -80,6 +82,8 @@ public class FirstPersonController : MonoBehaviour
 			//
 			//	rigidbody.velocity = new Vector3(rigidbody.velocity.x,CalculateJumpForce(),rigidbody.velocity.z);
 			//}
+=======
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 		}
 		else if(m_Locked)
 		{

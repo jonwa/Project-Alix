@@ -13,7 +13,7 @@ public class Pushable : ObjectComponent
 	#region PrivateMemberVariables
 	private float 		m_MouseXPosition;
 	private float 		m_MouseYPosition;
-	private Vector3 	m_Delta				= Vector3.zero;
+	private Vector3 	m_PlayerDirection	= Vector3.zero;
 	private float		m_DeActivateCounter	= 5;
 
 	private bool		m_UnlockedCamera	= true;
@@ -30,7 +30,7 @@ public class Pushable : ObjectComponent
 	
 	public Vector3 Delta
 	{
-		get {return m_Delta;}
+		get {return m_PlayerDirection;}
 	}
 
 	void Start () 
@@ -62,11 +62,8 @@ public class Pushable : ObjectComponent
 	{
 		if (IsActive) 
 		{
-			m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
-			m_MouseYPosition = Input.GetAxis(m_VerticalInput);
-
 			PlayerForward();
-			Vector3 targetPosition = transform.localPosition + m_Delta * m_MoveSpeed;
+			Vector3 targetPosition = transform.localPosition + (m_PlayerDirection * (m_MoveSpeed * Time.deltaTime));
 			if(gameObject.GetComponent<MovementLimit>())
 			{
 				targetPosition = gameObject.GetComponent<MovementLimit>().CheckPosition(targetPosition);
@@ -111,57 +108,25 @@ public class Pushable : ObjectComponent
 		Vector3 playerGeneralForward = ClosestDirection(m_Player.transform.forward);
 		Vector3 objectGeneralForward = ClosestDirection(transform.forward);
 		Vector3 objectGeneralRight	 = ClosestDirection(transform.right);
+		m_MouseXPosition = Input.GetAxis(m_HorizontalInput);
+		m_MouseYPosition = Input.GetAxis(m_VerticalInput);
 
 		if(playerGeneralForward == objectGeneralForward)
 		{
-			m_Delta = new Vector3(m_MouseXPosition, 0, m_MouseYPosition)*Time.deltaTime;
+			m_PlayerDirection = new Vector3(m_MouseXPosition, 0, m_MouseYPosition);
 		}
 		else if(playerGeneralForward == -objectGeneralForward)
 		{
-			m_Delta = new Vector3(m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
+			m_PlayerDirection = new Vector3(m_MouseXPosition, 0, -m_MouseYPosition);
 		}
 		else if(playerGeneralForward == objectGeneralRight)
 		{
-			m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
+			m_PlayerDirection = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition);
 		}
 		else if(playerGeneralForward == -objectGeneralRight)
 		{
-			m_Delta = new Vector3(m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
+			m_PlayerDirection = new Vector3(m_MouseYPosition, 0, m_MouseXPosition);
 		}
-		//if(playerGeneralForward == Vector3.forward)
-		//{
-		//	m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
-		//}
-		//else if(playerGeneralForward == Vector3.back)
-		//{
-		//	m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
-		//}
-		//else if(playerGeneralForward == Vector3.left)
-		//{
-		//	m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
-		//}
-		//else if(playerGeneralForward == Vector3.right)
-		//{
-		//	m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
-		//}
-
-
-	//	if(m_Player.transform.forward.z >= 0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
-	//	{
-	//		m_Delta = new Vector3(m_MouseXPosition, 0 , m_MouseYPosition)*Time.deltaTime;
-	//	}
-	//	else if(m_Player.transform.forward.z <= -0.7 && m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.x <= 0.7)
-	//	{
-	//		m_Delta = new Vector3(-m_MouseXPosition, 0, -m_MouseYPosition)*Time.deltaTime;
-	//	}
-	//	else if(m_Player.transform.forward.x <= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
-	//	{
-	//		m_Delta = new Vector3(-m_MouseYPosition, 0, m_MouseXPosition)*Time.deltaTime;
-	//	}
-	//	else if(m_Player.transform.forward.x >= -0.7 && m_Player.transform.forward.z >= -0.7 && m_Player.transform.forward.z <=0.7)
-	//	{
-	//		m_Delta = new Vector3(m_MouseYPosition, 0, -m_MouseXPosition)*Time.deltaTime;
-	//	}
 	}
 
 	public override void Serialize(ref JSONObject jsonObject){}

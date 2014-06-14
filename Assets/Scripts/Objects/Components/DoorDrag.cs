@@ -127,12 +127,12 @@ public class DoorDrag : ObjectComponent
 
 		if(forward == m_ObjectGeneralForward)
 		{
-			Debug.Log("forward");
+			//Debug.Log("forward");
 			m_Delta = ((-m_MouseYPosition)*m_Speed)*Time.deltaTime;
 		}
 		else if(forward == -m_ObjectGeneralForward)
 		{
-			Debug.Log("backwards");
+			//Debug.Log("backwards");
 			m_Delta = ((m_MouseYPosition)*m_Speed)*Time.deltaTime;
 		}
 

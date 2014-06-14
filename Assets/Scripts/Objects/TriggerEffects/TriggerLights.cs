@@ -9,7 +9,8 @@ using System.Collections;
  */
 
 [RequireComponent(typeof(Light))]
-public class TriggerLights : TriggerComponent {
+public class TriggerLights : TriggerComponent 
+{
 
 	#region PublicMemberVariables
 	#endregion
@@ -20,7 +21,7 @@ public class TriggerLights : TriggerComponent {
 
 	override public string Name
 	{
-		get{ return "TriggerLights"; }
+		get{ return "LightSwitch"; }
 	}
 
 	void LightSwitch()

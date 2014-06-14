@@ -9,8 +9,19 @@ using System.Collections;
 
 public class AudioOptionsWindow : MonoBehaviour 
 {
+
+	public Camera m_Camera; 
+
+
+	private static Camera _camera; 
+
+	void Start()
+	{
+		_camera = m_Camera;
+	}
+
 	public static void ChangeVolume(string name, float value)
 	{
-		Camera.main.GetComponent<MusicOptions> ().setVolume (name, value);
+		_camera.GetComponent<MusicOptions> ().setVolume (name, value);
 	}
 }

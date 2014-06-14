@@ -35,14 +35,21 @@ public class TimeTrigger : ObjectComponent
 
 	void Update () 
 	{
+
 		if (m_Active) 
 		{
 			m_Time = Time.time - m_StartTime;
+			Debug.Log (m_Time);
 			if(m_Time >= m_TriggerTime)
 			{
+<<<<<<< HEAD
 				SuperTrigger[] triggerArray;
 				triggerArray = gameObject.GetComponents<SuperTrigger>();
 				foreach(SuperTrigger c in triggerArray)
+=======
+				ActivateTimeTrigger();
+				if(gameObject.GetComponent<CheckTrigger>() != null)
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 				{
 					if(c.Time){
 						c.ActivateTriggerEffect();
@@ -65,6 +72,27 @@ public class TimeTrigger : ObjectComponent
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	void ActivateTimeTrigger()
+	{
+		if(!m_HasTriggered)
+		{
+			for(int i = 0; i < m_Messages.Length; i++){
+				if(m_Messages[i].Equals("Effect"))
+				{
+					Debug.Log("Fått en triggerEffect");
+				}
+				else
+				{
+					Debug.Log("SendMessage TimeTrigger");
+					SendMessage(m_Messages[i]);
+					
+				}
+			}
+		}
+	}
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 	public override void Serialize(ref JSONObject jsonObject){}
 	public override void Deserialize(ref JSONObject jsonObject){}
 }

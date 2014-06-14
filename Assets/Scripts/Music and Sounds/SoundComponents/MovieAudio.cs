@@ -45,7 +45,10 @@ public class MovieAudio : TriggerComponent
 
 	public void PlayMovie()
 	{
-		m_AudioStack.Play ();
+		if(m_AudioStack.PlaybackState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+		{
+			m_AudioStack.Play ();
+		}
 	}
 
 

@@ -12,7 +12,6 @@ public class CameraFilter : MonoBehaviour
 	#region PublicMemberVariables
 	public Material     m_DefaultMaterial;
 	public GameObject[] m_Materials;
-
 	#endregion
 
 	#region PrivateMemberVariables
@@ -39,12 +38,14 @@ public class CameraFilter : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		/*
 		if(Input.GetKeyDown("o"))
 		{
 			UseEffect(m_WhatEffect);
 		}
 		m_DefaultMaterial.SetFloat("_Random", Random.Range(0f, 1f));
-		TestShaders();
+		*/
+		//TestShaders();
 		if(m_EffectActive == true)
 		{
 			m_Timer -= Time.deltaTime;
@@ -53,6 +54,17 @@ public class CameraFilter : MonoBehaviour
 				ResetDefualt();
 			}
 		}
+
+		m_DefaultMaterial.SetFloat("_Random", Random.Range(0f, 1f));
+	}
+
+	public bool GetEffectActive()
+	{
+		return m_EffectActive;
+	}
+	public int GetWhatEffect()
+	{
+		return m_WhatEffect;
 	}
 
 	private void ResetDefualt()
@@ -109,6 +121,7 @@ public class CameraFilter : MonoBehaviour
 		}
 	}
 	#endregion
+	 
 
 	public void UseEffect(int effect)
 	{
@@ -143,28 +156,6 @@ public class CameraFilter : MonoBehaviour
 		{
 			SetVariables();
 		}
-		//if(m_EffectActive == true)
-		//{
-			//m_DefaultMaterial.
-			//if(m_WhatEffect == 5)
-			//{
-			//	Material test = new Material(m_Materials[5]);
-			//	test.SetTexture("_SecondTex", m_Materials[0].GetTexture("_NoiseTex"));
-			//	test.SetTexture("_ThirdTex", m_Materials[1].GetTexture("_NoiseTex"));
-			//	//test.Lerp(test, m_Materials[3], 0.5f);
-			//	//test.Lerp(test, m_Materials[4], 0.5f);
-			//
-			//	Graphics.Blit (source, destination, test);
-			//}
-			//else
-			//{
-			//	Graphics.Blit (source, destination, m_Materials[m_WhatEffect]);
-			//}
-		//}
-		//else
-		//{
-		//	Graphics.Blit (source, destination, m_DefaultMaterial);
-		//}
 		Graphics.Blit (source, destination, m_DefaultMaterial);
 	}
 

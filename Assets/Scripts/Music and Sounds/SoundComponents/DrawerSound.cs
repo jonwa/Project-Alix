@@ -8,7 +8,7 @@ using FMOD.Studio;
  * Created by: Sebastian Olsson 05/05-14
  * Modified by:
  */
-
+//TODO: Get working with the new sound
 public class DrawerSound : SoundComponent 
 {
 	#region PrivateMemberVariables
@@ -42,13 +42,13 @@ public class DrawerSound : SoundComponent
 		{
 			if(m_MouseYPosition > 0 && !m_Positive)
 			{
-				StartEvent();
+				//StartEvent();
 				m_Positive = true;
 				m_Negative = false;
 			}
 			else if(m_MouseYPosition < 0 && !m_Negative)
 			{
-				StartEvent();
+				//StartEvent();
 				m_Negative = true;
 				m_Positive = false;
 			}

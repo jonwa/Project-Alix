@@ -14,9 +14,8 @@ public class SoundEffect : TriggerComponent
 {
 	#region PrivateMemberVariables
 	private FMOD.Studio.EventInstance 		m_Event;
-	private FMOD.Studio.ParameterInstance	m_Parameter;
 	private string 							m_Path;
-	private bool							m_Started;
+	private bool							m_Started = false;
 	private int								m_Counter;
 	#endregion
 
@@ -24,6 +23,7 @@ public class SoundEffect : TriggerComponent
 	public FMODAsset						m_Asset;
 	public string[]							m_Parameters;
 	public float							m_Value;
+	public bool								m_StartOnAwake = false;
 	#endregion
 
 	override public string Name
@@ -39,11 +39,10 @@ public class SoundEffect : TriggerComponent
 
 	void Start()
 	{
-		m_Started = false;
 		CacheEventInstance();
-		if(m_Parameters != null)
+		if(m_StartOnAwake)
 		{
-			m_Event.getParameter (m_Parameters[0], out m_Parameter);
+			StartEvent();
 		}
 	}
 
@@ -55,7 +54,10 @@ public class SoundEffect : TriggerComponent
 		}
 		if (!m_Started) 
 		{
-			m_Parameter.setValue(m_Value);
+			if(m_Parameters.Length != 0)
+			{
+				m_Event.setParameterValue(m_Parameters[0], m_Value);
+			}
 			StartEvent();
 		}
 	}
@@ -72,6 +74,15 @@ public class SoundEffect : TriggerComponent
 			m_Event = null;
 		}
 
+	}
+
+	void OnDisable()
+	{
+		if(m_Event != null)
+		{
+			m_Event.stop ();
+			m_Event.release ();
+		}
 	}
 	
 	public FMOD.Studio.PLAYBACK_STATE getPlaybackState()

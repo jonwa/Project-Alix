@@ -13,8 +13,19 @@ using System.Linq;
 public class CollaborateTrigger : ObjectComponent
 {
 	#region PublicMemberVariables
+<<<<<<< HEAD
 	private List<int>	m_ValidId = new List<int>();
 	private string		m_Input;
+=======
+	public int[]	m_ValidId;
+	public string	m_Input = "Fire1";
+	public bool 	m_TriggerOnce = false;
+	public bool 	m_ReleaseOnTrigger = false;
+	#endregion
+	
+	#region PrivateMemberVariables
+	private bool	m_HasTriggered = false;
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 	#endregion
 
 	void Start()
@@ -51,9 +62,16 @@ public class CollaborateTrigger : ObjectComponent
 					
 						if(hoover.gameObject.GetComponent<SuperTrigger>())
 						{
+<<<<<<< HEAD
 							SuperTrigger[] triggerArray;
 							triggerArray = hoover.gameObject.GetComponents<SuperTrigger>();
 							foreach(SuperTrigger c in triggerArray)
+=======
+							hoover.gameObject.SendMessage("ActivateTriggerEffect");
+
+							//hoover.gameObject.GetComponent<TriggerEffect>().ActivateTriggerEffect();
+							if(hoover.gameObject.GetComponent<CheckTrigger>() != null)
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 							{
 								if(c.CollaborateGet){
 									c.ActivateTriggerEffect();
@@ -70,10 +88,20 @@ public class CollaborateTrigger : ObjectComponent
 									c.ActivateTriggerEffect();
 								}
 							}
+<<<<<<< HEAD
+=======
+							m_HasTriggered = true;
+
+							if(m_ReleaseOnTrigger)
+							{
+								Camera.main.GetComponent<Raycasting>().Release();
+
+								// Set new pos to object via hide n seek
+							}
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 						}
 					}
 				}
-
 			}
 		}
 		else

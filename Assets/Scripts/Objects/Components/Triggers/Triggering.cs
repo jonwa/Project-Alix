@@ -10,7 +10,18 @@ using System.Linq;
 
 public class Triggering : ObjectComponent 
 {
+<<<<<<< HEAD
 	private List<int> m_TriggerIDs;
+=======
+	#region PublicMemberVariables
+	public List<int>	m_Triggers = new List<int>();
+	public bool   		m_TriggerOnce = false;
+	#endregion
+	
+	#region PrivateMemberVariables
+	private bool 		 m_HasTriggered	 = false;
+	#endregion
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 
 	void Start()
 	{
@@ -29,7 +40,7 @@ public class Triggering : ObjectComponent
 	}
 		
 	//Will send activition to all TriggerID
-	void ActivateTrigger()
+	public void ActivateTrigger()
 	{
 		List<Id> ids = Object.FindObjectsOfType<Id>().ToList();
 		foreach(Id i in ids)

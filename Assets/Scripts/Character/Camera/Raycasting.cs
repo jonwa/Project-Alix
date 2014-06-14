@@ -55,6 +55,18 @@ public class Raycasting : MonoBehaviour
 		}
 	}
 
+	public bool HoldingInteractingWith()
+	{
+		if(m_InteractingWith == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
 	//Starts Interact with object when mouse button is clicked once over object and releases the object when button is pressed again
 	void ClickToInteract()
 	{
@@ -93,7 +105,7 @@ public class Raycasting : MonoBehaviour
 		}
 		else if(m_InteractingWith != null)
 		{
-			if(Vector3.Distance(m_InteractingWith.transform.position,transform.position) > m_Distance)
+			if(Vector3.Distance(m_InteractingWith.transform.position, transform.position) > m_Distance + 0.5f)
 			{
 				Release();
 			}
@@ -184,11 +196,13 @@ public class Raycasting : MonoBehaviour
 			}
 			else
 			{
+
 				Cursor.SetCursor(null, null, true);
 			}
 		}
 		else
 		{
+			Debug.Log ("NO SHIE");
 			Cursor.SetCursor(null, null, false);
 		}
 	}

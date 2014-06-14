@@ -23,7 +23,7 @@ public class SpawnController : MonoBehaviour
 		{
 			if(ID == m_GameObjects[i].GetComponent<Id>().ObjectId)
 			{
-				m_GameObjects[i].GetComponent<Spawn>().Spawned();
+				m_GameObjects[i].GetComponent<Spawn>().SpawnObject();
 			}
 		}
 	}

@@ -21,9 +21,18 @@ public class ShaderEffect : TriggerComponent
 		Camera.main.GetComponent<CameraFilter>().UseEffect(Random.Range(0, 9));
 	}
 
-	public void BloodShader()
+	public void Shader0()
 	{
+		Camera.main.GetComponent<CameraFilter>().UseEffect(0);
+	}
 
+	public void Shader1()
+	{
+		Camera.main.GetComponent<CameraFilter>().UseEffect(1);
+	}
+	public void Shader2()
+	{
+		Camera.main.GetComponent<CameraFilter>().UseEffect(2);
 	}
 
 	void Start () 

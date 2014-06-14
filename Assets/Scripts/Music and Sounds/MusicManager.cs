@@ -42,6 +42,7 @@ public class MusicManager : MonoBehaviour
 		get{ return m_Element1; }
 	}
 
+<<<<<<< HEAD
 	public float Element2
 	{
 		set{ m_Element2 = value; }
@@ -49,6 +50,13 @@ public class MusicManager : MonoBehaviour
 	}
 	#endregion
 	
+=======
+	public void TurnOff()
+	{
+		m_Event.stop ();
+	}
+
+>>>>>>> 92beaf40a036c549a2d3df76d99f75233488c66d
 	void Start()
 	{
 		CacheEventInstance();

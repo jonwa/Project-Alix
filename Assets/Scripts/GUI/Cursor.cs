@@ -15,6 +15,7 @@ public class Cursor : MonoBehaviour
 	public Texture m_DefaultCrossHair;
 	public Texture m_DefaultCursor;
 	public GameObject m_DescriptionFab;
+	public bool m_MainMenuCursor = false;
 	#endregion
 
 	#region PrivateMemberVariables
@@ -33,11 +34,11 @@ public class Cursor : MonoBehaviour
 	{
 		Screen.showCursor  = false;
 		m_UsingOculus 	   = Camera.main.transform.parent.GetComponent<CharacterData>().GetOculus();
-
 		m_DefaultTexture   = m_DefaultCrossHair;
 		m_CrossHairTexture = m_DefaultCrossHair;
 		m_CursorTexture    = m_DefaultCursor;
 		m_DescriptionGO    = m_DescriptionFab;
+
 	}
 
 	// In order to deside in what state the cursor should be in
@@ -65,18 +66,30 @@ public class Cursor : MonoBehaviour
 		m_ShowCrossHair   = crosshair;
 	}
 
+	void Update()
+	{
+		if(m_MainMenuCursor)
+			DrawMenuCursor();
+	}
+
 	void OnGUI()
 	{
-		if(m_ShowCrossHair)
+		if(m_MainMenuCursor)
 		{
-			DrawCrossHair();
+			DrawMenuCursor();	
 		}
-		else 
+		else
 		{
-			DrawCursor();
+			if(m_ShowCrossHair)
+			{
+				DrawCrossHair();
+			}
+			else 
+			{
+				DrawCursor();
+			}
+			DrawDescription(m_ShowDescription);
 		}
-
-		DrawDescription(m_ShowDescription);
 	}
 
 	// Draw the cross hair in the center of the screen
@@ -114,6 +127,11 @@ public class Cursor : MonoBehaviour
 	void DrawCursor()
 	{
 		GUI.DrawTexture(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y, m_CursorTexture.width, m_CursorTexture.height), m_CursorTexture);
+	}
+
+	void DrawMenuCursor()
+	{
+		GUI.DrawTexture(new Rect(Input.mousePosition.x, Screen.height - Input.mousePosition.y, m_DefaultCursor.width, m_DefaultCursor.height), m_DefaultCursor);
 	}
 
 	// Draw a description, part of the hoover effect. Gives the player an description

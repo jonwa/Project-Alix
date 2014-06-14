@@ -24,6 +24,8 @@ public class CharacterData : MonoBehaviour
 	void Start()
 	{
 		m_Instance = this;
+		Alive = true;
+		m_DeathMenu.GetComponent<ActivateDeathMenu>().DeactivateWindow();
 		UpdateOculus();
 	}
 
@@ -58,7 +60,7 @@ public class CharacterData : MonoBehaviour
 
 	public void ShowDeathMenu()
 	{
-		m_DeathMenu.GetComponent<ActivateDeathMenu>().Activate();
+		m_DeathMenu.GetComponent<ActivateDeathMenu>().ActivateWindow();
 	}
 
 	private void UpdateOculus()

@@ -13,7 +13,6 @@ using FMOD.Studio;
 public class AudioStack : SoundComponent
 {
 	#region PrivateMemberVariables
-	private MoviePlayer			m_Movie;
 	private GameObject			m_GameObject;
 	private bool				m_Played = false;
 	private Stack<FMODAsset>	m_SoundStack = new Stack<FMODAsset>();
@@ -28,12 +27,23 @@ public class AudioStack : SoundComponent
 	public float[]			m_ParameterValues;
 	#endregion
 
+	public PLAYBACK_STATE PlaybackState
+	{
+		get{ return getPlaybackState ();}
+	}
+
 	public int Counter
 	{
 		get{return m_Counter;}
 	}
 
-	void PlayMovieSound()
+	public int SoundStackCount
+	{
+		get{ return m_SoundStack.Count;}
+	}
+	
+
+	void PlaySounds()
 	{
 		if(Evt != null)
 		{
@@ -56,7 +66,7 @@ public class AudioStack : SoundComponent
 
 	public void Play()
 	{
-		PlayMovieSound ();
+		PlaySounds ();
 	}
 
 	void Start () 
@@ -65,7 +75,7 @@ public class AudioStack : SoundComponent
 
 		if(m_StartOnAwake && Evt != null)
 		{
-			CacheEventInstance();
+			CacheEventInstance(m_Asset);
 			StartEvent();
 		}
 
@@ -85,7 +95,7 @@ public class AudioStack : SoundComponent
 
 			if(m_PlaybackState == PLAYBACK_STATE.SUSTAINING)
 			{
-				PlayMovieSound();
+				PlaySounds();
 			}
 		}
 		if(Evt != null)
