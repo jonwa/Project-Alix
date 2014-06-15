@@ -17,6 +17,7 @@ public class SoundEffect : TriggerComponent
 	private string 							m_Path;
 	private bool							m_Started = false;
 	private int								m_Counter;
+	private GameObject						m_GameObject;
 	#endregion
 
 	#region PublicMemberVariables
@@ -24,6 +25,7 @@ public class SoundEffect : TriggerComponent
 	public string[]							m_Parameters;
 	public float							m_Value;
 	public bool								m_StartOnAwake = false;
+	public bool								m_IsPlayer = false;
 	#endregion
 
 	override public string Name
@@ -43,6 +45,15 @@ public class SoundEffect : TriggerComponent
 		if(m_StartOnAwake)
 		{
 			StartEvent();
+		}
+
+		if(m_IsPlayer)
+		{
+			m_GameObject = Camera.main.transform.parent.gameObject;
+		}
+		else
+		{
+			m_GameObject = this.gameObject;
 		}
 	}
 
@@ -66,7 +77,7 @@ public class SoundEffect : TriggerComponent
 	{
 		if (m_Event != null && m_Event.isValid ()) 
 		{
-			var attributes = UnityUtil.to3DAttributes (gameObject);			
+			var attributes = UnityUtil.to3DAttributes (m_GameObject);			
 			ERRCHECK (m_Event.set3DAttributes(attributes));			
 		} 
 		else 

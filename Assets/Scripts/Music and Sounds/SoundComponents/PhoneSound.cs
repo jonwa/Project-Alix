@@ -15,6 +15,9 @@ public class PhoneSound : SoundComponent
 	private FMOD.Studio.ParameterInstance	m_ActionParameter;
 	private bool 							m_Answered = false;
 	private bool							m_Ringing = false;
+	private bool							m_StartTimer = false;
+	private float							m_StartTheClock = 0.0f;
+	private float							m_Time;
 	private float 							m_Action;
 	private GameObject						m_GameObject;
 	#endregion
@@ -45,7 +48,6 @@ public class PhoneSound : SoundComponent
 	{
 		if(Evt != null)
 		{
-			Debug.Log("RINGRING");
 			CacheEventInstance();
 
 			m_Ringing = true;
@@ -84,14 +86,18 @@ public class PhoneSound : SoundComponent
 				Evt.setParameterValue(m_Parameters[0], m_Action);
 				Camera.main.SendMessage("Release");
 				m_Answered = true;
+				m_StartTimer = true;
+				m_StartTheClock = Time.time;
 			}
-			else if(m_Answered && Input.GetButtonDown(m_Input))
+
+			if(m_Answered && Input.GetButtonDown(m_Input) && m_Time >= 2.0f)
 			{
 				m_Action = 0.25f;
 				Evt.setParameterValue(m_Parameters[0], m_Action);
 				Camera.main.SendMessage("Release");
 				m_Answered = false;
 				m_Ringing = false;
+				m_StartTimer = false;
 			}
 		}
 
@@ -101,6 +107,11 @@ public class PhoneSound : SoundComponent
 	{		
 		var attributes = UnityUtil.to3DAttributes (m_GameObject);
 		ERRCHECK (Evt.set3DAttributes(attributes));			
+
+		if(m_StartTimer)
+		{
+			m_Time = Time.time - m_StartTheClock;
+		}
 
 		if(getPlaybackState() == FMOD.Studio.PLAYBACK_STATE.SUSTAINING)
 		{

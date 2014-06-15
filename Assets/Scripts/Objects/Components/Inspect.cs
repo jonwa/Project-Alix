@@ -13,12 +13,12 @@ public class Inspect : ObjectComponent
 {
 	#region PublicMemberVariables
 	public float m_Sensitivity 			  = 20.0f;
-	public float m_InspectionViewDistance = 2.0f;
-	public float m_LerpSpeed			  = 5f;
 	public string m_Input				  = "Fire2"; 
 	#endregion
 
 	#region PrivateMemberVariables
+	private float		 m_InspectionViewDistanceMax = 0.7f;
+	private float 		m_LerpSpeed			 		 = 5f;
 	private Vector3 	m_OriginalPosition;
 	private Quaternion  m_OriginalRotation;
 	private int			m_DeActivateCounter  = 0;
@@ -26,6 +26,9 @@ public class Inspect : ObjectComponent
 	private bool		m_UnlockedCamera	 = true;
 	private bool		m_ShouldMoveBack	 = false;
 	private bool		m_IsInspecting		 = false;
+	private Transform	m_HoldObject;
+	private Transform   m_CameraTransform;
+	private float 		m_InspectionViewDistance;
 	#endregion
 
 
@@ -33,6 +36,8 @@ public class Inspect : ObjectComponent
 	{
 		m_OriginalPosition = transform.position;
 		m_OriginalRotation = transform.rotation;
+		m_CameraTransform  = Camera.main.transform;
+		m_HoldObject	   = m_CameraTransform.FindChild("ObjectHoldPosition");
 		
 	}
 
@@ -42,7 +47,7 @@ public class Inspect : ObjectComponent
 		{
 			if(m_ShouldMoveBack)
 			{
-				ShouldCollide(true);
+				//ShouldCollide(true);
 				MoveToInspectDistance(false);
 			}
 			if(m_DeActivateCounter > 4 &&  m_UnlockedCamera == false && m_IsOriginalPosition && Quaternion.Angle(transform.rotation, m_OriginalRotation) < 0.5f)
@@ -81,6 +86,7 @@ public class Inspect : ObjectComponent
 
 		if(shouldInspect)
 		{
+			Cast ();
 			Vector3 cameraForward  = Camera.main.transform.forward.normalized;
 			cameraForward *= m_InspectionViewDistance;
 			targetPosition = cameraPosition+cameraForward;
@@ -121,7 +127,26 @@ public class Inspect : ObjectComponent
 		set { m_OriginalPosition = value; } 
 	}
 
-
+	void Cast()
+	{
+		RaycastHit hit;
+		Ray ray = new Ray(m_CameraTransform.transform.position, m_CameraTransform.transform.forward);
+		Debug.DrawRay (ray.origin, ray.direction * m_InspectionViewDistanceMax, Color.magenta);
+		
+		if (Physics.Raycast (ray, out hit, m_InspectionViewDistanceMax+2))
+		{
+			if(hit.transform.gameObject != gameObject)
+			{
+				m_InspectionViewDistance = Vector3.Distance(hit.point, m_CameraTransform.position);
+				m_InspectionViewDistance *= 0.5f;
+			}
+		}
+		else
+		{
+			m_InspectionViewDistance = m_InspectionViewDistanceMax;
+		}
+	}
+	
 	void ShouldCollide(bool yes)
 	{
 		if(GetComponent<BoxCollider>() != null)
@@ -150,9 +175,10 @@ public class Inspect : ObjectComponent
 			{
 				Camera.main.transform.gameObject.GetComponent<FirstPersonCamera>().LockCamera();
 				Camera.main.transform.parent.GetComponent<FirstPersonController>().LockPlayerMovement();
-				if(gameObject.GetComponent<PickUp>() != null){
-					m_OriginalPosition = transform.position;
-					m_OriginalRotation = transform.rotation;
+				if(gameObject.GetComponent<PickUp>() != null)
+				{
+					m_OriginalPosition = m_HoldObject.position;
+					m_OriginalRotation = m_HoldObject.rotation;
 				}
 				m_UnlockedCamera   = false;
 				m_ShouldMoveBack = true;
@@ -176,7 +202,7 @@ public class Inspect : ObjectComponent
 				transform.RotateAround(collider.bounds.center,Vector3.left, m_moveY);
 				transform.RotateAround(collider.bounds.center,Vector3.up, m_moveX);
 				m_IsInspecting = true;
-				ShouldCollide(false);
+				//ShouldCollide(false);
 			}
 			else 
 			{
@@ -185,6 +211,7 @@ public class Inspect : ObjectComponent
 			}
 		}
 	}
+
 	public bool IsInspecting
 	{
 		get{ return m_IsInspecting; }

@@ -21,6 +21,7 @@ public class Raycasting : MonoBehaviour
 	private GameObject m_InteractingWith;
 	private bool 	   m_Release = false;
 	private bool 	   m_ShowHover = true;
+	private bool 	   m_Ignore = false;
 	#endregion
 
 	// Used only for inventory swap functionallity
@@ -51,7 +52,12 @@ public class Raycasting : MonoBehaviour
 		{
 			if(hit.collider.gameObject.layer == (16))
 			{
-				return;
+				Debug.Log("träffad");
+				m_Ignore = true;
+			}
+			else
+			{
+				m_Ignore = false;
 			}
 		}	
 	
@@ -92,7 +98,7 @@ public class Raycasting : MonoBehaviour
 			Ray ray = new Ray(transform.position, transform.forward);
 			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
 			
-			if(Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+			if(Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value) && !m_Ignore)
 			{
 				ObjectComponent hoover = hit.collider.gameObject.GetComponent<ObjectComponent>();
 
@@ -140,7 +146,7 @@ public class Raycasting : MonoBehaviour
 		Ray ray = new Ray(transform.position, transform.forward);
 		Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
 
-		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+		if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value) && !m_Ignore)
 		{
 			m_InteractingWith = hit.collider.gameObject;
 
@@ -168,7 +174,7 @@ public class Raycasting : MonoBehaviour
 			Ray ray = new Ray(transform.position, transform.forward);
 			Debug.DrawRay (ray.origin, ray.direction * m_Distance, Color.yellow);
 			
-			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value))
+			if (Physics.Raycast (ray, out hit, m_Distance, m_LayerMask.value) && !m_Ignore)
 			{
 				CollaborateHoverEffect collaborateHover = hit.collider.gameObject.GetComponent<CollaborateHoverEffect>();
 				HoverEffect 		   hover		    = hit.collider.gameObject.GetComponent<HoverEffect>();
