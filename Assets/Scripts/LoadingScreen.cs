@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LoadingScreen : MonoBehaviour 
 {
-	public string m_LevelToLoad = "Main5";
+	public string m_LevelToLoad = "Main6";
 	public float m_TimeUntilNextLoad = 20f;
 	private bool	m_ShowLabel = false;
 
@@ -26,14 +26,15 @@ public class LoadingScreen : MonoBehaviour
 	{
 		m_TimeUntilNextLoad -= Time.deltaTime;
 		float progress = async.progress;
-		if((Input.GetButtonDown("Menu") || m_TimeUntilNextLoad <= 0f) && m_ShowLabel)
+
+		if(Input.GetButtonDown("Menu") || m_TimeUntilNextLoad <= 0f)
 		{
 			ActivateScene();
 			m_ShowLabel = false;
 		}
 
 		//Print text about skipping on screen
-		if(Input.GetButtonDown("Menu") && !m_ShowLabel)
+		if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0 || Input.anyKeyDown)
 		{
 			m_ShowLabel = true;
 		}
@@ -55,13 +56,15 @@ public class LoadingScreen : MonoBehaviour
 		StartCoroutine("load");
 	}
 	
-	IEnumerator load() {
+	IEnumerator load() 
+	{
 		async = Application.LoadLevelAsync(m_LevelToLoad);
 		async.allowSceneActivation = false;
 		yield return async;
 	}
 	
-	public void ActivateScene() {
+	public void ActivateScene() 
+	{
 		async.allowSceneActivation = true;
 	}
 
