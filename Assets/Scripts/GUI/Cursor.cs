@@ -33,7 +33,7 @@ public class Cursor : MonoBehaviour
 	void Start()
 	{
 		Screen.showCursor  = false;
-		m_UsingOculus 	   = Camera.main.transform.parent.GetComponent<CharacterData>().GetOculus();
+		//m_UsingOculus 	   = Camera.main.transform.parent.GetComponent<CharacterData>().GetOculus();
 		m_DefaultTexture   = m_DefaultCrossHair;
 		m_CrossHairTexture = m_DefaultCrossHair;
 		m_CursorTexture    = m_DefaultCursor;
@@ -77,16 +77,19 @@ public class Cursor : MonoBehaviour
 		if(m_MainMenuCursor)
 		{
 			DrawMenuCursor();	
+			Screen.lockCursor = false;
 		}
 		else
 		{
 			if(m_ShowCrossHair)
 			{
 				DrawCrossHair();
+				Screen.lockCursor = true;
 			}
 			else 
 			{
 				DrawCursor();
+				Screen.lockCursor = false;
 			}
 			DrawDescription(m_ShowDescription);
 		}

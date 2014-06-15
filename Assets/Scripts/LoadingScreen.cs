@@ -3,33 +3,30 @@ using System.Collections;
 
 public class LoadingScreen : MonoBehaviour 
 {
-	public string m_LevelToLoad = "Main6";
-	public float m_TimeUntilNextLoad = 20f;
-	private bool	m_ShowLabel = false;
-
-	AsyncOperation async;
-	float loading = 0;
-
-
-
-	//GameObject trans;
-
-	// Use this for initialization
+	public string 			m_LevelToLoad;
+	public float 			m_TimeUntilNextLoad = 20f;
+	private bool			m_ShowLabel = false;
+	private AsyncOperation 	m_Async;
+	private float 			m_Loading = 0;
+	
 	void Start() 
 	{
 		StartLoading();
-		//trans = GameObject.FindWithTag ("Progressbar");
 	}
 	
-	// Update is called once per frame
 	void Update () 
 	{
 		m_TimeUntilNextLoad -= Time.deltaTime;
-		float progress = async.progress;
+		float progress = m_Async.progress;
+		Debug.Log ("PROGRESS = " + progress);
+		Debug.Log ("IS DONE = " + m_Async.isDone);
 
 		if(Input.GetButtonDown("Menu") || m_TimeUntilNextLoad <= 0f)
 		{
-			ActivateScene();
+			if(m_Async.isDone)
+			{
+				ActivateScene();
+			}
 			m_ShowLabel = false;
 		}
 
@@ -38,8 +35,7 @@ public class LoadingScreen : MonoBehaviour
 		{
 			m_ShowLabel = true;
 		}
-		//trans.transform.localScale = new Vector3(progress*11,1,0);
-		loading++;
+		m_Loading++;
 	}
 
 	void OnGUI()
@@ -53,19 +49,47 @@ public class LoadingScreen : MonoBehaviour
 
 	public void StartLoading() 
 	{
-		StartCoroutine("load");
+		//StartCoroutine("load");
+		StartCoroutine ("loadLevel");
 	}
 	
 	IEnumerator load() 
 	{
-		async = Application.LoadLevelAsync(m_LevelToLoad);
-		async.allowSceneActivation = false;
+		m_Async = Application.LoadLevelAsync(m_LevelToLoad);
+		m_Async.allowSceneActivation = false;
+		yield return m_Async;
+	}
+
+	private IEnumerator loadLevel()
+	{
+		if(string.IsNullOrEmpty(m_LevelToLoad))
+		{
+			yield return 0;
+		}
+
+		Debug.Log ("ManagerGame: level[" + m_LevelToLoad + "] loading level");
+
+		GameObject go = GameObject.Find ("All");
+
+		if(go != null)
+		{
+			DestroyImmediate(go);
+			Resources.UnloadUnusedAssets();
+		}
+
+		AsyncOperation async = Application.LoadLevelAdditiveAsync (m_LevelToLoad);
 		yield return async;
+
+		go = new GameObject ("All");
+
+		GameObject.Find (m_LevelToLoad).transform.parent = go.transform;
+
+		Debug.Log ("ManagerGame: level[" + m_LevelToLoad + "] loading complete");
 	}
 	
 	public void ActivateScene() 
 	{
-		async.allowSceneActivation = true;
+		m_Async.allowSceneActivation = true;
 	}
 
 }
